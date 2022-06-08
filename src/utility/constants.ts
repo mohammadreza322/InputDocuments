@@ -1,0 +1,1 @@
+export const mongoConnection:string = "mongodb://mongo_admin:Imfn7Tndq@185.110.189.214:27017/chisco?authSource=admin&directConnection=true&ssl=false"
