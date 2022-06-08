@@ -1,0 +1,83 @@
+#!/bin/bash
+
+checkSudo() {
+  #check command run as root or not
+  if [ "$EUID" -ne 0 ];  then
+    echo "Please run as root"
+    exit
+  fi
+}
+
+upDocker() {
+  checkSudo
+
+  ## create mongo
+  echo "check mongo"
+  CONTAINER_NAME='mongo_viaq-core-db_1'
+  CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+  if [ ! "${CID}" ]; then
+    echo "mongo container doesn't exist and install it"
+    runMongo
+  fi
+  unset CID
+  unset CONTAINER_NAME
+  echo "mongo done!"
+
+  ## create mailserver
+  echo "check mailserver"
+  CONTAINER_NAME='mailserver'
+  CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+  if [ ! "${CID}" ]; then
+    echo "mailserver container doesn't exist and install it"
+    runMailServer
+  fi
+  unset CID
+  unset CONTAINER_NAME
+  echo "mailserver done!"
+
+  sudo docker ps
+}
+
+runMongo() {
+  cd /var/www/chisco-backend/docker/mongo
+  sudo docker-compose up -d
+}
+
+runMailServer() {
+  cd /var/www/chisco-backend/docker/mailserver
+  docker run  -d --restart always -p 25:25 -p 82:80 -p 445:443 -p 110:110 -p 143:143 -p 465:465 -p 587:587 -p 993:993 -p 995:995  -e TZ=Asia/Tehran   -v $PWD/data:/data --name mailserver -t analogic/poste.io
+}
+
+cp() {
+  cd /var/www/viaq-backend
+  echo "go to backend file"
+  sudo cp /var/www/viaq-backend/viaq-command /bin/viaq-command
+  echo "copied file"
+}
+
+pull() {
+  echo "nothing to pull"
+}
+
+help() {
+  echo "up > up the docker containers\r\n"
+  echo "pull > pull the last changes in the server of viaq and create pm2 tasks for it\r\n"
+  echo "cp > copy of this file into /bin folder\r\n"
+  
+}
+
+if [ -z "$1" ]; then
+  help
+  exit 0
+fi
+
+if [ "$1" == "up" ]; then
+  upDocker
+  exit
+elif [ "$1" == "pull" ]; then
+  pull
+  exit
+elif [ "$1" == "cp" ]; then
+  cp
+  exit
+fi
