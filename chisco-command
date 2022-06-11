@@ -13,7 +13,7 @@ upDocker() {
 
   ## create mongo
   echo "check mongo"
-  CONTAINER_NAME='mongo_viaq-core-db_1'
+  CONTAINER_NAME='chisco-core-db'
   CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
   if [ ! "${CID}" ]; then
     echo "mongo container doesn't exist and install it"

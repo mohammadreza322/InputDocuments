@@ -7,10 +7,8 @@ services:
             - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
             - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD
         volumes:
-            - ./script/init/:/docker-entrypoint-initdb.d
-            - ./script/init:/home/mongodb
-            - ./script/seed/:/home/mongodb/seed
-            - ./data:/data/db
+            - $PWD/data:/data/db
+            - '$PWD/scripts/:/docker-entrypoint-initdb.d/'
         ports:
             - '27017:27017'
         restart: always

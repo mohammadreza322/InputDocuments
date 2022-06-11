@@ -2,7 +2,7 @@ node_modules/
 node_modules
 
 docker/mongo/data
-docker/mongo/script
+docker/mongo
 
 docker/mailserver
 
