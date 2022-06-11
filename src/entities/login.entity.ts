@@ -9,7 +9,7 @@ export default class LoginEntity {
 			message: '',
 			id: undefined,
 			code: -1,
-			isNewUser: false,
+			isNewUser: true,
 		};
 
 		try {
@@ -35,11 +35,14 @@ export default class LoginEntity {
 			await newSmsCode.save();
 
 			const userDetails = await Users.findOne({
-				phoneNumber: smsCode.phoneNumber,
+				phoneNumber: newSmsCode.phoneNumber,
 			});
 
 			if (userDetails) {
-				output.isNewUser = true;
+				if(userDetails.fullName){
+					output.isNewUser = false;
+				}
+				
 			}
 
 			output.code = code;

@@ -38,11 +38,11 @@ export const getMobile = async (req: Request, res: Response) => {
 
 	if (loginOutput?.id) {
 		const smsProvider: SmsProvider = new SmsProvider(phoneNumber);
-		smsProvider.sendAuthSms(loginOutput.code!.toString());
+		await smsProvider.sendAuthSms(loginOutput.code!.toString());
 
 		return res.json({
 			message: 'پیامک با موفقیت ارسال شد',
-			code: loginOutput.id,
+			id: loginOutput.id,
 			isNewUser: loginOutput.isNewUser,
 		});
 	}
