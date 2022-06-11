@@ -2,6 +2,7 @@ version: '3.7'
 services:
     chisco-core-db:
         image: mongo
+        network_mode: host
         environment:
             - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
             - MONGO_INITDB_ROOT_PASSWORD=$MONGO_INITDB_ROOT_PASSWORD

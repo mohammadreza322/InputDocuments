@@ -49,8 +49,8 @@ runMailServer() {
 }
 
 cp() {
-  cd /var/www/viaq-backend
-  echo "go to backend file"
+  # cd /var/www/viaq-backend
+  #echo "go to backend file"
   sudo cp /var/www/chisco-backend/chisco-command /bin/chisco-command
   echo "copied file"
 }
