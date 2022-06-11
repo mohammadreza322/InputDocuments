@@ -35,7 +35,7 @@ export default class LoginEntity {
 			await newSmsCode.save();
 
 			const userDetails = await Users.findOne({
-				phoneNumber: smsCode.phoneNumber,
+				phoneNumber: newSmsCode.phoneNumber,
 			});
 
 			if (userDetails) {
