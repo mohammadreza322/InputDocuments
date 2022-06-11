@@ -9,7 +9,7 @@ export default class LoginEntity {
 			message: '',
 			id: undefined,
 			code: -1,
-			isNewUser: false,
+			isNewUser: true,
 		};
 
 		try {
@@ -39,7 +39,10 @@ export default class LoginEntity {
 			});
 
 			if (userDetails) {
-				output.isNewUser = true;
+				if(userDetails.fullName){
+					output.isNewUser = false;
+				}
+				
 			}
 
 			output.code = code;

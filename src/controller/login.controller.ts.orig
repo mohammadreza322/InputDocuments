@@ -38,10 +38,13 @@ export const getMobile = async (req: Request, res: Response) => {
 
 	if (loginOutput?.id) {
 		const smsProvider: SmsProvider = new SmsProvider(phoneNumber);
-
+<<<<<<< HEAD
 		console.log(
 			await smsProvider.sendAuthSms(loginOutput.code!.toString()),
 		);
+=======
+		await smsProvider.sendAuthSms(loginOutput.code!.toString());
+>>>>>>> 6e6db4694068dda000f02c1c2b2bda1fbe1e9a78
 
 		return res.json({
 			message: 'پیامک با موفقیت ارسال شد',

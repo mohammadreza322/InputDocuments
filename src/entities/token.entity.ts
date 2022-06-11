@@ -29,12 +29,11 @@ export default class TokenEntity {
 	static async createToken(userId: string, agent: string) {
 		const { accessToken, refreshToken } = this.generateToken(userId);
 
-		const user = Types.ObjectId.createFromHexString(userId);
 		await Token.insertMany({
 			token: accessToken,
 			refreshToken: refreshToken,
 			agent: agent,
-			user,
+			userId,
 		});
 
 		return {
