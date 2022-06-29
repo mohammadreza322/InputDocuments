@@ -1,7 +1,7 @@
 version: '3.7'
 services:
     chisco-core-db:
-        user: 'ahp'
+        #user: 'ahp'
         image: mongo
         environment:
             - MONGO_INITDB_ROOT_USERNAME=$MONGO_INITDB_ROOT_USERNAME
