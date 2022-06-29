@@ -1,8 +1,9 @@
 import express from 'express';
 import { json } from 'body-parser';
 import { apiRouter } from './routes/api.router';
-import mongoose, { ConnectOptions } from 'mongoose';
-import { mongoConnection } from './utility/constants';
+import connectDb from './config/db';
+
+process.env.TZ = 'Asia/Tehran';
 
 const app = express();
 
@@ -10,7 +11,9 @@ app.use(json());
 
 app.use('/api', apiRouter);
 
-mongoose.connect(mongoConnection).then(() => {
+const PORT = process.env.PORT || 8800;
+
+connectDb().then(() => {
 	console.log('mongo database connected');
-	app.listen(3000, () => console.log('server start at 3000'));
+	app.listen(PORT, () => console.log('server start at 3000'));
 });

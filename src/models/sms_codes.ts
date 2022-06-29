@@ -1,32 +1,32 @@
-import mongoose,{Schema,Model} from "mongoose";
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-export interface IsmsCode {
-  phoneNumber:string;
-  code:string;
-  date?:Date;
+export interface ISmsCode extends Document {
+	phoneNumber: string;
+	code: string;
+	date?: Date;
 }
 
+const smsCodesSchema: Schema = new Schema({
+	phoneNumber: {
+		type: 'string',
+		trim: true,
+		required: true,
+	},
+	code: {
+		type: 'string',
+		trim: true,
+		required: true,
+	},
+	date: {
+		type: Date,
+		required: true,
+		default: Date.now,
+	},
+});
 
-const smsCodesSchema:Schema = new Schema({
-  phoneNumber:{
-    type: "string",
-    trim:true,
-    required:true
-  },
-  code:{
-    type:"string",
-    trim:true,
-    required:true
-  },
-  date:{
-    type:Date,
-    required:true,
-    default:Date.now
-  }
-})
-
-
-const SmsCode = mongoose.model('SmsCodes',smsCodesSchema);
-
+const SmsCode: Model<ISmsCode> = mongoose.model<ISmsCode>(
+	'SmsCodes',
+	smsCodesSchema,
+);
 
 export default SmsCode;

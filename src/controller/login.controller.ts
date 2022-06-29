@@ -8,10 +8,7 @@ import isMobilePhone from 'validator/lib/isMobilePhone';
 import LoginEntity from '../entities/login.entity';
 import SmsProvider from '../classes/sms_provider';
 import TokenEntity, { generateTokenOutput } from '../entities/token.entity';
-import {
-	accessTokenExpireTime,
-	refreshTokenExpireTime,
-} from '../utility/constants';
+import UserEntity from '../entities/user.entity';
 
 export const getMobile = async (req: Request, res: Response) => {
 	const { phoneNumber }: getMobileInput = req.body;
@@ -37,16 +34,15 @@ export const getMobile = async (req: Request, res: Response) => {
 	const loginOutput = await LoginEntity.getCode(phoneNumber);
 
 	if (loginOutput?.id) {
-		const smsProvider: SmsProvider = new SmsProvider(phoneNumber);
+		// const smsProvider: SmsProvider = new SmsProvider(phoneNumber);
 
-		console.log(
-			await smsProvider.sendAuthSms(loginOutput.code!.toString()),
-		);
+		// await smsProvider.sendAuthSms(loginOutput.code!.toString());
 
 		return res.json({
 			message: 'پیامک با موفقیت ارسال شد',
 			id: loginOutput.id,
 			isNewUser: loginOutput.isNewUser,
+			code: loginOutput.code,
 		});
 	}
 
@@ -55,7 +51,7 @@ export const getMobile = async (req: Request, res: Response) => {
 
 export const checkOtp = async (req: Request, res: Response) => {
 	try {
-		const { smsId, code, fullName }: checkOtpInput = req.body;
+		const { smsId, code }: checkOtpInput = req.body;
 
 		const userAgent = req.get('user-agent');
 
@@ -78,7 +74,6 @@ export const checkOtp = async (req: Request, res: Response) => {
 		const otpDetails: checkOtpOutput = await LoginEntity.checkOtp(
 			smsId,
 			code,
-			fullName,
 		);
 
 		if (otpDetails.message) {
@@ -90,13 +85,15 @@ export const checkOtp = async (req: Request, res: Response) => {
 			userAgent,
 		);
 
+		const brokerDetails = await UserEntity.getBrokerUserNamePassword(
+			otpDetails.userId!,
+		);
+
 		return res.json({
 			message: 'ورود موفقیت آمیز',
 			accessToken: tokens.accessToken,
-
-			accessTokenExpireTime,
-			refreshTokenExpireTime,
 			refreshToken: tokens.refreshToken,
+			details: brokerDetails,
 		});
 	} catch (error) {
 		console.error('inside check otp');

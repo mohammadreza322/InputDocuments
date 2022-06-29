@@ -7,5 +7,6 @@ docker/mongo/data
 docker/mailserver
 
 .vscode/
+.vs/
 
 package-lock.json

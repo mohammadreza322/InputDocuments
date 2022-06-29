@@ -1,23 +1,21 @@
-
-import {ObjectId} from 'mongoose'
+import { ObjectId, Types } from 'mongoose';
 export interface getMobileInput {
-  phoneNumber?:string;
+	phoneNumber?: string;
 }
 
 export interface getCodeOutput {
-  message:string;
-  id?:ObjectId;
-  code?:number,
-  isNewUser:Boolean
+	message: string;
+	id?: ObjectId;
+	code?: number;
+	isNewUser: Boolean;
 }
 
 export interface checkOtpInput {
-  smsId:string;
-  code:string;
-  fullName?:string
+	smsId: string;
+	code: string;
 }
 
 export interface checkOtpOutput {
-  message?:string;
-  userId?:string
+	message?: string;
+	userId?: Types.ObjectId;
 }

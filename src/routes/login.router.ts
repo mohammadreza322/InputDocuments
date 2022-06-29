@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+import express from 'express';
 import { getMobile, checkOtp } from '../controller/login.controller';
 
 const router = express.Router();

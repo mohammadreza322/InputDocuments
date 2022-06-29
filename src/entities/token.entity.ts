@@ -26,14 +26,16 @@ export default class TokenEntity {
 		} as generateTokenOutput;
 	}
 
-	static async createToken(userId: string, agent: string) {
-		const { accessToken, refreshToken } = this.generateToken(userId);
+	static async createToken(userId: Types.ObjectId, agent: string) {
+		const { accessToken, refreshToken } = this.generateToken(
+			userId.toString(),
+		);
 
 		await Token.insertMany({
 			token: accessToken,
 			refreshToken: refreshToken,
 			agent: agent,
-			userId,
+			user: userId,
 		});
 
 		return {

@@ -1,7 +1,7 @@
 import SmsCode from '../models/sms_codes';
 import moment from 'moment';
 import { getCodeOutput, checkOtpOutput } from '../types/login.type';
-import Users from '../models/users.model';
+import Users, { IUser } from '../models/users.model';
 
 export default class LoginEntity {
 	static async getCode(phoneNumber: string) {
@@ -39,10 +39,9 @@ export default class LoginEntity {
 			});
 
 			if (userDetails) {
-				if(userDetails.fullName){
+				if (userDetails.fullName) {
 					output.isNewUser = false;
 				}
-				
 			}
 
 			output.code = code;
@@ -62,11 +61,11 @@ export default class LoginEntity {
 		return Math.floor(min + Math.random() * max);
 	}
 
-	static async checkOtp(smsId: string, code: string, fullName?: string) {
+	static async checkOtp(smsId: string, code: string) {
 		const smsCode = await SmsCode.findById(smsId);
 		const output: checkOtpOutput = {};
 		if (!smsCode) {
-			output.message = 'کاربر مورد نظر یافت نشد!';
+			output.message = 'کد مورد نظر یافت نشد!';
 			return output;
 		}
 
@@ -76,9 +75,7 @@ export default class LoginEntity {
 		}
 
 		const now = moment(new Date());
-		const duration = moment
-			.duration(now.diff(smsCode.lastAttempt))
-			.asMinutes();
+		const duration = moment.duration(now.diff(smsCode.date)).asMinutes();
 
 		if (duration > 2) {
 			output.message = 'کد شما منقضی شده است لطفا دوباره درخواست بدهید!';
@@ -90,16 +87,27 @@ export default class LoginEntity {
 		});
 
 		let userId = null;
+		let registerDate = null;
+		const phoneNumber = smsCode.phoneNumber;
 
 		if (!userDetails) {
-			const user = new Users({
-				phoneNumber: smsCode.phoneNumber,
+			const user: IUser = new Users({
+				phoneNumber: phoneNumber,
 			});
 			await user.save();
 			userId = user._id;
+			registerDate = user.registerDate;
 		} else {
 			userId = userDetails._id;
+			registerDate = userDetails.registerDate;
 		}
+
+		const usernameBroker = CryptoJS.SHA1(
+			registerDate.toString() + userId!.toString(),
+		);
+		const passwordBroker = CryptoJS.SHA1(
+			registerDate.toString() + phoneNumber.toString(),
+		);
 
 		await SmsCode.findByIdAndDelete(smsCode._id);
 
