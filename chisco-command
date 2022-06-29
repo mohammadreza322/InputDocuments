@@ -56,7 +56,9 @@ cp() {
 }
 
 pull() {
-  echo "nothing to pull"
+  cd /var/www/chisco-backend
+  git pull
+  
 }
 
 help() {
