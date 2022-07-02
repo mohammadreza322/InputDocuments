@@ -8,3 +8,10 @@ export interface getUserInformationOutput {
 	address?: string;
 	birthday?: Date;
 }
+
+export interface editUserProfileInput {
+	fullName: string;
+	phoneNumber: string;
+	address?: string;
+	birthday?: number;
+}

@@ -1,16 +1,20 @@
 import connectDb from './config/db';
-import Permission, { IPermission } from './models/permission.model';
+import {
+	ICooler,
+	IPowerStrip,
+	PowerStrip,
+	Cooler,
+} from './models/device.model';
 
 connectDb().then(async () => {
-	const permission: IPermission = new Permission({
-		role: 'user',
-		GET: ['/api/user/get-name'],
-		POST: [],
-		DELETE: [],
-		PUT: [],
-	});
+	const coolerDoc = {
+		serialNumber: 'cooler_ahp_3',
 
-	await permission.save();
+		schedule: [],
+	};
+
+	const a = new Cooler(coolerDoc);
+	await a.save();
 	console.log('done');
 	process.exit(0);
 });

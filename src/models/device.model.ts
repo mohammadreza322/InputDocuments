@@ -27,13 +27,20 @@ const defaultDeviceSchema = {
 	category: {
 		type: 'string',
 	},
+	registerAt:{
+		type:Date,
+	},
+	owner:{
+		type:Types.ObjectId
+	}
 };
 
-interface IDevice {
+interface IDevice extends Document{
 	serialNumber: string;
 	name?: string;
 	category?: string;
-	owner: Types.ObjectId;
+	owner?: Types.ObjectId;
+	registerAt?:Date;
 }
 
 interface ISchedule {
@@ -54,13 +61,13 @@ interface IPowerStripSchedule extends ISchedule {
 	port?: 'string';
 }
 
-export interface IPowerStrip extends Document, IDevice {
+export interface IPowerStrip extends IDevice {
 	connectors: Array<PowerConnectors>;
 	totalVoltage: Number;
 	schedule: Array<IPowerStripSchedule>;
 }
 
-export interface ICooler extends Document, IDevice {
+export interface ICooler extends IDevice {
 	brand?: string;
 	model?: string;
 	temp?: number;

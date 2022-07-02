@@ -1,6 +1,6 @@
 import { connect } from 'mqtt';
 import connectDb from '../config/db';
-import Device from '../models/device.model';
+//import Device  from '../models/device.model';
 import { brokerUrl } from '../utility/constants';
 connectDb().then(() => {
 	try {
@@ -99,10 +99,10 @@ async function changeDisconnectStatus(payload: any) {
 		return;
 	}
 
-	await Device.updateOne(
-		{ serialNumber },
-		{ $set: { deviceLastConnection: lastConnection } },
-	);
+	// await Device.updateOne(
+	// 	{ serialNumber },
+	// 	{ $set: { deviceLastConnection: lastConnection } },
+	// );
 }
 
 async function changeConnectStatus(payload: any) {
@@ -113,10 +113,10 @@ async function changeConnectStatus(payload: any) {
 		return;
 	}
 
-	await Device.updateOne(
-		{ serialNumber },
-		{ $set: { deviceLastConnection: lastConnection } },
-	);
+	// await Device.updateOne(
+	// 	{ serialNumber },
+	// 	{ $set: { deviceLastConnection: lastConnection } },
+	// );
 }
 
 async function changeCooler(serialNumber: string, payload: any) {
@@ -124,22 +124,22 @@ async function changeCooler(serialNumber: string, payload: any) {
 		return;
 	}
 
-	await Device.updateOne(
-		{ serialNumber },
-		{
-			$set: {
-				details: {
-					mode: payload.mode,
-					fan: payload.fan,
-					swing_horizontal: payload.swing_horizontal,
-					swing_vertical: payload.swing_vertical,
-					temp: payload.temp,
-					timer: payload.timer,
-					power: payload.power,
-				},
-			},
-		},
-	);
+	// await Device.updateOne(
+	// 	{ serialNumber },
+	// 	{
+	// 		$set: {
+	// 			details: {
+	// 				mode: payload.mode,
+	// 				fan: payload.fan,
+	// 				swing_horizontal: payload.swing_horizontal,
+	// 				swing_vertical: payload.swing_vertical,
+	// 				temp: payload.temp,
+	// 				timer: payload.timer,
+	// 				power: payload.power,
+	// 			},
+	// 		},
+	// 	},
+	// );
 }
 
 async function changePower(serialNumber: string, payload: any) {
@@ -147,23 +147,24 @@ async function changePower(serialNumber: string, payload: any) {
 		return;
 	}
 
-	await Device.updateOne(
-		{ serialNumber },
-		{
-			$set: {
-				details: {
-					relay1: payload.relay1,
-					relay2: payload.relay2,
-					relay3: payload.relay3,
-					relay4: payload.relay4,
-				},
-			},
-		},
-	);
+	// await Device.updateOne(
+	// 	{ serialNumber },
+	// 	{
+	// 		$set: {
+	// 			details: {
+	// 				relay1: payload.relay1,
+	// 				relay2: payload.relay2,
+	// 				relay3: payload.relay3,
+	// 				relay4: payload.relay4,
+	// 			},
+	// 		},
+	// 	},
+	// );
 }
 
 async function changeSchedule(serialNumber: string, payload: any) {}
 
 function _deviceExists(serialNumber: string) {
-	return Device.exists({ serialNumber });
+	return false;
+	// return Device.exists({ serialNumber });
 }

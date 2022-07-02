@@ -10,3 +10,4 @@ docker/mailserver
 .vs/
 
 package-lock.json
+yarn.lock
