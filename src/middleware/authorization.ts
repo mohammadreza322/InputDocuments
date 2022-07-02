@@ -1,10 +1,12 @@
-import { Response, NextFunction } from 'express';
-import type { CustomRequest } from '../types/global.type';
+import { Response, NextFunction, Request } from 'express';
+// import type { CustomRequest } from '../types/global.type';
 import Permission, { IPermission } from '../models/permission.model';
 import isJWT from 'validator/lib/isJWT';
-import Token from '../models/tokens.model';
+import Token, { IToken } from '../models/tokens.model';
 import { jsonWebTokenSecretKey } from '../utility/constants';
 import User from '../models/users.model';
+import { CustomRequest } from '../types/global.type';
+
 const jwt = require('jsonwebtoken');
 
 interface jwtInput {
@@ -27,7 +29,7 @@ export const getAuthorization = async (
 			return res.status(401).json({ message: 'Token is not valid!2' });
 		}
 
-		const token = await Token.findOne({ token: userToken });
+		const token: IToken | null = await Token.findOne({ token: userToken });
 
 		if (!token) {
 			return res.status(401).json({ message: 'Token is not valid3' });

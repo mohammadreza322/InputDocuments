@@ -6,7 +6,7 @@
  */
 
 import axios from 'axios';
-import { brokerUrl } from '../utility/constants';
+import { brokerUrlAPI } from '../utility/constants';
 
 export default class BrokerProvider {
 	static _config = {
@@ -25,24 +25,35 @@ export default class BrokerProvider {
 	 * @return {Promise<AxiosResponse<any>>}
 	 */
 	static async addUserToMnesia(username: string, password: string) {
-		return await axios.post(
-			`${brokerUrl}/api/v4/auth_username`,
-			{
-				username: encodeURIComponent(username),
-				password: encodeURIComponent(password),
-			},
-			this._config,
-		);
+		const response = await axios
+			.post(
+				`${brokerUrlAPI}/api/v4/auth_username`,
+				{
+					username: encodeURIComponent(username),
+					password: encodeURIComponent(password),
+				},
+				this._config,
+			)
+			.catch((e) => {
+				console.error('error in add user mnesia response');
+				console.error(e);
+			});
+		return response;
 	}
 
 	static async userExist(username: string) {
-		const response = await axios.get(
-			`${brokerUrl}/api/v4/auth_username/${username}`,
-			this._config,
-		);
+		const response = await axios
+			.get(
+				`${brokerUrlAPI}/api/v4/auth_username/${username}`,
+				this._config,
+			)
+			.catch((e) => {
+				console.error('error in exists user mnesia response');
+				console.error(e);
+			});
 
-		if (response.data) {
-			return !!response.data.data.username;
+		if (response) {
+			return Object.keys(response.data.data).length !== 0;
 		}
 
 		return false;

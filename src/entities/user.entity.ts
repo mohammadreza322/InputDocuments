@@ -3,6 +3,8 @@ import { Types } from 'mongoose';
 import BrokerProvider from '../classes/broker_provider';
 import Users, { IUser } from '../models/users.model';
 import { jsonWebTokenSecretKey } from '../utility/constants';
+import { SHA1 } from 'crypto-js';
+import { getUserInformationOutput } from '../types/user.type';
 
 export default class UserEntity {
 	public static async setUserDetails(
@@ -33,14 +35,16 @@ export default class UserEntity {
 	public static async getBrokerUserNamePassword(id: Types.ObjectId) {
 		const user: IUser | null = await Users.findOne({ _id: id });
 
-		const usernameBroker = CryptoJS.SHA1(
+		const usernameBroker = SHA1(
 			user!.registerDate.toString() + user!._id!.toString(),
 		).toString();
-		const passwordBroker = CryptoJS.SHA1(
+		const passwordBroker = SHA1(
 			user!.registerDate.toString() + user?.phoneNumber.toString(),
 		).toString();
 
-		if (await !BrokerProvider.userExist(usernameBroker)) {
+		const checkUserExists = await BrokerProvider.userExist(usernameBroker);
+
+		if (!checkUserExists) {
 			BrokerProvider.addUserToMnesia(usernameBroker, passwordBroker);
 		}
 
@@ -51,8 +55,19 @@ export default class UserEntity {
 			},
 			jsonWebTokenSecretKey,
 			{
-				expiresIn: '5m  ',
+				expiresIn: '5m',
 			},
 		);
+	}
+
+	public static async getUserInformation(id: Types.ObjectId) {
+		const user: IUser | null = await Users.findById(id);
+
+		return {
+			phoneNumber: user!.phoneNumber,
+			fullName: user!.fullName,
+			address: user!.address,
+			birthday: user!.birthday,
+		} as getUserInformationOutput;
 	}
 }

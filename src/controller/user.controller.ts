@@ -1,7 +1,9 @@
-import { getFullNameInput } from '../types/user.type';
-import { Response } from 'express';
+import { getFullNameInput, getUserInformationOutput } from '../types/user.type';
+import { Response, Request } from 'express';
 import UserEntity from '../entities/user.entity';
 import { CustomRequest } from '../types/global.type';
+import { listOfDevices } from '../types/device.type';
+import DeviceEntity from '../entities/device.entity';
 
 export const getFullName = async (req: CustomRequest, res: Response) => {
 	try {
@@ -32,4 +34,15 @@ export const getFullName = async (req: CustomRequest, res: Response) => {
 		console.error(error);
 		return res.status(500).json({ message: 'خطایی پیش آمده!!' });
 	}
+};
+
+export const getUserDetails = async (req: CustomRequest, res: Response) => {
+	const userDetails: getUserInformationOutput =
+		await UserEntity.getUserInformation(req.userId);
+
+	const userDevices: listOfDevices = await DeviceEntity.getAllDevices(
+		req.userId,
+	);
+
+	return res.json({ user: userDetails, devices: userDevices });
 };

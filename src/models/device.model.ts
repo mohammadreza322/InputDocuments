@@ -1,4 +1,4 @@
-import { Schema, model, Document, Model } from 'mongoose';
+import { Schema, model, Document, Model, Types } from 'mongoose';
 
 const scheduleDeviceDefaultSchema = {
 	name: {
@@ -11,8 +11,8 @@ const scheduleDeviceDefaultSchema = {
 		type: 'string',
 	},
 	repeat: {
-		type: [{ type: 'string' }],
 		default: [],
+		type: [{ type: Array<string> }],
 	},
 };
 
@@ -33,6 +33,7 @@ interface IDevice {
 	serialNumber: string;
 	name?: string;
 	category?: string;
+	owner: Types.ObjectId;
 }
 
 interface ISchedule {
@@ -146,7 +147,7 @@ const coolerSchema = new Schema({
 	},
 	schedule: {
 		type: [scheduleDeviceDefaultSchema],
-		default: [],
+		default: [] 
 	},
 });
 

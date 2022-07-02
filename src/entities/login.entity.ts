@@ -102,13 +102,6 @@ export default class LoginEntity {
 			registerDate = userDetails.registerDate;
 		}
 
-		const usernameBroker = CryptoJS.SHA1(
-			registerDate.toString() + userId!.toString(),
-		);
-		const passwordBroker = CryptoJS.SHA1(
-			registerDate.toString() + phoneNumber.toString(),
-		);
-
 		await SmsCode.findByIdAndDelete(smsCode._id);
 
 		output.userId = userId;

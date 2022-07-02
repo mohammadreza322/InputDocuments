@@ -5,3 +5,12 @@ export interface CustomRequest extends Request {
 	userDetails: IUser;
 	userId: Types.ObjectId;
 }
+
+declare global {
+	namespace Express {
+		export interface Request {
+			userDetails: IUser;
+			userId: Types.ObjectId;
+		}
+	}
+}
