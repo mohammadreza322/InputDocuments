@@ -1,5 +1,6 @@
 import { connect } from 'mqtt';
 import connectDb from '../config/db';
+import { Cooler, PowerStrip } from '../models/device.model';
 //import Device  from '../models/device.model';
 import { brokerUrl } from '../utility/constants';
 connectDb().then(() => {
@@ -95,55 +96,81 @@ connectDb().then(() => {
 async function changeDisconnectStatus(payload: any) {
 	const serialNumber = payload.username;
 	const lastConnection = payload.disconnected_at;
-	if (!(await _deviceExists(serialNumber))) {
+	const validSerialNumber = await _deviceExists(serialNumber);
+	if (!validSerialNumber.valid) {
 		return;
 	}
 
-	// await Device.updateOne(
-	// 	{ serialNumber },
-	// 	{ $set: { deviceLastConnection: lastConnection } },
-	// );
+	if (validSerialNumber.type == 'power') {
+		await PowerStrip.updateOne(
+			{ serialNumber },
+			{
+				$set: { deviceLastConnection: lastConnection },
+			},
+		);
+	} else {
+		await Cooler.updateOne(
+			{ serialNumber },
+			{
+				$set: { deviceLastConnection: lastConnection },
+			},
+		);
+	}
 }
 
 async function changeConnectStatus(payload: any) {
 	const serialNumber = payload.username;
 	const lastConnection = payload.disconnected_at;
 
-	if (!(await _deviceExists(serialNumber))) {
+	const validSerialNumber = await _deviceExists(serialNumber);
+	if (!validSerialNumber.valid) {
 		return;
 	}
 
-	// await Device.updateOne(
-	// 	{ serialNumber },
-	// 	{ $set: { deviceLastConnection: lastConnection } },
-	// );
+	if (validSerialNumber.type == 'power') {
+		await PowerStrip.updateOne(
+			{ serialNumber },
+			{
+				$set: { deviceLastConnection: lastConnection },
+			},
+		);
+	} else {
+		await Cooler.updateOne(
+			{ serialNumber },
+			{
+				$set: { deviceLastConnection: lastConnection },
+			},
+		);
+	}
 }
 
 async function changeCooler(serialNumber: string, payload: any) {
-	if (!(await _deviceExists(serialNumber))) {
+	const validSerialNumber = await _deviceExists(serialNumber);
+
+	if (!validSerialNumber.valid) {
 		return;
 	}
 
-	// await Device.updateOne(
-	// 	{ serialNumber },
-	// 	{
-	// 		$set: {
-	// 			details: {
-	// 				mode: payload.mode,
-	// 				fan: payload.fan,
-	// 				swing_horizontal: payload.swing_horizontal,
-	// 				swing_vertical: payload.swing_vertical,
-	// 				temp: payload.temp,
-	// 				timer: payload.timer,
-	// 				power: payload.power,
-	// 			},
-	// 		},
-	// 	},
-	// );
+	await Cooler.updateOne(
+		{ serialNumber },
+		{
+			$set: {
+				mode: payload.mode,
+				fan: payload.fan,
+				horizontalSwing: payload.swing_horizontal,
+				verticalSwing: payload.swing_vertical,
+				temp: payload.temp,
+				timer: payload.timer,
+				power: payload.power,
+			},
+		},
+	);
 }
 
 async function changePower(serialNumber: string, payload: any) {
-	if (!(await _deviceExists(serialNumber))) {
+	const validSerialNumber = await _deviceExists(serialNumber);
+
+	if (!validSerialNumber.valid) {
 		return;
 	}
 
@@ -164,7 +191,21 @@ async function changePower(serialNumber: string, payload: any) {
 
 async function changeSchedule(serialNumber: string, payload: any) {}
 
-function _deviceExists(serialNumber: string) {
-	return false;
-	// return Device.exists({ serialNumber });
+async function _deviceExists(serialNumber: string) {
+	if (await PowerStrip.exists({ serialNumber })) {
+		return {
+			type: 'power',
+			valid: true,
+		};
+	} else if (await Cooler.exists({ serialNumber })) {
+		return {
+			type: 'cooler',
+			valid: true,
+		};
+	}
+
+	return {
+		valid: false,
+		type: '',
+	};
 }

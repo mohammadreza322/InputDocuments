@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { ICooler, IPowerStrip } from '../models/device.model';
 
 export interface listOfDevices {
@@ -24,9 +25,48 @@ export interface addDeviceInput {
 export interface validateSerialNumberOutput {
 	message: string;
 	valid: boolean;
+	type: string;
 }
 
 export interface deleteDeviceInput {
 	serialNumber: string;
 	type: string;
+}
+
+export interface saveScheduleInput {
+	startTime?: string;
+	endTime?: string;
+	repeat: Array<string>;
+	portNumber?: number;
+	serialNumber: string;
+	type?: string;
+	enable?: boolean;
+	id?: string;
+}
+
+export interface editSchedule extends saveScheduleInput {
+	_id: Types.ObjectId;
+}
+
+export interface addSchedule {
+	startTime?: string;
+	endTime?: string;
+	repeat: Array<string>;
+	portNumber?: number;
+	serialNumber: string;
+	type?: string;
+}
+
+export interface IScheduleObject {
+	startTime?: string;
+	endTime?: string;
+	repeat: Array<string>;
+	port?: number;
+	id?: Types.ObjectId;
+	enable: boolean;
+}
+
+export interface deleteDeviceInput {
+	serialNumber: string;
+	id: string;
 }

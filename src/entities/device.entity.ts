@@ -1,4 +1,4 @@
-import { ObjectId, Types } from 'mongoose';
+import { Types, ObjectId } from 'mongoose';
 import AhpMqtt from '../classes/mqtt';
 import {
 	Cooler,
@@ -8,8 +8,12 @@ import {
 } from '../models/device.model';
 // import Device from '../models/device.model';
 import {
+	saveScheduleInput,
 	listOfDevices,
 	validateSerialNumberOutput,
+	addSchedule,
+	IScheduleObject,
+	editSchedule,
 } from '../types/device.type';
 
 export default class DeviceEntity {
@@ -57,13 +61,13 @@ export default class DeviceEntity {
 
 	static async validateSerialNumber(
 		serialNumber: string,
-		type: string,
 		userId: Types.ObjectId,
 		validateType: string,
 	): Promise<validateSerialNumberOutput> {
 		const output: validateSerialNumberOutput = {
 			message: '',
 			valid: false,
+			type: '',
 		};
 
 		output.message = 'شماره سریال وارد شده معتبر نیست!';
@@ -78,16 +82,14 @@ export default class DeviceEntity {
 			return output;
 		}
 
-		if (powerDetails && type != 'power') {
-			return output;
-		} else if (powerDetails && type == 'power') {
+		if (powerDetails) {
 			device = powerDetails;
-		}
-
-		if (coolerDetails && type != 'cooler') {
-			return output;
-		} else if (coolerDetails && type == 'cooler') {
+			output.type = 'power';
+		} else if (coolerDetails) {
 			device = coolerDetails;
+			output.type = 'cooler';
+		} else {
+			return output;
 		}
 
 		if (device?.owner) {
@@ -96,7 +98,7 @@ export default class DeviceEntity {
 				return output;
 			}
 		} else {
-			if (validateType === 'delete') {
+			if (validateType === 'delete' || validateType === 'addSchedule') {
 				output.message = 'شما مالک این دستگاه نیستید';
 				return output;
 			}
@@ -239,5 +241,150 @@ export default class DeviceEntity {
 			JSON.stringify({ delete: true }),
 		);
 		return true;
+	}
+
+	static async addSchedule({
+		serialNumber,
+		startTime,
+		endTime,
+		repeat,
+		portNumber,
+		type,
+	}: addSchedule) {
+		const scheduleObject: IScheduleObject = {
+			endTime,
+			startTime,
+			repeat,
+			enable: true,
+		};
+		if (type === 'power') {
+			scheduleObject.port = portNumber;
+
+			const power: IPowerStrip | null = await PowerStrip.findOne({
+				serialNumber,
+			});
+
+			if (power) {
+				power.schedule.push({
+					start: startTime?.toString(),
+					end: endTime?.toString(),
+					repeat,
+					port: portNumber,
+					enable: true,
+				});
+				await power.save();
+
+				scheduleObject.id =
+					power.schedule[power.schedule.length - 1]._id;
+			}
+		} else if (type === 'cooler') {
+			const cooler: ICooler | null = await Cooler.findOne({
+				serialNumber,
+			});
+			if (cooler) {
+				cooler.schedule.push({
+					start: startTime?.toString(),
+					end: endTime?.toString(),
+					repeat,
+					enable: true,
+				});
+				await cooler.save();
+
+				scheduleObject.id =
+					cooler.schedule[cooler.schedule.length - 1]._id;
+			}
+		}
+
+		AhpMqtt.getInstance().publish(
+			`/chisco/set_schedule/${serialNumber}`,
+			JSON.stringify(scheduleObject),
+		);
+	}
+
+	static async editSchedule({
+		serialNumber,
+		startTime,
+		endTime,
+		repeat,
+		portNumber,
+		type,
+		enable,
+		_id,
+	}: editSchedule) {
+		const scheduleObject: IScheduleObject = {
+			id: new Types.ObjectId(_id),
+			enable: enable!,
+			startTime,
+			endTime,
+			repeat,
+		};
+
+		
+		if (type === 'power') {
+			scheduleObject.port = portNumber;
+			await PowerStrip.updateOne(
+				{ serialNumber, 'schedule._id': _id },
+				{
+					$set: {
+						start: startTime,
+						end: endTime,
+						repeat,
+						port: portNumber,
+						enable,
+					},
+				},
+			);
+		} else if (type === 'cooler') {
+			await Cooler.updateOne(
+				{ serialNumber, 'schedule._id': _id },
+				{
+					$set: {
+						'schedule.$.start': startTime,
+						'schedule.$.end': endTime,
+						'schedule.$.repeat': repeat,
+						'schedule.$.enable': enable,
+					},
+				},
+			)
+		}
+
+		AhpMqtt.getInstance().publish(
+			`/chisco/set_schedule/${serialNumber}`,
+			JSON.stringify(scheduleObject),
+		);
+	}
+
+	static async deleteSchedule(
+		serialNumber: string,
+		id: Types.ObjectId,
+		type: string,
+	): Promise<void> {
+		if (type == 'power') {
+			await PowerStrip.updateOne(
+				{ serialNumber },
+				{
+					$pull: {
+						schedule: {
+							_id: id,
+						},
+					},
+				},
+			);
+		} else if (type == 'cooler') {
+			await Cooler.updateOne(
+				{ serialNumber: serialNumber },
+				{
+					$pull: {
+						schedule: {
+							_id: id,
+						},
+					},
+				},
+			);
+		}
+		AhpMqtt.getInstance().publish(
+			`/chisco/delete_schedule/${serialNumber}`,
+			JSON.stringify({ id }),
+		);
 	}
 }

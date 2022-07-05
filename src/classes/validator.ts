@@ -14,4 +14,27 @@ export default class AhpValidator {
 			dateObject.getTime() > 0
 		);
 	}
+
+	static isWeekDayArray(value: any) {
+		if (!Array.isArray(value)) {
+			console.log('not array');
+			return false;
+		}
+
+		if (value.length == 0) return true;
+
+		const isArrayStringAndWeekDay = value.every(
+			(v) =>
+				typeof v === 'string' &&
+				['sat', 'sun', 'mon', 'tue', 'wed', 'thr', 'fri'].includes(
+					v.toLowerCase(),
+				),
+		);
+
+		return isArrayStringAndWeekDay;
+	}
+
+	static isTime(time: string) {
+		return /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(time);
+	}
 }

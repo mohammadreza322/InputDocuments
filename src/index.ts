@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { Request, Response } from 'express';
 import { json } from 'body-parser';
 import { apiRouter } from './routes/api.router';
 import connectDb from './config/db';
@@ -12,6 +12,10 @@ const app = express();
 app.use(json());
 
 app.use('/api', apiRouter);
+
+app.use('/', (_: Request, res: Response) => {
+	return res.json({ message: 'ok server' });
+});
 
 const PORT = process.env.PORT || 8800;
 

@@ -10,9 +10,14 @@ const scheduleDeviceDefaultSchema = {
 	end: {
 		type: 'string',
 	},
+	enable: {
+		type: 'boolean',
+		default: true,
+	},
+
 	repeat: {
 		default: [],
-		type: [{ type: Array<string> }],
+		type: [{ type: String }],
 	},
 };
 
@@ -27,26 +32,31 @@ const defaultDeviceSchema = {
 	category: {
 		type: 'string',
 	},
-	registerAt:{
-		type:Date,
+	registerAt: {
+		type: Date,
 	},
-	owner:{
-		type:Types.ObjectId
-	}
+	owner: {
+		type: Types.ObjectId,
+	},
+	deviceLastConnection: {
+		type: 'string',
+	},
 };
 
-interface IDevice extends Document{
+interface IDevice extends Document {
 	serialNumber: string;
 	name?: string;
 	category?: string;
 	owner?: Types.ObjectId;
-	registerAt?:Date;
+	registerAt?: Date;
 }
 
 interface ISchedule {
+	_id?: Types.ObjectId;
 	name?: string;
 	start?: string;
 	end?: string;
+	enable: boolean;
 	repeat?: Array<string>;
 }
 
@@ -58,7 +68,7 @@ interface PowerConnectors {
 }
 
 interface IPowerStripSchedule extends ISchedule {
-	port?: 'string';
+	port?: number;
 }
 
 export interface IPowerStrip extends IDevice {
@@ -77,6 +87,7 @@ export interface ICooler extends IDevice {
 	fan: string;
 	timer: string;
 	schedule: Array<ISchedule>;
+	power?: boolean;
 }
 
 const powerStripSchema = new Schema({
@@ -106,6 +117,10 @@ const powerStripSchema = new Schema({
 				name: String,
 				start: String,
 				end: String,
+				enable: {
+					type: Boolean,
+					default: true,
+				},
 				repeat: {
 					type: [{ type: String }],
 					default: [],
@@ -154,7 +169,10 @@ const coolerSchema = new Schema({
 	},
 	schedule: {
 		type: [scheduleDeviceDefaultSchema],
-		default: [] 
+		default: [],
+	},
+	power: {
+		type: Boolean,
 	},
 });
 

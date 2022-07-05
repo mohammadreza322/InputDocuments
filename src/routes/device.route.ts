@@ -1,5 +1,10 @@
 import express from 'express';
-import { deleteDevice, saveDevice } from '../controller/device.controller';
+import {
+	saveSchedule,
+	deleteDevice,
+	saveDevice,
+	deleteSchedule,
+} from '../controller/device.controller';
 
 import { getAuthorization, hasPermission } from '../middleware/authorization';
 
@@ -10,5 +15,9 @@ router.use([getAuthorization, hasPermission]);
 router.post('/save', saveDevice);
 
 router.post('/delete', deleteDevice);
+
+router.post('/schedule', saveSchedule);
+
+router.post('/delete-schedule', deleteSchedule);
 
 export { router as deviceRouter };
