@@ -3,6 +3,9 @@ node_modules
 
 docker/mongo/data
 
+data/
+
+dist/
 
 docker/mailserver
 
