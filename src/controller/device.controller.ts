@@ -12,9 +12,9 @@ import { CustomRequest } from '../types/global.type';
 
 export const saveDevice = async (req: CustomRequest, res: Response) => {
 	try {
-		const { type, serialNumber, name, category }: addDeviceInput = req.body;
+		const { serialNumber, name, category }: addDeviceInput = req.body;
 
-		if (!type || !serialNumber || !name || !category) {
+		if (!serialNumber || !name || !category) {
 			return res.status(400).json({ message: 'خطا در ورودی' });
 		}
 
@@ -30,10 +30,6 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 			return res.status(400).json({ message: 'خطا در ورودی' });
 		}
 
-		if (type != 'cooler' && type != 'power') {
-			return res.status(400).json({ message: 'خطا در ورودی' });
-		}
-
 		const validateSerialNumber = await DeviceEntity.validateSerialNumber(
 			serialNumber.trim(),
 			req.userId,
@@ -46,7 +42,7 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 				.json({ message: validateSerialNumber.message });
 		}
 
-		if (type == 'cooler') {
+		if (validateSerialNumber.type == 'cooler') {
 			const { brand, model }: addDeviceInput = req.body;
 
 			if (!brand || !model) {
@@ -75,7 +71,7 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 				category.trim(),
 				req.userId,
 			);
-		} else if (type == 'power') {
+		} else if (validateSerialNumber.type == 'power') {
 			const {
 				power1,
 				power2,
