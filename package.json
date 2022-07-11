@@ -5,7 +5,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "ts-node-dev src/index.ts",
-		"pm2": "pm2 delete pm2.config.js && tsc && pm2 start pm2.config.js"
+		"pm2": "pm2 delete pm2-process.json && tsc && pm2 start pm2-process.json"
 	},
 	"author": "AHP",
 	"license": "ISC",
