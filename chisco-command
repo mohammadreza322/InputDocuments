@@ -41,18 +41,16 @@ upDocker() {
 runMongo() {
   cd /var/www/chisco-backend/docker/mongo
   mkdir -p data
-  sudo docker run -d --restart always -p 27018:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=amir1234 -v $PWD/data:/data/db --name mongodb mongo
+  sudo docker run -d --restart always -p 27018:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=sUajUoa29V5A -v $PWD/data:/data/db --name mongodb mongo
 }
 
 runMailServer() {
   cd /var/www/chisco-backend/docker/mailserver
   mkdir -p data
-  docker run  -d --restart always -p 25:25 -p 82:80 -p 445:443 -p 110:110 -p 143:143 -p 465:465 -p 587:587 -p 993:993 -p 995:995  -e TZ=Asia/Tehran   -v $PWD/data:/data --name mailserver -t analogic/poste.io
+  docker run  -d --restart always -p 25:25 -p 82:80 -p 445:443 -p 110:110 -p 143:143 -p 465:465 -p 587:587 -p 993:993 -p 995:995 -p 4190:4190  -e TZ=Asia/Tehran   -v $PWD/data:/data --name mailserver -t analogic/poste.io
 }
 
 cp() {
-  # cd /var/www/viaq-backend
-  #echo "go to backend file"
   sudo cp /var/www/chisco-backend/chisco-command /bin/chisco-command
   echo "copied file"
 }

@@ -15,19 +15,19 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 		const { serialNumber, name, category }: addDeviceInput = req.body;
 
 		if (!serialNumber || !name || !category) {
-			return res.status(400).json({ message: 'خطا در ورودی' });
+			return res.status(400).json({ message: 'خطا در ورودی1' });
 		}
 
 		if (serialNumber.trim() === '') {
-			return res.status(400).json({ message: 'خطا در ورودی' });
+			return res.status(400).json({ message: 'خطا در ورودی2' });
 		}
 
 		if (category.trim() === '') {
-			return res.status(400).json({ message: 'خطا در ورودی' });
+			return res.status(400).json({ message: 'خطا در ورودی3' });
 		}
 
 		if (name.trim() === '') {
-			return res.status(400).json({ message: 'خطا در ورودی' });
+			return res.status(400).json({ message: 'خطا در ورودی4' });
 		}
 
 		const validateSerialNumber = await DeviceEntity.validateSerialNumber(
@@ -46,7 +46,7 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 			const { brand, model }: addDeviceInput = req.body;
 
 			if (!brand || !model) {
-				return res.status(400).json({ message: 'خطا در ورودی' });
+				return res.status(400).json({ message: 'خطا در ورودی5' });
 			}
 
 			if (brand!.trim() === '') {
