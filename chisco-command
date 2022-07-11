@@ -41,7 +41,7 @@ upDocker() {
 runMongo() {
   cd /var/www/chisco-backend/docker/mongo
   mkdir -p data
-  sudo docker run -d --restart always -p 27018:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=sUajUoa29V5A -v $PWD/data:/data/db --name mongodb mongo
+  sudo docker run -d --restart always -p 27018:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=amir1234 -v $PWD/data:/data/db --name mongodb mongo:4.4
 }
 
 runMailServer() {
@@ -58,7 +58,7 @@ cp() {
 pull() {
   cd /var/www/chisco-backend
   git pull
-  npm run start
+  npm run pm2
 }
 
 help() {
