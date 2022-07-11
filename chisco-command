@@ -58,8 +58,7 @@ cp() {
 pull() {
   cd /var/www/chisco-backend
   git pull
-  pm2 delete pm2-process.json
-  pm2 start pm2-process.json
+  npm run start
 }
 
 help() {
