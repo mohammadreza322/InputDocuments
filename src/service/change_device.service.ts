@@ -173,20 +173,6 @@ async function changePower(serialNumber: string, payload: any) {
 	if (!validSerialNumber.valid) {
 		return;
 	}
-
-	// await Device.updateOne(
-	// 	{ serialNumber },
-	// 	{
-	// 		$set: {
-	// 			details: {
-	// 				relay1: payload.relay1,
-	// 				relay2: payload.relay2,
-	// 				relay3: payload.relay3,
-	// 				relay4: payload.relay4,
-	// 			},
-	// 		},
-	// 	},
-	// );
 }
 
 async function changeSchedule(serialNumber: string, payload: any) {}

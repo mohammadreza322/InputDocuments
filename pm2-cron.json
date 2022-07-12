@@ -1,0 +1,11 @@
+{
+	"apps": [
+		{
+			"script": "./dist/service/change_device.service.js",
+			"exec_mode": "fork",
+			"name": "change_device_status",
+			"log_date_format": "MM-DD HH:mm",
+			"autorestart": true
+		}
+	]
+}

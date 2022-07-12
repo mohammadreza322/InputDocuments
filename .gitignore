@@ -5,8 +5,6 @@ docker/mongo/data
 
 data/
 
-dist/
-
 docker/mailserver
 
 .vscode/

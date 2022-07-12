@@ -59,9 +59,15 @@ pull() {
   cd /var/www/chisco-backend
   git pull
   pm2 delete pm2-process.json
-  tsc
   pm2 start pm2-process.json
   
+}
+
+cron() {
+  cd /var/www/chisco-backend
+  git pull
+  pm2 delete pm2-cron.json
+  pm2 start pm2-cron.json
 }
 
 help() {
@@ -84,5 +90,8 @@ elif [ "$1" == "pull" ]; then
   exit
 elif [ "$1" == "cp" ]; then
   cp
+  exit
+elif [ "$1" == "cron" ]; then
+  cron
   exit
 fi
