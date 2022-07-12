@@ -12,16 +12,16 @@ upDocker() {
   checkSudo
 
   ## create mongo
-  echo "check mongo"
-  CONTAINER_NAME='chisco-core-db'
-  CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
-  if [ ! "${CID}" ]; then
-    echo "mongo container doesn't exist and install it"
-    runMongo
-  fi
-  unset CID
-  unset CONTAINER_NAME
-  echo "mongo done!"
+  # echo "check mongo"
+  # CONTAINER_NAME='chisco-core-db'
+  # CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+  # if [ ! "${CID}" ]; then
+  #   echo "mongo container doesn't exist and install it"
+  #   runMongo
+  # fi
+  # unset CID
+  # unset CONTAINER_NAME
+  # echo "mongo done!"
 
   ## create mailserver
   echo "check mailserver"
