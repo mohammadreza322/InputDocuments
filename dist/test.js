@@ -15,13 +15,24 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const db_1 = __importDefault(require("./config/db"));
 const device_model_1 = require("./models/device.model");
 (0, db_1.default)().then(() => __awaiter(void 0, void 0, void 0, function* () {
-    const coolerDoc = {
-        serialNumber: 'cooler_ahp_3',
-        schedule: [],
-    };
-    const a = new device_model_1.Cooler(coolerDoc);
-    yield a.save();
-    console.log('done');
+    for (let i = 0; i < 10; i++) {
+        const newPowerInputs = {
+            serialNumber: 'power_ahp_' + i,
+            connectors: [
+                { portNumber: 1, type: 'power', status: true },
+                { portNumber: 2, type: 'power', status: true },
+                { portNumber: 3, type: 'power', status: false },
+                { portNumber: 4, type: 'power', status: false },
+                { portNumber: 1, type: 'usb', status: false },
+                { portNumber: 2, type: 'usb', status: true },
+            ],
+            totalVoltage: 120,
+            schedule: [],
+        };
+        const powerStrip = new device_model_1.PowerStrip(newPowerInputs);
+        yield powerStrip.save();
+        console.log('done');
+    }
     process.exit(0);
 }));
 //# sourceMappingURL=test.js.map

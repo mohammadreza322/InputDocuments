@@ -62,8 +62,8 @@ class LoginEntity {
         });
     }
     static generateCode() {
-        const min = 1000;
-        const max = 9000;
+        const min = 10000;
+        const max = 90000;
         return Math.floor(min + Math.random() * max);
     }
     static checkOtp(smsId, code) {
