@@ -1,6 +1,8 @@
 import 'package:chisco/ui/auth/auth_controller.dart';
 import 'package:chisco/ui/auth/widgets/auth_text_field.dart';
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/const.dart';
+import 'package:chisco/utils/converter.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_button.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:chisco/ui/widget/chisco_textfield.dart';
@@ -12,48 +14,53 @@ class SubmitNumberPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    //todo Remember To Remove Text
+    TextEditingController controller = TextEditingController(text: '09011234342');
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const ChiscoText(
-              text: 'شروع با شماره موبایل',
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              textColor: Styles.primaryColor,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const ChiscoText(
-                text: 'لطفا اطلاعات خود را برای ورود یا ثبت‌نام وارد کنید.',
-                fontSize: 16,
-                fontWeight: FontWeight.w300,
-                textColor: Styles.primaryTextColor),
-            const SizedBox(
-              height: 45,
-            ),
-            const AuthTextField(
-                label: 'شماره همراه',
-                controller: null,
-                text: '09123456789',
-                icon: 'assets/images/phone_icon.png'),
-            const SizedBox(
-              height: 20,
-            ),
-            SizedBox(
-                child: ChiscoButton(
-              text: 'دریافت پیامک تایید',
-              onClick: () {
-                Provider.of<AuthController>(context, listen: false).goToPage(1);
-              },
-              icon: 'assets/images/left_arrow.png',
-            ))
-          ],
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const ChiscoText(
+                text: 'شروع با شماره موبایل',
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                textColor: Styles.primaryColor,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const ChiscoText(
+                  text: 'لطفا اطلاعات خود را برای ورود یا ثبت ‌نام وارد کنید.',
+                  fontWeight: FontWeight.w300,
+                  textColor: Styles.primaryTextColor),
+               SizedBox(
+                height:  ChiscoConverter.calculateWidgetWidth(width,45),
+              ),
+               AuthTextField(
+                  label: 'شماره همراه',
+                  controller: controller,
+                  text: '09012345678',
+                  isInputNumber: true,
+                  icon: PHONE),
+              const SizedBox(
+                height: 20,
+              ),
+              ChiscoButton(
+                text: 'دریافت پیامک تایید',
+                onClick: () {
+                  print("callled 1");
+                  Provider.of<AuthController>(context,listen: false).submitNumberBtnClicked(controller.text);
+                },
+                icon: LEFT_ARROW,
+              )
+            ],
+          ),
         ),
       ),
     );

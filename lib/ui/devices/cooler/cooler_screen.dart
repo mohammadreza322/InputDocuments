@@ -1,288 +1,266 @@
+import 'package:chisco/data/data_class/Cooler.dart';
+import 'package:chisco/ui/devices/cooler/cooler_controller.dart';
 import 'package:chisco/ui/devices/cooler/widgets/cooler_state.dart';
-import 'package:chisco/ui/devices/cooler/widgets/cooler_controller.dart';
+import 'package:chisco/ui/devices/cooler/widgets/cooler_controller_item.dart';
 import 'package:chisco/ui/devices/cooler/widgets/edit_btn.dart';
 import 'package:chisco/ui/devices/cooler/widgets/edit_cooler_bottom_sheet.dart';
 import 'package:chisco/ui/devices/cooler/widgets/schedule_btn.dart';
+import 'package:chisco/ui/devices/cooler/widgets/temp_controller.dart';
+import 'package:chisco/ui/devices/widgets/device_appbar.dart';
 import 'package:chisco/ui/devices/widgets/device_header.dart';
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/const.dart';
+import 'package:chisco/utils/converter.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:chisco/ui/widget/power_icon.dart';
 import 'package:chisco/ui/widget/show_chisco_bottom_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 //todo Clean This Class
-class CoolerControllerScreen extends StatelessWidget {
-  const CoolerControllerScreen({Key? key}) : super(key: key);
+class CoolerScreen extends StatelessWidget {
+  const CoolerScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    double iconWidth = (30 / 360) * width;
+    final selectedCooler = ModalRoute.of(context)!.settings.arguments as Cooler;
+
+    CoolerController controller = Provider.of<CoolerController>(context);
     return SafeArea(
         child: Scaffold(
             backgroundColor: Styles.backGroundColor,
-            body: CustomScrollView(
-              slivers: [
-                SliverPersistentHeader(
-                  delegate: DeviceHeader(),
-                  floating: false,
-                  pinned: true,
-                ),
-                SliverToBoxAdapter(
-                  child: Container(
-                    decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Color(0xff2884D6), Color(0xff1D68BB)])),
+            body: Stack(
+              children: [
+                Positioned(
+                    top: 0,
+                    left: 0,
+                    right: 0,
                     child: Container(
+                      height:
+                          ChiscoConverter.calculateWidgetHeight(height, 260),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: const BoxDecoration(
-                          color: Styles.backGroundColor,
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25))),
-                      height: 25,
-                    ),
-                  ),
-                ),
-                SliverFillRemaining(
-                  hasScrollBody: false,
-                  fillOverscroll: true,
-                  child: Container(
-                    margin: const EdgeInsets.symmetric(horizontal: 25),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
+                          image: DecorationImage(
+                              image:
+                                  AssetImage('assets/images/home_header.png'),
+                              fit: BoxFit.cover)),
+                      child: Align(
+                        alignment: Alignment.topCenter,
+                        child: DeviceAppBar(
+                          title: 'کنترلر',
+                          onBackClick: () {Navigator.pop(context);},
+                          onMenuClick: () {},
+                        ),
+                      ),
+                    )),
+                Container(
+                  margin: EdgeInsets.only(
+                      top: ChiscoConverter.calculateWidgetHeight(height, 70)),
+                  padding: EdgeInsets.all(16),
+                  decoration: const BoxDecoration(
+                      color: Styles.backGroundColor,
+                      borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25),
+                          topRight: Radius.circular(25))),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children:  [
+                                ChiscoText(
+                                  text: selectedCooler.name,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                                ChiscoText(
+                                  text: selectedCooler.category,
+                                  fontWeight: FontWeight.w400,
+                                  textColor: Styles.secondaryTextColor,
+                                )
+                              ],
+                            ),
+                          ),
+                          scheduleBtn(
+                            width: 32,
+                            onClick: () {
+                              Navigator.pushNamed(context, schedulePage,arguments: selectedCooler);
+                            },
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          EditCoolerBtn(
+                              width: 32,
+                              onClick: () {
+                                showChiscoBottomSheet(
+                                    context, const EditCoolerBottomSheet());
+                              }),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          PowerIcon(
+                           isActive: true,
+                            onClick: () {
+                              //todo Power Btn onClick
+                            },
+                          )
+                        ],
+                      ),
+
+                      //Temp Controller
+                      const Flexible(
+                          fit: FlexFit.tight, child: TempController()),
+
+                      const ChiscoText(text: 'حالت های کولر'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                            boxShadow: [Styles.getBoxShadow(0.07)],
+                            borderRadius: BorderRadius.circular(12),
+                            color: Colors.white),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: const [
-                                  ChiscoText(
-                                    text: 'کولر اتاق پذیرایی',
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                  ChiscoText(
-                                    text: 'اتاق مهمان',
-                                    fontWeight: FontWeight.w400,
-                                    textColor: Styles.secondaryTextColor,
-                                  )
-                                ],
+                              child: CoolerState(
+                                icon: AUTO,
+                                title: 'خودکار',
+                                isSelected:
+                                    controller.changeCoolerStateCompareItems(
+                                        CoolerStates.auto),
+                                onClick: () {
+                                  controller.changeSelectedCoolerState(CoolerStates.auto);
+                                },
                               ),
                             ),
-                            scheduleBtn(iconWidth: iconWidth,onClick: (){},),
-                            const SizedBox(
-                              width: 10,
+                            Expanded(
+                              child: CoolerState(
+                                icon: COLD,
+                                title: 'سرد',
+                                isSelected:
+                                    controller.changeCoolerStateCompareItems(
+                                        CoolerStates.cold),
+                                onClick: () {
+                                  controller.changeSelectedCoolerState(CoolerStates.cold);
+                                },
+                              ),
                             ),
-                            EditCoolerBtn(iconWidth: iconWidth,onClick:(){
-                              showChiscoBottomSheet(
-                                  context, const EditCoolerBottomSheet());
-                            }),
-                            const SizedBox(
-                              width: 10,
+                            Expanded(
+                              child: CoolerState(
+                                icon: HEATER,
+                                title: 'گرم',
+                                isSelected:
+                                    controller.changeCoolerStateCompareItems(
+                                        CoolerStates.warm),
+                                onClick: () {
+                                  controller.changeSelectedCoolerState(CoolerStates.warm);
+                                },
+                              ),
                             ),
-                            PowerIcon(
-                              onClick: () {
-                                //todo Power Btn onClick
-                              },
+                            Expanded(
+                              child: CoolerState(
+                                icon: FAN,
+                                title: 'فن',
+                                isSelected:
+                                    controller.changeCoolerStateCompareItems(
+                                        CoolerStates.fan),
+                                onClick: () {
+                                  controller.changeSelectedCoolerState(CoolerStates.fan);
+                                },
+                              ),
                             )
                           ],
                         ),
-
-                        //Temp Controller
-                        Expanded(
-                            child: Center(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              const ChiscoText(
-                                text: '32°',
-                                fontWeight: FontWeight.w400,
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              Container(
-                                width: (252 / 350) * width,
-                                height: (252 / 350) * width,
-                                decoration: BoxDecoration(
-                                    color: const Color(0xffE8F0F9),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Styles.primaryColor
-                                              .withOpacity(0.20),
-                                          offset: const Offset(0, 0),
-                                          blurRadius: 20)
-                                    ],
-                                    shape: BoxShape.circle),
-                                child: SleekCircularSlider(
-                                  min: 16,
-                                  max: 32,
-                                  initialValue: 16,
-                                  appearance: CircularSliderAppearance(
-                                    startAngle: 180,
-                                    angleRange: 180,
-                                    size: 300 - 30,
-                                    customWidths: CustomSliderWidths(
-                                      trackWidth: 4,
-                                      shadowWidth: 0,
-                                      progressBarWidth: 01,
-                                      handlerSize: 13,
-                                    ),
-                                    customColors: CustomSliderColors(
-                                      hideShadow: true,
-                                      progressBarColor: Colors.transparent,
-                                      trackColors: const [
-                                        Color(0xffD82148),
-                                        Color(0xff34A6F6)
-                                      ],
-                                      shadowColor:
-                                          Color(0xff144FA3).withOpacity(0.25),
-                                      shadowMaxOpacity: 0.1,
-                                      shadowStep: 0.5,
-                                      dotColor: Colors.white,
-                                    ),
-                                  ),
-                                  onChange: (value) {},
-                                  innerWidget: (percentage) {
-                                    return Container(
-                                      margin: const EdgeInsets.all(30),
-                                      decoration: BoxDecoration(
-                                          color: Colors.white,
-                                          border: Border.all(
-                                              color: const Color(0xff4B5196)
-                                                  .withOpacity(0.15)),
-                                          shape: BoxShape.circle),
-                                      child: Center(
-                                        child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              ChiscoText(
-                                                text: '${percentage.toInt()}',
-                                                fontSize: 60,
-                                                fontWeight: FontWeight.w400,
-                                              ),
-                                              const ChiscoText(
-                                                text: 'تنظیم دمای هوا',
-                                                fontWeight: FontWeight.w400,
-                                                fontSize: 16,
-                                              ),
-                                              const ChiscoText(
-                                                text: 'سلسیوس',
-                                                textColor:
-                                                    Styles.secondaryTextColor,
-                                                fontSize: 16,
-                                              )
-                                            ]),
-                                      ),
-                                    );
-                                  },
-                                ),
-                              ),
-                              const SizedBox(
-                                width: 15,
-                              ),
-                              const ChiscoText(
-                                text: '16°',
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ],
-                          ),
-                        )),
-
-                        const ChiscoText(text: 'حالت های کولر'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                              boxShadow: [Styles.getBoxShadow(0.07)],
-                              borderRadius: BorderRadius.circular(12),
-                              color: Colors.white),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: const [
-                              CoolerState(
-                                  icon: 'assets/images/Auto.png',
-                                  title: 'خودکار',
-                                  isSelected: true),
-                              CoolerState(
-                                  icon: 'assets/images/cooler_icon.png',
-                                  title: 'خودکار',
-                                  isSelected: false),
-                              CoolerState(
-                                  icon: 'assets/images/heater_icon.png',
-                                  title: 'خودکار',
-                                  isSelected: false),
-                              CoolerState(
-                                  icon: 'assets/images/fan_icon.png',
-                                  title: 'خودکار',
-                                  isSelected: false)
-                            ],
-                          ),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: const [
-                            CoolerController(
-                              icon: 'assets/images/air.svg',
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: const [
+                          Expanded(
+                            child: CoolerControllerItem(
+                              icon: AIR_FLOW,
                               title: 'چرخش افقی',
                               controllerState: 'خاموش',
                             ),
-                            CoolerController(
-                              icon: 'assets/images/swing.svg',
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: CoolerControllerItem(
+                              icon: SWING,
                               title: 'چرخش عمودی',
                               controllerState: 'سریع',
                             ),
-                            CoolerController(
-                              icon: 'assets/images/fan.svg',
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Expanded(
+                            child: CoolerControllerItem(
+                              icon: FAN_SPEED,
                               title: 'شدت باد',
                               controllerState: 'زیاد',
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const ChiscoText(text: 'زمان سنج خاموشی'),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Container(
-                              width: (50 / 360) * width,
-                              height: (41 / 767) * height,
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Styles.primaryColor
-                                            .withOpacity(0.07),
-                                        blurRadius: 15,
-                                        offset: const Offset(0, 4))
-                                  ]),
-                              child: Image.asset(
-                                'assets/images/add_icon.png',
-                                color: const Color(0xff292D32),
-                              ),
-                            ),
-                            Container(
-                              width: (204 / 360) * width,
-                              height: (41 / 767) * height,
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      const ChiscoText(text: 'زمان سنج خاموشی'),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                                height: ChiscoConverter.calculateWidgetWidth(
+                                    width, 40),
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Styles.primaryColor
+                                              .withOpacity(0.07),
+                                          blurRadius: 15,
+                                          offset: const Offset(0, 4))
+                                    ]),
+                                child: SvgPicture.asset(
+                                    PLUS_ICON) /* Image.asset(
+                                  'assets/images/add_icon.png',
+                                  color: Styles.secondaryIconColor,
+                                ),*/
+                                ),
+                          ),
+                          Expanded(
+                            flex: 4,
+                            child: Container(
+                              margin: EdgeInsets.only(left: 10, right: 10),
+
+                              height: ChiscoConverter.calculateWidgetWidth(
+                                  width, 40),
+
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(12),
@@ -298,12 +276,15 @@ class CoolerControllerScreen extends StatelessWidget {
                                   child: ChiscoText(
                                 text: '3 ساعت تا خاموشی',
                                 fontWeight: FontWeight.w400,
-                                fontSize: 16,
                               )),
                             ),
-                            Container(
-                              width: (50 / 360) * width,
-                              height: (41 / 767) * height,
+                          ),
+                          Expanded(
+                            flex: 1,
+                            child: Container(
+                              height: ChiscoConverter.calculateWidgetWidth(
+                                  width, 40),
+                              padding: EdgeInsets.all(8),
                               decoration: BoxDecoration(
                                   color: Colors.white,
                                   borderRadius: BorderRadius.circular(12),
@@ -314,104 +295,18 @@ class CoolerControllerScreen extends StatelessWidget {
                                         blurRadius: 15,
                                         offset: const Offset(0, 4))
                                   ]),
-                              child: Image.asset(
-                                'assets/images/minus_icon.png',
-                                color: const Color(0xff292D32),
-                              ),
+                              child: SvgPicture.asset(MINUS_ICON),
                             ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 30,
-                        )
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      )
+                    ],
                   ),
                 )
               ],
             )));
-  }
-}
-
-
-
-class TempController extends StatelessWidget {
-  const TempController({
-    Key? key,
-    required this.width,
-  }) : super(key: key);
-
-  final double width;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      width: (252 / 350) * width,
-      height: (252 / 350) * width,
-      decoration: BoxDecoration(
-          color: const Color(0xff1D67BA).withOpacity(0.06),
-          /*boxShadow: [BoxShadow(
-          color: Styles.primaryColor.withOpacity(0.20),
-          offset: Offset(0,0),
-          blurRadius: 20
-        )]*/
-
-          shape: BoxShape.circle),
-      child: SleekCircularSlider(
-        min: 16,
-        max: 32,
-        initialValue: 16,
-        appearance: CircularSliderAppearance(
-          startAngle: 180,
-          angleRange: 180,
-          size: 300 - 30,
-          customWidths: CustomSliderWidths(
-            trackWidth: 4,
-            shadowWidth: 0,
-            progressBarWidth: 01,
-            handlerSize: 13,
-          ),
-          customColors: CustomSliderColors(
-            hideShadow: true,
-            progressBarColor: Colors.transparent,
-            trackColors: const [Color(0xffD82148), Color(0xff34A6F6)],
-            dotColor: Colors.white,
-          ),
-        ),
-        onChange: (value) {},
-        innerWidget: (percentage) {
-          return Container(
-            margin: const EdgeInsets.all(30),
-            decoration: BoxDecoration(
-                color: Colors.white,
-                border: Border.all(
-                    color: const Color(0xff4B5196).withOpacity(0.15)),
-                shape: BoxShape.circle),
-            child: Center(
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    ChiscoText(
-                      text: '${percentage.toInt()}',
-                      fontSize: 60,
-                      fontWeight: FontWeight.w400,
-                    ),
-                    const ChiscoText(
-                      text: 'تنظیم دمای هوا',
-                      fontWeight: FontWeight.w400,
-                      fontSize: 16,
-                    ),
-                    const ChiscoText(
-                      text: 'سلسیوس',
-                      textColor: Styles.secondaryTextColor,
-                      fontSize: 16,
-                    )
-                  ]),
-            ),
-          );
-        },
-      ),
-    );
   }
 }

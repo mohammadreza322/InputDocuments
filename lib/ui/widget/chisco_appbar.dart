@@ -1,5 +1,8 @@
+import 'package:chisco/utils/theme.dart';
+import 'package:chisco/ui/widget/chisco_icon.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class ChiscoAppbar extends StatelessWidget {
 
@@ -12,6 +15,8 @@ class ChiscoAppbar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: Colors.transparent,
+      height: 40,
       margin: const EdgeInsets.only(top: 23),
       child: Stack(
         children: [
@@ -22,7 +27,7 @@ class ChiscoAppbar extends StatelessWidget {
               child: SizedBox(
                   width: 26,
                   height: 26,
-                  child: Image.asset(icon)),
+                  child: SvgPicture.asset(icon)),
             ),
           ),
            //todo Hard Code Font Size
@@ -30,8 +35,8 @@ class ChiscoAppbar extends StatelessWidget {
             alignment: Alignment.center,
             child: ChiscoText(
               text: title,
-              fontWeight: FontWeight.w600,
-              fontSize: 14,
+              fontWeight: FontWeight.w500,
+              fontSize: Styles.defaultFontSize,
               textColor: Colors.white,
             ),
           ),

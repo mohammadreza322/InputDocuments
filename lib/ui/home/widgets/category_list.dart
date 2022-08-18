@@ -1,5 +1,5 @@
 import 'package:chisco/ui/home/home_controller.dart';
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

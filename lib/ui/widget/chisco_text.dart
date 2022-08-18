@@ -1,4 +1,4 @@
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:flutter/material.dart';
 
 class ChiscoText extends StatelessWidget {
@@ -9,8 +9,8 @@ class ChiscoText extends StatelessWidget {
   final TextAlign textAlign;
   const ChiscoText(
       {required this.text,
-      this.fontSize = 14,
-      this.fontWeight = FontWeight.w300,
+      this.fontSize = Styles.defaultFontSize,
+      this.fontWeight = Styles.defaultFontWeight,
       this.textAlign = TextAlign.start,
 
          Key? key,
@@ -20,12 +20,12 @@ class ChiscoText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(
+
       text,
       style: TextStyle(
           fontSize: fontSize,
           fontWeight: fontWeight,
           color: textColor,
-
           fontFamily: 'ChiscoText'),
       textAlign: textAlign,
     );

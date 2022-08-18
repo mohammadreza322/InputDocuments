@@ -1,17 +1,15 @@
 import 'package:flutter/material.dart';
 
-class ChiscoConverter {
-  static calculateWidgetWidth(
-      BoxConstraints constraints, double parentSize, double widgetSize) {
-    double width = constraints.maxWidth;
 
-    return width * (widgetSize / parentSize);
+
+class ChiscoConverter  {
+  static calculateWidgetWidth(double parentSize, double widgetSize) {
+
+    return parentSize * (widgetSize / 360);
   }
 
 
-  static calculateWidgetHeight(
-      BoxConstraints constraints, double parentSize, double widgetSize) {
-    double height = constraints.maxHeight;
-    return height * (widgetSize / parentSize);
+  static calculateWidgetHeight(double parentSize, double widgetSize) {
+    return parentSize * (widgetSize / 767);
   }
 }

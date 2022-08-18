@@ -1,8 +1,11 @@
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/const.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EmptyStateView extends StatelessWidget {
+
   const EmptyStateView({
     Key? key,
   }) : super(key: key);
@@ -12,7 +15,7 @@ class EmptyStateView extends StatelessWidget {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset('assets/images/info-circle.png'),
+       SvgPicture.asset(INFO),
         Container(
             margin: const EdgeInsets.only(top: 20, bottom: 10),
             child: const ChiscoText(text: 'هنوز هیچ دستگاهی ثبت نشده')),

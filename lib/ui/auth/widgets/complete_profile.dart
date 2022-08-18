@@ -1,5 +1,6 @@
 import 'package:chisco/ui/auth/widgets/auth_text_field.dart';
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/const.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_button.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:flutter/material.dart';
@@ -12,60 +13,68 @@ class CompleteProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controller = TextEditingController(text: "مهدی ابوالحسنی");
     return Directionality(
       textDirection: TextDirection.rtl,
 
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 50),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const ChiscoText(
-              text: 'تکمیل ثبت نام',
-              fontSize: 20,
-              fontWeight: FontWeight.w600,
-              textColor: Styles.primaryColor,
-            ),
-            const SizedBox(
-              height: 10,
-            ),
-            const ChiscoText(
-                text: 'لطفا نام و نام خانوادگی خود را وارد کنید.',
-                fontSize: 16,
-                fontWeight: FontWeight.w300,
-                textColor: Styles.primaryTextColor),
-            const SizedBox(
-              height: 45,
-            ),
-            const AuthTextField(
-                label: 'نام و نام خانوادگی',
-                controller: null,
-                text: 'مهدی ابوالحسنی',
-                icon: 'assets/images/user.png'),
-            const SizedBox(
-              height: 20,
-            ),
-            ChiscoButton(
+        child: SingleChildScrollView(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const ChiscoText(
+                text: 'تکمیل ثبت نام',
+                fontSize: 20,
+                fontWeight: FontWeight.w500,
+                textColor: Styles.primaryColor,
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const ChiscoText(
+                  text: 'لطفا نام و نام خانوادگی خود را وارد کنید.',
 
-              text: 'تایید و ورود به چیسکو',
-              onClick: () {},
-              icon: 'assets/images/left_arrow.png',
-            ),
-            const SizedBox(
-              height: 20,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: TextButton(
-                  onPressed: () {
-                    Provider.of<AuthController>(context,listen: false).goToPage(0);
-                  },
-                  child: const ChiscoText(
-                      text: 'برگشت به مرحله قبل',
-                      textColor: Styles.primaryTextColor)),
-            )
-          ],
+                  fontWeight: FontWeight.w300,
+                  textColor: Styles.primaryTextColor),
+              const SizedBox(
+                height: 45,
+              ),
+               AuthTextField(
+                  label: 'نام و نام خانوادگی',
+                  controller: controller,
+                  text: 'مهدی ابوالحسنی',
+                  isInputNumber: false,
+                  icon: USER),
+              const SizedBox(
+                height: 20,
+              ),
+              ChiscoButton(
+                text: 'تایید و ورود به چیسکو',
+                onClick: (){
+
+                  Provider.of<AuthController>(context,listen: false).submitNameBtnClicked(controller.text);
+
+                },
+                icon: LEFT_ARROW,
+              ),
+              const SizedBox(
+                height: 20,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: TextButton(
+                    onPressed: () {
+                      Provider.of<AuthController>(context,listen: false).goToPage(0);
+                    },
+                    child: const ChiscoText(
+                        text: 'برگشت به مرحله قبل',
+                        fontWeight: FontWeight.w300,
+                        textColor: Styles.primaryTextColor)),
+              )
+            ],
+          ),
         ),
       ),
     );

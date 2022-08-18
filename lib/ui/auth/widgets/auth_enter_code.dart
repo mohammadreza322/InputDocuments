@@ -1,7 +1,7 @@
 
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/theme.dart';
 class AuthOtp extends StatelessWidget {
 
   const AuthOtp({Key? key}) : super(key: key);

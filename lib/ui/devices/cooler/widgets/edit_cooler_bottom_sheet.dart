@@ -1,7 +1,10 @@
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/const.dart';
+import 'package:chisco/utils/converter.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_button.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:chisco/ui/widget/chisco_textfield.dart';
+import 'package:chisco/ui/widget/chisco_unchange_textfield.dart';
 import 'package:chisco/ui/widget/list_handler.dart';
 import 'package:flutter/material.dart';
 
@@ -25,37 +28,37 @@ class EditCoolerBottomSheet extends StatelessWidget {
         children: [
           const ListHandlerView(),
           const SizedBox(
-            height: 25,
+            height: 15,
           ),
           const ChiscoText(
             text: 'ویرایش اطلاعات دستگاه',
             fontWeight: FontWeight.w400,
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
-          ChiscoTextField(
-            controller: serialTextController,
-            hintText: 'مانند Ch-32145267469',
-            icon: 'assets/images/serial_icon.png',
+
+          const ChiscoFixedTextField(
+            text: 'مانند Ch-32145267469',
+            icon: SERIAL,
             label: "شماره سریال",
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           ChiscoTextField(
             controller: nameTextController,
             hintText: 'مانند کولر اتاق پذیرایی',
-            icon: 'assets/images/device_icon.png',
+            icon: DEVICE,
             label: "اسم نمایشی کنترلر: ",
           ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           ChiscoTextField(
             controller: categoryTextController,
             hintText: 'مانند اتاق مهمان',
-            icon: 'assets/images/category_icon.png',
+            icon: CATEGORY,
             label: "دسته‌بندی:",
           ),
           const SizedBox(
@@ -67,7 +70,7 @@ class EditCoolerBottomSheet extends StatelessWidget {
             },
             child: Container(
               //todo HardCode Height Of all Buttons
-              height: height * (46 / 767),
+              height: ChiscoConverter.calculateWidgetWidth(width, buttonHeight),
               width: double.infinity,
               padding: const EdgeInsets.symmetric(vertical: 14),
               decoration: BoxDecoration(
@@ -78,18 +81,23 @@ class EditCoolerBottomSheet extends StatelessWidget {
               child: const Center(
                 child: ChiscoText(
                   text: 'حذف دستگاه',
-                  fontSize: 14,
-                  fontWeight: FontWeight.w600,
+
+                  fontWeight: FontWeight.w500,
                   textColor: Colors.white,
                 ),
               ),
             ),
           ),
-          SizedBox( height: 20,),
-          ChiscoButton(text: 'ویرایش دستگاه', onClick: (){}, icon: '',hasIcon: false,),
           const SizedBox(
-            height: 20,
-          )
+            height: 15,
+          ),
+          ChiscoButton(
+            text: 'ویرایش دستگاه',
+            onClick: () {},
+            icon: '',
+            hasIcon: false,
+          ),
+
         ],
       ),
     );

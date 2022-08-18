@@ -1,4 +1,4 @@
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:flutter/material.dart';
 
 class ListHandlerView extends StatelessWidget {
@@ -10,11 +10,12 @@ class ListHandlerView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
+
           decoration: BoxDecoration(
               color: Styles.primaryTextColor.withOpacity(.2),
-              borderRadius: BorderRadius.circular(5)
+              borderRadius: BorderRadius.circular(5),
           ),
-          margin: const EdgeInsets.only(top: 10),
+          margin: const EdgeInsets.only(top: 15,bottom: 10),
           width: 28,
           height: 4,
         ));

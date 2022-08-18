@@ -2,7 +2,7 @@ import 'package:chisco/ui/devices/widgets/device_appbar.dart';
 import 'package:chisco/ui/widget/chisco_appbar.dart';
 import 'package:flutter/material.dart';
 
-class DeviceHeader extends SliverPersistentHeaderDelegate {
+class CoolerScreenHeader extends SliverPersistentHeaderDelegate {
   @override
   Widget build(BuildContext context, double shrinkOffset,
       bool overlapsContent) {
@@ -14,7 +14,9 @@ class DeviceHeader extends SliverPersistentHeaderDelegate {
             image: AssetImage('assets/images/home_header.png'),
               fit: BoxFit.cover
           )),
-      child:DeviceAppBar(onBackClick: (){},onMenuClick: (){},title: 'کنترلر',),);
+      child:DeviceAppBar(onBackClick: (){
+        Navigator.pop(context);
+      },onMenuClick: (){},title: 'کنترلر',),);
   }
 
   @override

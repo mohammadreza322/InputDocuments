@@ -1,6 +1,6 @@
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:flutter/material.dart';
-
+//Todo Role And ... Link
 class AuthDefaultText extends StatelessWidget {
   const AuthDefaultText({
     Key? key,
@@ -10,6 +10,9 @@ class AuthDefaultText extends StatelessWidget {
   Widget build(BuildContext context) {
     TextStyle textStyle =TextStyle(
       color: const Color(0xff06196280).withOpacity(0.5),
+      fontFamily: 'ChiscoText',
+      fontSize: Styles.defaultFontSize,
+      fontWeight: Styles.defaultFontWeight
     );
     return RichText(
       textAlign: TextAlign.center,
@@ -17,15 +20,14 @@ class AuthDefaultText extends StatelessWidget {
           text: 'با ورود و زدن دکمه ادامه، شما با ',
           style: textStyle,
           children:  [
-            const TextSpan(
-
+             TextSpan(
               text: 'شرایط',
-              style: TextStyle(color: Styles.primaryTextColor),
+              style: textStyle.copyWith(color: Styles.primaryTextColor),
             ),
             TextSpan(text: ' و ',style: textStyle),
-            const TextSpan(
+             TextSpan(
               text: 'مقررات',
-              style: TextStyle(color: Styles.primaryTextColor),
+              style: textStyle.copyWith(color: Styles.primaryTextColor),
             ),
             TextSpan(text: '\n .ما موافقت کرده‌اید',style: textStyle)
           ]),

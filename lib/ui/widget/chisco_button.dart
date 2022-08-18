@@ -1,6 +1,11 @@
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/const.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
+import 'package:chisco/utils/converter.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import 'chisco_icon.dart';
 
 class ChiscoButton extends StatelessWidget {
   final String text;
@@ -21,13 +26,13 @@ class ChiscoButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+
     return GestureDetector(
-      onTap: () {
-        onClick;
-      },
+      onTap: onClick,
       child: Container(
         //todo HardCode Height Of all Buttons
-        height: height*(46/767),
+        height: ChiscoConverter.calculateWidgetWidth(width, buttonHeight),
         padding: const EdgeInsets.symmetric(vertical: 14),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
@@ -37,16 +42,16 @@ class ChiscoButton extends StatelessWidget {
         child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
           ChiscoText(
             text: text,
-            fontSize: 14,
-            fontWeight: FontWeight.w600,
+            fontSize: Styles.defaultFontSize,
+            fontWeight: FontWeight.w500,
             textColor: Colors.white,
           ),
 
           hasIcon
-              ? Image.asset(
-                  icon,
-                  color: Colors.white,
-                )
+              ? SvgPicture.asset(
+            icon,
+            color: Colors.white,
+          )
               : Container()
         ]),
       ),

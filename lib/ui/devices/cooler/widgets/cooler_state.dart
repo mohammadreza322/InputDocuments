@@ -1,29 +1,32 @@
-import 'package:chisco/ui/main/theme.dart';
+import 'package:chisco/utils/converter.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class CoolerState extends StatelessWidget {
   final String icon;
   final String title;
   final bool isSelected;
+  final GestureTapCallback onClick;
+
 
   const CoolerState({
     Key? key,
     required this.icon,
     required this.title,
-    required this.isSelected,
+    required this.isSelected, required this.onClick,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    double widthSize = (88 / 360) * width;
-    double heightSize = (39/797) * height;
+
+
     if (isSelected) {
       return Container(
-        width: widthSize,
-        height: heightSize,
+        height: ChiscoConverter.calculateWidgetWidth(width, 39),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(12),
             boxShadow: [Styles.getBoxShadow(0.07)],
@@ -33,7 +36,7 @@ class CoolerState extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            Image.asset(
+            SvgPicture.asset(
               icon,
               color: Colors.white,
             ),
@@ -51,28 +54,27 @@ class CoolerState extends StatelessWidget {
         ),
       );
     } else {
-      return Container(
-        width: 88,
-        height: 40,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Image.asset(
-              icon,
-              color: Styles.secondaryColor,
-            ),
-            const SizedBox(
-              width: 5,
-            ),
-            isSelected
-                ? ChiscoText(
-              text: title,
-              textColor: Colors.white,
-              fontWeight: FontWeight.w400,
-            )
-                : Container()
-          ],
+      return InkWell(
+        onTap: onClick,
+        child: SizedBox(
+          height:ChiscoConverter.calculateWidgetWidth(width, 39),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              SvgPicture.asset(icon,color: Styles.secondaryColor,),
+              const SizedBox(
+                width: 5,
+              ),
+              isSelected
+                  ? ChiscoText(
+                text: title,
+                textColor: Colors.white,
+                fontWeight: FontWeight.w400,
+              )
+                  : Container()
+            ],
+          ),
         ),
       );
     }
