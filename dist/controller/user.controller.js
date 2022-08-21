@@ -16,11 +16,11 @@ exports.refreshToken = exports.editUserProfile = exports.getUserDetails = export
 const user_entity_1 = __importDefault(require("../entities/user.entity"));
 const device_entity_1 = __importDefault(require("../entities/device.entity"));
 const validator_1 = __importDefault(require("../classes/validator"));
-const constants_1 = require("@/utility/constants");
+const constants_1 = require("../utility/constants");
 const jwt = require('jsonwebtoken');
 const tokens_model_1 = __importDefault(require("../models/tokens.model"));
 const moment_1 = __importDefault(require("moment"));
-const token_entity_1 = __importDefault(require("@/entities/token.entity"));
+const token_entity_1 = __importDefault(require("../entities/token.entity"));
 const getFullName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { fullName } = req.body;

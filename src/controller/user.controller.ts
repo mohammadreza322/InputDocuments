@@ -9,11 +9,11 @@ import { CustomRequest } from '../types/global.type';
 import { listOfDevices } from '../types/device.type';
 import DeviceEntity from '../entities/device.entity';
 import AhpValidator from '../classes/validator';
-import { jsonWebTokenSecretKey } from '@/utility/constants';
+import { jsonWebTokenSecretKey } from '../utility/constants';
 const jwt = require('jsonwebtoken');
 import Token, { IToken } from '../models/tokens.model';
 import moment from 'moment';
-import TokenEntity, { generateTokenOutput } from '@/entities/token.entity';
+import TokenEntity, { generateTokenOutput } from '../entities/token.entity';
 
 export const getFullName = async (req: CustomRequest, res: Response) => {
 	try {
@@ -139,8 +139,7 @@ export const refreshToken = async (req: CustomRequest, res: Response) => {
 			return res.status(404).json({ message: 'invalid refresh token!' });
 		}
 
-		await TokenEntity.removeOldToken(decoded.id,
-			userAgent,)
+		await TokenEntity.removeOldToken(decoded.id, userAgent);
 
 		const tokens: generateTokenOutput = await TokenEntity.createToken(
 			decoded.id,
@@ -156,5 +155,4 @@ export const refreshToken = async (req: CustomRequest, res: Response) => {
 		console.error(e);
 		return res.status(500).json({ message: 'خطایی پیش آمده' });
 	}
-	
 };
