@@ -43,4 +43,11 @@ export default class TokenEntity {
 			refreshToken,
 		} as generateTokenOutput;
 	}
+
+	static async removeOldToken(userId: Types.ObjectId, agent: string) {
+		await Token.deleteOne({
+			agent: agent,
+			user: userId,
+		});
+	}
 }

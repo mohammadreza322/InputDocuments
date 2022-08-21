@@ -57,40 +57,7 @@ const saveDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         }
         else if (validateSerialNumber.type == 'power') {
             const { power1, power2, power3, power4, usb1, usb2, } = req.body;
-            if (!power1 || !power2 || !power3 || !power4 || !usb1 || !usb2) {
-                return res.status(400).json({ message: 'خطا در ورودی' });
-            }
-            if (power1.trim() === '') {
-                return res
-                    .status(400)
-                    .json({ message: 'نام پریز 1 را وارد نکرده اید!' });
-            }
-            if (power2.trim() === '') {
-                return res
-                    .status(400)
-                    .json({ message: 'نام پریز 2 را وارد نکرده اید!' });
-            }
-            if (power3.trim() === '') {
-                return res
-                    .status(400)
-                    .json({ message: 'نام پریز 3 را وارد نکرده اید!' });
-            }
-            if (power4.trim() === '') {
-                return res
-                    .status(400)
-                    .json({ message: 'نام پریز 4 را وارد نکرده اید!' });
-            }
-            if (usb1.trim() === '') {
-                return res
-                    .status(400)
-                    .json({ message: 'نام پورت 1 را وارد نکرده اید!' });
-            }
-            if (usb2.trim() === '') {
-                return res
-                    .status(400)
-                    .json({ message: 'نام پورت 2 را وارد نکرده اید!' });
-            }
-            yield device_entity_1.default.savePower(serialNumber.trim(), category.trim(), name.trim(), req.userId, power1.trim(), power2.trim(), power3.trim(), power4.trim(), usb1.trim(), usb2.trim());
+            yield device_entity_1.default.savePower(serialNumber.trim(), category.trim(), name.trim(), req.userId, power1, power2, power3, power4, usb1, usb2);
         }
         const devices = yield device_entity_1.default.getAllDevices(req.userId);
         return res.json({ message: 'دستگاه شما با موفقیت ذخیره شد', devices });

@@ -9,6 +9,7 @@ const user_controller_1 = require("../controller/user.controller");
 const authorization_1 = require("../middleware/authorization");
 const router = express_1.default.Router();
 exports.userRouter = router;
+router.put('/refresh-token', user_controller_1.refreshToken);
 router.use([authorization_1.getAuthorization, authorization_1.hasPermission]);
 router.post('/get-name', user_controller_1.getFullName);
 router.put('/edit', user_controller_1.editUserProfile);

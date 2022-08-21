@@ -113,37 +113,37 @@ class DeviceEntity {
                     owner: userId,
                     connectors: [
                         {
-                            name: power1,
+                            name: power1 !== null && power1 !== void 0 ? power1 : '',
                             connectorType: 'power',
                             status: true,
                             connectorId: 1,
                         },
                         {
-                            name: power2,
+                            name: power2 !== null && power2 !== void 0 ? power2 : '',
                             connectorType: 'power',
                             status: true,
                             connectorId: 2,
                         },
                         {
-                            name: power3,
+                            name: power3 !== null && power3 !== void 0 ? power3 : '',
                             connectorType: 'power',
                             status: true,
                             connectorId: 3,
                         },
                         {
-                            name: power4,
+                            name: power4 !== null && power4 !== void 0 ? power4 : '',
                             connectorType: 'power',
                             status: true,
                             connectorId: 4,
                         },
                         {
-                            name: usb1,
+                            name: usb1 !== null && usb1 !== void 0 ? usb1 : '',
                             connectorType: 'usb',
                             status: true,
                             connectorId: 5,
                         },
                         {
-                            name: usb2,
+                            name: usb2 !== null && usb2 !== void 0 ? usb2 : '',
                             connectorType: 'usb',
                             status: true,
                             connectorId: 6,

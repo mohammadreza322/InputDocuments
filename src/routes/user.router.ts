@@ -4,10 +4,13 @@ import {
 	editUserProfile,
 	getFullName,
 	getUserDetails,
+	refreshToken,
 } from '../controller/user.controller';
 import { getAuthorization, hasPermission } from '../middleware/authorization';
 
 const router = express.Router();
+
+router.put('/refresh-token', refreshToken);
 
 router.use([getAuthorization, hasPermission]);
 

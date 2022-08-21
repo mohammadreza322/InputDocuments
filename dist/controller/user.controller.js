@@ -12,10 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editUserProfile = exports.getUserDetails = exports.getFullName = void 0;
+exports.refreshToken = exports.editUserProfile = exports.getUserDetails = exports.getFullName = void 0;
 const user_entity_1 = __importDefault(require("../entities/user.entity"));
 const device_entity_1 = __importDefault(require("../entities/device.entity"));
 const validator_1 = __importDefault(require("../classes/validator"));
+const constants_1 = require("@/utility/constants");
+const jwt = require('jsonwebtoken');
+const tokens_model_1 = __importDefault(require("../models/tokens.model"));
+const moment_1 = __importDefault(require("moment"));
+const token_entity_1 = __importDefault(require("@/entities/token.entity"));
 const getFullName = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const { fullName } = req.body;
@@ -84,4 +89,46 @@ const editUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function
     }
 });
 exports.editUserProfile = editUserProfile;
+const refreshToken = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const { refreshToken } = req.body;
+    const userToken = req.header('x-auth-token');
+    const userAgent = req.get('user-agent');
+    if (!refreshToken || !userToken) {
+        return res.status(404).send({ message: 'خطا در شناسایی توکن' });
+    }
+    if (refreshToken == null || userToken == null) {
+        return res.status(404).send({ message: 'خطا در شناسایی توکن' });
+    }
+    try {
+        const decoded = jwt.verify(refreshToken, constants_1.jsonWebTokenSecretKey);
+        const token = yield tokens_model_1.default.findOne({ token: userToken });
+        if (!token) {
+            return res.status(404).json({ message: 'invalid token1' });
+        }
+        if (refreshToken !== token.refreshToken) {
+            return res.status(404).json({ message: 'invalid token2' });
+        }
+        if (!token.user.equals(decoded.id)) {
+            return res.status(401).json({ message: 'Token is not valid' });
+        }
+        const now = (0, moment_1.default)(new Date());
+        const duration = moment_1.default.duration(now.diff(token.time)).asDays();
+        if (Math.floor(duration) > 30) {
+            return res.status(404).json({ message: 'invalid refresh token!' });
+        }
+        yield token_entity_1.default.removeOldToken(decoded.id, userAgent);
+        const tokens = yield token_entity_1.default.createToken(decoded.id, userAgent);
+        return res.json({
+            message: 'توکن شما با موفیت تغییر کرد',
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken,
+        });
+    }
+    catch (e) {
+        console.error('inside refresh token');
+        console.error(e);
+        return res.status(500).json({ message: 'خطایی پیش آمده' });
+    }
+});
+exports.refreshToken = refreshToken;
 //# sourceMappingURL=user.controller.js.map

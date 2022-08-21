@@ -43,6 +43,14 @@ class TokenEntity {
             };
         });
     }
+    static removeOldToken(userId, agent) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield tokens_model_1.default.deleteOne({
+                agent: agent,
+                user: userId,
+            });
+        });
+    }
 }
 exports.default = TokenEntity;
 //# sourceMappingURL=token.entity.js.map

@@ -81,57 +81,17 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 				usb2,
 			}: addDeviceInput = req.body;
 
-			if (!power1 || !power2 || !power3 || !power4 || !usb1 || !usb2) {
-				return res.status(400).json({ message: 'خطا در ورودی' });
-			}
-
-			if (power1.trim() === '') {
-				return res
-					.status(400)
-					.json({ message: 'نام پریز 1 را وارد نکرده اید!' });
-			}
-
-			if (power2.trim() === '') {
-				return res
-					.status(400)
-					.json({ message: 'نام پریز 2 را وارد نکرده اید!' });
-			}
-
-			if (power3.trim() === '') {
-				return res
-					.status(400)
-					.json({ message: 'نام پریز 3 را وارد نکرده اید!' });
-			}
-
-			if (power4.trim() === '') {
-				return res
-					.status(400)
-					.json({ message: 'نام پریز 4 را وارد نکرده اید!' });
-			}
-
-			if (usb1.trim() === '') {
-				return res
-					.status(400)
-					.json({ message: 'نام پورت 1 را وارد نکرده اید!' });
-			}
-
-			if (usb2.trim() === '') {
-				return res
-					.status(400)
-					.json({ message: 'نام پورت 2 را وارد نکرده اید!' });
-			}
-
 			await DeviceEntity.savePower(
 				serialNumber.trim(),
 				category.trim(),
 				name.trim(),
 				req.userId,
-				power1.trim(),
-				power2.trim(),
-				power3.trim(),
-				power4.trim(),
-				usb1.trim(),
-				usb2.trim(),
+				power1,
+				power2,
+				power3,
+				power4,
+				usb1,
+				usb2,
 			);
 		}
 

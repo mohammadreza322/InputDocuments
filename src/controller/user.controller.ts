@@ -9,6 +9,11 @@ import { CustomRequest } from '../types/global.type';
 import { listOfDevices } from '../types/device.type';
 import DeviceEntity from '../entities/device.entity';
 import AhpValidator from '../classes/validator';
+import { jsonWebTokenSecretKey } from '@/utility/constants';
+const jwt = require('jsonwebtoken');
+import Token, { IToken } from '../models/tokens.model';
+import moment from 'moment';
+import TokenEntity, { generateTokenOutput } from '@/entities/token.entity';
 
 export const getFullName = async (req: CustomRequest, res: Response) => {
 	try {
@@ -99,4 +104,57 @@ export const editUserProfile = async (req: CustomRequest, res: Response) => {
 		console.error(error);
 		return res.status(500).json({ message: 'خطایی پیش آمده!!' });
 	}
+};
+
+export const refreshToken = async (req: CustomRequest, res: Response) => {
+	const { refreshToken } = req.body;
+	const userToken = req.header('x-auth-token');
+	const userAgent = req.get('user-agent');
+
+	if (!refreshToken || !userToken) {
+		return res.status(404).send({ message: 'خطا در شناسایی توکن' });
+	}
+
+	if (refreshToken == null || userToken == null) {
+		return res.status(404).send({ message: 'خطا در شناسایی توکن' });
+	}
+	try {
+		const decoded = jwt.verify(refreshToken, jsonWebTokenSecretKey);
+		const token = await Token.findOne({ token: userToken });
+		if (!token) {
+			return res.status(404).json({ message: 'invalid token1' });
+		}
+
+		if (refreshToken !== token.refreshToken) {
+			return res.status(404).json({ message: 'invalid token2' });
+		}
+
+		if (!token.user.equals(decoded.id)) {
+			return res.status(401).json({ message: 'Token is not valid' });
+		}
+
+		const now = moment(new Date());
+		const duration = moment.duration(now.diff(token.time)).asDays();
+		if (Math.floor(duration) > 30) {
+			return res.status(404).json({ message: 'invalid refresh token!' });
+		}
+
+		await TokenEntity.removeOldToken(decoded.id,
+			userAgent,)
+
+		const tokens: generateTokenOutput = await TokenEntity.createToken(
+			decoded.id,
+			userAgent,
+		);
+		return res.json({
+			message: 'توکن شما با موفیت تغییر کرد',
+			accessToken: tokens.accessToken,
+			refreshToken: tokens.refreshToken,
+		});
+	} catch (e) {
+		console.error('inside refresh token');
+		console.error(e);
+		return res.status(500).json({ message: 'خطایی پیش آمده' });
+	}
+	
 };

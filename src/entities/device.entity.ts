@@ -141,12 +141,12 @@ export default class DeviceEntity {
 		category: string,
 		name: string,
 		userId: Types.ObjectId,
-		power1: string,
-		power2: string,
-		power3: string,
-		power4: string,
-		usb1: string,
-		usb2: string,
+		power1?: string,
+		power2?: string,
+		power3?: string,
+		power4?: string,
+		usb1?: string,
+		usb2?: string,
 	) {
 		await PowerStrip.updateOne(
 			{ serialNumber },
@@ -157,37 +157,37 @@ export default class DeviceEntity {
 					owner: userId,
 					connectors: [
 						{
-							name: power1,
+							name: power1 ?? '',
 							connectorType: 'power',
 							status: true,
 							connectorId: 1,
 						},
 						{
-							name: power2,
+							name: power2 ?? '',
 							connectorType: 'power',
 							status: true,
 							connectorId: 2,
 						},
 						{
-							name: power3,
+							name: power3 ?? '',
 							connectorType: 'power',
 							status: true,
 							connectorId: 3,
 						},
 						{
-							name: power4,
+							name: power4 ?? '',
 							connectorType: 'power',
 							status: true,
 							connectorId: 4,
 						},
 						{
-							name: usb1,
+							name: usb1 ?? '',
 							connectorType: 'usb',
 							status: true,
 							connectorId: 5,
 						},
 						{
-							name: usb2,
+							name: usb2 ?? '',
 							connectorType: 'usb',
 							status: true,
 							connectorId: 6,
@@ -319,7 +319,6 @@ export default class DeviceEntity {
 			repeat,
 		};
 
-		
 		if (type === 'power') {
 			scheduleObject.port = portNumber;
 			await PowerStrip.updateOne(
@@ -345,7 +344,7 @@ export default class DeviceEntity {
 						'schedule.$.enable': enable,
 					},
 				},
-			)
+			);
 		}
 
 		AhpMqtt.getInstance().publish(
