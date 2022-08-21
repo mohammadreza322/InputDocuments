@@ -28,7 +28,7 @@ class HomeListContainer extends StatelessWidget {
     AppController appController = Provider.of<AppController>(context);
     HomeController homeController = Provider.of<HomeController>(context);
     String selectedCategory = homeController.selectedCategory;
-    print('Category     ${appController.getCategories.toString()}');
+    //print('Category     ${appController.getCategories.toString()}');
     if (appController.isUserHaveDevice()) {
       return Column(
         mainAxisSize: MainAxisSize.min,
@@ -58,7 +58,7 @@ class HomeListContainer extends StatelessWidget {
           Expanded(
             child: DeviceGridList(
               controller: controller,
-              devices: homeController.getListDevices,
+              devices: homeController.filteredDevices,
             ),
           ),
         ],

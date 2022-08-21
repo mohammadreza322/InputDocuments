@@ -104,7 +104,7 @@ class CoolerScreen extends StatelessWidget {
                               width: 32,
                               onClick: () {
                                 showChiscoBottomSheet(
-                                    context, const EditCoolerBottomSheet());
+                                    context,EditCoolerBottomSheet(selectedCooler: selectedCooler,));
                               }),
                           const SizedBox(
                             width: 10,

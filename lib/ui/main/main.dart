@@ -29,11 +29,12 @@ final ThemeData androidTheme =
     ThemeData(fontFamily: 'ChiscoText', dividerColor: Colors.transparent);
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+   MyApp({Key? key}) : super(key: key);
+  AppController appController = AppController();
 
   @override
   Widget build(BuildContext context) {
-    AppController appController = AppController();
+
     const defaultTextStyle =
         TextStyle(fontFamily: 'ChiscoText', color: Styles.primaryTextColor);
 

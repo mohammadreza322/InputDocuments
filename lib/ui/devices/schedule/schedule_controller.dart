@@ -1,3 +1,4 @@
+import 'package:chisco/data/data_class/Device.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,14 +11,14 @@ class ScheduleController extends ChangeNotifier {
 
   ScheduleController(this.context);
 
-  onAddScheduleClick(bool isPower) {
+  onAddScheduleClick(Device device,bool isPower) {
     showChiscoBottomSheet(
         context,
         ChangeNotifierProvider(
           create: (context) => AddScheduleController(context),
-          child: const Directionality(
+          child:  Directionality(
             textDirection: TextDirection.rtl,
-            child: AddScheduleBottomSheet(isPower: false),
+            child: AddScheduleBottomSheet(device: device,isPower: isPower),
           ),
         ));
     print("is Power  : $isPower");
@@ -59,6 +60,8 @@ class ScheduleController extends ChangeNotifier {
 
     return farsiList.join(' ');
   }
+
+
 
   void enableChanged(bool values) {}
 }

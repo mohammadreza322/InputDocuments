@@ -4,7 +4,7 @@ import 'package:chisco/data/data_source/account/account_remote_data_source.dart'
 
 abstract class AccountRepository {
   Future<ChiscoResponse> editUserInformation(
-      String? location, String? birthday, String? fullName);
+      String? location, int? birthday, String? fullName);
 }
 
 class AccountRepositoryImpl extends AccountRepository {
@@ -13,7 +13,8 @@ class AccountRepositoryImpl extends AccountRepository {
 
   @override
   Future<ChiscoResponse> editUserInformation(
-      String? location, String? birthday, String? fullName) async {
+      String? location, int? birthday, String? fullName) async {
+
     ChiscoResponse response = await _accountRemoteDataSource
         .editUserInformation(location, birthday, fullName);
     if (response.status) {

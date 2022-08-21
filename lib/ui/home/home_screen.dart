@@ -30,6 +30,7 @@ class HomeScreen extends StatelessWidget {
 
     if(!homeController.isPageLoading){
       homeController.init();
+      homeController.filteringDevices('نمایش همه');
     }
     return SafeArea(
       child: Container(
@@ -115,10 +116,9 @@ class HomeScreen extends StatelessWidget {
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(25),
                               topRight: Radius.circular(25))),
-                      child: Expanded(
-                          child: HomeListContainer(
+                      child: HomeListContainer(
                         controller: scrollController,
-                      )));
+                      ));
                 },
               )
             ],

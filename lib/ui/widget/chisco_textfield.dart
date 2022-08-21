@@ -63,11 +63,6 @@ class ChiscoTextField extends StatelessWidget {
           Flexible(
             child: TextField(
               controller: controller,
-              /*inputFormatters: [
-                isInputNumber
-                    ? FilteringTextInputFormatter.allow(RegExp(""))
-                    : FilteringTextInputFormatter.allow(RegExp("."))
-              ],*/
               keyboardType: isInputNumber?TextInputType.phone:TextInputType.text,
               style: const TextStyle(
                   color: Styles.primaryTextColor,
@@ -83,6 +78,7 @@ class ChiscoTextField extends StatelessWidget {
                     fontSize: Styles.defaultFontSize,
 
                   )),
+
             ),
           ),
         ],

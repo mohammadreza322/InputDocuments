@@ -10,7 +10,7 @@ class AddDeviceResponse {
   factory AddDeviceResponse.fromJson(Map<String, dynamic> json){
     return AddDeviceResponse(json['message'], json['devices'] != null
         ? UserDevices.fromJson(json['devices'])
-        : UserDevices(categories: [], coolers: [], powers: []),
-    );
+        : UserDevices(categories: [], coolers: [], powers: []),);
+
   }
 }

@@ -31,9 +31,24 @@ class ScheduleScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     double iconWidth = (36 / 360) * width;
-    final selectedDevice = ModalRoute.of(context)!.settings.arguments as Cooler;
+    final selectedDevice = ModalRoute.of(context)!.settings.arguments as Device;
+
+    List schedule = [];
+
+    if(selectedDevice is Power) {
+      schedule = (selectedDevice).schedule;
+      print("Power");
+    } else {
+      schedule = (selectedDevice as Cooler).schedule;
+      print("Cooler");
+
+    }
+    print("Schedule List : ${schedule.toString()}");
 
     return SafeArea(
+
+
+
         child: Scaffold(
             backgroundColor: Styles.backGroundColor,
             body: Stack(children: [
@@ -85,9 +100,9 @@ class ScheduleScreen extends StatelessWidget {
                               fontWeight: FontWeight.w400),
                         ],
                       ),
-                      GestureDetector(
+                      InkWell(
                         onTap: () {
-                          controller.onAddScheduleClick(selectedDevice is Power);
+                          controller.onAddScheduleClick(selectedDevice,selectedDevice is Power);
                         },
                         child: Container(
                             width: iconWidth,
@@ -101,23 +116,23 @@ class ScheduleScreen extends StatelessWidget {
                       )
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Expanded(
-                      child: ScrollConfiguration(
+                      child:schedule.isNotEmpty? ScrollConfiguration(
                     behavior: ChiscoScrollBehavior(),
 
                     child: ListView.builder(
-                        itemCount: selectedDevice.schedule.length,
+                        itemCount: schedule.length,
                         itemBuilder: (context, index) {
-                          return  ScheduleListItem(schedule:selectedDevice.schedule[index]);
+                          return  ScheduleListItem(schedule:schedule[index]);
                         }),
-                  )
+                  ):const Align(
+                          alignment: Alignment.center, child: ScheduleEmptyState()),
 
-                      /* Align(
-                        alignment: Alignment.center, child: ScheduleEmptyState()),*/
-                      ),
+
+                      )
                 ]),
               )
             ])));

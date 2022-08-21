@@ -10,7 +10,7 @@ abstract class AuthRepository{
 
   Future<ChiscoResponse> checkOtp(String smsId,String code);
 
-  Future<ChiscoResponse> refreshToken(String token);
+
 
 
   Future<ChiscoResponse> getUserName(String fullName);

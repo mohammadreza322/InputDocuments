@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AppController extends ChangeNotifier {
-  late User _user;
+   User? _user;
 
   List<Cooler> _coolers = [];
 
@@ -18,18 +18,27 @@ class AppController extends ChangeNotifier {
 
   List<String> _categories = [];
 
-  setData(User value) async {
+  setData(User value) {
     _user = value;
-    _categories = _user.devices.categories;
-    _coolers = _user.devices.coolers;
-    _powers = _user.devices.powers;
+    _categories = _user!.devices.categories;
+    _coolers = _user!.devices.coolers;
+    _powers = _user!.devices.powers;
+    print("User Devices from App Controller : ${_user!.devices.toString()}");
 
-    print("User Devices from App Controller : ${_user.devices.toString()}");
+    notifyListeners();
+  }
+
+  setUserDevices(UserDevices devices){
+    _categories = devices.categories;
+    _coolers = devices.coolers;
+    _powers = devices.powers;
+    notifyListeners();
   }
 
   UserDetail getUserDetail() {
-    return _user.userDetail;
+    return _user!.userDetail;
   }
+
 
   List<Cooler> getCoolers() => _coolers;
 

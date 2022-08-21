@@ -31,23 +31,6 @@ class AuthLocalDataSourceImpl implements AuthDataSource{
   }
 
   @override
-  Future<ChiscoResponse> refreshToken(String token) {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> loadToken() async{
-    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    final String accessToken = sharedPreferences.getString("access_token") ?? '';
-    final String refreshToken = sharedPreferences.getString("refresh_token") ?? '';
-    final String detail = sharedPreferences.getString('detail') ?? '';
-
-    //TokenSingleton().update(accessToken, refreshToken, detail);
-  }
-
-  @override
   void saveToken(CheckOtpResponse response) async{
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
@@ -57,7 +40,7 @@ class AuthLocalDataSourceImpl implements AuthDataSource{
 
     print("saved Tokens");
 
-    loadToken();
+
   }
 
   @override

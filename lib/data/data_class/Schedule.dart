@@ -12,7 +12,7 @@ class Schedule {
             id: json['_id'],
             enable: json['enable'], 
             end: json['end'] ,
-            repeat: json['repeat'],
+            repeat: List<String>.from(json['repeat']),
             start: json['start'], 
         );
     }

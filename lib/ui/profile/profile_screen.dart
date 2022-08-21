@@ -24,19 +24,15 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProfileController controller = Provider.of<ProfileController>(context);
-    UserDetail detail = controller.init();
-    final TextEditingController nameController =
-        TextEditingController(text: detail.fullName);
-    final TextEditingController numberController =
-        TextEditingController(text: detail.phoneNumber);
-    final TextEditingController locationController =
-        TextEditingController(text: detail.address);
+    //UserDetail detail = controller.init();
+
 
     double width = MediaQuery.of(context).size.width;
-    final mediaQuery =
-        MediaQueryData.fromWindow(WidgetsBinding.instance.window);
+    final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     double height = MediaQuery.of(context).size.height;
-
+    if(!controller.isPageLoading){
+      controller.init();
+    }
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: false,
@@ -86,8 +82,8 @@ class ProfileScreen extends StatelessWidget {
                     ),
                   ),
                   ChiscoTextField(
-                    controller: nameController,
-                    label: 'نام و نام خانوادگی',
+                    controller: controller.nameController,
+                    label: 'نام و نام خانوادگی :',
                     icon: USER,
                     hintText: 'مثلا مهدی ابوالحسنی',
                     hasLabel: true,
@@ -96,7 +92,7 @@ class ProfileScreen extends StatelessWidget {
                     height: 15,
                   ),
                   ChiscoFixedTextField(
-                      icon: PHONE, label: 'شماره تماس', text: detail.phoneNumber),
+                      icon: PHONE, label: 'شماره تماس', text: controller.numberController.text),
 
                   const SizedBox(
                     height: 25,
@@ -107,8 +103,8 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   ChiscoTextField(
-                    controller: locationController,
-                    label: 'محل سکونت',
+                    controller: controller.locationController,
+                    label: 'محل سکونت :',
                     icon: LOCATION,
                     hintText: ' فارس شیراز',
                     hasLabel: true,
@@ -118,8 +114,8 @@ class ProfileScreen extends StatelessWidget {
 
                   ChiscoTimeSelector(
                       icon: CAKE,
-                      label: 'تاریخ تولد',
-                      text: controller.selectedDate,
+                      label: 'تاریخ تولد:',
+                      text: controller.selectedStringDate,
                       isHint: controller.isHintDate,
                       onClick: () async {
                         var picker = await showPersianDatePicker(
@@ -127,10 +123,8 @@ class ProfileScreen extends StatelessWidget {
                             initialDate: Jalali.now(),
                             firstDate: Jalali(1330, 10),
                             lastDate: Jalali.now());
-
                         if (picker != null) {
-                          controller
-                              .changeSelectedDate(picker.formatCompactDate());
+                          controller.changeSelectedDate(picker.toDateTime());
                         }
                       }),
 
@@ -139,16 +133,15 @@ class ProfileScreen extends StatelessWidget {
                     child: Align(
                         alignment: Alignment.bottomCenter,
                         child: Padding(
-                          padding: const EdgeInsets.only(bottom: 15),
+                          padding: const EdgeInsets.only(bottom: 10),
                           child: ChiscoButton(
                             text: 'ثبت و ذخیره اطلاعات',
                             onClick: () {
                               controller.submitEditUserBtnClicked(
-                                  nameController.text,
-                                  controller.selectedDate,
-                                  locationController.text);
+                                  controller.nameController.text,
+                                  controller.selectedStringDate,
+                                  controller.locationController.text);
 
-                              print(numberController.text);
                             },
                             hasIcon: false,
                             icon: '',

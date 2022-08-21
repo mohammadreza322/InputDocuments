@@ -9,7 +9,7 @@ abstract class AuthDataSource {
 
   Future<ChiscoResponse> checkUserOtp(String smsId,String code);
 
-  Future<ChiscoResponse> refreshToken(String token);
+
 
   Future<ChiscoResponse> getUserDevices();
 
@@ -17,7 +17,7 @@ abstract class AuthDataSource {
 
   void saveToken(CheckOtpResponse response) ;
 
-  Future<void> loadToken();
+
 
 
 }

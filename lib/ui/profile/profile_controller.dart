@@ -4,35 +4,45 @@ import 'package:chisco/data/data_class/UserDetail.dart';
 import 'package:chisco/data/repository/account/account_repository.dart';
 import 'package:chisco/ui/main/app_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfileController extends ChangeNotifier {
   final BuildContext context;
   AccountRepositoryImpl accountRepositoryImpl = AccountRepositoryImpl();
-  String selectedDate = '';
-
+  String selectedStringDate = '';
+  int selectedDateLong = 0;
   bool isHintDate = true;
+  bool isPageLoading = false;
+
+  final TextEditingController nameController = TextEditingController();
+  final TextEditingController numberController = TextEditingController();
+  final TextEditingController locationController = TextEditingController();
 
   ProfileController(this.context);
 
-  UserDetail init() {
+  init() {
+    isPageLoading = true;
     UserDetail userDetail = Provider.of<AppController>(context).getUserDetail();
-    selectedDate =
-        userDetail.birthday.length == 0 ? '1377/09/25' : userDetail.birthday;
-    return userDetail;
+    nameController.text = userDetail.fullName;
+    numberController.text = userDetail.phoneNumber;
+    locationController.text = userDetail.address;
+    selectedStringDate = userDetail.birthday.isEmpty ? '1377/09/25' : userDetail.birthday;
+    //jalali Birthday
   }
 
-  changeSelectedDate(String selectedDate) {
-    this.selectedDate = selectedDate;
-    print(selectedDate.toString());
-    this.isHintDate = false;
+  changeSelectedDate(DateTime selectedDate) {
+    Jalali jalali = Jalali.fromDateTime(selectedDate);
+    selectedStringDate = jalali.formatCompactDate();
+    selectedDateLong = selectedDate.millisecondsSinceEpoch;
+    isHintDate = false;
     notifyListeners();
   }
 
   submitEditUserBtnClicked(
       String name, String? birthday, String? location) async {
     ChiscoResponse response = await accountRepositoryImpl.editUserInformation(
-        location, birthday, name);
+        location, selectedDateLong, name);
 
     if (!response.status) {
       print("Error Edit User");

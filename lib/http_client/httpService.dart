@@ -4,19 +4,89 @@ import 'package:chisco/data/data_class/ChiscoResponse.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+enum RequestType { post, get, put }
+
 final httpClient = ChiscoClient();
+
 class ChiscoClient {
   late final Dio _dio;
+  RequestType requestType = RequestType.post;
 
-  ChiscoClient()  {
+  ChiscoClient() {
     _dio = Dio(BaseOptions(
       baseUrl: "https://chisco.tech/api/",
+      connectTimeout: 7000,
+      receiveTimeout: 7000,
+      sendTimeout: 7000,
       receiveDataWhenStatusError: true,
     ))
       ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
   }
 
-  Future<ChiscoResponse> get(String url) async {
+  Future<ChiscoResponse> request(
+      {RequestType type = RequestType.post,
+      required String url,
+      dynamic data}) async {
+    final SharedPreferences sharedPreferences =
+        await SharedPreferences.getInstance();
+
+    try {
+      Response response;
+      if (type == RequestType.post) {
+        response = await _dio.post(
+          url,
+          data: data,
+          options: Options(headers: {
+            "x-auth-token": sharedPreferences.getString("access_token")
+          }),
+        );
+      } else if (type == RequestType.put) {
+        response = await _dio.put(
+          url,
+          data: data,
+          options: Options(headers: {
+            "x-auth-token": sharedPreferences.getString("access_token")
+          }),
+        );
+      } else {
+        response = await _dio.get(
+          url,
+          options: Options(headers: {
+            "x-auth-token": sharedPreferences.getString("access_token")
+          }),
+        );
+      }
+      return ChiscoResponse(
+          status: true, code: response.statusCode, object: response.data);
+    } on SocketException {
+      return ChiscoResponse(
+        status: false,
+        code: 406,
+        errorMessage: 'اتصال انترنت خود را بررسی کنید!',
+      );
+    } on DioError catch (error) {
+      if (error.type == DioErrorType.connectTimeout) {
+        print("Errorrrrrrrrrr Internettttttt");
+        return ChiscoResponse(
+            status: false,
+            code: 100,
+            errorMessage: "اتصال به اینترنت خود را بررسی کنید");
+      }
+
+      print(error.message);
+      if (error.response!.statusCode == 401) {
+        return ChiscoResponse(status: false, code: error.response?.statusCode);
+      } else {
+        return ChiscoResponse(
+          status: false,
+          code: error.response!.statusCode,
+          errorMessage: error.response?.data['message'],
+        );
+      }
+    }
+  }
+
+/* Future<ChiscoResponse> get(String url) async {
     final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
     try {
       Response response = await _dio.get(url,options:Options(
@@ -31,6 +101,12 @@ class ChiscoClient {
         code: 406,
         errorMessage: 'اتصال انترنت خود را بررسی کنید!',);
     } on DioError catch (error) {
+      if(error.type ==DioErrorType.connectTimeout){
+        print("Errorrrrrrrrrr Internettttttt");
+        return ChiscoResponse(status: false, code: 100,errorMessage: "اتصال به اینترنت خود را بررسی کنید");
+      }
+
+      print(error.message);
       if (error.response!.statusCode == 401) {
         return ChiscoResponse(status: false, code:error.response?.statusCode);
       } else {
@@ -95,5 +171,5 @@ class ChiscoClient {
             object: error.response?.data);
       }
     }
-  }
+  }*/
 }

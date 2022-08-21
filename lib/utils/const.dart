@@ -60,7 +60,7 @@ const ARROW_BOTTOM = 'assets/images/svg/arrow_bottom.svg';
 
 const CLOCK = 'assets/images/svg/clock.svg';
 const SCHEDULE_ARROW = 'assets/images/svg/arrow.svg';
-
+const TRASH = 'assets/images/svg/trash.svg';
 
 const ACTIVE_SWITCH_THUMB = 'assets/images/switch_thumb_on.png';
 const OFF_SWITCH_THUMB = 'assets/images/switch_thumb_off.png';

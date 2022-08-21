@@ -14,7 +14,7 @@ class ScheduleRemoteDataSource extends ScheduleDataSource {
 
   @override
   Future<ChiscoResponse> saveSchedule(AddSchedule schedule) async {
-    ChiscoResponse response = await _client.post(url: 'device/add-schedule',
+    ChiscoResponse response = await _client.request(url: 'device/schedule',
         data: schedule.toJson());
     return response;
   }

@@ -10,13 +10,13 @@ class AuthRemoteDataSourceImpl implements AuthDataSource {
 
   @override
   Future<ChiscoResponse> checkUserOtp(String smsId, String code) async {
-    final response = await httpClient.post(url: 'check-otp', data: {"smsId": smsId, "code": code});
+    final response = await httpClient.request(url: 'check-otp', data: {"smsId": smsId, "code": code});
     return response;
   }
 
   @override
   Future<ChiscoResponse> submitMobile(String number) async {
-    final response =await httpClient.post(url: 'get-mobile', data: {"phoneNumber": number});
+    final response =await httpClient.request(url: 'get-mobile', data: {"phoneNumber": number});
     print(response.errorMessage);
 
     return response;
@@ -24,29 +24,19 @@ class AuthRemoteDataSourceImpl implements AuthDataSource {
 
   @override
   Future<ChiscoResponse> submitUserName(String fullName) async {
-    final response = await httpClient.post(url: 'user/get-name', data: {"fullName": fullName});
+    final response = await httpClient.request(url: 'user/get-name', data: {"fullName": fullName});
     print(response.object.toString());
     return response;
   }
 
-  @override
-  Future<ChiscoResponse> refreshToken(String token) async {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
-  }
+
   @override
   Future<ChiscoResponse> getUserDevices() async{
     print("response.object");
-    final response = await httpClient.get('user');
+    final response = await httpClient.request(type: RequestType.get,url:'user');
     print(response.object);
     return response;
 
-  }
-
-
-  @override
-  Future<void> loadToken() async {
-    // TODO: implement loadToken
   }
 
   @override

@@ -15,22 +15,32 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class HomeController extends ChangeNotifier {
+
   final DeviceRepositoryImpl deviceRepository = DeviceRepositoryImpl();
   final BuildContext context;
+  HomeController(this.context);
+
   List<Cooler> _coolers = [];
   List<Power> _powers = [];
   List<String> _categories = [];
   List<Device> devices = [];
+  List<Device> _listDevices = [];
+  List<Device> _filteredDevices = [];
+
   User? user;
+
   bool isPageLoading = false;
 
-  HomeController(this.context);
+  String selectedCategory = 'نمایش همه';
+
 
   init() {
+    print("ok1");
     isPageLoading = true;
     user = Provider.of<AppController>(context).getUser();
     _coolers = user!.devices.coolers;
     _categories = user!.devices.categories;
+    _categories.insert(0, 'نمایش همه');
     _powers = user!.devices.powers;
     convertDevices();
   }
@@ -40,7 +50,7 @@ class HomeController extends ChangeNotifier {
     if (!response.status) {
       print("Error...........");
       return;
-    }else {
+    } else {
       print(response.object.toString());
       AddDeviceResponse addDeviceResponse = response.object;
       _powers = addDeviceResponse.devices.powers;
@@ -49,11 +59,11 @@ class HomeController extends ChangeNotifier {
       convertDevices();
       Navigator.pop(context);
     }
-
   }
-  addPowerBtnClicked(AddPower power) async{
+
+  addPowerBtnClicked(AddPower power) async {
     ChiscoResponse response = await deviceRepository.addPower(power);
-    if(!response.status){
+    if (!response.status) {
       print("Error From add power");
       return;
     }
@@ -61,19 +71,23 @@ class HomeController extends ChangeNotifier {
 
     print(response.object.toString());
     Navigator.pop(context);
-
   }
 
-  List<Device> _listDevices = [];
-
-  List<Device> _filteredDevices = [];
-
-  String selectedCategory = 'نمایش همه';
 
   filteringDevices(String category) {
-    //_filteredDevices = _userDevices.where((element) => element.categories == category).toList();
-    selectedCategory = category;
-    print(selectedCategory);
+    print('Devices : ${_listDevices.toString()}');
+    if (category == 'نمایش همه') {
+      filteredDevices.clear();
+      _filteredDevices.addAll(_listDevices);
+      selectedCategory = category;
+    } else {
+
+      print('else');
+      _filteredDevices = _listDevices.where((element) =>element.category == category).toList();
+      print(filteredDevices.toString());
+      selectedCategory = category;
+      print(selectedCategory);
+    }
     notifyListeners();
   }
 

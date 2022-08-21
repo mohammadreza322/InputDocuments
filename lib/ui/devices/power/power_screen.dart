@@ -27,7 +27,7 @@ class PowerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final args = ModalRoute.of(context)!.settings.arguments as Power;
+    final selectedPower = ModalRoute.of(context)!.settings.arguments as Power;
 
     return SafeArea(
         child: Container(
@@ -128,11 +128,11 @@ class PowerScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       ChiscoText(
-                                        text: args.name,
+                                        text: selectedPower.name,
                                         fontWeight: FontWeight.w400,
                                       ),
                                       ChiscoText(
-                                        text: args.category,
+                                        text: selectedPower.category,
                                         fontWeight: FontWeight.w400,
                                         textColor: Styles.secondaryTextColor,
                                       )
@@ -142,8 +142,7 @@ class PowerScreen extends StatelessWidget {
                                 scheduleBtn(
                                   width: 32,
                                   onClick: () {
-                                    Navigator.pushNamed(context, schedulePage,
-                                        arguments: args);
+                                    Navigator.pushNamed(context, schedulePage, arguments: selectedPower);
                                   },
                                 ),
                                 const SizedBox(
@@ -175,11 +174,11 @@ class PowerScreen extends StatelessWidget {
                               child: ScrollConfiguration(
                             behavior: ChiscoScrollBehavior(),
                             child: ListView.builder(
-                              itemCount: args.connectors.length,
+                              itemCount: selectedPower.connectors.length,
                               shrinkWrap: false,
                               controller: scrollController,
                               itemBuilder: (context, index) {
-                                Connector connector = args.connectors[index];
+                                Connector connector = selectedPower.connectors[index];
                                 return Container(
                                   margin: EdgeInsets.symmetric(
                                     vertical:

@@ -1,3 +1,4 @@
+import 'package:chisco/ui/devices/edit/edit_controller.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:chisco/utils/converter.dart';
 import 'package:chisco/utils/theme.dart';
@@ -6,26 +7,22 @@ import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:chisco/ui/widget/chisco_textfield.dart';
 import 'package:chisco/ui/widget/list_handler.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_svg/flutter_svg.dart';
 
 class EditPowerBottomSheet extends StatelessWidget {
   const EditPowerBottomSheet({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
+    EditDeviceController controller = EditDeviceController(context);
 
     final TextEditingController serialTextController = TextEditingController();
     final TextEditingController brandTextController = TextEditingController();
     //final TextEditingController nameTextController = TextEditingController();
-    final TextEditingController categoryTextController = TextEditingController();
+    final TextEditingController categoryTextController =
+        TextEditingController();
     final TextEditingController powerOutletFirst = TextEditingController();
     final TextEditingController powerOutletSecond = TextEditingController();
     final TextEditingController powerOutletThird = TextEditingController();
@@ -44,7 +41,7 @@ class EditPowerBottomSheet extends StatelessWidget {
             height: 15,
           ),
           const ChiscoText(
-            text: 'افزودن کنترلر کولر جدید',
+            text: 'ویرایش اطلاعات دستگاه',
             fontWeight: FontWeight.w400,
           ),
           const SizedBox(
@@ -59,35 +56,28 @@ class EditPowerBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-
           ChiscoTextField(
             controller: brandTextController,
-            hintText: 'سامسونگ - b78s8',
-            icon: BRAND,
-            label: "برند و مدل کولر",
+            icon: DEVICE,
+            label: "اسم نمایشی سه راهی:",
+            hintText: '',
           ),
           const SizedBox(
             height: 10,
           ),
           ChiscoTextField(
             controller: categoryTextController,
-            hintText: 'مانند اتاق مهمان',
+            hintText: '',
             icon: CATEGORY,
             label: "دسته‌بندی:",
           ),
-
-
           Theme(
             data: theme,
             child: ExpansionTile(
-
                 collapsedIconColor: Styles.primaryColor,
                 iconColor: Styles.primaryColor,
-
                 title: const ChiscoText(
                     text: 'اسم نمایشی پریز ها پورت ها(دلخواه)'),
-
-
                 children: [
                   ChiscoTextField(
                     controller: powerOutletFirst,
@@ -140,37 +130,48 @@ class EditPowerBottomSheet extends StatelessWidget {
                     icon: USB,
                     label: "پورت 2:",
                   ),
-
                 ]),
           ),
-        SizedBox(height: 16,),
-          Container(
-
-            height: ChiscoConverter.calculateWidgetWidth(width, buttonHeight),
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(vertical: 14),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
-                boxShadow: [Styles.getBoxShadow(0.07)],
-                gradient: const LinearGradient(
-                    colors: [Color(0xffCC2044), Color(0xffDB244B)])),
-            child: const Center(
-              child: ChiscoText(
-                text: 'حذف دستگاه',
-                fontWeight: FontWeight.w500,
-                textColor: Colors.white,
-              ),
-            ),
-          ),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
-
-          ChiscoButton(text: 'تایید و افزودن دستگاه',
-            onClick: () {},
-            icon: '',
-            hasIcon: false,)
-
+          Row(
+            children: [
+              Flexible(
+                child: GestureDetector(
+                  onTap: () {
+                    print("delete clicked");
+                  },
+                  child: Container(
+                    height: ChiscoConverter.calculateWidgetWidth(
+                        width, buttonHeight),
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [Styles.getBoxShadow(0.07)],
+                        gradient: const LinearGradient(
+                            colors: [Color(0xffD92249), Color(0xffCC2045)])),
+                    child: Center(child: SvgPicture.asset(TRASH)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                flex: 5,
+                child: ChiscoButton(
+                  text: 'تایید و ثبت تغییرات',
+                  onClick: () {
+                    print('edit Cooler clicked');
+                  },
+                  icon: '',
+                  hasIcon: false,
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );

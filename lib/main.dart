@@ -9,5 +9,5 @@ void main() async{
   AuthRepositoryImpl();
   repository.loadToken();
   */
-  runApp(const MyApp());
+  runApp( MyApp());
 }

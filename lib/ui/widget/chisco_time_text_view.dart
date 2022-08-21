@@ -63,7 +63,6 @@ class ChiscoTimeSelector extends StatelessWidget {
               width: 4,
             ),
             ChiscoText(
-
               text: text,
               textColor: isHint
                   ? Styles.secondaryTextColor

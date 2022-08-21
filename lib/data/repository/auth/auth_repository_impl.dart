@@ -24,9 +24,8 @@ class AuthRepositoryImpl extends AuthRepository {
     if (response.status) {
       CheckOtpResponse otpResponse = CheckOtpResponse.fromJson(response.object);
 
-      authRemoteDataSource.saveToken(otpResponse);
-      ChiscoResponse result = ChiscoResponse(
-          status: response.status, code: response.code, object: otpResponse);
+      authLocalDataSource.saveToken(otpResponse);
+      ChiscoResponse result = ChiscoResponse(status: response.status, code: response.code, object: otpResponse);
       return result;
     } else {
       return response;
@@ -76,19 +75,5 @@ class AuthRepositoryImpl extends AuthRepository {
     }
   }
 
-  Future<void> _saveTokens(CheckOtpResponse response) async {
 
-  }
-
-/*  Future<void> loadToken() async {
-    authLocalDataSource.loadToken();
-  }*/
-
-
-
-  @override
-  Future<ChiscoResponse> refreshToken(String token) {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
-  }
 }

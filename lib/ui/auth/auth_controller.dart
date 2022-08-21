@@ -61,6 +61,7 @@ class AuthController extends ChangeNotifier {
       ChiscoResponse userDevices = await repository.getUserDevices();
       await Provider.of<AppController>(context, listen: false).setData(userDevices.object);
       Navigator.pushReplacementNamed(context, homePage);
+      print("Owwwkke");
     }
     //show Flush
   }
@@ -73,7 +74,6 @@ class AuthController extends ChangeNotifier {
     }
     ChiscoResponse userDevices = await repository.getUserDevices();
     await Provider.of<AppController>(context, listen: false).setData(userDevices.object);
-
     // print("Print From Controller : ${userDevices.object.toString()}");
     MessageResponse messageResponse = response.object;
     //print("Message Response : ${messageResponse.message}");
