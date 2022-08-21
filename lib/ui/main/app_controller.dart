@@ -1,3 +1,4 @@
+import 'package:chisco/data/data_class/AddDeviceResponse.dart';
 import 'package:chisco/data/data_class/Cooler.dart';
 import 'package:chisco/data/data_class/Device.dart';
 import 'package:chisco/data/data_class/UserDetail.dart';
@@ -18,12 +19,16 @@ class AppController extends ChangeNotifier {
 
   List<String> _categories = [];
 
+
+  List<Device> _userDevicesList =[];
+
   setData(User value) {
     _user = value;
     _categories = _user!.devices.categories;
     _coolers = _user!.devices.coolers;
     _powers = _user!.devices.powers;
     print("User Devices from App Controller : ${_user!.devices.toString()}");
+    convertDeviceList();
 
     notifyListeners();
   }
@@ -38,7 +43,6 @@ class AppController extends ChangeNotifier {
   UserDetail getUserDetail() {
     return _user!.userDetail;
   }
-
 
   List<Cooler> getCoolers() => _coolers;
 
@@ -55,4 +59,21 @@ class AppController extends ChangeNotifier {
       return true;
     }
   }
+
+  convertDeviceList(){
+    _userDevicesList = List.from(_powers)..addAll(_coolers);
+    print("User Device List : ${_userDevicesList.toString()}");
+  }
+
+
+
+  refreshData(AddDeviceResponse response){
+    _coolers = response.devices.coolers;
+    _powers = response.devices.powers;
+    _categories = response.devices.categories;
+    notifyListeners();
+  }
+
+  get getUserDevicesList=>_userDevicesList;
+
 }

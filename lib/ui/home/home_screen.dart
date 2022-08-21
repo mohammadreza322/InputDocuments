@@ -32,6 +32,9 @@ class HomeScreen extends StatelessWidget {
       homeController.init();
       homeController.filteringDevices('نمایش همه');
     }
+
+    homeController.homeList();
+
     return SafeArea(
       child: Container(
         width: double.infinity,
@@ -90,12 +93,12 @@ class HomeScreen extends StatelessWidget {
                                 HeaderItem(
                                   titleText: 'کنترلر',
                                   icon: COOLER,
-                                  counterText: appController.getCoolers().length.toString(),
+                                  counterText: homeController.getCoolerCount.toString(),
                                 ),
                                 HeaderItem(
                                   titleText: 'سه راهی',
                                   icon: SOCKET,
-                                  counterText: appController.getPowers().length.toString(),
+                                  counterText: homeController.getPowerCount.toString(),
                                 )
                               ],
                             ),

@@ -20,12 +20,13 @@ class HomeController extends ChangeNotifier {
   final BuildContext context;
   HomeController(this.context);
 
-  List<Cooler> _coolers = [];
-  List<Power> _powers = [];
+
   List<String> _categories = [];
   List<Device> devices = [];
   List<Device> _listDevices = [];
   List<Device> _filteredDevices = [];
+  int _coolerCount = 0;
+  int _powerCount =0;
 
   User? user;
 
@@ -33,17 +34,32 @@ class HomeController extends ChangeNotifier {
 
   String selectedCategory = 'نمایش همه';
 
+  /*refreshDevice(){
+    User? u = Provider.of<AppController>(context).getUser();
+    _listDevices = [
+      ...u!.devices.powers,
+      ...u.devices.coolers
+    ];
+  }*/
+  List<String> get categories => _categories;
+
+  List<Device> get filteredDevices => _filteredDevices;
+
+  get getListDevices => _listDevices;
+
+  get getCoolerCount =>_coolerCount;
+  get getPowerCount =>_powerCount;
+
 
   init() {
     print("ok1");
     isPageLoading = true;
-    user = Provider.of<AppController>(context).getUser();
-    _coolers = user!.devices.coolers;
-    _categories = user!.devices.categories;
-    _categories.insert(0, 'نمایش همه');
-    _powers = user!.devices.powers;
-    convertDevices();
+    AppController appController = Provider.of<AppController>(context);
+    user = appController.getUser();
+
+
   }
+
 
   addCoolerBtnClicked(AddCooler cooler) async {
     ChiscoResponse response = await deviceRepository.addCooler(cooler);
@@ -53,10 +69,7 @@ class HomeController extends ChangeNotifier {
     } else {
       print(response.object.toString());
       AddDeviceResponse addDeviceResponse = response.object;
-      _powers = addDeviceResponse.devices.powers;
-      _coolers = addDeviceResponse.devices.coolers;
-      _categories = addDeviceResponse.devices.categories;
-      convertDevices();
+
       Navigator.pop(context);
     }
   }
@@ -91,17 +104,25 @@ class HomeController extends ChangeNotifier {
     notifyListeners();
   }
 
-  List<Cooler> get coolers => _coolers;
 
-  List<Power> get powers => _powers;
 
-  List<String> get categories => _categories;
+  homeList(){
+    _coolerCount =Provider.of<AppController>(context).getCoolers().length;
+    _powerCount = Provider.of<AppController>(context).getPowers().length;
+    _listDevices = Provider.of<AppController>(context).getUserDevicesList;
+    _categories = Provider.of<AppController>(context).getCategories;
 
-  List<Device> get filteredDevices => _filteredDevices;
+    if(!_categories.contains('نمایش همه')) {
+      _categories.insert(0, 'نمایش همه');
+    }
+    filteringDevices(selectedCategory);
+  }
 
-  get getListDevices => _listDevices;
-
-  convertDevices() {
-    _listDevices = List.from(_coolers)..addAll(_powers);
+  isUserHaveDevice() {
+    if (_listDevices.length ==0) {
+      return false;
+    } else {
+      return true;
+    }
   }
 }

@@ -51,7 +51,7 @@ class EditPowerBottomSheet extends StatelessWidget {
             controller: serialTextController,
             hintText: 'مانند Ch-32145267469',
             icon: SERIAL,
-            label: "شماره سریال",
+            label: "شماره سریال:",
           ),
           const SizedBox(
             height: 10,
@@ -140,7 +140,7 @@ class EditPowerBottomSheet extends StatelessWidget {
               Flexible(
                 child: GestureDetector(
                   onTap: () {
-                    print("delete clicked");
+                    print("delete  power clicked");
                   },
                   child: Container(
                     height: ChiscoConverter.calculateWidgetWidth(
@@ -164,7 +164,7 @@ class EditPowerBottomSheet extends StatelessWidget {
                 child: ChiscoButton(
                   text: 'تایید و ثبت تغییرات',
                   onClick: () {
-                    print('edit Cooler clicked');
+                    print('edit power clicked');
                   },
                   icon: '',
                   hasIcon: false,
