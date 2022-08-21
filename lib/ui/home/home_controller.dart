@@ -68,13 +68,15 @@ class HomeController extends ChangeNotifier {
       return;
     } else {
       print(response.object.toString());
-      AddDeviceResponse addDeviceResponse = response.object;
+
+      Provider.of<AppController>(context,listen: false).refreshData(response.object);
 
       Navigator.pop(context);
     }
   }
 
   addPowerBtnClicked(AddPower power) async {
+    print("power : ${power.toString()}");
     ChiscoResponse response = await deviceRepository.addPower(power);
     if (!response.status) {
       print("Error From add power");
@@ -83,6 +85,8 @@ class HomeController extends ChangeNotifier {
     // bind response to all lists
 
     print(response.object.toString());
+    Provider.of<AppController>(context,listen: false).refreshData(response.object);
+    notifyListeners();
     Navigator.pop(context);
   }
 
@@ -107,10 +111,10 @@ class HomeController extends ChangeNotifier {
 
 
   homeList(){
-    _coolerCount =Provider.of<AppController>(context).getCoolers().length;
-    _powerCount = Provider.of<AppController>(context).getPowers().length;
-    _listDevices = Provider.of<AppController>(context).getUserDevicesList;
-    _categories = Provider.of<AppController>(context).getCategories;
+    _coolerCount =Provider.of<AppController>(context,listen: false).getCoolers().length;
+    _powerCount = Provider.of<AppController>(context,listen: false).getPowers().length;
+    _listDevices = Provider.of<AppController>(context,listen: false).getUserDevicesList;
+    _categories = Provider.of<AppController>(context,listen: false).getCategories;
 
     if(!_categories.contains('نمایش همه')) {
       _categories.insert(0, 'نمایش همه');

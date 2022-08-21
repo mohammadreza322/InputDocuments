@@ -49,9 +49,9 @@ class DeviceGridList extends StatelessWidget {
                       return  GestureDetector(
                         onTap: (){
                           if(devices[index].deviceType==DeviceType.cooler){
-                            Navigator.pushNamed(context, coolerDevicePage,arguments: devices[index]);
+                            Navigator.pushNamed(context, coolerDevicePage,arguments: devices[index].serialNumber);
                           }else{
-                            Navigator.pushNamed(context, powerDevicePage,arguments: devices[index]);
+                            Navigator.pushNamed(context, powerDevicePage,arguments: devices[index].serialNumber);
                           }
                         },
                         child: DeviceListItem(

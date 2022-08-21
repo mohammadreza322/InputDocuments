@@ -37,7 +37,6 @@ class AddScheduleController extends ChangeNotifier {
     offTimeController.text = "${oneHourLater.to24hours()}";
 
     onTimeController.text = "${TimeOfDay.now().to24hours()}";
-
   }
 
   changeOnText(String onTime) {
@@ -92,14 +91,17 @@ class AddScheduleController extends ChangeNotifier {
     if (response.status) {
       AddDeviceResponse deviceResponse = response.object;
 
-      Provider.of<AppController>(context, listen: false).setUserDevices(deviceResponse.devices);
-    notifyListeners();
+      Provider.of<AppController>(context, listen: false).refreshData(deviceResponse);
+
+      notifyListeners();
       Navigator.pop(context);
+
     } else {
       print(response.errorMessage);
       print('status 4111 ');
     }
   }
+  addPowerScheduleBtnClicked(){
+
+  }
 }
-
-

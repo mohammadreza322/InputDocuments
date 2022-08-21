@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
+import 'package:chisco/data/data_source/auth/auth_local_data_source_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -11,7 +12,7 @@ final httpClient = ChiscoClient();
 class ChiscoClient {
   late final Dio _dio;
   RequestType requestType = RequestType.post;
-
+  AuthLocalDataSourceImpl localDataSourceImpl = AuthLocalDataSourceImpl();
   ChiscoClient() {
     _dio = Dio(BaseOptions(
       baseUrl: "https://chisco.tech/api/",
@@ -75,7 +76,23 @@ class ChiscoClient {
 
       print(error.message);
       if (error.response!.statusCode == 401) {
-        return ChiscoResponse(status: false, code: error.response?.statusCode);
+        try {
+          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          String? accessToken = sharedPreferences.getString('access_token');
+          String? refreshToken = sharedPreferences.getString('refresh_token');
+          String? detail = sharedPreferences.getString('detail');
+
+          Response<dynamic> refreshRequest = await _dio.post("user/refresh-token",
+              options: Options(headers: {"x-auth-token": accessToken}), data: {'refreshToken': refreshToken});
+
+          localDataSourceImpl.saveToken(refreshRequest.data['accessToken'], refreshRequest.data['refreshToken'], detail!);
+
+          return request(url: url,data: data,type: type);
+        } catch (err) {
+          return ChiscoResponse(status: false,code: 401,errorMessage: err.toString());
+        }
+
+        //return ChiscoResponse(status: false, code: error.response?.statusCode);
       } else {
         return ChiscoResponse(
           status: false,

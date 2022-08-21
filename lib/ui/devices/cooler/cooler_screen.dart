@@ -8,6 +8,7 @@ import 'package:chisco/ui/devices/cooler/widgets/schedule_btn.dart';
 import 'package:chisco/ui/devices/cooler/widgets/temp_controller.dart';
 import 'package:chisco/ui/devices/widgets/device_appbar.dart';
 import 'package:chisco/ui/devices/widgets/device_header.dart';
+import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:chisco/utils/converter.dart';
 import 'package:chisco/utils/theme.dart';
@@ -27,9 +28,13 @@ class CoolerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final selectedCooler = ModalRoute.of(context)!.settings.arguments as Cooler;
+    final serialNumber = ModalRoute.of(context)!.settings.arguments as String;
 
     CoolerController controller = Provider.of<CoolerController>(context);
+
+    Cooler selectedCooler =Provider.of<AppController>(context).getCoolerWithSerialNumber(serialNumber);
+
+
     return SafeArea(
         child: Scaffold(
             backgroundColor: Styles.backGroundColor,

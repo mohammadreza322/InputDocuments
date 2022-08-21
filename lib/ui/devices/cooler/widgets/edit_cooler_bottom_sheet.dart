@@ -2,6 +2,7 @@ import 'package:chisco/data/data_class/AddCoolerRequest.dart';
 import 'package:chisco/data/data_class/Cooler.dart';
 import 'package:chisco/data/data_class/EditCoolerRequest.dart';
 import 'package:chisco/ui/devices/edit/edit_controller.dart';
+import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:chisco/utils/converter.dart';
 import 'package:chisco/utils/theme.dart';
@@ -12,6 +13,7 @@ import 'package:chisco/ui/widget/chisco_unchange_textfield.dart';
 import 'package:chisco/ui/widget/list_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class EditCoolerBottomSheet extends StatelessWidget {
   final Cooler selectedCooler;

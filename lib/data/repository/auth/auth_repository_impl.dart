@@ -24,7 +24,7 @@ class AuthRepositoryImpl extends AuthRepository {
     if (response.status) {
       CheckOtpResponse otpResponse = CheckOtpResponse.fromJson(response.object);
 
-      authLocalDataSource.saveToken(otpResponse);
+      authLocalDataSource.saveToken(otpResponse.accessToken,otpResponse.refreshToken,otpResponse.details);
       ChiscoResponse result = ChiscoResponse(status: response.status, code: response.code, object: otpResponse);
       return result;
     } else {

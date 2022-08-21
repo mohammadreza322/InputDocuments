@@ -65,7 +65,6 @@ class AddScheduleBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
@@ -119,6 +118,7 @@ class AddScheduleBottomSheet extends StatelessWidget {
                                 text: item.name,
                               )))
                           .toList(),
+                      // value: items[0].name,
                       onChanged: (value) {
                         controller.changeDropDownValue(value as String);
                       },
@@ -142,7 +142,8 @@ class AddScheduleBottomSheet extends StatelessWidget {
                             const ChiscoText(
                               fontWeight: FontWeight.w400,
                               text: 'اسم پورت یا پریز:',
-                            )
+                            ),
+                            ChiscoText(text: controller.dropDownString)
                           ],
                         ),
                       ),
@@ -159,7 +160,6 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   ],
                 )
               : Container(),
-
           on || both
               ? ChiscoTimeSelector(
                   icon: CLOCK,
@@ -168,17 +168,15 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   text: controller.onTimeController.text,
                   onClick: () async {
                     var picked = await showPersianTimePicker(
-                      context: context,
-                      initialTime: TimeOfDay.now(),
-                      buttonTextStyle: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.w400),
-                      titleTextStyle: const TextStyle(
-                          fontSize: 12, fontWeight: FontWeight.w500),
-                      initialEntryMode: PTimePickerEntryMode.dial
-                    );
-                    if(picked!=null){
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                        buttonTextStyle: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w400),
+                        titleTextStyle: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w500),
+                        initialEntryMode: PTimePickerEntryMode.dial);
+                    if (picked != null) {
                       controller.changeOnText(picked.to24hours());
-
                     }
                   })
               : Container(),
@@ -203,10 +201,8 @@ class AddScheduleBottomSheet extends StatelessWidget {
                           fontSize: 12, fontWeight: FontWeight.w500),
                     );
 
-
-                    if(picked!=null){
+                    if (picked != null) {
                       controller.changeOffText(picked.to24hours());
-
                     }
                   })
               : Container(),

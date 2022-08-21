@@ -1,3 +1,4 @@
+
 class CheckOtpResponse {
   final String accessToken;
   final String details;

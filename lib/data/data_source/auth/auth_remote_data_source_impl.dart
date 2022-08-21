@@ -40,7 +40,7 @@ class AuthRemoteDataSourceImpl implements AuthDataSource {
   }
 
   @override
-  void saveToken(CheckOtpResponse response) {
+  void saveToken(String accessToken,String refreshToken,String detail) {
     // TODO: implement saveToken
   }
 

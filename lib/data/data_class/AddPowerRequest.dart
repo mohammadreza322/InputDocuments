@@ -13,13 +13,13 @@ class AddPower {
   AddPower(
       {required this.category,
       required this.name,
-      required this.power1,
-      required this.power2,
-      required this.power3,
-      required this.power4,
       required this.serialNumber,
-      required this.usb1,
-      required this.usb2});
+      this.power1 = '',
+      this.power2 = '',
+      this.power3 = '',
+      this.power4 = '',
+      this.usb1 = '',
+      this.usb2 = ''});
 
   factory AddPower.fromJson(Map<String, dynamic> json) {
     return AddPower(

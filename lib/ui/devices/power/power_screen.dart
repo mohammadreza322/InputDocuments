@@ -8,6 +8,7 @@ import 'package:chisco/ui/devices/power/widgets/power_header.dart';
 import 'package:chisco/ui/devices/power/widgets/power_list_item.dart';
 import 'package:chisco/ui/devices/schedule/schedule_controller.dart';
 import 'package:chisco/ui/devices/widgets/device_appbar.dart';
+import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/ui/widget/chisco_appbar.dart';
 import 'package:chisco/ui/widget/list_handler.dart';
 import 'package:chisco/ui/widget/scroll_behavior.dart';
@@ -27,7 +28,9 @@ class PowerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
-    final selectedPower = ModalRoute.of(context)!.settings.arguments as Power;
+    final serialNumber = ModalRoute.of(context)!.settings.arguments as String;
+    final selectedPower = Provider.of<AppController>(context,listen: false).getPowerWithSerialNumber(serialNumber);
+
 
     return SafeArea(
         child: Container(
@@ -152,7 +155,7 @@ class PowerScreen extends StatelessWidget {
                                     width: 32,
                                     onClick: () {
                                       showChiscoBottomSheet(context,
-                                          const EditPowerBottomSheet());
+                                           EditPowerBottomSheet(selectedPower: selectedPower,));
                                     }),
                                 const SizedBox(
                                   width: 10,

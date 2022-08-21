@@ -31,15 +31,13 @@ class AuthLocalDataSourceImpl implements AuthDataSource{
   }
 
   @override
-  void saveToken(CheckOtpResponse response) async{
+  void saveToken(String accessToken,String refreshToken,String detail) async{
+
     final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
-    sharedPreferences.setString("access_token", response.accessToken);
-    sharedPreferences.setString("refresh_token", response.refreshToken);
-    sharedPreferences.setString("detail", response.details);
-
+    sharedPreferences.setString("access_token", accessToken);
+    sharedPreferences.setString("refresh_token",refreshToken);
+    sharedPreferences.setString("detail", detail);
     print("saved Tokens");
-
 
   }
 

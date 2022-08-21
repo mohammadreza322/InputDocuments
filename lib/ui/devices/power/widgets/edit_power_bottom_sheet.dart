@@ -1,4 +1,7 @@
+import 'package:chisco/data/data_class/EditPowerRequest.dart';
+import 'package:chisco/data/data_class/Power.dart';
 import 'package:chisco/ui/devices/edit/edit_controller.dart';
+import 'package:chisco/ui/widget/chisco_unchange_textfield.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:chisco/utils/converter.dart';
 import 'package:chisco/utils/theme.dart';
@@ -10,25 +13,41 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class EditPowerBottomSheet extends StatelessWidget {
-  const EditPowerBottomSheet({Key? key}) : super(key: key);
+  final Power selectedPower;
+
+  const EditPowerBottomSheet({Key? key, required this.selectedPower})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery
+        .of(context)
+        .size
+        .height;
+    double width = MediaQuery
+        .of(context)
+        .size
+        .width;
     EditDeviceController controller = EditDeviceController(context);
 
-    final TextEditingController serialTextController = TextEditingController();
-    final TextEditingController brandTextController = TextEditingController();
-    //final TextEditingController nameTextController = TextEditingController();
-    final TextEditingController categoryTextController =
-        TextEditingController();
-    final TextEditingController powerOutletFirst = TextEditingController();
-    final TextEditingController powerOutletSecond = TextEditingController();
-    final TextEditingController powerOutletThird = TextEditingController();
-    final TextEditingController powerOutletFourth = TextEditingController();
-    final TextEditingController usbPortFirst = TextEditingController();
-    final TextEditingController usbPortSecond = TextEditingController();
+    final TextEditingController serialTextController = TextEditingController(
+        text: selectedPower.serialNumber);
+    final TextEditingController nameTextController = TextEditingController(
+        text: selectedPower.name);
+    final TextEditingController categoryTextController = TextEditingController(
+        text: selectedPower.category);
+    final TextEditingController powerOutletFirst = TextEditingController(
+        text: selectedPower.connectors[0].name);
+    final TextEditingController powerOutletSecond = TextEditingController(
+        text: selectedPower.connectors[1].name);
+    final TextEditingController powerOutletThird = TextEditingController(
+        text: selectedPower.connectors[2].name);
+    final TextEditingController powerOutletFourth = TextEditingController(
+        text: selectedPower.connectors[3].name);
+    final TextEditingController usbPortFirst = TextEditingController(
+        text: selectedPower.connectors[4].name);
+    final TextEditingController usbPortSecond = TextEditingController(
+        text: selectedPower.connectors[5].name);
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -47,9 +66,8 @@ class EditPowerBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-          ChiscoTextField(
-            controller: serialTextController,
-            hintText: 'مانند Ch-32145267469',
+          ChiscoFixedTextField(
+            text: selectedPower.serialNumber,
             icon: SERIAL,
             label: "شماره سریال:",
           ),
@@ -57,7 +75,7 @@ class EditPowerBottomSheet extends StatelessWidget {
             height: 10,
           ),
           ChiscoTextField(
-            controller: brandTextController,
+            controller: nameTextController,
             icon: DEVICE,
             label: "اسم نمایشی سه راهی:",
             hintText: '',
@@ -141,6 +159,8 @@ class EditPowerBottomSheet extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     print("delete  power clicked");
+                    controller.onDeviceDeleteClicked(
+                        selectedPower.serialNumber);
                   },
                   child: Container(
                     height: ChiscoConverter.calculateWidgetWidth(
@@ -165,6 +185,15 @@ class EditPowerBottomSheet extends StatelessWidget {
                   text: 'تایید و ثبت تغییرات',
                   onClick: () {
                     print('edit power clicked');
+                    controller.onPowerEditClicked(EditPower(category: categoryTextController.text,
+                        name: nameTextController.text,
+                        power1: powerOutletFirst.text,
+                        power2: powerOutletSecond.text,
+                        power3: powerOutletThird.text,
+                        power4: powerOutletFourth.text,
+                        serialNumber: selectedPower.serialNumber,
+                        usb1: usbPortFirst.text,
+                        usb2: usbPortSecond.text));
                   },
                   icon: '',
                   hasIcon: false,

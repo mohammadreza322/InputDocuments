@@ -27,18 +27,12 @@ class AppController extends ChangeNotifier {
     _categories = _user!.devices.categories;
     _coolers = _user!.devices.coolers;
     _powers = _user!.devices.powers;
-    print("User Devices from App Controller : ${_user!.devices.toString()}");
+    print("User Devices from App Controller : ${_user!.devices}");
     convertDeviceList();
 
     notifyListeners();
   }
 
-  setUserDevices(UserDevices devices){
-    _categories = devices.categories;
-    _coolers = devices.coolers;
-    _powers = devices.powers;
-    notifyListeners();
-  }
 
   UserDetail getUserDetail() {
     return _user!.userDetail;
@@ -71,9 +65,26 @@ class AppController extends ChangeNotifier {
     _coolers = response.devices.coolers;
     _powers = response.devices.powers;
     _categories = response.devices.categories;
+    convertDeviceList();
+    print("refreh data called");
+    print(_userDevicesList);
     notifyListeners();
   }
 
   get getUserDevicesList=>_userDevicesList;
+
+  Cooler getCoolerWithSerialNumber(String serialNumber){
+    final index = _coolers.indexWhere((element) =>
+    element.serialNumber == serialNumber);
+    return _coolers[index];
+  }
+
+  Power getPowerWithSerialNumber(String serialNumber){
+    final index = _powers.indexWhere((element) =>
+    element.serialNumber == serialNumber);
+    return _powers[index];
+  }
+
+
 
 }
