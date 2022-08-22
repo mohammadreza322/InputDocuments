@@ -4,7 +4,7 @@ export const mongoConnection: string =
 export const jsonWebTokenSecretKey: string =
 	'CE1EF2B97E080294A562165650C850A3EBE452E08420ACEB6863E8543510FDEB';
 
-export const accessTokenExpireTime: string = '7d';
+export const accessTokenExpireTime: string = '10m';
 export const refreshTokenExpireTime: string = '30d';
 
 export const brokerUrl: string = 'mqtt://185.204.197.144:8885';
