@@ -56,7 +56,25 @@ const saveDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
             yield device_entity_1.default.saveCooler(serialNumber.trim(), brand.trim(), model.trim(), name.trim(), category.trim(), req.userId);
         }
         else if (validateSerialNumber.type == 'power') {
-            const { power1, power2, power3, power4, usb1, usb2, } = req.body;
+            let { power1, power2, power3, power4, usb1, usb2 } = req.body;
+            if (power1.toString().trim() == '') {
+                power1 = 'پریز 1';
+            }
+            if (power2.toString().trim() == '') {
+                power2 = 'پریز 2';
+            }
+            if (power3.toString().trim() == '') {
+                power3 = 'پریز 3';
+            }
+            if (power4.toString().trim() == '') {
+                power4 = 'پریز 4';
+            }
+            if (usb1.toString().trim() == '') {
+                usb1 = 'پورت 1';
+            }
+            if (usb2.toString().trim() == '') {
+                usb2 = 'پورت 1';
+            }
             yield device_entity_1.default.savePower(serialNumber.trim(), category.trim(), name.trim(), req.userId, power1, power2, power3, power4, usb1, usb2);
         }
         const devices = yield device_entity_1.default.getAllDevices(req.userId);
