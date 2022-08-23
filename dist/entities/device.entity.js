@@ -248,11 +248,11 @@ class DeviceEntity {
                 scheduleObject.port = portNumber;
                 yield device_model_1.PowerStrip.updateOne({ serialNumber, 'schedule._id': _id }, {
                     $set: {
-                        start: startTime,
-                        end: endTime,
-                        repeat,
-                        port: portNumber,
-                        enable,
+                        'schedule.$.start': startTime,
+                        'schedule.$.end': endTime,
+                        'schedule.$.repeat': repeat,
+                        'schedule.$.port': portNumber,
+                        'schedule.$.enable': enable,
                     },
                 });
             }
