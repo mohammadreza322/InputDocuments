@@ -19,31 +19,29 @@ class SplashController extends ChangeNotifier {
   init() async {
     final AuthRepositoryImpl repository = AuthRepositoryImpl();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-
+    //sharedPreferences.clear();
     String? accessToken = sharedPreferences.getString('access_token');
     isPageLoading = true;
 
     if (accessToken == null) {
-      Timer(const Duration(seconds: 2), () {
-
-        Navigator.pushReplacementNamed(context, loginPage);
-
+      print('AccessToken Nulllllllllllllllll');
+      Timer(const Duration(seconds: 2), () {Navigator.pushReplacementNamed(context, loginPage);
       });
     } else {
       print('Okkkk');
       ChiscoResponse response = await repository.getUserDevices();
-      if(response.status){
+      if (response.status) {
         Provider.of<AppController>(context, listen: false).setData(response.object);
         Timer(const Duration(seconds: 2), () {
+
           Navigator.pushReplacementNamed(context, homePage);
+
         });
-      }else{
+      } else {
         print("Error Message Splash : ${response.errorMessage}");
       }
 
       print('Okkkk1234');
-
-
     }
 
     //login check

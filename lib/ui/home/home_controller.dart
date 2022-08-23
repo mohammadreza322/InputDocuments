@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:ui';
 
 import 'package:chisco/data/data_class/AddCoolerRequest.dart';
@@ -11,6 +12,7 @@ import 'package:chisco/data/data_class/UserDevices.dart';
 import 'package:chisco/data/data_class/Power.dart';
 import 'package:chisco/data/repository/device/device_reposiory_impl.dart';
 import 'package:chisco/ui/main/app_controller.dart';
+import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -34,13 +36,7 @@ class HomeController extends ChangeNotifier {
 
   String selectedCategory = 'نمایش همه';
 
-  /*refreshDevice(){
-    User? u = Provider.of<AppController>(context).getUser();
-    _listDevices = [
-      ...u!.devices.powers,
-      ...u.devices.coolers
-    ];
-  }*/
+
   List<String> get categories => _categories;
 
   List<Device> get filteredDevices => _filteredDevices;
@@ -64,10 +60,15 @@ class HomeController extends ChangeNotifier {
   addCoolerBtnClicked(AddCooler cooler) async {
     ChiscoResponse response = await deviceRepository.addCooler(cooler);
     if (!response.status) {
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+
       print("Error...........");
       return;
     } else {
       print(response.object.toString());
+      AddDeviceResponse addDeviceResponse =response.object;
+
+      ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
 
       Provider.of<AppController>(context,listen: false).refreshData(response.object);
 
@@ -79,19 +80,21 @@ class HomeController extends ChangeNotifier {
     print("power : ${power.toString()}");
     ChiscoResponse response = await deviceRepository.addPower(power);
     if (!response.status) {
-      print("Error From add power");
+     ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
       return;
     }
     // bind response to all lists
+    AddDeviceResponse addDeviceResponse =response.object;
 
+    ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
     print(response.object.toString());
-    Provider.of<AppController>(context,listen: false).refreshData(response.object);
+    Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
     notifyListeners();
     Navigator.pop(context);
   }
 
 
-  filteringDevices(String category) {
+   filteringDevices(String category) {
     print('Devices : ${_listDevices.toString()}');
     if (category == 'نمایش همه') {
       filteredDevices.clear();
@@ -105,7 +108,9 @@ class HomeController extends ChangeNotifier {
       selectedCategory = category;
       print(selectedCategory);
     }
+
     notifyListeners();
+
   }
 
 

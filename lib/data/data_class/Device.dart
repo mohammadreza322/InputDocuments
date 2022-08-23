@@ -11,6 +11,7 @@ final String serialNumber;
 
 
 final DeviceType deviceType;
+Device.clone(Device device):this(deviceType: device.deviceType,serialNumber: device.serialNumber,category: device.category,name: device.name);
 
 Device(
 {required this.category, required this.name, required this.serialNumber,required this.deviceType,});

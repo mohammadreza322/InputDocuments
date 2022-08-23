@@ -1,7 +1,9 @@
 import 'package:chisco/data/data_class/Connector.dart';
 import 'package:chisco/data/data_class/Device.dart';
 import 'package:chisco/data/data_class/Power.dart';
+import 'package:chisco/data/data_class/Schedule.dart';
 import 'package:chisco/ui/devices/schedule/addSchedule/add_schedule_controller.dart';
+import 'package:chisco/ui/devices/schedule/editSchedule/edit_schedule_controller.dart';
 import 'package:chisco/ui/devices/schedule/schedule_controller.dart';
 import 'package:chisco/ui/devices/schedule/addSchedule/widgets/add_schedule_item.dart';
 import 'package:chisco/ui/widget/chisco_time_text_view.dart';
@@ -18,37 +20,57 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:provider/provider.dart';
 
-class AddScheduleBottomSheet extends StatelessWidget {
-  final bool isPower;
+class EditScheduleBottomSheet extends StatelessWidget {
+  final Schedule schedule;
   final Device device;
 
-  const AddScheduleBottomSheet(
-      {Key? key, required this.isPower, required this.device})
-      : super(key: key);
+  const EditScheduleBottomSheet(
+      {super.key, required this.schedule, required this.device});
 
   @override
   Widget build(BuildContext context) {
-    List<Connector> connectors = [];
+    EditScheduleController controller =
+        Provider.of<EditScheduleController>(context);
 
+    double width = MediaQuery.of(context).size.width;
+    double scheduleWidth = ChiscoConverter.calculateWidgetWidth(width, 100);
+    double scheduleHeight = ChiscoConverter.calculateWidgetWidth(width, 39);
+
+    List<Connector> connectors = [];
+    bool isPower = device.deviceType == DeviceType.power;
     if (isPower) {
       connectors = (device as Power).connectors;
     }
 
-    AddScheduleController controller = Provider.of<AddScheduleController>(context);
+    if (controller.initState) {
+      controller.init();
+      controller.days = schedule.repeat
+          .map((e) =>
+              ScheduleDays.values.firstWhere((element) => element.name == e))
+          .toList();
+      print(controller.days);
+      print('Start Time : ${schedule.start} End Time :${schedule.end}');
+      if (schedule.start != null && schedule.end != null) {
+        print("Both");
+        controller.changeSelectedScheduleItem(ScheduleType.both);
+      } else if (schedule.start != null && schedule.end == null) {
+        controller.changeSelectedScheduleItem(ScheduleType.on);
+        print("Onn");
+      } else {
+        controller.changeSelectedScheduleItem(ScheduleType.off);
+        print("Offff");
+      }
 
-
-    double height = MediaQuery.of(context).size.height;
-    double width = MediaQuery.of(context).size.width;
-    double scheduleWidth = ChiscoConverter.calculateWidgetWidth(width, 100);
-    double scheduleHeight = ChiscoConverter.calculateWidgetWidth(width, 39);
-    ScheduleType scheduleType = controller.selectedType;
+      if (isPower) {
+        controller.dropDownString = connectors[schedule.port! - 1].name;
+        controller.connectorId = schedule.port!;
+      }
+    }
     bool both = controller.isScheduleItemActive(ScheduleType.both);
     bool on = controller.isScheduleItemActive(ScheduleType.on);
     bool off = controller.isScheduleItemActive(ScheduleType.off);
+    //print('On : $on /// Off : $off //// Both : $both');
 
-    if (controller.initState) {
-      controller.init();
-    }
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Column(
@@ -73,8 +95,7 @@ class AddScheduleBottomSheet extends StatelessWidget {
                 title: 'روشن شدن',
                 scheduleWidth: scheduleWidth,
                 scheduleHeight: scheduleHeight,
-                isActive:
-                    controller.isScheduleItemActive(ScheduleType.on),
+                isActive: controller.isScheduleItemActive(ScheduleType.on),
                 onClick: () {
                   controller.changeSelectedScheduleItem(ScheduleType.on);
                 },
@@ -83,8 +104,7 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   title: 'خاموش شدن',
                   scheduleWidth: scheduleWidth,
                   scheduleHeight: scheduleHeight,
-                  isActive:
-                      controller.isScheduleItemActive(ScheduleType.off),
+                  isActive: controller.isScheduleItemActive(ScheduleType.off),
                   onClick: () {
                     controller.changeSelectedScheduleItem(ScheduleType.off);
                   }),
@@ -92,8 +112,7 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   title: 'هر دو',
                   scheduleWidth: scheduleWidth,
                   scheduleHeight: scheduleHeight,
-                  isActive:
-                      controller.isScheduleItemActive(ScheduleType.both),
+                  isActive: controller.isScheduleItemActive(ScheduleType.both),
                   onClick: () {
                     controller.changeSelectedScheduleItem(ScheduleType.both);
                   }),
@@ -121,8 +140,10 @@ class AddScheduleBottomSheet extends StatelessWidget {
                           .toList(),
                       onChanged: (value) {
                         print(value);
-                        int index = connectors.indexWhere((element) => element.connectorId == value);
-                        controller.changeDropDownValue(connectors[index].name,value as int);
+                        int index = connectors.indexWhere(
+                            (element) => element.connectorId == value);
+                        controller.changeDropDownValue(
+                            connectors[index].name, value as int);
                       },
                       buttonHeight: buttonHeight,
                       buttonDecoration: BoxDecoration(
@@ -145,7 +166,9 @@ class AddScheduleBottomSheet extends StatelessWidget {
                               fontWeight: FontWeight.w400,
                               text: 'اسم پورت یا پریز:',
                             ),
-                            const SizedBox(width: 4,),
+                            const SizedBox(
+                              width: 4,
+                            ),
                             ChiscoText(
                               text: controller.dropDownString,
                               fontWeight: FontWeight.w400,
@@ -224,15 +247,19 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   scheduleHeight:
                       ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'ش',
-                  isActive: controller.isSelectedScheduleItem(ScheduleDays.sat),
-                  onClick: () {controller.changeSelectedDayItem(ScheduleDays.sat);}),
+                  isActive:
+                      controller.isSelectedScheduleDayActive(ScheduleDays.sat),
+                  onClick: () {
+                    controller.changeSelectedDayItem(ScheduleDays.sat);
+                  }),
               AddScheduleItem(
                   scheduleWidth:
                       ChiscoConverter.calculateWidgetWidth(width, 40),
                   scheduleHeight:
                       ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'ی',
-                  isActive: controller.isSelectedScheduleItem(ScheduleDays.sun),
+                  isActive:
+                      controller.isSelectedScheduleDayActive(ScheduleDays.sun),
                   onClick: () {
                     controller.changeSelectedDayItem(ScheduleDays.sun);
                   }),
@@ -242,7 +269,8 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   scheduleHeight:
                       ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'د',
-                  isActive: controller.isSelectedScheduleItem(ScheduleDays.mon),
+                  isActive:
+                      controller.isSelectedScheduleDayActive(ScheduleDays.mon),
                   onClick: () {
                     controller.changeSelectedDayItem(ScheduleDays.mon);
                   }),
@@ -252,7 +280,8 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   scheduleHeight:
                       ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'س',
-                  isActive: controller.isSelectedScheduleItem(ScheduleDays.tue),
+                  isActive:
+                      controller.isSelectedScheduleDayActive(ScheduleDays.tue),
                   onClick: () {
                     controller.changeSelectedDayItem(ScheduleDays.tue);
                   }),
@@ -262,7 +291,8 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   scheduleHeight:
                       ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'چ',
-                  isActive: controller.isSelectedScheduleItem(ScheduleDays.wed),
+                  isActive:
+                      controller.isSelectedScheduleDayActive(ScheduleDays.wed),
                   onClick: () {
                     controller.changeSelectedDayItem(ScheduleDays.wed);
                   }),
@@ -270,7 +300,8 @@ class AddScheduleBottomSheet extends StatelessWidget {
                 scheduleWidth: ChiscoConverter.calculateWidgetWidth(width, 40),
                 scheduleHeight: ChiscoConverter.calculateWidgetWidth(width, 40),
                 title: 'پ',
-                isActive: controller.isSelectedScheduleItem(ScheduleDays.thr),
+                isActive:
+                    controller.isSelectedScheduleDayActive(ScheduleDays.thr),
                 onClick: () {
                   controller.changeSelectedDayItem(ScheduleDays.thr);
                 },
@@ -281,7 +312,8 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   scheduleHeight:
                       ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'ج',
-                  isActive: controller.isSelectedScheduleItem(ScheduleDays.fri),
+                  isActive:
+                      controller.isSelectedScheduleDayActive(ScheduleDays.fri),
                   onClick: () {
                     controller.changeSelectedDayItem(ScheduleDays.fri);
                   })
@@ -290,17 +322,50 @@ class AddScheduleBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 20,
           ),
-          ChiscoButton(
-            text: 'تایید و ثبت زمانبندی',
-            onClick: () {
-              if (!isPower) {
-                controller.addCoolerScheduleBtnClicked(device.serialNumber);
-              } else {
-                controller.addPowerScheduleBtnClicked(device.serialNumber);
-              }
-            },
-            icon: '',
-            hasIcon: false,
+          Row(
+            children: [
+              Flexible(
+                child: GestureDetector(
+                  onTap: () {
+                    print("delete clicked");
+                    controller.onScheduleDeleteBtnClicked(
+                        device.serialNumber, schedule.id);
+                  },
+                  child: Container(
+                    height: ChiscoConverter.calculateWidgetWidth(
+                        width, buttonHeight),
+                    width: double.infinity,
+                    padding: const EdgeInsets.symmetric(vertical: 14),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [Styles.getBoxShadow(0.07)],
+                        gradient: const LinearGradient(
+                            colors: [Color(0xffD92249), Color(0xffCC2045)])),
+                    child: Center(child: SvgPicture.asset(TRASH)),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                flex: 5,
+                child: ChiscoButton(
+                  text: 'تایید و ثبت زمانبندی',
+                  onClick: () {
+                    if (!isPower) {
+                      controller.editCoolerScheduleBtnClicked(
+                          device.serialNumber, schedule.id);
+                    } else {
+                      controller.editPowerScheduleBtnClicked(
+                          device.serialNumber, schedule.id);
+                    }
+                  },
+                  icon: '',
+                  hasIcon: false,
+                ),
+              ),
+            ],
           ),
         ],
       ),

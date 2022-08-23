@@ -99,7 +99,7 @@ class CoolerScreen extends StatelessWidget {
                           scheduleBtn(
                             width: 32,
                             onClick: () {
-                              Navigator.pushNamed(context, schedulePage,arguments: selectedCooler);
+                              Navigator.pushNamed(context, schedulePage,arguments: serialNumber);
                             },
                           ),
                           const SizedBox(
@@ -305,9 +305,7 @@ class CoolerScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-                      const SizedBox(
-                        height: 25,
-                      )
+
                     ],
                   ),
                 )

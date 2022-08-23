@@ -11,6 +11,7 @@ import 'package:chisco/data/repository/auth/auth_repository.dart';
 import 'package:chisco/data/repository/auth/auth_repository_impl.dart';
 import 'package:chisco/http_client/httpService.dart';
 import 'package:chisco/ui/main/app_controller.dart';
+import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -23,20 +24,21 @@ class AuthController extends ChangeNotifier {
 
   AuthController(this.context);
 
-  PageController pageViewController = PageController(initialPage: 0, viewportFraction: 1, keepPage: true);
-
+  PageController pageViewController =
+      PageController(initialPage: 0, viewportFraction: 1, keepPage: true);
 
   submitNumberBtnClicked(String number) async {
-    print("called 2");
     ChiscoResponse response = await repository.getMobile(number);
     if (!response.status) {
-      //FlushBar
-      //return
       print("Error Message is : ${response.errorMessage}");
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+
       return;
     }
 
     GetMobileResponse getMobileResponse = response.object;
+    ChiscoFlushBar.showSuccessFlushBar(context, getMobileResponse.message);
+
     smsId = getMobileResponse.id;
     isNewUser = getMobileResponse.isNewUser;
     goToPage(1);
@@ -45,24 +47,29 @@ class AuthController extends ChangeNotifier {
   submitCodeBtnClicked(String code) async {
     ChiscoResponse response = await repository.checkOtp(smsId, code);
     if (!response.status) {
-      //FlushBar
-      //return
-      print("Error Message is : ${response.errorMessage}");
+      //print("Error Message is : ${response.errorMessage}");
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
 
       return;
-    }
-    CheckOtpResponse otpResponse = response.object;
+    } else {
+      CheckOtpResponse otpResponse = response.object;
+      MessageResponse messageResponse =
+          MessageResponse(message: otpResponse.message);
+      print("Message Response : ${messageResponse.message}");
 
-    MessageResponse messageResponse = MessageResponse(message: otpResponse.message);
-    print("Message Response : ${messageResponse.message}");
-    if(isNewUser){
-      goToPage(2);
-    }else{
-      ChiscoResponse userDevices = await repository.getUserDevices();
-      await Provider.of<AppController>(context, listen: false).setData(userDevices.object);
-      Navigator.pushReplacementNamed(context, homePage);
-      print("Owwwkke");
+      if (isNewUser) {
+        goToPage(2);
+      } else {
+        ChiscoResponse userDevices = await repository.getUserDevices();
+        await Provider.of<AppController>(context, listen: false)
+            .setData(userDevices.object);
+        Navigator.pushReplacementNamed(context, homePage);
+        ChiscoFlushBar.showSuccessFlushBar(context, messageResponse.message);
+
+        print("Owwwkke");
+      }
     }
+
     //show Flush
   }
 
@@ -70,16 +77,20 @@ class AuthController extends ChangeNotifier {
     ChiscoResponse response = await repository.getUserName(name);
     if (!response.status) {
       print("Error Message is : ${response.errorMessage}");
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+
       return;
     }
-    ChiscoResponse userDevices = await repository.getUserDevices();
-    await Provider.of<AppController>(context, listen: false).setData(userDevices.object);
-    // print("Print From Controller : ${userDevices.object.toString()}");
     MessageResponse messageResponse = response.object;
-    //print("Message Response : ${messageResponse.message}");
+    ChiscoFlushBar.showSuccessFlushBar(context, messageResponse.message);
+
+    ChiscoResponse userDevices = await repository.getUserDevices();
+
+    await Provider.of<AppController>(context, listen: false)
+        .setData(userDevices.object);
+
     Navigator.pushReplacementNamed(context, homePage);
   }
-
 
   goToPage(int index) {
     pageViewController.animateToPage(index,

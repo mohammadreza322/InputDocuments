@@ -24,11 +24,16 @@ class EditDeviceController extends ChangeNotifier {
     ChiscoResponse response = await deviceRepository.editCooler(cooler);
 
     if (!response.status) {
-      //Show Error to user
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
       return;
     } else {
-      Provider.of<AppController>(context,listen: false).refreshData(response.object);
+      AddDeviceResponse addDeviceResponse =response.object;
+
+      ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
+
+      Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
       //notify change
+      Navigator.pop(context);
 
     }
   }
@@ -38,14 +43,19 @@ class EditDeviceController extends ChangeNotifier {
 
     if (!response.status) {
       //Show Error to user
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+
       return;
     } else {
-      AddDeviceResponse addDeviceResponse= response.object;
+
+      AddDeviceResponse addDeviceResponse =response.object;
+
+      ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
       Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
       Navigator.pop(context);
       //notify change
 
-      ChiscoFlushBar.showFlushBar(context, 'Title',addDeviceResponse.message);
+      ChiscoFlushBar.showSuccessFlushBar(context,addDeviceResponse.message);
 
 
     }
@@ -54,9 +64,14 @@ class EditDeviceController extends ChangeNotifier {
   onDeviceDeleteClicked(String serialNumber) async {
     ChiscoResponse response = await deviceRepository.deleteDevice(serialNumber);
     if (!response.status) {
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+
       return;
     } else {
-      Provider.of<AppController>(context,listen: false).refreshData(response.object);
+      AddDeviceResponse addDeviceResponse =response.object;
+      ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
+
+      Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
       Navigator.pushNamed(context, homePage);
     }
   }

@@ -3,6 +3,7 @@ import 'package:chisco/data/data_class/MessageResponse.dart';
 import 'package:chisco/data/data_class/UserDetail.dart';
 import 'package:chisco/data/repository/account/account_repository.dart';
 import 'package:chisco/ui/main/app_controller.dart';
+import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:provider/provider.dart';
@@ -46,13 +47,14 @@ class ProfileController extends ChangeNotifier {
 
     if (!response.status) {
       print("Error Edit User");
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
 
       return;
     } else {
-      MessageResponse messageResponse =
-          MessageResponse.fromJson(response.object);
-      //Show messageResponse To user;
-      print(messageResponse.message);
+
+      MessageResponse messageResponse = response.object;
+
+      ChiscoFlushBar.showSuccessFlushBar(context,messageResponse.message);
       Navigator.pop(context);
     }
   }

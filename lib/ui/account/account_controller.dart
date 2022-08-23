@@ -1,9 +1,11 @@
 import 'package:chisco/data/data_class/UserDetail.dart';
 import 'package:chisco/data/data_class/UserDevices.dart';
 import 'package:chisco/ui/main/app_controller.dart';
+import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class AccountController extends ChangeNotifier {
@@ -24,17 +26,26 @@ class AccountController extends ChangeNotifier {
   List<AccountItem> getSettingItems() {
     return [
       AccountItem('ویرایش اطلاعات کاربری', EDIT_USER,
-          () => Navigator.of(context).pushNamed('/profile')),
+          () => Navigator.of(context).pushNamed(profilePage)),
       AccountItem('درباره چیسکو', ABOUT_US, () {
         chiscoLaunchUrl();
       }),
       AccountItem('ورود به سایت', WEB, () {
+
         chiscoLaunchUrl();
       }),
       AccountItem('شرایط و مقررات', ROLES, () {
         chiscoLaunchUrl();
       }),
-      AccountItem('خروج از حساب', LOGOUT, isRed: true, () {}),
+      AccountItem('خروج از حساب', LOGOUT, isRed: true, () async {
+        SharedPreferences share= await SharedPreferences.getInstance();
+
+        print('Clear Tokens');
+        share.clear();
+        Navigator.pushReplacementNamed(context,loginPage );
+
+        ChiscoFlushBar.showInfoFlushBar(context, 'از حساب کاربری خود خارج شدید');
+      }),
     ];
   }
 }

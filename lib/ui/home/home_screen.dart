@@ -30,10 +30,12 @@ class HomeScreen extends StatelessWidget {
 
     if(!homeController.isPageLoading){
       homeController.init();
-      homeController.filteringDevices('نمایش همه');
+     // homeController.filteringDevices('نمایش همه');
     }
 
     homeController.homeList();
+
+
 
     return SafeArea(
       child: Container(
@@ -47,6 +49,8 @@ class HomeScreen extends StatelessWidget {
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
+            automaticallyImplyLeading: false,
+
             flexibleSpace: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: ChiscoAppbar(

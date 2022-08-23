@@ -1,54 +1,43 @@
+
 import 'package:chisco/data/data_class/AddDeviceResponse.dart';
 import 'package:chisco/data/data_class/AddSchedule.dart';
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
+import 'package:chisco/data/data_class/Schedule.dart';
 import 'package:chisco/data/repository/schedule/schedule_repository.dart';
-import 'package:chisco/ui/devices/schedule/addSchedule/widgets/add_schedule_item.dart';
+import 'package:chisco/ui/devices/schedule/addSchedule/add_schedule_controller.dart';
 import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:chisco/utils/converter.dart';
 import 'package:flutter/material.dart';
-import 'package:persian_datetime_picker/persian_datetime_picker.dart';
 import 'package:provider/provider.dart';
 
-enum ScheduleType { on, off, both }
-
-enum ScheduleDays { sat, sun, mon, tue, wed, thr, fri }
-
-class AddScheduleController extends ChangeNotifier {
+class EditScheduleController extends ChangeNotifier{
   final BuildContext context;
-
-  AddScheduleController(this.context);
+  EditScheduleController(this.context);
 
   TextEditingController onTimeController = TextEditingController();
   TextEditingController offTimeController = TextEditingController();
 
   ScheduleRepositoryImpl repositoryImpl = ScheduleRepositoryImpl();
-
-  bool onHint = true;
-  bool offHint = true;
+  bool onHint = false;
+  bool offHint = false;
   ScheduleType selectedType = ScheduleType.on;
-
   List<ScheduleDays> days = [];
   String dropDownString = '';
   int connectorId = 0;
   bool initState = true;
 
-  init() {
+
+  init(){
     initState = false;
-    TimeOfDay oneHourLater = TimeOfDay(
-        hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
-    if (selectedType == ScheduleType.both) {
+    TimeOfDay oneHourLater = TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
+    if (selectedType == ScheduleType.on) {
       onTimeController.text = TimeOfDay.now().to24hours();
-      offTimeController.text = oneHourLater.to24hours();
-      print("Both");
     } else if (selectedType == ScheduleType.off) {
       offTimeController.text = oneHourLater.to24hours();
-      print("off");
-
     } else {
       onTimeController.text = TimeOfDay.now().to24hours();
-      print("Onn");
-
+      offTimeController.text = oneHourLater.to24hours();
     }
   }
 
@@ -71,25 +60,22 @@ class AddScheduleController extends ChangeNotifier {
     notifyListeners();
   }
 
-  changeSelectedScheduleItem(ScheduleType type) {
+  changeSelectedScheduleItem(ScheduleType type) async {
     selectedType = type;
     TimeOfDay oneHourLater = TimeOfDay(
         hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
-    if (selectedType == ScheduleType.both) {
-      onTimeController.text = TimeOfDay.now().to24hours();
-      offTimeController.text = oneHourLater.to24hours();
-      print("Both");
-    }
     if (selectedType == ScheduleType.on) {
       onTimeController.text = TimeOfDay.now().to24hours();
-      print("On");
     } else if (selectedType == ScheduleType.off) {
       offTimeController.text = oneHourLater.to24hours();
-      print("Off");
+    } else {
+      onTimeController.text = TimeOfDay.now().to24hours();
+      offTimeController.text = oneHourLater.to24hours();
     }
-
+    await Future.delayed(Duration(milliseconds: 250));
     notifyListeners();
   }
+
 
   bool isScheduleItemActive(ScheduleType type) {
    // print("Schedule Type : $type");
@@ -102,6 +88,7 @@ class AddScheduleController extends ChangeNotifier {
     } else {
       days.add(day);
     }
+    print(days.toString());
 
     days.sort((a, b) {
       if (a.index < b.index) {
@@ -115,48 +102,82 @@ class AddScheduleController extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isSelectedScheduleItem(ScheduleDays day) {
+  bool isSelectedScheduleDayActive(ScheduleDays day) {
+    print("Days List : $days");
     return days.contains(day);
   }
 
-  addCoolerScheduleBtnClicked(String serialNumber) async {
+
+
+
+  editCoolerScheduleBtnClicked(String serialNumber,String id) async {
     ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
-        endTime: offTimeController.text,
+        endTime: selectedType != ScheduleType.on ? offTimeController.text : null,
         repeat: days.map((e) => e.name).toList(),
+
         serialNumber: serialNumber,
-        startTime: onTimeController.text));
+        id: id,
+        startTime: selectedType != ScheduleType.off ? onTimeController.text : null));
+    print(response);
 
     if (response.status) {
       AddDeviceResponse deviceResponse = response.object;
-      Provider.of<AppController>(context, listen: false)
-          .refreshData(deviceResponse);
+
+      Provider.of<AppController>(context, listen: false).refreshData(deviceResponse);
+
       notifyListeners();
       Navigator.pop(context);
+      ChiscoFlushBar.showSuccessFlushBar(context,deviceResponse.message);
+
+
     } else {
+
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage!);
       print(response.errorMessage);
       print('status 4111 ');
     }
   }
 
-  addPowerScheduleBtnClicked(String serialNumber) async {
+  editPowerScheduleBtnClicked(String serialNumber,String id) async {
+    print("response");
+    print( days.map((e) => e.name).toList());
     ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
-        endTime:
-            selectedType != ScheduleType.on ? offTimeController.text : null,
+        endTime: selectedType != ScheduleType.on ? offTimeController.text : null,
         repeat: days.map((e) => e.name).toList(),
         portNumber: connectorId,
+        id: id,
         serialNumber: serialNumber,
-        startTime:
-            selectedType != ScheduleType.off ? onTimeController.text : null));
+        startTime: selectedType != ScheduleType.off ? onTimeController.text : null));
+
+    print(response);
     if (response.status) {
+      print(response.status);
       AddDeviceResponse deviceResponse = response.object;
-      Provider.of<AppController>(context, listen: false)
-          .refreshData(deviceResponse);
+      Provider.of<AppController>(context, listen: false).refreshData(deviceResponse);
       notifyListeners();
       Navigator.pop(context);
-      ChiscoFlushBar.showSuccessFlushBar(context, deviceResponse.message);
+      ChiscoFlushBar.showSuccessFlushBar(context,deviceResponse.message);
+
     } else {
-      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+      // ChiscoFlushBar.showFlushBar(context, response.errorMessage!);
+      ChiscoFlushBar.showErrorFlushBar(context, 'اسم پورت را تغییر دهید');
       print(response.errorMessage);
+      print('status 4111 ');
+    }
+  }
+
+  onScheduleDeleteBtnClicked(String serialNumber, String id) async {
+    ChiscoResponse response =
+    await repositoryImpl.deleteSchedule(serialNumber, id);
+    AddDeviceResponse addDeviceResponse =response.object;
+    if (response.status) {
+      Provider.of<AppController>(context, listen: false)
+          .refreshData(addDeviceResponse);
+      notifyListeners();
+      Navigator.pop(context);
+      ChiscoFlushBar.showSuccessFlushBar(context,addDeviceResponse.message );
+    } else {
+      ChiscoFlushBar.showErrorFlushBar(context,response.errorMessage);
       print('status 4111 ');
     }
   }

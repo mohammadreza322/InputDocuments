@@ -13,6 +13,7 @@ class ChiscoClient {
   late final Dio _dio;
   RequestType requestType = RequestType.post;
   AuthLocalDataSourceImpl localDataSourceImpl = AuthLocalDataSourceImpl();
+
   ChiscoClient() {
     _dio = Dio(BaseOptions(
       baseUrl: "https://chisco.tech/api/",
@@ -76,20 +77,30 @@ class ChiscoClient {
 
       print(error.message);
       if (error.response!.statusCode == 401) {
+        print('Refresh Token is call 401 Error');
         try {
           SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
           String? accessToken = sharedPreferences.getString('access_token');
           String? refreshToken = sharedPreferences.getString('refresh_token');
           String? detail = sharedPreferences.getString('detail');
 
-          Response<dynamic> refreshRequest = await _dio.post("user/refresh-token",
-              options: Options(headers: {"x-auth-token": accessToken}), data: {'refreshToken': refreshToken});
+          Response<dynamic> refreshRequest = await _dio.put(
+              "user/refresh-token",
+              options: Options(headers: {"x-auth-token": accessToken}),
+              data: {'refreshToken': refreshToken});
 
-          localDataSourceImpl.saveToken(refreshRequest.data['accessToken'], refreshRequest.data['refreshToken'], detail!);
+          print('Refresh Token Call');
+          print(refreshRequest.data.toString());
 
-          return request(url: url,data: data,type: type);
+          localDataSourceImpl.saveToken(refreshRequest.data['accessToken'],
+              refreshRequest.data['refreshToken'], detail!);
+          print('Tokens Saved');
+          return request(url: url, data: data, type: type);
+
         } catch (err) {
-          return ChiscoResponse(status: false,code: 401,errorMessage: err.toString());
+          print("Error For Refresh Token ${err.toString()}");
+          return ChiscoResponse(
+              status: false, code: 401, errorMessage: err.toString());
         }
 
         //return ChiscoResponse(status: false, code: error.response?.statusCode);

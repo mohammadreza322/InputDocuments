@@ -29,6 +29,7 @@ class PowerScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     final serialNumber = ModalRoute.of(context)!.settings.arguments as String;
+
     final selectedPower = Provider.of<AppController>(context,listen: false).getPowerWithSerialNumber(serialNumber);
 
 
@@ -145,7 +146,7 @@ class PowerScreen extends StatelessWidget {
                                 scheduleBtn(
                                   width: 32,
                                   onClick: () {
-                                    Navigator.pushNamed(context, schedulePage, arguments: selectedPower);
+                                    Navigator.pushNamed(context, schedulePage, arguments: serialNumber);
                                   },
                                 ),
                                 const SizedBox(
@@ -154,8 +155,7 @@ class PowerScreen extends StatelessWidget {
                                 EditCoolerBtn(
                                     width: 32,
                                     onClick: () {
-                                      showChiscoBottomSheet(context,
-                                           EditPowerBottomSheet(selectedPower: selectedPower,));
+                                      showChiscoBottomSheet(context, EditPowerBottomSheet(selectedPower: selectedPower,));
                                     }),
                                 const SizedBox(
                                   width: 10,
@@ -182,6 +182,13 @@ class PowerScreen extends StatelessWidget {
                               controller: scrollController,
                               itemBuilder: (context, index) {
                                 Connector connector = selectedPower.connectors[index];
+                                int connectorId = connector.connectorId;
+                                String description ='';
+                                if(connectorId<=4){
+                                   description = 'پریز $connectorId';
+                                }else {
+                                  description = 'پورت ${connectorId-4}';
+                                }
                                 return Container(
                                   margin: EdgeInsets.symmetric(
                                     vertical:
@@ -190,7 +197,7 @@ class PowerScreen extends StatelessWidget {
                                   ),
                                   child: PowerListItem(
                                     title: connector.name,
-                                    description: connector.connectorType,
+                                    description: description,
                                     isPower: connector.connectorType == 'power',
                                     isActive: connector.status,
                                   ),

@@ -1,6 +1,7 @@
 import 'package:chisco/data/data_class/Cooler.dart';
 import 'package:chisco/data/data_class/Device.dart';
 import 'package:chisco/data/data_class/Power.dart';
+import 'package:chisco/data/data_class/Schedule.dart';
 import 'package:chisco/ui/devices/schedule/addSchedule/add_schedule.dart';
 import 'package:chisco/ui/devices/schedule/schedule_controller.dart';
 import 'package:chisco/ui/devices/schedule/widgets/schedule_empty_state.dart';
@@ -8,7 +9,9 @@ import 'package:chisco/ui/devices/schedule/widgets/schedule_header.dart';
 import 'package:chisco/ui/devices/schedule/widgets/schedule_list_item.dart';
 import 'package:chisco/ui/devices/widgets/device_appbar.dart';
 import 'package:chisco/ui/devices/widgets/device_header.dart';
+import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/ui/widget/scroll_behavior.dart';
+import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
@@ -31,24 +34,31 @@ class ScheduleScreen extends StatelessWidget {
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     double iconWidth = (36 / 360) * width;
-    final selectedDevice = ModalRoute.of(context)!.settings.arguments as Device;
 
-    List schedule = [];
+    final serialNumber = ModalRoute.of(context)!.settings.arguments as String;
 
-    if(selectedDevice is Power) {
+    final selectedDevice = Provider.of<AppController>(context).getDeviceWithSerialNumber(serialNumber);
+
+    List<Schedule> schedule = [];
+    bool isPower;
+    if (selectedDevice is Power) {
+      print('ok1');
       schedule = (selectedDevice).schedule;
+      isPower = true;
       print("Power");
     } else {
+      print('ok1');
       schedule = (selectedDevice as Cooler).schedule;
-      print("Cooler");
 
+      print("Cooler");
+      isPower = false;
     }
-    print("Schedule List : ${schedule.toString()}");
+
+
+
+    //debugPrint("Schedule List : ${schedule[1].repeat}");
 
     return SafeArea(
-
-
-
         child: Scaffold(
             backgroundColor: Styles.backGroundColor,
             body: Stack(children: [
@@ -67,7 +77,9 @@ class ScheduleScreen extends StatelessWidget {
                       alignment: Alignment.topCenter,
                       child: DeviceAppBar(
                         title: 'زمان بندی دستگاه',
-                        onBackClick: () {Navigator.pop(context);},
+                        onBackClick: () {
+                          Navigator.pop(context);
+                        },
                         onMenuClick: () {},
                       ),
                     ),
@@ -102,7 +114,7 @@ class ScheduleScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          controller.onAddScheduleClick(selectedDevice,selectedDevice is Power);
+                          controller.onAddScheduleClick(selectedDevice, selectedDevice is Power);
                         },
                         child: Container(
                             width: iconWidth,
@@ -120,19 +132,32 @@ class ScheduleScreen extends StatelessWidget {
                     height: 15,
                   ),
                   Expanded(
-                      child:schedule.isNotEmpty? ScrollConfiguration(
-                    behavior: ChiscoScrollBehavior(),
-
-                    child: ListView.builder(
-                        itemCount: schedule.length,
-                        itemBuilder: (context, index) {
-                          return  ScheduleListItem(schedule:schedule[index]);
-                        }),
-                  ):const Align(
-                          alignment: Alignment.center, child: ScheduleEmptyState()),
-
-
-                      )
+                    child: schedule.isNotEmpty
+                        ? ScrollConfiguration(
+                            behavior: ChiscoScrollBehavior(),
+                            child: ListView.builder(
+                                itemCount: schedule.length,
+                                itemBuilder: (context, index) {
+                                  return GestureDetector(
+                                      onTap: () {
+                                        controller.onListItemClicked(
+                                            selectedDevice,
+                                            isPower,
+                                            schedule[index]);
+                                      },
+                                      child: ScheduleListItem(
+                                        schedule: schedule[index],
+                                        isPower: isPower,
+                                        index: index,
+                                        device: selectedDevice,
+                                        connectors: isPower ? (selectedDevice as Power).connectors : [],
+                                      ));
+                                }),
+                          )
+                        : const Align(
+                            alignment: Alignment.center,
+                            child: ScheduleEmptyState()),
+                  )
                 ]),
               )
             ])));

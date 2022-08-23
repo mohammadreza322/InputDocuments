@@ -1,3 +1,5 @@
+import 'package:chisco/data/data_class/Connector.dart';
+import 'package:chisco/data/data_class/Device.dart';
 import 'package:chisco/data/data_class/Schedule.dart';
 import 'package:chisco/ui/devices/schedule/schedule_controller.dart';
 import 'package:chisco/utils/const.dart';
@@ -9,16 +11,23 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleListItem extends StatelessWidget {
-  const ScheduleListItem({Key? key, required this.schedule}) : super(key: key);
+  const ScheduleListItem({Key? key, required this.schedule, required this.index, required this.isPower, this.connectors = const [], required this.device}) : super(key: key);
 
   final Schedule schedule ;
-
+  final int index;
+  final bool isPower;
+  final Device device;
+  final List<Connector> connectors;
   @override
   Widget build(BuildContext context) {
     ScheduleController controller = Provider.of<ScheduleController>(context);
 
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
+
+    int connectorIndex = isPower ? connectors.indexWhere((Connector element) {
+    return  element.connectorId == schedule.port;
+    }) : 0 ;
 
     return Container(
       width: ChiscoConverter.calculateWidgetWidth(width, 320),
@@ -40,8 +49,9 @@ class ScheduleListItem extends StatelessWidget {
             fit: FlexFit.tight,
             child: Row(
               children: [
-                const ChiscoText(
-                  text: 'زمانبندی 1',
+
+                ChiscoText(
+                  text: !isPower ? "زماندبندی ${index+1}" : connectors[connectorIndex].name,
                   fontWeight: FontWeight.w400,
                 ),
                 Expanded(child: Container()),
@@ -56,25 +66,24 @@ class ScheduleListItem extends StatelessWidget {
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: Switch(
-
                       //activeColor: Styles.primaryColor,
                       inactiveThumbColor: Colors.white,
                       activeThumbImage: const AssetImage(ACTIVE_SWITCH_THUMB),
                       inactiveThumbImage: const AssetImage(OFF_SWITCH_THUMB),
-                      activeTrackColor: Color(0xff34A6F6),
-                      inactiveTrackColor: Color(0xffE2E3E4),
+                      activeTrackColor: const Color(0xff34A6F6),
+                      inactiveTrackColor: const Color(0xffE2E3E4),
                       key: UniqueKey(),
                       value: schedule.enable,
                       onChanged: (bool) {
-                        //???
-                        controller.enableChanged(bool);
+
+                        controller.enableChanged(bool,schedule,device);
 
                       }),
                 )
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Expanded(
@@ -93,7 +102,7 @@ class ScheduleListItem extends StatelessWidget {
               }),
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: 5,
           ),
           Row(
@@ -112,7 +121,7 @@ class ScheduleListItem extends StatelessWidget {
                         width: 5,
                       ),
                        ChiscoText(
-                        text: schedule.start.toString(),
+                         text: schedule.start.toString()=='null'?'-:-':schedule.start.toString(),
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                       )
@@ -147,7 +156,7 @@ class ScheduleListItem extends StatelessWidget {
                         width: 5,
                       ),
                        ChiscoText(
-                        text: schedule.end.toString(),
+                        text: schedule.end.toString()=='null'?'-:-':schedule.end.toString(),
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                       )

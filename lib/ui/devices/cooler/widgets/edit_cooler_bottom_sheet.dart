@@ -114,7 +114,10 @@ class EditCoolerBottomSheet extends StatelessWidget {
                   text: 'تایید و ثبت تغییرات',
                   onClick: () {
                     print('edit Cooler clicked');
+
                     controller.onCoolerEditClicked(EditCooler(
+                      brand: selectedCooler.brand,
+                        model: selectedCooler.model,
                         category:categoryTextController.text,
                         name: nameTextController.text,
                         serialNumber: selectedCooler.serialNumber));

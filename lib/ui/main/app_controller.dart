@@ -62,6 +62,7 @@ class AppController extends ChangeNotifier {
 
 
   refreshData(AddDeviceResponse response){
+    print('****************************');
     _coolers = response.devices.coolers;
     _powers = response.devices.powers;
     _categories = response.devices.categories;
@@ -83,6 +84,10 @@ class AppController extends ChangeNotifier {
     final index = _powers.indexWhere((element) =>
     element.serialNumber == serialNumber);
     return _powers[index];
+  }
+  Device getDeviceWithSerialNumber(String serialNumber){
+    final index = _userDevicesList.indexWhere((element) => element.serialNumber == serialNumber);
+    return _userDevicesList[index];
   }
 
 

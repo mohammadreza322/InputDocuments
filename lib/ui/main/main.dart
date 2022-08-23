@@ -22,11 +22,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-import '../devices/schedule/addSchedule/add_schedule.dart';
-import '../widget/scroll_behavior.dart';
 
-final ThemeData androidTheme =
-    ThemeData(fontFamily: 'ChiscoText', dividerColor: Colors.transparent);
+final ThemeData androidTheme = ThemeData(fontFamily: 'ChiscoText', dividerColor: Colors.transparent);
 
 class MyApp extends StatelessWidget {
    MyApp({Key? key}) : super(key: key);
