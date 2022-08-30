@@ -18,15 +18,29 @@ class SplashScreen extends StatelessWidget {
 
     return SafeArea(
       child: Scaffold(
-          body: Container(
+          body: Stack(
+        children: [
+          Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
                   image: AssetImage('assets/images/splash.png'),
-                  fit:BoxFit.cover),
-
+                  fit: BoxFit.cover),
             ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: controller.progressBarShown
+                ? Container(
+              margin: const EdgeInsets.only(bottom: 22),
+                  child: const CircularProgressIndicator(
+                      color: Colors.white,
 
-          )),
+                    ),
+                )
+                : Container(),
+          )
+        ],
+      )),
     );
   }
 }

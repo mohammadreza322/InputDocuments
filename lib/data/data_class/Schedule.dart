@@ -1,15 +1,15 @@
 class Schedule {
   String id;
   bool enable;
-  String? end;
+  String end;
   List<String> repeat;
-  String? start;
+  String start;
   int? port;
 
   Schedule(
       {required this.id,
       required this.enable,
-      this.end,
+        required this.end,
       required this.repeat,
       required this.start,
       required this.port});
@@ -20,9 +20,9 @@ class Schedule {
     return Schedule(
         id: json['_id'],
         enable: json['enable'],
-        end: json['end'],
+        end: json['end']!=null ? json['end']:'',
         repeat: List<String>.from(json['repeat']),
-        start: json['start'],
+        start: json['start']!=null ?(json['start']):'',
         port: json['port']);
   }
 }

@@ -10,6 +10,8 @@ class Cooler extends Device {
   String model;
   String timer;
   String verticalSwing;
+  bool power;
+  int temp;
   List<Schedule> schedule;
 
   Cooler(
@@ -23,7 +25,9 @@ class Cooler extends Device {
       required this.mode,
       required this.model,
       required this.timer,
-      required this.verticalSwing})
+      required this.verticalSwing,
+        required this.temp,
+      required this.power})
       : super(
             category: category,
             name: name,
@@ -42,6 +46,9 @@ class Cooler extends Device {
         category: json['category'],
         serialNumber: json['serialNumber'],
         timer: json['timer'],
-        verticalSwing: json['verticalSwing']);
+        verticalSwing: json['verticalSwing'],
+      power: json['power'],
+      temp: json['temp']
+    );
   }
 }

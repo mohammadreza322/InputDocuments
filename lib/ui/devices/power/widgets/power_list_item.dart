@@ -11,7 +11,8 @@ class PowerListItem extends StatelessWidget {
 
   final String description;
   final bool isPower;
-  final isActive;
+  final bool isActive;
+  final Function(bool) onChange;
 
   const PowerListItem(
       {Key? key,
@@ -19,7 +20,7 @@ class PowerListItem extends StatelessWidget {
       required this.description,
       required this.isPower,
 
-      this.isActive})
+      required this.isActive, required this.onChange})
       : super(key: key);
 
   @override
@@ -69,7 +70,7 @@ class PowerListItem extends StatelessWidget {
                     inactiveTrackColor: const Color(0xffE2E3E4),
                     key: UniqueKey(),
                     value: isActive,
-                    onChanged: (bool) {}),
+                    onChanged: onChange),
               )
             ],
           ),

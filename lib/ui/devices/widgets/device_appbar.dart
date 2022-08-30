@@ -13,13 +13,15 @@ class DeviceAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(top: 26),
+      color: Colors.transparent,
+      height: 40,
+      margin: const EdgeInsets.only(top: 20),
       child: Stack(
         children: [
           GestureDetector(
             onTap: onMenuClick,
             child: Align(
-              alignment: Alignment.topLeft,
+              alignment: Alignment.centerLeft,
               child: SizedBox(
                   width: 26,
                   height: 26,
@@ -28,18 +30,17 @@ class DeviceAppBar extends StatelessWidget {
           ),
           //todo Hard Code Font Size
           Align(
-            alignment: Alignment.topCenter,
+            alignment: Alignment.center,
             child: ChiscoText(
               text: title,
-              fontWeight: FontWeight.w500,
-              fontSize: 14,
+              fontWeight: FontWeight.w400,
               textColor: Colors.white,
             ),
           ),
           GestureDetector(
             onTap: onBackClick,
             child: Align(
-              alignment: Alignment.topRight,child: SizedBox(
+              alignment: Alignment.centerRight,child: SizedBox(
                 width: 26,
                 height: 26,
                 child: SvgPicture.asset(ARROW_RIGHT)),

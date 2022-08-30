@@ -5,6 +5,7 @@ import 'package:chisco/data/data_class/AddCoolerRequest.dart';
 import 'package:chisco/data/data_class/AddDeviceResponse.dart';
 import 'package:chisco/data/data_class/AddPowerRequest.dart';
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
+import 'package:chisco/data/data_class/Connector.dart';
 import 'package:chisco/data/data_class/Cooler.dart';
 import 'package:chisco/data/data_class/Device.dart';
 import 'package:chisco/data/data_class/User.dart';
@@ -13,7 +14,9 @@ import 'package:chisco/data/data_class/Power.dart';
 import 'package:chisco/data/repository/device/device_reposiory_impl.dart';
 import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/utils/chisco_flush_bar.dart';
+import 'package:chisco/utils/const.dart';
 import 'package:flutter/material.dart';
+import 'package:mqtt_client/mqtt_client.dart';
 import 'package:provider/provider.dart';
 
 class HomeController extends ChangeNotifier {
@@ -34,6 +37,8 @@ class HomeController extends ChangeNotifier {
 
   bool isPageLoading = false;
 
+  late bool isDeviceActive;
+
   String selectedCategory = 'نمایش همه';
 
 
@@ -53,6 +58,10 @@ class HomeController extends ChangeNotifier {
     AppController appController = Provider.of<AppController>(context);
     user = appController.getUser();
 
+    if(!_categories.contains('نمایش همه')) {
+      _categories.insert(0, 'نمایش همه');
+    }
+    filteringDevices(selectedCategory);
 
   }
 
@@ -67,12 +76,13 @@ class HomeController extends ChangeNotifier {
     } else {
       print(response.object.toString());
       AddDeviceResponse addDeviceResponse =response.object;
+      Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
 
+     // Navigator.pop(context);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
 
       Provider.of<AppController>(context,listen: false).refreshData(response.object);
 
-      Navigator.pop(context);
     }
   }
 
@@ -80,17 +90,21 @@ class HomeController extends ChangeNotifier {
     print("power : ${power.toString()}");
     ChiscoResponse response = await deviceRepository.addPower(power);
     if (!response.status) {
-     ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+
       return;
     }
     // bind response to all lists
     AddDeviceResponse addDeviceResponse =response.object;
 
+    //Navigator.pop(context);
+    Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
     ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
     print(response.object.toString());
     Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
     notifyListeners();
-    Navigator.pop(context);
+
   }
 
 
@@ -101,7 +115,6 @@ class HomeController extends ChangeNotifier {
       _filteredDevices.addAll(_listDevices);
       selectedCategory = category;
     } else {
-
       print('else');
       _filteredDevices = _listDevices.where((element) =>element.category == category).toList();
       print(filteredDevices.toString());
@@ -109,22 +122,17 @@ class HomeController extends ChangeNotifier {
       print(selectedCategory);
     }
 
-    notifyListeners();
+    Future.delayed(const Duration(milliseconds: 250),() {
+      notifyListeners();
+    });
+
 
   }
-
-
-
-  homeList(){
+  homeLists(){
     _coolerCount =Provider.of<AppController>(context,listen: false).getCoolers().length;
     _powerCount = Provider.of<AppController>(context,listen: false).getPowers().length;
     _listDevices = Provider.of<AppController>(context,listen: false).getUserDevicesList;
     _categories = Provider.of<AppController>(context,listen: false).getCategories;
-
-    if(!_categories.contains('نمایش همه')) {
-      _categories.insert(0, 'نمایش همه');
-    }
-    filteringDevices(selectedCategory);
   }
 
   isUserHaveDevice() {
@@ -134,4 +142,55 @@ class HomeController extends ChangeNotifier {
       return true;
     }
   }
+
+
+
+  onDevicePowerBtnClicked(Device device){
+    if(device.deviceType == DeviceType.power){
+      Power power = device as Power;
+      bool isPowerActive= changeDevicePowersBtn(device);
+      power.connectors.forEach((element) {
+        element.status = !isPowerActive;
+
+      });
+
+      Provider.of<AppController>(context,listen: false).setPower(power);
+      isPowerActive = !isPowerActive;
+      Provider.of<AppController>(context,listen: false).publishPowerMqtt(power);
+
+      //AppController Publish\
+      notifyListeners();
+
+    }else {
+      Cooler cooler =device as Cooler;
+      bool isPowerActive= changeDevicePowersBtn(device);
+      cooler.power = !isPowerActive;
+      Provider.of<AppController>(context,listen: false).setCooler(cooler);
+      isPowerActive = !isPowerActive;
+      Provider.of<AppController>(context,listen: false).publishCoolerMqtt(cooler);
+      notifyListeners();
+
+    }
+
+
+
+  }
+  bool changeDevicePowersBtn(Device device){
+    if (device.deviceType == DeviceType.power) {
+      List<Connector> connectors = (device as Power)
+          .connectors
+          .where((element) => element.status)
+          .toList();
+      if (connectors.isEmpty) {
+        isDeviceActive = false;
+        return false;
+      } else {
+        isDeviceActive = true;
+        return true;
+      }
+    }else{
+      return (device as Cooler).power;
+    }
+  }
+
 }

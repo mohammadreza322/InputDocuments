@@ -1,3 +1,4 @@
+import 'package:chisco/http_client/mqtt/mqtt_controller.dart';
 import 'package:chisco/ui/devices/cooler/cooler_controller.dart';
 import 'package:chisco/ui/devices/cooler/cooler_screen.dart';
 import 'package:chisco/ui/devices/power/power_screen.dart';
@@ -9,6 +10,7 @@ import 'package:chisco/ui/home/home_controller.dart';
 import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/ui/auth/authScreen.dart';
 import 'package:chisco/ui/auth/auth_controller.dart';
+import 'package:chisco/ui/main/routes.dart';
 import 'package:chisco/ui/main/test.dart';
 import 'package:chisco/ui/profile/profile_controller.dart';
 import 'package:chisco/ui/profile/profile_screen.dart';
@@ -22,89 +24,40 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 
-
-final ThemeData androidTheme = ThemeData(fontFamily: 'ChiscoText', dividerColor: Colors.transparent);
+final ThemeData androidTheme =
+    ThemeData(fontFamily: 'ChiscoText', dividerColor: Colors.transparent);
 
 class MyApp extends StatelessWidget {
-   MyApp({Key? key}) : super(key: key);
+  MyApp({Key? key}) : super(key: key);
   AppController appController = AppController();
-
+ // MqttController mqttController = MqttController();
   @override
   Widget build(BuildContext context) {
-
     const defaultTextStyle =
         TextStyle(fontFamily: 'ChiscoText', color: Styles.primaryTextColor);
 
     return Sizer(
       builder: (BuildContext context, Orientation orientation,
           DeviceType deviceType) {
-        return ChangeNotifierProvider.value(
-          value: appController,
-          child: Consumer<AppController>(
-            builder: (context, AppController controller, child) =>
-                GestureDetector(
-              onTap: () {
-                FocusScope.of(context).unfocus();
-              },
+        return MultiProvider(
+            providers: [
+              ChangeNotifierProvider<AppController>(create: (_) => AppController()),
+              ChangeNotifierProvider<MqttController>(create: (_) => MqttController(context)),
 
-              child: MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: androidTheme,
-                title: 'Chisco',
-                routes: {
-                  loginPage: (context) => ChangeNotifierProvider(
-                        child: const AuthScreen(),
-                        create: (ctx) => AuthController(context),
+            ],
+            child: Consumer<AppController>(
+                builder: (context, AppController controller, child) =>
+                    GestureDetector(
+                      onTap: () {
+                        FocusScope.of(context).unfocus();
+                      },
+                      child: MaterialApp(
+                        theme: androidTheme,
+                        title: 'Chisco',
+                        routes: routes,
+                        initialRoute: splashPage,
                       ),
-                  splashPage: (context) => ChangeNotifierProvider(
-                        create: (context) => SplashController(context),
-                        child: const SplashScreen(),
-                      ),
-                  homePage: (context) => ChangeNotifierProvider(
-                        create: (context) => HomeController(context),
-                        child: const Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: HomeScreen()),
-                      ),
-                  accountPage: (context) => ChangeNotifierProvider(
-                        create: (context) => AccountController(context),
-                        child: const Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: AccountScreen()),
-                      ),
-                  profilePage: (context) => ChangeNotifierProvider(
-                        create: (context) => ProfileController(context),
-                        child: const Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: ProfileScreen()),
-                      ),
-                  coolerDevicePage: (context) => ChangeNotifierProvider(
-                        create: (BuildContext context) => CoolerController(context),
-                        child: const Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: CoolerScreen()),
-                      ),
-                  schedulePage: (context) => ChangeNotifierProvider(
-                        create: (BuildContext context) =>
-                            ScheduleController(context),
-                        child: const Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: ScheduleScreen()),
-                      ),
-                  powerDevicePage: (context) => const Directionality(
-                      textDirection: TextDirection.rtl, child: PowerScreen()),
-                  testPage: (context) => ChangeNotifierProvider(
-                        create: (context) => HomeController(context),
-                        child: const Directionality(
-                            textDirection: TextDirection.rtl,
-                            child: TestScreen()),
-                      ),
-                },
-                initialRoute: splashPage,
-              ),
-            ),
-          ),
-        );
+                    )));
       },
     );
   }

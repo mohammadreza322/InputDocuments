@@ -121,7 +121,7 @@ class ScheduleListItem extends StatelessWidget {
                         width: 5,
                       ),
                        ChiscoText(
-                         text: schedule.start.toString()=='null'?'-:-':schedule.start.toString(),
+                         text: schedule.start==' '?'-:-':schedule.start.toString(),
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                       )
@@ -156,7 +156,7 @@ class ScheduleListItem extends StatelessWidget {
                         width: 5,
                       ),
                        ChiscoText(
-                        text: schedule.end.toString()=='null'?'-:-':schedule.end.toString(),
+                        text: schedule.end==' '?'-:-':schedule.end.toString(),
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                       )

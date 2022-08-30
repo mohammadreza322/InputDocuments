@@ -67,7 +67,7 @@ class AddPowerBottomSheet extends StatelessWidget {
           ),
           ExpansionTile(
           //todo Select Background color
-            title: ChiscoText(text: 'اسم نمایشی پریز ها پورت ها(دلخواه)'),
+            title: const ChiscoText(text: 'اسم نمایشی پریز ها پورت ها(دلخواه)'),
             children: [
               ChiscoTextField(
                 controller: powerOutletFirst,

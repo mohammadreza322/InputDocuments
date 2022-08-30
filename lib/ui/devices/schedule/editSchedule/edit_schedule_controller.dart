@@ -27,18 +27,22 @@ class EditScheduleController extends ChangeNotifier{
   int connectorId = 0;
   bool initState = true;
 
+  String onTime = '00:00';
+  String offTime = '00:00';
+
+
 
   init(){
     initState = false;
     TimeOfDay oneHourLater = TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
-    if (selectedType == ScheduleType.on) {
-      onTimeController.text = TimeOfDay.now().to24hours();
+    /*if (selectedType == ScheduleType.on) {
+      onTimeController.text = 13.toString();
     } else if (selectedType == ScheduleType.off) {
       offTimeController.text = oneHourLater.to24hours();
     } else {
       onTimeController.text = TimeOfDay.now().to24hours();
       offTimeController.text = oneHourLater.to24hours();
-    }
+    }*/
   }
 
   changeOnTimeText(String onTime) {
@@ -62,17 +66,19 @@ class EditScheduleController extends ChangeNotifier{
 
   changeSelectedScheduleItem(ScheduleType type) async {
     selectedType = type;
-    TimeOfDay oneHourLater = TimeOfDay(
-        hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
+    TimeOfDay oneHourLater = TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
+
     if (selectedType == ScheduleType.on) {
-      onTimeController.text = TimeOfDay.now().to24hours();
+      onTimeController.text =onTime==''?'-:-':onTime;
     } else if (selectedType == ScheduleType.off) {
-      offTimeController.text = oneHourLater.to24hours();
+      offTimeController.text = offTime!=''?offTime:'-:-';
     } else {
-      onTimeController.text = TimeOfDay.now().to24hours();
-      offTimeController.text = oneHourLater.to24hours();
+      onTimeController.text =  onTime==''?'-:-':onTime;
+      offTimeController.text =offTime!=''?offTime:'-:-';
     }
+
     await Future.delayed(Duration(milliseconds: 250));
+
     notifyListeners();
   }
 

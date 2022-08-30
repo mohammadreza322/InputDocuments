@@ -17,7 +17,7 @@ class ChiscoAppbar extends StatelessWidget {
     return Container(
       color: Colors.transparent,
       height: 40,
-      margin: const EdgeInsets.only(top: 23),
+      margin: const EdgeInsets.only(top: 20),
       child: Stack(
         children: [
           Align(

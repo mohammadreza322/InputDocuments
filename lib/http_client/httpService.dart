@@ -9,6 +9,11 @@ enum RequestType { post, get, put }
 
 final httpClient = ChiscoClient();
 
+bool _isServerDown(DioError error) {
+  return (error.error is SocketException) ||
+      (error.type == DioErrorType.connectTimeout);
+}
+
 class ChiscoClient {
   late final Dio _dio;
   RequestType requestType = RequestType.post;
@@ -16,8 +21,8 @@ class ChiscoClient {
 
   ChiscoClient() {
     _dio = Dio(BaseOptions(
-      baseUrl: "https://chisco.tech/api/",
-      connectTimeout: 7000,
+      baseUrl: "http://chisco.tech/api/",
+      connectTimeout: 10000,
       receiveTimeout: 7000,
       sendTimeout: 7000,
       receiveDataWhenStatusError: true,
@@ -60,26 +65,24 @@ class ChiscoClient {
       }
       return ChiscoResponse(
           status: true, code: response.statusCode, object: response.data);
-    } on SocketException {
-      return ChiscoResponse(
-        status: false,
-        code: 406,
-        errorMessage: 'اتصال انترنت خود را بررسی کنید!',
-      );
     } on DioError catch (error) {
       if (error.type == DioErrorType.connectTimeout) {
-        print("Errorrrrrrrrrr Internettttttt");
         return ChiscoResponse(
             status: false,
-            code: 100,
+            code: 404,
             errorMessage: "اتصال به اینترنت خود را بررسی کنید");
+      } else if (error.type == DioErrorType.other) {
+        return ChiscoResponse(
+            status: false,
+            code: 404,
+            errorMessage: 'اتصال به اینترنت خود را بررسی کنید!');
       }
-
       print(error.message);
       if (error.response!.statusCode == 401) {
         print('Refresh Token is call 401 Error');
         try {
-          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
           String? accessToken = sharedPreferences.getString('access_token');
           String? refreshToken = sharedPreferences.getString('refresh_token');
           String? detail = sharedPreferences.getString('detail');
@@ -96,7 +99,6 @@ class ChiscoClient {
               refreshRequest.data['refreshToken'], detail!);
           print('Tokens Saved');
           return request(url: url, data: data, type: type);
-
         } catch (err) {
           print("Error For Refresh Token ${err.toString()}");
           return ChiscoResponse(
@@ -111,93 +113,11 @@ class ChiscoClient {
           errorMessage: error.response?.data['message'],
         );
       }
+    } catch (e) {
+      if ((e as SocketException).message ==
+          "Failed host lookup: 'chisco.tech' (OS Error: No address associated with hostname, errno = 7)")
+        print('***** Exception Caught *****');
+      throw Exception();
     }
   }
-
-/* Future<ChiscoResponse> get(String url) async {
-    final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
-    try {
-      Response response = await _dio.get(url,options:Options(
-          headers: {"x-auth-token":sharedPreferences.getString("access_token")
-          }
-      ),);
-      //print("Print From Http Service : ${response.data.toString()}");
-      return ChiscoResponse(status: true, code: response.statusCode, object: response.data);
-    } on SocketException {
-      return ChiscoResponse(
-        status: false,
-        code: 406,
-        errorMessage: 'اتصال انترنت خود را بررسی کنید!',);
-    } on DioError catch (error) {
-      if(error.type ==DioErrorType.connectTimeout){
-        print("Errorrrrrrrrrr Internettttttt");
-        return ChiscoResponse(status: false, code: 100,errorMessage: "اتصال به اینترنت خود را بررسی کنید");
-      }
-
-      print(error.message);
-      if (error.response!.statusCode == 401) {
-        return ChiscoResponse(status: false, code:error.response?.statusCode);
-      } else {
-        return ChiscoResponse(
-            status: false,
-            code: error.response!.statusCode,
-            errorMessage: error.response?.data['message'],);
-      }
-    }
-
-  }
-
-  Future<ChiscoResponse> put({required String url,required dynamic data}) async{
-    final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
-    try{
-      Response response = await _dio.put(url,data: data,options: Options(
-          headers: {"x-auth-token":sharedPreferences.getString("access_token")
-          }
-      ),);
-      print("Response :${response.data.toString()}");
-      return ChiscoResponse(status: true, code: response.statusCode,object: response.data);
-    }on SocketException{
-      return ChiscoResponse(status: false, code:408,errorMessage: 'اتصال به اینترنت خود را بررسی کنید!');
-
-    }on DioError catch (error){
-      if (error.response!.statusCode == 401) {
-        return ChiscoResponse(status: false, code:error.response?.statusCode);
-      } else {
-        print("Response :${error.response?.data.toString()}");
-
-        return ChiscoResponse(
-            status: false,
-            code: error.response!.statusCode,
-            errorMessage: error.response?.data['message'],
-            object: error.response?.data);
-      }
-    }
-  }
-
-  Future<ChiscoResponse> post({required String url, required dynamic data}) async {
-    final SharedPreferences sharedPreferences =await SharedPreferences.getInstance();
-    try {
-      Response response = await _dio.post(url, data: data,options:Options(
-        headers: {"x-auth-token":sharedPreferences.getString("access_token")
-        }
-      ),);
-      print("Response :${response.data.toString()}");
-
-      return ChiscoResponse(status: true, code: response.statusCode, object: response.data);
-
-    }on SocketException{
-      return ChiscoResponse(status: false, code:408,errorMessage: 'اتصال به اینترنت خود را بررسی کنید!');
-    } on DioError catch (error) {
-      if (error.response!.statusCode == 401) {
-        return ChiscoResponse(status: false, code:error.response?.statusCode);
-      } else {
-        print("Error :${error.response?.data.toString()}");
-        return ChiscoResponse(
-            status: false,
-            code: error.response!.statusCode,
-            errorMessage: error.response?.data['message'],
-            object: error.response?.data);
-      }
-    }
-  }*/
 }

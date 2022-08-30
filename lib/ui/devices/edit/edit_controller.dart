@@ -29,11 +29,11 @@ class EditDeviceController extends ChangeNotifier {
     } else {
       AddDeviceResponse addDeviceResponse =response.object;
 
+      Navigator.pop(context);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
 
       Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
       //notify change
-      Navigator.pop(context);
 
     }
   }
@@ -49,10 +49,10 @@ class EditDeviceController extends ChangeNotifier {
     } else {
 
       AddDeviceResponse addDeviceResponse =response.object;
+      Navigator.pop(context);
 
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
       Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
-      Navigator.pop(context);
       //notify change
 
       ChiscoFlushBar.showSuccessFlushBar(context,addDeviceResponse.message);
@@ -65,14 +65,16 @@ class EditDeviceController extends ChangeNotifier {
     ChiscoResponse response = await deviceRepository.deleteDevice(serialNumber);
     if (!response.status) {
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
-
+      print(response.errorMessage);
       return;
     } else {
       AddDeviceResponse addDeviceResponse =response.object;
+      print(addDeviceResponse.message);
+      Navigator.pushNamed(context, homePage);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
 
       Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
-      Navigator.pushNamed(context, homePage);
+
     }
   }
 }

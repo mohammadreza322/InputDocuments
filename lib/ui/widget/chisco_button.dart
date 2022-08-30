@@ -12,14 +12,14 @@ class ChiscoButton extends StatelessWidget {
   final GestureTapCallback onClick;
   final String icon;
   final bool hasIcon;
-
-
+  final bool hasProgressBar;
 
   const ChiscoButton(
       {Key? key,
       required this.text,
       required this.onClick,
       required this.icon,
+      this.hasProgressBar = false,
       this.hasIcon = true})
       : super(key: key);
 
@@ -46,13 +46,11 @@ class ChiscoButton extends StatelessWidget {
             fontWeight: FontWeight.w500,
             textColor: Colors.white,
           ),
-
-          hasIcon
-              ? SvgPicture.asset(
-            icon,
-            color: Colors.white,
-          )
-              : Container()
+          hasProgressBar
+              ? (const CircularProgressIndicator(
+                  color: Colors.white,
+                ))
+              : hasIcon ? SvgPicture.asset(icon, color: Colors.white,) : Container()
         ]),
       ),
     );

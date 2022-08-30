@@ -104,10 +104,6 @@ class AccountScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     Container(
-                      decoration: const BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                              topLeft: Radius.circular(25),
-                              topRight: Radius.circular(25))),
                       margin: const EdgeInsets.only(bottom: 8, top: 0),
                       child: const ListHandlerView(),
                     ),
@@ -115,7 +111,6 @@ class AccountScreen extends StatelessWidget {
                       height: ChiscoConverter.calculateWidgetWidth(width, 4),
                     ),
                     ...items.map((AccountItem item) {
-                      //Todo InkWell Gesture
                       return InkWell(
                         onTap: item.onClick,
                         child: Padding(

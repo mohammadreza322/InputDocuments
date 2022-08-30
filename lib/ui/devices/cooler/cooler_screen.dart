@@ -1,6 +1,6 @@
 import 'package:chisco/data/data_class/Cooler.dart';
 import 'package:chisco/ui/devices/cooler/cooler_controller.dart';
-import 'package:chisco/ui/devices/cooler/widgets/cooler_state.dart';
+import 'package:chisco/ui/devices/cooler/widgets/cooler_mode.dart';
 import 'package:chisco/ui/devices/cooler/widgets/cooler_controller_item.dart';
 import 'package:chisco/ui/devices/cooler/widgets/edit_btn.dart';
 import 'package:chisco/ui/devices/cooler/widgets/edit_cooler_bottom_sheet.dart';
@@ -32,11 +32,16 @@ class CoolerScreen extends StatelessWidget {
 
     CoolerController controller = Provider.of<CoolerController>(context);
 
-    Cooler selectedCooler =Provider.of<AppController>(context).getCoolerWithSerialNumber(serialNumber);
+    Cooler selectedCooler = Provider.of<AppController>(context).getCoolerWithSerialNumber(serialNumber);
+    print(selectedCooler.temp);
 
-
+    if(controller.initCall){
+      controller.initTemp(selectedCooler);
+    }
+    controller.init(selectedCooler);
     return SafeArea(
         child: Scaffold(
+            resizeToAvoidBottomInset: false,
             backgroundColor: Styles.backGroundColor,
             body: Stack(
               children: [
@@ -46,26 +51,31 @@ class CoolerScreen extends StatelessWidget {
                     right: 0,
                     child: Container(
                       height:
-                          ChiscoConverter.calculateWidgetHeight(height, 260),
+                          ChiscoConverter.calculateWidgetHeight(height, 200),
                       padding: const EdgeInsets.symmetric(horizontal: 20),
                       decoration: const BoxDecoration(
                           image: DecorationImage(
                               image:
-                                  AssetImage('assets/images/home_header.png'),
+                                  AssetImage(APP_HEADER_BACKGROUND_IMAGE),
                               fit: BoxFit.cover)),
                       child: Align(
                         alignment: Alignment.topCenter,
                         child: DeviceAppBar(
                           title: 'کنترلر',
-                          onBackClick: () {Navigator.pop(context);},
-                          onMenuClick: () {},
+                          onBackClick: () {
+                            Navigator.pop(context);
+                          },
+                          onMenuClick: () {
+                            Navigator.pushNamed(context, accountPage);
+
+                          },
                         ),
                       ),
                     )),
                 Container(
                   margin: EdgeInsets.only(
                       top: ChiscoConverter.calculateWidgetHeight(height, 70)),
-                  padding: EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(16),
                   decoration: const BoxDecoration(
                       color: Styles.backGroundColor,
                       borderRadius: BorderRadius.only(
@@ -83,7 +93,7 @@ class CoolerScreen extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              children:  [
+                              children: [
                                 ChiscoText(
                                   text: selectedCooler.name,
                                   fontWeight: FontWeight.w400,
@@ -99,7 +109,8 @@ class CoolerScreen extends StatelessWidget {
                           scheduleBtn(
                             width: 32,
                             onClick: () {
-                              Navigator.pushNamed(context, schedulePage,arguments: serialNumber);
+                              Navigator.pushNamed(context, schedulePage,
+                                  arguments: serialNumber);
                             },
                           ),
                           const SizedBox(
@@ -109,23 +120,32 @@ class CoolerScreen extends StatelessWidget {
                               width: 32,
                               onClick: () {
                                 showChiscoBottomSheet(
-                                    context,EditCoolerBottomSheet(selectedCooler: selectedCooler,));
+                                    context,
+                                    EditCoolerBottomSheet(
+                                      selectedCooler: selectedCooler,
+                                    ));
                               }),
                           const SizedBox(
                             width: 10,
                           ),
                           PowerIcon(
-                           isActive: true,
+                            isActive: selectedCooler.power,
                             onClick: () {
-                              //todo Power Btn onClick
+                              controller.changeCoolerActive();
                             },
                           )
                         ],
                       ),
 
                       //Temp Controller
-                      const Flexible(
-                          fit: FlexFit.tight, child: TempController()),
+                      Flexible(
+                          fit: FlexFit.tight,
+                          child: TempController(
+                            tempCallBack: (double) {
+                            controller.changeTemp(double);
+                            },
+
+                          )),
 
                       const ChiscoText(text: 'حالت های کولر'),
                       const SizedBox(
@@ -140,50 +160,49 @@ class CoolerScreen extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Expanded(
-                              child: CoolerState(
+                              child: CoolerMode(
                                 icon: AUTO,
                                 title: 'خودکار',
-                                isSelected:
-                                    controller.changeCoolerStateCompareItems(
-                                        CoolerStates.auto),
+                                isSelected: controller
+                                    .changeCoolerStateMode(CoolerModes.auto),
                                 onClick: () {
-                                  controller.changeSelectedCoolerState(CoolerStates.auto);
+                                  controller.changeSelectedCoolerMode(
+                                      CoolerModes.auto);
                                 },
                               ),
                             ),
                             Expanded(
-                              child: CoolerState(
+                              child: CoolerMode(
                                 icon: COLD,
                                 title: 'سرد',
-                                isSelected:
-                                    controller.changeCoolerStateCompareItems(
-                                        CoolerStates.cold),
+                                isSelected: controller
+                                    .changeCoolerStateMode(CoolerModes.cold),
                                 onClick: () {
-                                  controller.changeSelectedCoolerState(CoolerStates.cold);
+                                  controller.changeSelectedCoolerMode(
+                                      CoolerModes.cold);
                                 },
                               ),
                             ),
                             Expanded(
-                              child: CoolerState(
+                              child: CoolerMode(
                                 icon: HEATER,
                                 title: 'گرم',
-                                isSelected:
-                                    controller.changeCoolerStateCompareItems(
-                                        CoolerStates.warm),
+                                isSelected: controller
+                                    .changeCoolerStateMode(CoolerModes.warm),
                                 onClick: () {
-                                  controller.changeSelectedCoolerState(CoolerStates.warm);
+                                  controller.changeSelectedCoolerMode(
+                                      CoolerModes.warm);
                                 },
                               ),
                             ),
                             Expanded(
-                              child: CoolerState(
+                              child: CoolerMode(
                                 icon: FAN,
                                 title: 'فن',
-                                isSelected:
-                                    controller.changeCoolerStateCompareItems(
-                                        CoolerStates.fan),
+                                isSelected: controller.changeCoolerStateMode(CoolerModes.fan),
                                 onClick: () {
-                                  controller.changeSelectedCoolerState(CoolerStates.fan);
+                                  controller.changeSelectedCoolerMode(
+                                      CoolerModes.fan);
                                 },
                               ),
                             )
@@ -195,32 +214,48 @@ class CoolerScreen extends StatelessWidget {
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
+                        children: [
                           Expanded(
-                            child: CoolerControllerItem(
-                              icon: AIR_FLOW,
-                              title: 'چرخش افقی',
-                              controllerState: 'خاموش',
+                            child: InkWell(
+                              onTap: () {
+                                controller.changeHorizontalString();
+                              },
+                              child: CoolerControllerItem(
+                                icon: AIR_FLOW,
+                                title: 'چرخش افقی',
+                                controllerState: controller.horizontalString,
+                              ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
-                            child: CoolerControllerItem(
-                              icon: SWING,
-                              title: 'چرخش عمودی',
-                              controllerState: 'سریع',
+                            child: InkWell(
+                              onTap: () {
+                                controller.changeVerticalString();
+                              },
+                              child: CoolerControllerItem(
+                                icon: SWING,
+                                title: 'چرخش عمودی',
+                                controllerState: controller.verticalString,
+                              ),
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                             width: 10,
                           ),
                           Expanded(
-                            child: CoolerControllerItem(
-                              icon: FAN_SPEED,
-                              title: 'شدت باد',
-                              controllerState: 'زیاد',
+                            child: InkWell(
+                              onTap: () {
+                                controller
+                                    .changeFanSpeedString();
+                              },
+                              child: CoolerControllerItem(
+                                icon: FAN_SPEED,
+                                title: 'شدت باد',
+                                controllerState: controller.fanSpeedString,
+                              ),
                             ),
                           ),
                         ],
@@ -237,26 +272,26 @@ class CoolerScreen extends StatelessWidget {
                         children: [
                           Expanded(
                             flex: 1,
-                            child: Container(
-                                height: ChiscoConverter.calculateWidgetWidth(
-                                    width, 40),
-                                padding: EdgeInsets.all(8),
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(12),
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Styles.primaryColor
-                                              .withOpacity(0.07),
-                                          blurRadius: 15,
-                                          offset: const Offset(0, 4))
-                                    ]),
-                                child: SvgPicture.asset(
-                                    PLUS_ICON) /* Image.asset(
-                                  'assets/images/add_icon.png',
-                                  color: Styles.secondaryIconColor,
-                                ),*/
-                                ),
+                            child: InkWell(
+                              onTap: () {
+                                controller.changeHourToSleepIncrease();
+                              },
+                              child: Container(
+                                  height: ChiscoConverter.calculateWidgetWidth(
+                                      width, 40),
+                                  padding: EdgeInsets.all(8),
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(12),
+                                      boxShadow: [
+                                        BoxShadow(
+                                            color: Styles.primaryColor
+                                                .withOpacity(0.07),
+                                            blurRadius: 15,
+                                            offset: const Offset(0, 4))
+                                      ]),
+                                  child: SvgPicture.asset(PLUS_ICON)),
+                            ),
                           ),
                           Expanded(
                             flex: 4,
@@ -276,36 +311,41 @@ class CoolerScreen extends StatelessWidget {
                                         blurRadius: 15,
                                         offset: const Offset(0, 4))
                                   ]),
-                              //todo X Hour Of
-                              child: const Center(
+
+                              child: Center(
                                   child: ChiscoText(
-                                text: '3 ساعت تا خاموشی',
+                                text:
+                                    controller.hourToSleepTitle,
                                 fontWeight: FontWeight.w400,
                               )),
                             ),
                           ),
                           Expanded(
                             flex: 1,
-                            child: Container(
-                              height: ChiscoConverter.calculateWidgetWidth(
-                                  width, 40),
-                              padding: EdgeInsets.all(8),
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(12),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Styles.primaryColor
-                                            .withOpacity(0.07),
-                                        blurRadius: 15,
-                                        offset: const Offset(0, 4))
-                                  ]),
-                              child: SvgPicture.asset(MINUS_ICON),
+                            child: InkWell(
+                              onTap: () {
+                                controller.changeHourToSleepDecrease();
+                              },
+                              child: Container(
+                                height: ChiscoConverter.calculateWidgetWidth(
+                                    width, 40),
+                                padding: EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(12),
+                                    boxShadow: [
+                                      BoxShadow(
+                                          color: Styles.primaryColor
+                                              .withOpacity(0.07),
+                                          blurRadius: 15,
+                                          offset: const Offset(0, 4))
+                                    ]),
+                                child: SvgPicture.asset(MINUS_ICON),
+                              ),
                             ),
                           ),
                         ],
                       ),
-
                     ],
                   ),
                 )

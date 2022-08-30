@@ -57,7 +57,7 @@ class HomeListContainer extends StatelessWidget {
           ),
           Expanded(
             child: DeviceGridList(
-              controller: controller,
+              scrollController: controller,
               devices: homeController.filteredDevices,
             ),
           ),
@@ -65,7 +65,7 @@ class HomeListContainer extends StatelessWidget {
       );
     } else {
       return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Styles.backGroundColor,
             borderRadius: BorderRadius.only(
                 topRight: Radius.circular(25), topLeft: Radius.circular(25))),

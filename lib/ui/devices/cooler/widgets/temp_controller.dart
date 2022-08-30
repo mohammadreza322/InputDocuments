@@ -1,16 +1,20 @@
+import 'package:chisco/ui/devices/cooler/cooler_controller.dart';
 import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:chisco/utils/converter.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 
 class TempController extends StatelessWidget {
+  final Function(double) tempCallBack;
   const TempController({
-    Key? key,
+    Key? key, required this.tempCallBack,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    CoolerController controller = Provider.of<CoolerController>(context);
+
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     return Row(
@@ -43,19 +47,20 @@ class TempController extends StatelessWidget {
                         shape: BoxShape.circle),),
                   Center(
                     child: SleekCircularSlider(
+
                       min: 16,
                       max: 32,
-                      initialValue: 20,
+                      initialValue: controller.temp.toDouble(),
 
                       appearance: CircularSliderAppearance(
                         startAngle: 180,
                         angleRange: 180,
-                        size: 320,
+                        size:300,
                         customWidths: CustomSliderWidths(
-                          trackWidth: 20,
+                          trackWidth: 8,
                           shadowWidth:0,
                           progressBarWidth: 0,
-                          handlerSize: 8,
+                          handlerSize: 12,
 
                         ),
                         customColors: CustomSliderColors(
@@ -73,6 +78,8 @@ class TempController extends StatelessWidget {
                       ),
                       onChange: (value) {
                         print('value ${value.toInt()}');
+                        tempCallBack(value);
+
                       },
                       innerWidget: (percentage) {
                         return Container(
@@ -89,7 +96,7 @@ class TempController extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   ChiscoText(
-                                    text: '${percentage.toInt()}',
+                                    text: '${controller.temp}',
                                     fontSize: 55,
                                     fontWeight: FontWeight.w500,
                                   ),

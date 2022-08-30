@@ -3,6 +3,7 @@ import 'package:chisco/data/data_class/Power.dart';
 import 'package:chisco/ui/devices/cooler/widgets/edit_btn.dart';
 import 'package:chisco/ui/devices/cooler/widgets/edit_cooler_bottom_sheet.dart';
 import 'package:chisco/ui/devices/cooler/widgets/schedule_btn.dart';
+import 'package:chisco/ui/devices/power/power_screen_controller.dart';
 import 'package:chisco/ui/devices/power/widgets/edit_power_bottom_sheet.dart';
 import 'package:chisco/ui/devices/power/widgets/power_header.dart';
 import 'package:chisco/ui/devices/power/widgets/power_list_item.dart';
@@ -30,9 +31,13 @@ class PowerScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     final serialNumber = ModalRoute.of(context)!.settings.arguments as String;
 
-    final selectedPower = Provider.of<AppController>(context,listen: false).getPowerWithSerialNumber(serialNumber);
+    final selectedPower = Provider.of<AppController>(context).getPowerWithSerialNumber(serialNumber);
+    print(selectedPower.totalVoltage);
+    PowerController controller = Provider.of<PowerController>(context);
 
-
+    if (controller.initCall) {
+      controller.init(selectedPower);
+    }
     return SafeArea(
         child: Container(
       height: ChiscoConverter.calculateWidgetHeight(height, 280),
@@ -42,6 +47,7 @@ class PowerScreen extends StatelessWidget {
               image: AssetImage(APP_HEADER_BACKGROUND_IMAGE),
               alignment: Alignment.topCenter)),
       child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -49,7 +55,13 @@ class PowerScreen extends StatelessWidget {
             flexibleSpace: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: DeviceAppBar(
-                  onMenuClick: () {}, onBackClick: () {Navigator.pop(context);}, title: 'سه راهی'),
+                  onMenuClick: () {
+                    Navigator.pushNamed(context, accountPage);
+                  },
+                  onBackClick: () {
+                    Navigator.pop(context);
+                  },
+                  title: 'سه راهی'),
             ),
           ),
           backgroundColor: Colors.transparent,
@@ -68,16 +80,16 @@ class PowerScreen extends StatelessWidget {
                     children: [
                       RichText(
                         textDirection: TextDirection.ltr,
-                        text: const TextSpan(
+                        text:  TextSpan(
                           children: <TextSpan>[
                             TextSpan(
-                                text: '120',
-                                style: TextStyle(
+                                text: selectedPower.totalVoltage.toString(),
+                                style: const TextStyle(
                                     fontFamily: "ChiscoText",
                                     fontSize: 50,
                                     fontWeight: FontWeight.w500,
                                     color: Colors.white)),
-                            TextSpan(
+                            const TextSpan(
                                 text: ' w',
                                 style: TextStyle(
                                     fontFamily: "ChiscoText",
@@ -146,7 +158,8 @@ class PowerScreen extends StatelessWidget {
                                 scheduleBtn(
                                   width: 32,
                                   onClick: () {
-                                    Navigator.pushNamed(context, schedulePage, arguments: serialNumber);
+                                    Navigator.pushNamed(context, schedulePage,
+                                        arguments: serialNumber);
                                   },
                                 ),
                                 const SizedBox(
@@ -155,15 +168,20 @@ class PowerScreen extends StatelessWidget {
                                 EditCoolerBtn(
                                     width: 32,
                                     onClick: () {
-                                      showChiscoBottomSheet(context, EditPowerBottomSheet(selectedPower: selectedPower,));
+                                      showChiscoBottomSheet(
+                                          context,
+                                          EditPowerBottomSheet(
+                                            selectedPower: selectedPower,
+                                          ));
                                     }),
                                 const SizedBox(
                                   width: 10,
                                 ),
                                 PowerIcon(
-                                  isActive: true,
+                                  isActive: controller.isPowerActive,
                                   onClick: () {
-                                    //todo Power Btn onClick
+                                    controller.onPowerBtnClicked(
+                                        selectedPower: selectedPower);
                                   },
                                 )
                               ],
@@ -181,13 +199,14 @@ class PowerScreen extends StatelessWidget {
                               shrinkWrap: false,
                               controller: scrollController,
                               itemBuilder: (context, index) {
-                                Connector connector = selectedPower.connectors[index];
+                                Connector connector =
+                                    selectedPower.connectors[index];
                                 int connectorId = connector.connectorId;
-                                String description ='';
-                                if(connectorId<=4){
-                                   description = 'پریز $connectorId';
-                                }else {
-                                  description = 'پورت ${connectorId-4}';
+                                String description = '';
+                                if (connectorId <= 4) {
+                                  description = 'پریز $connectorId';
+                                } else {
+                                  description = 'پورت ${connectorId - 4}';
                                 }
                                 return Container(
                                   margin: EdgeInsets.symmetric(
@@ -200,6 +219,10 @@ class PowerScreen extends StatelessWidget {
                                     description: description,
                                     isPower: connector.connectorType == 'power',
                                     isActive: connector.status,
+                                    onChange: (val) {
+                                      controller.onConnectorChange(
+                                          connector.connectorId, val);
+                                    },
                                   ),
                                 );
                               },

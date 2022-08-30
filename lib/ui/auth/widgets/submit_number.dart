@@ -53,9 +53,11 @@ class SubmitNumberPage extends StatelessWidget {
               ),
               ChiscoButton(
                 text: 'دریافت پیامک تایید',
+                hasProgressBar:Provider.of<AuthController>(context,listen: false).hasProgressBar,
                 onClick: () {
                   print("callled 1");
                   Provider.of<AuthController>(context,listen: false).submitNumberBtnClicked(controller.text);
+
                 },
                 icon: LEFT_ARROW,
               )

@@ -48,6 +48,9 @@ class EditScheduleBottomSheet extends StatelessWidget {
           .map((e) =>
               ScheduleDays.values.firstWhere((element) => element.name == e))
           .toList();
+      controller.onTime = schedule.start;
+      controller.offTime = schedule.end;
+
       print(controller.days);
       print('Start Time : ${schedule.start} End Time :${schedule.end}');
       if (schedule.start != null && schedule.end != null) {

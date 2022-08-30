@@ -21,6 +21,7 @@ class AuthController extends ChangeNotifier {
   final AuthRepositoryImpl repository = AuthRepositoryImpl();
   String smsId = '';
   bool isNewUser = true;
+  bool hasProgressBar = false;
 
   AuthController(this.context);
 
@@ -28,13 +29,15 @@ class AuthController extends ChangeNotifier {
       PageController(initialPage: 0, viewportFraction: 1, keepPage: true);
 
   submitNumberBtnClicked(String number) async {
+    hasProgressBar = true;
     ChiscoResponse response = await repository.getMobile(number);
     if (!response.status) {
+      hasProgressBar = false;
       print("Error Message is : ${response.errorMessage}");
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
-
       return;
     }
+    hasProgressBar = false;
 
     GetMobileResponse getMobileResponse = response.object;
     ChiscoFlushBar.showSuccessFlushBar(context, getMobileResponse.message);
@@ -42,6 +45,7 @@ class AuthController extends ChangeNotifier {
     smsId = getMobileResponse.id;
     isNewUser = getMobileResponse.isNewUser;
     goToPage(1);
+
   }
 
   submitCodeBtnClicked(String code) async {
@@ -61,8 +65,7 @@ class AuthController extends ChangeNotifier {
         goToPage(2);
       } else {
         ChiscoResponse userDevices = await repository.getUserDevices();
-        await Provider.of<AppController>(context, listen: false)
-            .setData(userDevices.object);
+        await Provider.of<AppController>(context, listen: false).setData(userDevices.object);
         Navigator.pushReplacementNamed(context, homePage);
         ChiscoFlushBar.showSuccessFlushBar(context, messageResponse.message);
 
@@ -86,8 +89,7 @@ class AuthController extends ChangeNotifier {
 
     ChiscoResponse userDevices = await repository.getUserDevices();
 
-    await Provider.of<AppController>(context, listen: false)
-        .setData(userDevices.object);
+    await Provider.of<AppController>(context, listen: false).setData(userDevices.object);
 
     Navigator.pushReplacementNamed(context, homePage);
   }

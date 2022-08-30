@@ -4,6 +4,7 @@ import 'package:chisco/data/data_class/Schedule.dart';
 
 enum DeviceType{cooler,power}
 class Device {
+
 final String category;
 final String name;
 final String serialNumber;

@@ -28,14 +28,10 @@ class HomeScreen extends StatelessWidget {
     HomeController homeController = Provider.of<HomeController>(context);
     String selectedCategory = homeController.selectedCategory;
 
+    homeController.homeLists();
     if(!homeController.isPageLoading){
       homeController.init();
-     // homeController.filteringDevices('نمایش همه');
     }
-
-    homeController.homeList();
-
-
 
     return SafeArea(
       child: Container(
@@ -46,11 +42,11 @@ class HomeScreen extends StatelessWidget {
           alignment: Alignment.topCenter,
         )),
         child: Scaffold(
+          resizeToAvoidBottomInset: false,
           appBar: AppBar(
             backgroundColor: Colors.transparent,
             elevation: 0,
             automaticallyImplyLeading: false,
-
             flexibleSpace: Padding(
               padding: const EdgeInsets.only(left: 20, right: 20),
               child: ChiscoAppbar(
@@ -58,7 +54,7 @@ class HomeScreen extends StatelessWidget {
                 iconAlignment: Alignment.centerLeft,
                 title: 'خانه',
                 onClick: () {
-                  Navigator.pushNamed(context, '/account');
+                  Navigator.pushNamed(context, accountPage);
                 },
               ),
             ),

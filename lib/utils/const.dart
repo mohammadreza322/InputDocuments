@@ -12,7 +12,6 @@ const MINUS_ICON ='assets/images/svg/minus.svg';
 const MINUS_FAB_ICON = 'assets/images/svg/minus-fab.svg';
 const PLUS_FAB_ICON = 'assets/images/svg/plus-fab.svg';
 
-
 const POWER_ICON = 'assets/images/svg/power-icon.svg';
 
 const ADD_COOLER_ICON = 'assets/images/svg/add-cooler.svg';
@@ -79,5 +78,5 @@ const profilePage = '/profile';
 const testPage = '/test';
 
 const horizontalPadding = 20.0;
-const bottomSheetPaddings = EdgeInsets.symmetric(horizontal:20.0,vertical: 15.0);
+const bottomSheetPaddings = EdgeInsets.fromLTRB(15,5,15,10);
 const buttonHeight= 48.0;

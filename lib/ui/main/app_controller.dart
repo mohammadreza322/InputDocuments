@@ -1,17 +1,23 @@
+import 'dart:convert';
+
 import 'package:chisco/data/data_class/AddDeviceResponse.dart';
+import 'package:chisco/data/data_class/Connector.dart';
 import 'package:chisco/data/data_class/Cooler.dart';
 import 'package:chisco/data/data_class/Device.dart';
 import 'package:chisco/data/data_class/UserDetail.dart';
-import 'package:chisco/data/data_class/UserDevices.dart';
 import 'package:chisco/data/data_class/Power.dart';
 import 'package:chisco/data/data_class/User.dart';
-import 'package:chisco/ui/home/home_controller.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:mqtt_client/mqtt_client.dart';
+import 'package:mqtt_client/mqtt_server_client.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../http_client/mqtt/mqtt_classes/MqttClientFactory.dart';
 
 class AppController extends ChangeNotifier {
-   User? _user;
+  User? _user;
 
   List<Cooler> _coolers = [];
 
@@ -19,9 +25,10 @@ class AppController extends ChangeNotifier {
 
   List<String> _categories = [];
 
+  List<Device> _userDevicesList = [];
+  MqttClient? mqttClient;
 
-  List<Device> _userDevicesList =[];
-
+  //MqttClient mqttClient;
   setData(User value) {
     _user = value;
     _categories = _user!.devices.categories;
@@ -32,7 +39,6 @@ class AppController extends ChangeNotifier {
 
     notifyListeners();
   }
-
 
   UserDetail getUserDetail() {
     return _user!.userDetail;
@@ -54,14 +60,13 @@ class AppController extends ChangeNotifier {
     }
   }
 
-  convertDeviceList(){
-    _userDevicesList = List.from(_powers)..addAll(_coolers);
+  convertDeviceList() {
+    _userDevicesList = List.from(_powers)
+      ..addAll(_coolers);
     print("User Device List : ${_userDevicesList.toString()}");
   }
 
-
-
-  refreshData(AddDeviceResponse response){
+  refreshData(AddDeviceResponse response) {
     print('****************************');
     _coolers = response.devices.coolers;
     _powers = response.devices.powers;
@@ -72,24 +77,192 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-  get getUserDevicesList=>_userDevicesList;
+  get getUserDevicesList => _userDevicesList;
 
-  Cooler getCoolerWithSerialNumber(String serialNumber){
-    final index = _coolers.indexWhere((element) =>
-    element.serialNumber == serialNumber);
+  Cooler getCoolerWithSerialNumber(String serialNumber) {
+    final index =
+    _coolers.indexWhere((element) => element.serialNumber == serialNumber);
     return _coolers[index];
   }
 
-  Power getPowerWithSerialNumber(String serialNumber){
-    final index = _powers.indexWhere((element) =>
-    element.serialNumber == serialNumber);
+  Power getPowerWithSerialNumber(String serialNumber) {
+    final index =
+    _powers.indexWhere((element) => element.serialNumber == serialNumber);
     return _powers[index];
   }
-  Device getDeviceWithSerialNumber(String serialNumber){
-    final index = _userDevicesList.indexWhere((element) => element.serialNumber == serialNumber);
+
+  Device getDeviceWithSerialNumber(String serialNumber) {
+    final index = _userDevicesList
+        .indexWhere((element) => element.serialNumber == serialNumber);
     return _userDevicesList[index];
   }
 
+  setPower(Power power) {
+    int index = _powers
+        .indexWhere((element) => element.serialNumber == power.serialNumber);
+    _powers[index] = power;
 
+    //publishPowerMqtt(power);
 
+    notifyListeners();
+  }
+
+  connect({String? topicForSubscribe}) async {
+    //MqttClient client = MqttServerClient.withPort('mqtt://chisco.tech', '',8885);
+    /*MqttClient client = makeClient('mqtt://chisco.tech', 'gdfsg');
+    client.websocketProtocols = ['mqtt'];*/
+    print('controller');
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    Map<String, dynamic> decodedToken =
+    JwtDecoder.decode(sharedPreferences.getString('detail')!);
+    String userNameBroker = decodedToken['usernameBroker'];
+    String passwordBroker = decodedToken['passwordBroker'];
+
+    print(
+        'UserName : ${decodedToken['usernameBroker']}\nPassword: ${decodedToken['passwordBroker']}');
+    //MqttClient client = MqttServerClient.withPort('chisco.tech','gdfsg',8885);
+    MqttClient client = makeClient('185.204.197.144', 'gdfsg');
+    //client.logging(on: true);
+    client.onDisconnected=(){
+      print("disConnectttttttttt");
+
+    };
+    final connMessage = MqttConnectMessage()
+        .authenticateAs(userNameBroker, passwordBroker)
+        .withClientIdentifier(
+        'Chisco_${getUserDetail().phoneNumber}_${kIsWeb ? 'pwa' : 'mobile'}')
+        .withWillQos(MqttQos.atMostOnce);
+    client.connectionMessage = connMessage;
+    try {
+      client.autoReconnect = true;
+      await client.connect();
+
+      client.logging(on: true);
+      if (client.connectionStatus!.state == MqttConnectionState.connected) {
+        //for device
+        _userDevicesList.forEach((element) {
+          client.subscribe(
+              '/chisco/${element.serialNumber}/get', MqttQos.atLeastOnce);
+          print("Meti ::");
+          print("subscribe '/chisco/${element.serialNumber}'");
+        });
+        client.updates!.listen(mqttListen);
+      }
+    } catch (e) {
+      print('MqttError $e');
+      client.disconnect();
+    }
+
+    mqttClient = client;
+  }
+
+  mqttListen(List<MqttReceivedMessage<MqttMessage?>>? c) {
+    print('hjjhj');
+    print(c);
+    if (c != null) {
+      final recMess = c[0].payload as MqttPublishMessage;
+      final payloadString =
+      MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      try {
+        final payload = jsonDecode(payloadString);
+        final topic = c[0].topic;
+        RegExp regExp = RegExp(r'/chisco/(.*)');
+        var matches = regExp.allMatches(topic);
+        String? serialNumber = matches.first.group(1);
+
+        _coolers.forEach((element) {
+          print(element.timer);
+          print(serialNumber);
+          if (element.serialNumber == serialNumber) {
+            Cooler cooler = getCoolerWithSerialNumber(serialNumber!);
+            cooler.timer = payload['timer'];
+            cooler.mode = payload['mode'];
+            cooler.horizontalSwing = payload['horizontalSwing'];
+            cooler.verticalSwing = payload['verticalSwing'];
+            cooler.fan = payload['fan'];
+            cooler.temp = payload['temp'];
+            setCooler(cooler);
+          }
+        });
+
+        _powers.forEach((element) {
+          print(element.serialNumber);
+          if (element.serialNumber == serialNumber) {
+            print(payload['connectors']);
+            List<Connector> connectors = [];
+            for (int i = 0; i < element.connectors.length; i++) {
+              Connector connector = element.connectors[i];
+              bool status = (payload['connectors'] as List<dynamic>).singleWhere((
+                  element) => element['portNumber'] == connector.connectorId)['status'];
+              connector.status = status;
+              connectors.add(connector);
+            }
+
+            Power power = getPowerWithSerialNumber(serialNumber!);
+            power.connectors = connectors;
+            power.totalVoltage = payload['totalVoltage'];
+
+            print('set power');
+            setPower(power);
+          }
+        });
+
+        print(serialNumber);
+
+        notifyListeners();
+      } on FormatException {
+        // print(e);
+        print('The provided string is not valid JSON');
+      }
+    }
+  }
+
+  publishMessage(String topic, MqttClientPayloadBuilder data) {
+    if (data.payload == null) {
+      data.addString({"chisco": true}.toString());
+    }
+
+    //print(data.payload);
+    mqttClient?.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
+  }
+
+  setCooler(Cooler selectedCooler) {
+    int index = _coolers.indexWhere(
+            (element) => element.serialNumber == selectedCooler.serialNumber);
+    _coolers[index] = selectedCooler;
+
+    notifyListeners();
+  }
+
+  publishPowerMqtt(Power power) {
+    List ports = [];
+
+    power.connectors.forEach((element) {
+      Map<String, dynamic> connector = {};
+      connector['portNumber'] = element.connectorId;
+      connector['status'] = element.status;
+      ports.add(connector);
+    });
+    print(power.serialNumber);
+    print(jsonEncode(ports));
+    String port = 'ports:${jsonEncode(ports)}';
+    String result = json.encode({"ports": ports});
+
+    publishMessage('/chisco/${power.serialNumber}/change',
+        MqttClientPayloadBuilder().addString(result));
+  }
+
+  publishCoolerMqtt(Cooler cooler) {
+    Map<String, dynamic> coolerMap = {};
+    coolerMap['status'] = cooler.power;
+    coolerMap['temp'] = cooler.temp;
+    coolerMap['mode'] = cooler.mode;
+    coolerMap['vertical_swing'] = cooler.verticalSwing;
+    coolerMap['horizontal_swing'] = cooler.horizontalSwing;
+    coolerMap['fan'] = cooler.fan;
+    coolerMap['timer'] = cooler.timer;
+    String result = json.encode({"cooler": coolerMap});
+    publishMessage('/chisco/${cooler.serialNumber}/change',
+        MqttClientPayloadBuilder().addString(result));
+  }
 }

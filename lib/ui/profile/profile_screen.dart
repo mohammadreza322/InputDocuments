@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 
 import 'package:chisco/data/data_class/UserDetail.dart';
@@ -24,8 +25,6 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     ProfileController controller = Provider.of<ProfileController>(context);
-    //UserDetail detail = controller.init();
-
 
     double width = MediaQuery.of(context).size.width;
     final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
@@ -56,8 +55,12 @@ class ProfileScreen extends StatelessWidget {
                         iconAlignment: Alignment.centerRight,
                         title: 'ویرایش اطلاعات کاربری',
                         onClick: () {
-                          Navigator.pop(context);
-                          print('Cliced');
+                          FocusScope.of(context).unfocus();
+                          Timer(const Duration(milliseconds: 5), () {
+                            Navigator.pop(context);
+
+                          });
+
                         }),
                   ),
                 )),

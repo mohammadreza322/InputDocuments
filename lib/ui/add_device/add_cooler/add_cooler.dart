@@ -28,14 +28,14 @@ class AddCoolerBottomSheet extends StatelessWidget {
         children: [
           const ListHandlerView(),
           const SizedBox(
-            height: 15,
+            height: 10,
           ),
           const ChiscoText(
             text: 'افزودن کنترلر کولر جدید',
             fontWeight: FontWeight.w400,
           ),
           const SizedBox(
-            height: 20,
+            height: 10,
           ),
           ChiscoTextField(
               controller: serialTextController,
@@ -47,9 +47,9 @@ class AddCoolerBottomSheet extends StatelessWidget {
           ),
           ChiscoTextField(
             controller: brandTextController,
-            hintText: 'سامسونگ - b78s8',
+            hintText: 'مانند سامسونگ - b78s8',
             icon: BRAND,
-            label: "برند و مدل کولر",
+            label: "برند و مدل کولر:",
           ),
           const SizedBox(
             height: 15,
@@ -70,7 +70,7 @@ class AddCoolerBottomSheet extends StatelessWidget {
             label: "دسته‌بندی:",
           ),
           const SizedBox(
-            height: 20,
+            height:15,
           ),
           ChiscoButton(
             text: 'تایید و افزودن دستگاه',
@@ -86,9 +86,7 @@ class AddCoolerBottomSheet extends StatelessWidget {
             icon: '',
             hasIcon: false,
           ),
-          const SizedBox(
-            height: 20,
-          )
+
         ],
       ),
     );

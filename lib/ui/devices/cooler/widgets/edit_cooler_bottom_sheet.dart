@@ -64,6 +64,11 @@ class EditCoolerBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
+
+          ChiscoFixedTextField(icon: BRAND, label: 'بزند و مدل کولر:', text: selectedCooler.brand),
+          const SizedBox(
+            height: 10,
+          ),
           ChiscoTextField(
             controller: nameTextController,
             hintText: selectedCooler.name,

@@ -4,14 +4,14 @@ import 'package:chisco/ui/widget/chisco_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CoolerState extends StatelessWidget {
+class CoolerMode extends StatelessWidget {
   final String icon;
   final String title;
   final bool isSelected;
   final GestureTapCallback onClick;
 
 
-  const CoolerState({
+  const CoolerMode({
     Key? key,
     required this.icon,
     required this.title,
@@ -63,6 +63,7 @@ class CoolerState extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SvgPicture.asset(icon,color: Styles.secondaryColor,),
+
               const SizedBox(
                 width: 5,
               ),

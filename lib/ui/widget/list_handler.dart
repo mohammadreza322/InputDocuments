@@ -15,6 +15,7 @@ class ListHandlerView extends StatelessWidget {
               color: Styles.primaryTextColor.withOpacity(.2),
               borderRadius: BorderRadius.circular(5),
           ),
+
           margin: const EdgeInsets.only(top: 15,bottom: 10),
           width: 28,
           height: 4,
