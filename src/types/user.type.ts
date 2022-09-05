@@ -6,7 +6,7 @@ export interface getUserInformationOutput {
 	phoneNumber: string;
 	fullName?: string;
 	address?: string;
-	birthday?: Date;
+	birthday?: number;
 }
 
 export interface editUserProfileInput {

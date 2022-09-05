@@ -146,6 +146,7 @@ const coolerSchema = new Schema({
 	},
 	temp: {
 		type: Number,
+		default: 20,
 	},
 	mode: {
 		type: String,
@@ -173,6 +174,7 @@ const coolerSchema = new Schema({
 	},
 	power: {
 		type: Boolean,
+		default: true,
 	},
 });
 

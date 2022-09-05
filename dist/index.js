@@ -12,6 +12,12 @@ const mqtt_1 = __importDefault(require("./classes/mqtt"));
 process.env.TZ = 'Asia/Tehran';
 const app = (0, express_1.default)();
 app.use((0, body_parser_1.json)());
+app.use((_, res, next) => {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type'); // If needed
+    return next();
+});
 app.use('/api', api_router_1.apiRouter);
 app.use('/', (_, res) => {
     return res.json({ message: 'ok server' });

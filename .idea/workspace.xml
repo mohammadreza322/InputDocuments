@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/chisco-backend.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/validator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/validator.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/device.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/device.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/device.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/device.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/device.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/device.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/users.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/users.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/user.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/user.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utility/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/constants.ts" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2E3qs6hemshxYpxHQg7LOZp1wzi" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="ts.external.directory.path" value="C:\projects\node\chisco-backend\node_modules\typescript\lib" />
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="" />
+      <created>1661834818990</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1661834818990</updated>
+      <workItem from="1661834820463" duration="950000" />
+      <workItem from="1662350829425" duration="195000" />
+      <workItem from="1662351958540" duration="87000" />
+      <workItem from="1662352075853" duration="1517000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+</project>

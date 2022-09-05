@@ -57,11 +57,15 @@ class UserEntity {
     static getUserInformation(id) {
         return __awaiter(this, void 0, void 0, function* () {
             const user = yield users_model_1.default.findById(id);
+            let birthday = null;
+            if (user.birthday) {
+                birthday = Math.ceil(user.birthday.getTime() / 1000);
+            }
             return {
                 phoneNumber: user.phoneNumber,
                 fullName: user.fullName,
                 address: user.address,
-                birthday: user.birthday,
+                birthday: birthday,
             };
         });
     }

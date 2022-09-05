@@ -7,5 +7,5 @@ export const jsonWebTokenSecretKey: string =
 export const accessTokenExpireTime: string = '10m';
 export const refreshTokenExpireTime: string = '30d';
 
-export const brokerUrl: string = 'mqtt://185.204.197.144:8885';
+export const brokerUrl: string = 'mqtt://185.204.197.144:1883';
 export const brokerUrlAPI: string = 'http://185.204.197.144:8081';

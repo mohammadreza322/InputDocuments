@@ -63,11 +63,16 @@ export default class UserEntity {
 	public static async getUserInformation(id: Types.ObjectId) {
 		const user: IUser | null = await Users.findById(id);
 
+		let birthday = null
+		if(user.birthday){
+			birthday = Math.ceil(user.birthday.getTime()/1000)
+		}
+
 		return {
 			phoneNumber: user!.phoneNumber,
 			fullName: user!.fullName,
 			address: user!.address,
-			birthday: user!.birthday,
+			birthday: birthday,
 		} as getUserInformationOutput;
 	}
 }

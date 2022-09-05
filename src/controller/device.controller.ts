@@ -15,19 +15,25 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 		const { serialNumber, name, category }: addDeviceInput = req.body;
 
 		if (!serialNumber || !name || !category) {
-			return res.status(400).json({ message: 'خطا در ورودی1' });
+			return res.status(400).json({ message: 'خطا در ورودی' });
 		}
 
 		if (serialNumber.trim() === '') {
-			return res.status(400).json({ message: 'خطا در ورودی2' });
+			return res
+				.status(400)
+				.json({ message: 'شماره سریال را وارد نکرده اید!' });
 		}
 
 		if (category.trim() === '') {
-			return res.status(400).json({ message: 'خطا در ورودی3' });
+			return res
+				.status(400)
+				.json({ message: 'دسته بندی را وارد نکرده اید!' });
 		}
 
 		if (name.trim() === '') {
-			return res.status(400).json({ message: 'خطا در ورودی4' });
+			return res
+				.status(400)
+				.json({ message: 'نام دستگاه را وارد نکرده اید!' });
 		}
 
 		const validateSerialNumber = await DeviceEntity.validateSerialNumber(
@@ -43,29 +49,29 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 		}
 
 		if (validateSerialNumber.type == 'cooler') {
-			const { brand, model }: addDeviceInput = req.body;
+			const { model }: addDeviceInput = req.body;
 
-			if (!brand || !model) {
-				return res.status(400).json({ message: 'خطا در ورودی5' });
+			if (!model) {
+				return res.status(400).json({ message: 'مدل دستگاه را وارد نکرده اید!' });
 			}
 
-			if (brand!.trim() === '') {
-				return res
-					.status(400)
-					.json({ message: 'برند کولر را وارد نکرده اید' });
-			}
+			// if (brand!.trim() === '') {
+			// 	return res
+			// 		.status(400)
+			// 		.json({ message: 'برند کولر را وارد نکرده اید' });
+			// }
 
 			if (model!.trim() === '') {
 				return res
 					.status(400)
-					.json({ message: 'مدل کولر را وارد نکرده اید' });
+					.json({ message: 'مدل کولر را وارد نکرده اید!' });
 			}
 
 			//todo check validate brand and model
 
 			await DeviceEntity.saveCooler(
 				serialNumber.trim(),
-				brand!.trim(),
+
 				model!.trim(),
 				name.trim(),
 				category.trim(),
@@ -75,29 +81,29 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 			let { power1, power2, power3, power4, usb1, usb2 }: addDeviceInput =
 				req.body;
 
-			if (power1.toString().trim() == '') {
-				power1 = 'پریز 1';
-			}
+			// if (power1.toString().trim() == '') {
+			// 	power1 = 'پریز 1';
+			// }
 
-			if (power2.toString().trim() == '') {
-				power2 = 'پریز 2';
-			}
+			// if (power2.toString().trim() == '') {
+			// 	power2 = 'پریز 2';
+			// }
 
-			if (power3.toString().trim() == '') {
-				power3 = 'پریز 3';
-			}
+			// if (power3.toString().trim() == '') {
+			// 	power3 = 'پریز 3';
+			// }
 
-			if (power4.toString().trim() == '') {
-				power4 = 'پریز 4';
-			}
+			// if (power4.toString().trim() == '') {
+			// 	power4 = 'پریز 4';
+			// }
 
-			if (usb1.toString().trim() == '') {
-				usb1 = 'پورت 1';
-			}
+			// if (usb1.toString().trim() == '') {
+			// 	usb1 = 'پورت 1';
+			// }
 
-			if (usb2.toString().trim() == '') {
-				usb2 = 'پورت 1';
-			}
+			// if (usb2.toString().trim() == '') {
+			// 	usb2 = 'پورت 1';
+			// }
 
 			await DeviceEntity.savePower(
 				serialNumber.trim(),
@@ -130,7 +136,7 @@ export const deleteDevice = async (req: CustomRequest, res: Response) => {
 		const { serialNumber }: deleteDeviceInput = req.body;
 
 		if (!serialNumber) {
-			return res.status(400).json({ message: 'خطا در ورودی' });
+			return res.status(400).json({ message: 'خطا در ورودی!' });
 		}
 
 		const validateSerialNumber = await DeviceEntity.validateSerialNumber(
@@ -174,7 +180,7 @@ export const saveSchedule = async (req: CustomRequest, res: Response) => {
 		}: saveScheduleInput = req.body;
 
 		if (!startTime && !endTime) {
-			return res.status(400).json({ message: 'خطا در ورودی' });
+			return res.status(400).json({ message: 'زمان روشن شدن یا زمان خاموش شدن باید انتخاب شود' });
 		}
 
 		if (!serialNumber || !repeat) {
@@ -186,18 +192,18 @@ export const saveSchedule = async (req: CustomRequest, res: Response) => {
 		}
 
 		if (!AhpValidator.isWeekDayArray(repeat)) {
-			return res.status(400).json({ message: 'خطا در ورودی' });
+			return res.status(400).json({ message: 'فرمت انتخاب روز های هفته اشتباه است' });
 		}
 
 		if (startTime) {
 			if (!AhpValidator.isTime(startTime)) {
-				return res.status(400).json({ message: 'خطا در ورودی' });
+				return res.status(400).json({ message: 'فرمت ساعت روشن شدن اشتباه است' });
 			}
 		}
 
 		if (endTime) {
 			if (!AhpValidator.isTime(endTime)) {
-				return res.status(400).json({ message: 'خطا در ورودی' });
+				return res.status(400).json({ message: 'فرمت ساعت خاموش شدن اشتباه است' });
 			}
 		}
 

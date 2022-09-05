@@ -110,7 +110,7 @@ export default class DeviceEntity {
 
 	static async saveCooler(
 		serialNumber: string,
-		brand: string,
+
 		model: string,
 		name: string,
 		category: string,
@@ -120,7 +120,6 @@ export default class DeviceEntity {
 			{ serialNumber },
 			{
 				$set: {
-					brand,
 					model,
 					name,
 					category,
@@ -132,7 +131,7 @@ export default class DeviceEntity {
 
 		AhpMqtt.getInstance().publish(
 			`/chisco/change_model/${serialNumber}`,
-			JSON.stringify({ brand, model }),
+			JSON.stringify({ model }),
 		);
 	}
 

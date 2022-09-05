@@ -89,11 +89,10 @@ class DeviceEntity {
             return output;
         });
     }
-    static saveCooler(serialNumber, brand, model, name, category, userId) {
+    static saveCooler(serialNumber, model, name, category, userId) {
         return __awaiter(this, void 0, void 0, function* () {
             yield device_model_1.Cooler.updateOne({ serialNumber }, {
                 $set: {
-                    brand,
                     model,
                     name,
                     category,
@@ -101,7 +100,7 @@ class DeviceEntity {
                     registerAt: Date.now(),
                 },
             });
-            mqtt_1.default.getInstance().publish(`/chisco/change_model/${serialNumber}`, JSON.stringify({ brand, model }));
+            mqtt_1.default.getInstance().publish(`/chisco/change_model/${serialNumber}`, JSON.stringify({ model }));
         });
     }
     static savePower(serialNumber, category, name, userId, power1, power2, power3, power4, usb1, usb2) {

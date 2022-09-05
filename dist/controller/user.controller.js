@@ -76,7 +76,9 @@ const editUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function
             userBirthday = new Date(birthday);
         }
         if (yield user_entity_1.default.setUserDetails(req.userId, fullName, userBirthday, address)) {
-            return res.json({ message: 'اطلاعات شما با موفقیت تغییر کرد' });
+            const userDetails = yield user_entity_1.default.getUserInformation(req.userId);
+            const userDevices = yield device_entity_1.default.getAllDevices(req.userId);
+            return res.json({ message: 'اطلاعات شما با موفقیت تغییر کرد', user: userDetails, devices: userDevices });
         }
         else {
             return res.status(500).json({ message: 'خطایی پیش آمده!!' });

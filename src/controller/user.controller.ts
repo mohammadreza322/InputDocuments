@@ -95,7 +95,14 @@ export const editUserProfile = async (req: CustomRequest, res: Response) => {
 				address,
 			)
 		) {
-			return res.json({ message: 'اطلاعات شما با موفقیت تغییر کرد' });
+			const userDetails: getUserInformationOutput =
+				await UserEntity.getUserInformation(req.userId);
+
+			const userDevices: listOfDevices = await DeviceEntity.getAllDevices(
+				req.userId,
+			);
+
+			return res.json({ message: 'اطلاعات شما با موفقیت تغییر کرد',user: userDetails, devices: userDevices });
 		} else {
 			return res.status(500).json({ message: 'خطایی پیش آمده!!' });
 		}

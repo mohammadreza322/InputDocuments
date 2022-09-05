@@ -84,6 +84,7 @@ const coolerSchema = new mongoose_1.Schema(Object.assign(Object.assign({}, defau
         type: String,
     }, temp: {
         type: Number,
+        default: 20,
     }, mode: {
         type: String,
         default: 'Auto',
@@ -104,6 +105,7 @@ const coolerSchema = new mongoose_1.Schema(Object.assign(Object.assign({}, defau
         default: [],
     }, power: {
         type: Boolean,
+        default: true,
     } }));
 exports.Cooler = (0, mongoose_1.model)('Cooler', coolerSchema);
 //# sourceMappingURL=device.model.js.map

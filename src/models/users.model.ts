@@ -10,7 +10,7 @@ export interface IUser extends Document {
 	usernameBroker?: string;
 	passwordBroker?: string;
 	address?: string;
-	birthday: Date;
+	birthday?: Date;
 }
 
 const UserSchema = new Schema(
