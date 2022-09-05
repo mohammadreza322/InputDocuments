@@ -10,7 +10,7 @@ process.env.TZ = 'Asia/Tehran';
 
 const app = express();
 
-app.use(cors)
+app.use(cors())
 app.use(json());
 
 app.use((_:Request,res:Response,next:NextFunction) => {

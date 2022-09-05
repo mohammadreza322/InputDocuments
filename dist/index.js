@@ -12,7 +12,7 @@ const mqtt_1 = __importDefault(require("./classes/mqtt"));
 const cors_1 = __importDefault(require("cors"));
 process.env.TZ = 'Asia/Tehran';
 const app = (0, express_1.default)();
-app.use(cors_1.default);
+app.use((0, cors_1.default)());
 app.use((0, body_parser_1.json)());
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
