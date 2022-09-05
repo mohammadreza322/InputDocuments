@@ -15,6 +15,7 @@ app.use((_:Request,res:Response,next:NextFunction) => {
 	res.setHeader('Access-Control-Allow-Origin', '*');
 	res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
 	res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-auth-token'); // If needed
+	res.setHeader('Access-Control-Allow-Credentials', "true")
 	return next()
 })
 
