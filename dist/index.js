@@ -9,8 +9,10 @@ const api_router_1 = require("./routes/api.router");
 const db_1 = __importDefault(require("./config/db"));
 require("./types/global.type");
 const mqtt_1 = __importDefault(require("./classes/mqtt"));
+const cors_1 = __importDefault(require("cors"));
 process.env.TZ = 'Asia/Tehran';
 const app = (0, express_1.default)();
+app.use(cors_1.default);
 app.use((0, body_parser_1.json)());
 app.use((_, res, next) => {
     res.setHeader('Access-Control-Allow-Origin', '*');

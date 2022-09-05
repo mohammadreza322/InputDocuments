@@ -4,11 +4,13 @@ import { apiRouter } from './routes/api.router';
 import connectDb from './config/db';
 import './types/global.type';
 import AhpMqtt from './classes/mqtt';
+import cors from 'cors'
 
 process.env.TZ = 'Asia/Tehran';
 
 const app = express();
 
+app.use(cors)
 app.use(json());
 
 app.use((_:Request,res:Response,next:NextFunction) => {
