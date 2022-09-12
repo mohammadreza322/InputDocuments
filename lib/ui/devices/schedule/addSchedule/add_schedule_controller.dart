@@ -44,11 +44,9 @@ class AddScheduleController extends ChangeNotifier {
     } else if (selectedType == ScheduleType.off) {
       offTimeController.text = oneHourLater.to24hours();
       print("off");
-
     } else {
       onTimeController.text = TimeOfDay.now().to24hours();
       print("Onn");
-
     }
   }
 
@@ -92,7 +90,7 @@ class AddScheduleController extends ChangeNotifier {
   }
 
   bool isScheduleItemActive(ScheduleType type) {
-   // print("Schedule Type : $type");
+    // print("Schedule Type : $type");
     return selectedType == type;
   }
 
@@ -120,33 +118,79 @@ class AddScheduleController extends ChangeNotifier {
   }
 
   addCoolerScheduleBtnClicked(String serialNumber) async {
-    ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
-        endTime: offTimeController.text,
-        repeat: days.map((e) => e.name).toList(),
-        serialNumber: serialNumber,
-        startTime: onTimeController.text));
+    ChiscoResponse? response;
+    switch(selectedType){
+      case ScheduleType.both:{
+        if(onHint || offHint){
+          ChiscoFlushBar.showErrorFlushBar(
+              context, 'ساعت روشن و خاموش شدن هردو باید وارد شود.');
+          return;
+        }else {
+          response = await repositoryImpl.saveSchedule(AddSchedule(
+              endTime: selectedType != ScheduleType.on
+                  ? !offHint
+                  ? offTimeController.text
+                  : null
+                  : null,
+              repeat: days.map((e) => e.name).toList(),
+              serialNumber: serialNumber,
+              startTime: selectedType != ScheduleType.off
+                  ? !onHint
+                  ? onTimeController.text
+                  : null
+                  : null));
+        }
+      break;
+      }
+      case ScheduleType.on:{
+        if(onHint){
+          ChiscoFlushBar.showErrorFlushBar(
+              context, 'ساعت روشن شدن باید وارد شود.');
+          return;
+        }else {
+          response = await repositoryImpl.saveSchedule(AddSchedule(
+              endTime: selectedType != ScheduleType.on
+                  ? !offHint
+                  ? offTimeController.text
+                  : null
+                  : null,
+              repeat: days.map((e) => e.name).toList(),
+              serialNumber: serialNumber,
+              startTime: selectedType != ScheduleType.off
+                  ? !onHint
+                  ? onTimeController.text
+                  : null
+                  : null));
+        }
+        break;
+      }
 
-    if (response.status) {
-      AddDeviceResponse deviceResponse = response.object;
-      Provider.of<AppController>(context, listen: false)
-          .refreshData(deviceResponse);
-      notifyListeners();
-      Navigator.pop(context);
-    } else {
-      print(response.errorMessage);
-      print('status 4111 ');
+      case ScheduleType.off:{
+        if(offHint){
+          ChiscoFlushBar.showErrorFlushBar(
+              context, 'ساعت خاموش شدن باید وارد شود.');
+          return;
+
+        }else {
+          response = await repositoryImpl.saveSchedule(AddSchedule(
+              endTime: selectedType != ScheduleType.on
+                  ? !offHint
+                  ? offTimeController.text
+                  : null
+                  : null,
+              repeat: days.map((e) => e.name).toList(),
+              serialNumber: serialNumber,
+              startTime: selectedType != ScheduleType.off
+                  ? !onHint
+                  ? onTimeController.text
+                  : null
+                  : null));
+        }
+        break;
+      }
     }
-  }
 
-  addPowerScheduleBtnClicked(String serialNumber) async {
-    ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
-        endTime:
-            selectedType != ScheduleType.on ? offTimeController.text : null,
-        repeat: days.map((e) => e.name).toList(),
-        portNumber: connectorId,
-        serialNumber: serialNumber,
-        startTime:
-            selectedType != ScheduleType.off ? onTimeController.text : null));
+
     if (response.status) {
       AddDeviceResponse deviceResponse = response.object;
       Provider.of<AppController>(context, listen: false)
@@ -159,5 +203,121 @@ class AddScheduleController extends ChangeNotifier {
       print(response.errorMessage);
       print('status 4111 ');
     }
+
+  }
+
+  addPowerScheduleBtnClicked(String serialNumber) async {
+    ChiscoResponse? response;
+    switch(selectedType){
+      case ScheduleType.both:{
+        if(onHint || offHint){
+          ChiscoFlushBar.showErrorFlushBar(
+              context, 'ساعت روشن و خاموش شدن هردو باید وارد شود.');
+          return;
+        }else {
+          response = await repositoryImpl.saveSchedule(AddSchedule(
+              endTime: selectedType != ScheduleType.on
+                  ? !offHint
+                  ? offTimeController.text
+                  : null
+                  : null,
+              repeat: days.map((e) => e.name).toList(),
+              portNumber: connectorId,
+              serialNumber: serialNumber,
+              startTime: selectedType != ScheduleType.off
+                  ? !onHint
+                  ? onTimeController.text
+                  : null
+                  : null));
+        }
+        break;
+      }
+      case ScheduleType.on:{
+        if(onHint){
+          ChiscoFlushBar.showErrorFlushBar(
+              context, 'ساعت روشن شدن باید وارد شود.');
+          return;
+        }else {
+          response = await repositoryImpl.saveSchedule(AddSchedule(
+              endTime: selectedType != ScheduleType.on
+                  ? !offHint
+                  ? offTimeController.text
+                  : null
+                  : null,
+              repeat: days.map((e) => e.name).toList(),
+              serialNumber: serialNumber,
+              portNumber: connectorId,
+
+              startTime: selectedType != ScheduleType.off
+                  ? !onHint
+                  ? onTimeController.text
+                  : null
+                  : null));
+        }
+        break;
+      }
+
+      case ScheduleType.off:{
+        if(offHint){
+          ChiscoFlushBar.showErrorFlushBar(
+              context, 'ساعت خاموش شدن باید وارد شود.');
+          return;
+
+        }else {
+          response = await repositoryImpl.saveSchedule(AddSchedule(
+              endTime: selectedType != ScheduleType.on
+                  ? !offHint
+                  ? offTimeController.text
+                  : null
+                  : null,
+              repeat: days.map((e) => e.name).toList(),
+              serialNumber: serialNumber,
+              portNumber: connectorId,
+
+              startTime: selectedType != ScheduleType.off
+                  ? !onHint
+                  ? onTimeController.text
+                  : null
+                  : null));
+        }
+        break;
+      }
+    }
+
+    if (response.status) {
+      AddDeviceResponse deviceResponse = response.object;
+      Provider.of<AppController>(context, listen: false)
+          .refreshData(deviceResponse);
+      notifyListeners();
+      Navigator.pop(context);
+      ChiscoFlushBar.showSuccessFlushBar(context, deviceResponse.message);
+    } else {
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+      print(response.errorMessage);
+      print('status 4111 ');
+    }
+
+   /* ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
+        endTime: selectedType != ScheduleType.on ? offTimeController.text : null,
+        repeat: days.map((e) => e.name).toList(),
+        portNumber: connectorId,
+        serialNumber: serialNumber,
+        startTime:
+            selectedType != ScheduleType.off ? onTimeController.text : null));
+    if (response.status) {
+      AddDeviceResponse deviceResponse = response.object;
+
+      Provider.of<AppController>(context, listen: false).refreshData(deviceResponse);
+
+      notifyListeners();
+      Navigator.pop(context);
+
+      ChiscoFlushBar.showSuccessFlushBar(context, deviceResponse.message);
+
+    } else {
+      ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+      print(response.errorMessage);
+      print('status 4111 ');
+    }*/
   }
 }

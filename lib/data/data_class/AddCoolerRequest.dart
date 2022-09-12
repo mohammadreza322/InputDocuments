@@ -1,3 +1,4 @@
+//data Class for send add cooler request
 class AddCooler {
   String brand;
   String category;

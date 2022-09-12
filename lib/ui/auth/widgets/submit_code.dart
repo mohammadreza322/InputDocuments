@@ -14,7 +14,7 @@ class SubmitCodePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController controller =TextEditingController();
+    AuthController authController = Provider.of<AuthController>(context);
     TextStyle textStyle =const TextStyle(
         color: Styles.primaryTextColor,
         fontFamily: 'ChiscoText',
@@ -23,69 +23,67 @@ class SubmitCodePage extends StatelessWidget {
     );
     return Directionality(
       textDirection: TextDirection.rtl,
-
       child: Container(
-
         margin: const EdgeInsets.symmetric(horizontal: 50),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const ChiscoText(
-                text: 'تایید شماره همراه',
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                textColor: Styles.primaryColor,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              RichText(
-                  textAlign: TextAlign.start,
-                  text:  TextSpan(children:[
-                TextSpan(text: 'لطفا کد ارسال شده به ',style: textStyle),
-                TextSpan(text: '989172223311+',style: textStyle),
-                TextSpan(text: ' را وارد کنید.',style: textStyle),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const ChiscoText(
+              text: 'تایید شماره همراه',
+              fontSize: 20,
+              fontWeight: FontWeight.w600,
+              textColor: Styles.primaryColor,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            RichText(
+                textAlign: TextAlign.start,
+                text:  TextSpan(children:[
+              TextSpan(text: 'لطفا کد ارسال شده به ',style: textStyle),
+              TextSpan(text: authController.getUserPhone(),style: textStyle),
+              TextSpan(text: ' را وارد کنید.',style: textStyle),
 
-              ]
-              )),
-              const SizedBox(
-                height: 45,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: OtpInput(controller: controller,),
-              ),
+            ]
+            )),
+            const SizedBox(
+              height: 45,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: OtpInput(controller: authController.enterCodeController,),
+            ),
 
-              const SizedBox(
-                height: 20,
-              ),
-              ChiscoButton(
+            const SizedBox(
+              height: 20,
+            ),
+            ChiscoButton(
 
-                text: 'تایید و ورود به چیسکو',
-                onClick: () {
-                  Provider.of<AuthController>(context, listen: false).submitCodeBtnClicked(controller.text);
-                },
-                icon: LEFT_ARROW,
+              text: 'تایید و ورود به چیسکو',
+              onClick: () {
+                authController.submitCodeBtnClicked(authController.enterCodeController.text);
+              },
+              icon: LEFT_ARROW,
 
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: TextButton(
-                    onPressed: () {
-                      Provider.of<AuthController>(context, listen: false)
-                          .goToPage(0);
-                    },
-                    child: const ChiscoText(
-                        text: 'برگشت به مرحله قبل',
-                        textColor: Styles.primaryTextColor)),
-              )
-            ],
-          ),
+            ),
+
+            const SizedBox(
+              height: 15,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: TextButton(
+                  onPressed: () {
+                    authController
+                        .goToPage(0);
+                  },
+                  child: const ChiscoText(
+                      text: 'برگشت به مرحله قبل',
+                      textColor: Styles.primaryTextColor)),
+            )
+          ],
+
         ),
       ),
     );

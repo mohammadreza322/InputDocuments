@@ -17,18 +17,19 @@ class EditScheduleController extends ChangeNotifier{
 
   TextEditingController onTimeController = TextEditingController();
   TextEditingController offTimeController = TextEditingController();
-
   ScheduleRepositoryImpl repositoryImpl = ScheduleRepositoryImpl();
+
   bool onHint = false;
   bool offHint = false;
+  bool initState = true;
+
   ScheduleType selectedType = ScheduleType.on;
   List<ScheduleDays> days = [];
   String dropDownString = '';
   int connectorId = 0;
-  bool initState = true;
 
-  String onTime = '00:00';
-  String offTime = '00:00';
+  String onTime = '';
+  String offTime = '';
 
 
 
@@ -67,9 +68,8 @@ class EditScheduleController extends ChangeNotifier{
   changeSelectedScheduleItem(ScheduleType type) async {
     selectedType = type;
     TimeOfDay oneHourLater = TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
-
     if (selectedType == ScheduleType.on) {
-      onTimeController.text =onTime==''?'-:-':onTime;
+      onTimeController.text = onTime==''?'-:-':onTime;
     } else if (selectedType == ScheduleType.off) {
       offTimeController.text = offTime!=''?offTime:'-:-';
     } else {
@@ -78,7 +78,6 @@ class EditScheduleController extends ChangeNotifier{
     }
 
     await Future.delayed(Duration(milliseconds: 250));
-
     notifyListeners();
   }
 
@@ -117,6 +116,9 @@ class EditScheduleController extends ChangeNotifier{
 
 
   editCoolerScheduleBtnClicked(String serialNumber,String id) async {
+    print(offTimeController.text);
+    print(onTimeController.text);
+
     ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
         endTime: selectedType != ScheduleType.on ? offTimeController.text : null,
         repeat: days.map((e) => e.name).toList(),
@@ -124,6 +126,7 @@ class EditScheduleController extends ChangeNotifier{
         serialNumber: serialNumber,
         id: id,
         startTime: selectedType != ScheduleType.off ? onTimeController.text : null));
+
     print(response);
 
     if (response.status) {

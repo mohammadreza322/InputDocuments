@@ -1,4 +1,5 @@
 
+ ///after send phone number and after successful response this data class reserve
 class CheckOtpResponse {
   final String accessToken;
   final String details;

@@ -1,3 +1,4 @@
+///give this data class for some of requests
 class MessageResponse{
   final String message;
 

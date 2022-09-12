@@ -27,9 +27,9 @@ class ProfileScreen extends StatelessWidget {
     ProfileController controller = Provider.of<ProfileController>(context);
 
     double width = MediaQuery.of(context).size.width;
-    final mediaQuery = MediaQueryData.fromWindow(WidgetsBinding.instance.window);
     double height = MediaQuery.of(context).size.height;
-    if(!controller.isPageLoading){
+    if (!controller.isPageLoading) {
+      print('init');
       controller.init();
     }
     return SafeArea(
@@ -58,9 +58,7 @@ class ProfileScreen extends StatelessWidget {
                           FocusScope.of(context).unfocus();
                           Timer(const Duration(milliseconds: 5), () {
                             Navigator.pop(context);
-
                           });
-
                         }),
                   ),
                 )),
@@ -88,15 +86,16 @@ class ProfileScreen extends StatelessWidget {
                     controller: controller.nameController,
                     label: 'نام و نام خانوادگی :',
                     icon: USER,
-                    hintText: 'مثلا مهدی ابوالحسنی',
+                    hintText: 'نام شما',
                     hasLabel: true,
                   ),
                   const SizedBox(
                     height: 15,
                   ),
                   ChiscoFixedTextField(
-                      icon: PHONE, label: 'شماره تماس', text: controller.numberController.text),
-
+                      icon: PHONE,
+                      label: 'شماره تماس',
+                      text: controller.numberController.text),
                   const SizedBox(
                     height: 25,
                   ),
@@ -109,12 +108,10 @@ class ProfileScreen extends StatelessWidget {
                     controller: controller.locationController,
                     label: 'محل سکونت :',
                     icon: LOCATION,
-                    hintText: ' فارس شیراز',
+                    hintText: 'ندارد',
                     hasLabel: true,
                   ),
                   const SizedBox(height: 15),
-
-
                   ChiscoTimeSelector(
                       icon: CAKE,
                       label: 'تاریخ تولد:',
@@ -130,7 +127,6 @@ class ProfileScreen extends StatelessWidget {
                           controller.changeSelectedDate(picker.toDateTime());
                         }
                       }),
-
                   Expanded(
                     flex: 1,
                     child: Align(
@@ -144,7 +140,6 @@ class ProfileScreen extends StatelessWidget {
                                   controller.nameController.text,
                                   controller.selectedStringDate,
                                   controller.locationController.text);
-
                             },
                             hasIcon: false,
                             icon: '',

@@ -2,11 +2,20 @@
     package="com.example.chisco">
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS"/>
+    <uses-permission android:name="android.permission.READ_SMS"/>
    <application
-        android:label="chisco"
+        android:label="چیسکو"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher">
-        <activity
+        android:icon="@mipmap/chisco">
+       <receiver android:name="com.shounakmulay.telephony.sms.IncomingSmsReceiver"
+           android:permission="android.permission.BROADCAST_SMS" android:exported="true">
+           <intent-filter>
+               <action android:name="android.provider.Telephony.SMS_RECEIVED"/>
+           </intent-filter>
+       </receiver>
+
+       <activity
             android:name=".MainActivity"
             android:exported="true"
             android:usesCleartextTraffic="true"
@@ -15,6 +24,8 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
+
+
             <!-- Specifies an Android theme to apply to this Activity as soon as
                  the Android process has started. This theme is visible to the user
                  while the Flutter UI initializes. After that, this theme continues
@@ -33,6 +44,7 @@
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
+
     </application>
 
     <!-- Provide required visibility configuration for API level 30 and above -->

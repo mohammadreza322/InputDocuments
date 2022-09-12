@@ -28,18 +28,8 @@ class AppController extends ChangeNotifier {
   List<Device> _userDevicesList = [];
   MqttClient? mqttClient;
 
-  //MqttClient mqttClient;
-  setData(User value) {
-    _user = value;
-    _categories = _user!.devices.categories;
-    _coolers = _user!.devices.coolers;
-    _powers = _user!.devices.powers;
-    print("User Devices from App Controller : ${_user!.devices}");
-    convertDeviceList();
-
-    notifyListeners();
-  }
-
+  bool isAppLoaded = false;
+  bool isMqttConnected = false;
   UserDetail getUserDetail() {
     return _user!.userDetail;
   }
@@ -52,6 +42,19 @@ class AppController extends ChangeNotifier {
 
   get getCategories => _categories;
 
+  get getUserDevicesList => _userDevicesList;
+
+
+  setData(User value) {
+    _user = value;
+    _categories = _user!.devices.categories;
+    _coolers = _user!.devices.coolers;
+    _powers = _user!.devices.powers;
+    print('set Data from app controller');
+    print("User Devices from App Controller : ${_user!.devices}");
+    convertDeviceList();
+    notifyListeners();
+  }
   isUserHaveDevice() {
     if (_coolers.length == 0 && _powers.length == 0) {
       return false;
@@ -77,7 +80,15 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-  get getUserDevicesList => _userDevicesList;
+  refreshUserData({required String location, required String name, required num date}){
+    _user!.userDetail.address =location;
+    _user!.userDetail.birthday = date;
+    _user!.userDetail.fullName = name;
+
+
+    notifyListeners();
+  }
+
 
   Cooler getCoolerWithSerialNumber(String serialNumber) {
     final index =
@@ -109,42 +120,52 @@ class AppController extends ChangeNotifier {
 
   connect({String? topicForSubscribe}) async {
     //MqttClient client = MqttServerClient.withPort('mqtt://chisco.tech', '',8885);
-    /*MqttClient client = makeClient('mqtt://chisco.tech', 'gdfsg');
-    client.websocketProtocols = ['mqtt'];*/
+    //MqttClient client = makeClient('mqtt://chisco.tech', 'gdfsg');
     print('controller');
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    Map<String, dynamic> decodedToken =
-    JwtDecoder.decode(sharedPreferences.getString('detail')!);
+    Map<String, dynamic> decodedToken = JwtDecoder.decode(sharedPreferences.getString('detail')!);
     String userNameBroker = decodedToken['usernameBroker'];
     String passwordBroker = decodedToken['passwordBroker'];
 
-    print(
-        'UserName : ${decodedToken['usernameBroker']}\nPassword: ${decodedToken['passwordBroker']}');
-    //MqttClient client = MqttServerClient.withPort('chisco.tech','gdfsg',8885);
-    MqttClient client = makeClient('185.204.197.144', 'gdfsg');
+    String url ='';
+
+    if(kIsWeb) {
+      url = "ws://";
+    }
+
+    url+="chisco.tech";
+    print('UserName : ${decodedToken['usernameBroker']}\nPassword: ${decodedToken['passwordBroker']}');
+    MqttClient client = makeClient(url, '');
+    client.websocketProtocols = ['mqtts','mqtt'];
+
     //client.logging(on: true);
     client.onDisconnected=(){
       print("disConnectttttttttt");
 
     };
+
+    client.onConnected=(){
+      //print("concteeeeeeeeeeed");
+      isMqttConnected = true;
+      notifyListeners();
+
+    };
     final connMessage = MqttConnectMessage()
         .authenticateAs(userNameBroker, passwordBroker)
-        .withClientIdentifier(
-        'Chisco_${getUserDetail().phoneNumber}_${kIsWeb ? 'pwa' : 'mobile'}')
+        .withClientIdentifier('Chisco_${getUserDetail().phoneNumber}_${kIsWeb ? 'pwa' : 'mobile'}')
         .withWillQos(MqttQos.atMostOnce);
     client.connectionMessage = connMessage;
     try {
       client.autoReconnect = true;
+      client.logging(on: false);
       await client.connect();
 
-      client.logging(on: true);
       if (client.connectionStatus!.state == MqttConnectionState.connected) {
         //for device
         _userDevicesList.forEach((element) {
-          client.subscribe(
-              '/chisco/${element.serialNumber}/get', MqttQos.atLeastOnce);
-          print("Meti ::");
-          print("subscribe '/chisco/${element.serialNumber}'");
+          client.subscribe('/chisco/${element.serialNumber}/get', MqttQos.atLeastOnce);
+         // print("Meti ::");
+          //print("subscribe '/chisco/${element.serialNumber}'");
         });
         client.updates!.listen(mqttListen);
       }
@@ -157,8 +178,8 @@ class AppController extends ChangeNotifier {
   }
 
   mqttListen(List<MqttReceivedMessage<MqttMessage?>>? c) {
-    print('hjjhj');
-    print(c);
+   //print('hjjhj');
+   //print(c);
     if (c != null) {
       final recMess = c[0].payload as MqttPublishMessage;
       final payloadString =
@@ -171,8 +192,7 @@ class AppController extends ChangeNotifier {
         String? serialNumber = matches.first.group(1);
 
         _coolers.forEach((element) {
-          print(element.timer);
-          print(serialNumber);
+
           if (element.serialNumber == serialNumber) {
             Cooler cooler = getCoolerWithSerialNumber(serialNumber!);
             cooler.timer = payload['timer'];
@@ -188,7 +208,7 @@ class AppController extends ChangeNotifier {
         _powers.forEach((element) {
           print(element.serialNumber);
           if (element.serialNumber == serialNumber) {
-            print(payload['connectors']);
+
             List<Connector> connectors = [];
             for (int i = 0; i < element.connectors.length; i++) {
               Connector connector = element.connectors[i];
@@ -222,7 +242,8 @@ class AppController extends ChangeNotifier {
       data.addString({"chisco": true}.toString());
     }
 
-    //print(data.payload);
+
+    print('published');
     mqttClient?.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
   }
 
@@ -243,8 +264,7 @@ class AppController extends ChangeNotifier {
       connector['status'] = element.status;
       ports.add(connector);
     });
-    print(power.serialNumber);
-    print(jsonEncode(ports));
+
     String port = 'ports:${jsonEncode(ports)}';
     String result = json.encode({"ports": ports});
 
@@ -261,8 +281,9 @@ class AppController extends ChangeNotifier {
     coolerMap['horizontal_swing'] = cooler.horizontalSwing;
     coolerMap['fan'] = cooler.fan;
     coolerMap['timer'] = cooler.timer;
+
+
     String result = json.encode({"cooler": coolerMap});
-    publishMessage('/chisco/${cooler.serialNumber}/change',
-        MqttClientPayloadBuilder().addString(result));
+    publishMessage('/chisco/${cooler.serialNumber}/change', MqttClientPayloadBuilder().addString(result));
   }
 }

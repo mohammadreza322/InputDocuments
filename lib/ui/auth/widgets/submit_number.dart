@@ -15,54 +15,68 @@ class SubmitNumberPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    //todo Remember To Remove Text
-    TextEditingController controller = TextEditingController(text: '09011234342');
+
+    TextEditingController controller = TextEditingController(text: '');
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
         margin: const EdgeInsets.symmetric(horizontal: 50),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const ChiscoText(
-                text: 'شروع با شماره موبایل',
-                fontSize: 20,
-                fontWeight: FontWeight.w500,
-                textColor: Styles.primaryColor,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const ChiscoText(
-                  text: 'لطفا اطلاعات خود را برای ورود یا ثبت ‌نام وارد کنید.',
-                  fontWeight: FontWeight.w300,
-                  textColor: Styles.primaryTextColor),
-               SizedBox(
-                height:  ChiscoConverter.calculateWidgetWidth(width,45),
-              ),
-               AuthTextField(
-                  label: 'شماره همراه',
-                  controller: controller,
-                  text: '09012345678',
-                  isInputNumber: true,
-                  icon: PHONE),
-              const SizedBox(
-                height: 20,
-              ),
-              ChiscoButton(
-                text: 'دریافت پیامک تایید',
-                hasProgressBar:Provider.of<AuthController>(context,listen: false).hasProgressBar,
-                onClick: () {
-                  print("callled 1");
-                  Provider.of<AuthController>(context,listen: false).submitNumberBtnClicked(controller.text);
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const ChiscoText(
+              text: 'شروع با شماره موبایل',
+              fontSize: 20,
+              fontWeight: FontWeight.w500,
+              textColor: Styles.primaryColor,
+            ),
+            const SizedBox(
+              height: 10,
+            ),
+            const ChiscoText(
+                text: 'لطفا اطلاعات خود را برای ورود یا ثبت ‌نام وارد کنید.',
+                fontWeight: FontWeight.w300,
+                textColor: Styles.primaryTextColor),
+             SizedBox(
+              height:  ChiscoConverter.calculateWidgetWidth(width,45),
+            ),
+             AuthTextField(
+                label: 'شماره همراه',
+                controller: controller,
+                text: 'برای مثال : 09012345789',
+                isInputNumber: true,
+                icon: PHONE),
+            const SizedBox(
+              height: 20,
+            ),
+            ChiscoButton(
+              text: 'دریافت پیامک تایید',
+              hasProgressBar:Provider.of<AuthController>(context,listen: false).hasProgressBar,
+              onClick: () {
+                print("callled 1");
+                FocusManager.instance.primaryFocus?.unfocus();
+                Provider.of<AuthController>(context,listen: false).setPhoneNumber(controller.text);
+                Provider.of<AuthController>(context,listen: false).submitNumberBtnClicked(controller.text);
 
-                },
-                icon: LEFT_ARROW,
-              )
-            ],
-          ),
+              },
+              icon: LEFT_ARROW,
+            ),
+            const SizedBox(
+              height: 15,
+            ),
+            Align(
+              alignment: Alignment.center,
+              child: TextButton(
+                  onPressed: () {
+                    Provider.of<AuthController>(context,listen: false).goToPage(0);
+                  },
+                  child: const ChiscoText(
+                      text: '',
+                      fontWeight: FontWeight.w300,
+                      textColor: Styles.primaryTextColor)),
+            )
+          ],
         ),
       ),
     );

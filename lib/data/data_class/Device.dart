@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:chisco/data/data_class/Schedule.dart';
-
+///parent of @Cooler and @Power data class,
 enum DeviceType{cooler,power}
 class Device {
 

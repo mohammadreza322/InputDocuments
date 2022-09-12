@@ -15,8 +15,7 @@ class AccountRepositoryImpl extends AccountRepository {
   Future<ChiscoResponse> editUserInformation(
       String? location, int? birthday, String? fullName) async {
 
-    ChiscoResponse response = await _accountRemoteDataSource
-        .editUserInformation(location, birthday, fullName);
+    ChiscoResponse response = await _accountRemoteDataSource.editUserInformation(location, birthday, fullName);
     if (response.status) {
       MessageResponse messageResponse =
           MessageResponse.fromJson(response.object);

@@ -49,6 +49,7 @@ class HomeController extends ChangeNotifier {
   get getListDevices => _listDevices;
 
   get getCoolerCount =>_coolerCount;
+
   get getPowerCount =>_powerCount;
 
 
@@ -57,7 +58,7 @@ class HomeController extends ChangeNotifier {
     isPageLoading = true;
     AppController appController = Provider.of<AppController>(context);
     user = appController.getUser();
-
+    print('home controller init');
     if(!_categories.contains('نمایش همه')) {
       _categories.insert(0, 'نمایش همه');
     }
@@ -126,13 +127,15 @@ class HomeController extends ChangeNotifier {
       notifyListeners();
     });
 
-
   }
+
   homeLists(){
+
     _coolerCount =Provider.of<AppController>(context,listen: false).getCoolers().length;
     _powerCount = Provider.of<AppController>(context,listen: false).getPowers().length;
     _listDevices = Provider.of<AppController>(context,listen: false).getUserDevicesList;
     _categories = Provider.of<AppController>(context,listen: false).getCategories;
+
   }
 
   isUserHaveDevice() {

@@ -1,15 +1,15 @@
 import 'UserDevices.dart';
-
+/// this data class is contain user details
 class UserDetail {
-  final String address;
-  final String birthday;
-  final String fullName;
-  final String phoneNumber;
+  String address;
+  num? birthday;
+  String fullName;
+  String phoneNumber;
 
 
   UserDetail({
     this.address = '',
-    this.birthday = '',
+    this.birthday =null,
     required this.fullName,
     required this.phoneNumber,
   });
@@ -17,7 +17,7 @@ class UserDetail {
   factory UserDetail.fromJson(Map<String, dynamic> json) {
     return UserDetail(
       address: json['address'] != null ? json['address'] : '',
-      birthday: json['birthday'] != null ? json['birthday'] :'',
+      birthday: json['birthday'],
       fullName: json['fullName'],
       phoneNumber: json['phoneNumber'],
     );

@@ -1,3 +1,4 @@
+///for editing cooler we will send this data class
 class EditCooler {
 
   String category;

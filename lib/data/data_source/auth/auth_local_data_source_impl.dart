@@ -1,7 +1,7 @@
 import 'package:chisco/data/data_class/CheckOtpResponse.dart';
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
 import 'package:chisco/data/data_class/GetMobileResponse.dart';
-import 'package:chisco/data/data_class/TokenSingeleton.dart';
+
 
 import 'package:chisco/data/data_class/MessageResponse.dart';
 import 'package:chisco/data/data_source/auth/auth_data_source.dart';

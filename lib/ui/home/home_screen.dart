@@ -1,9 +1,8 @@
-import 'package:chisco/ui/home/widgets/device_grid_list.dart';
+
 import 'package:chisco/ui/home/widgets/header_item.dart';
 import 'package:chisco/ui/home/widgets/home_list.dart';
 import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/utils/const.dart';
-import 'package:chisco/utils/converter.dart';
 import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_appbar.dart';
 import 'package:chisco/ui/widget/chisco_speed_dial.dart';
@@ -11,11 +10,8 @@ import 'package:chisco/ui/widget/chisco_text.dart';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
 import '../home/home_controller.dart';
-import '../home/widgets/category_list.dart';
 
-import '../widget/list_handler.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -27,12 +23,11 @@ class HomeScreen extends StatelessWidget {
     AppController appController = Provider.of<AppController>(context);
     HomeController homeController = Provider.of<HomeController>(context);
     String selectedCategory = homeController.selectedCategory;
-
     homeController.homeLists();
-    if(!homeController.isPageLoading){
+    if (!homeController.isPageLoading) {
+      print('homeControoller init');
       homeController.init();
     }
-
     return SafeArea(
       child: Container(
         width: double.infinity,
@@ -88,17 +83,20 @@ class HomeScreen extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.only(left: 20, right: 20),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children:  [
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
                                 HeaderItem(
                                   titleText: 'کنترلر',
                                   icon: COOLER,
-                                  counterText: homeController.getCoolerCount.toString(),
+                                  counterText: homeController.getCoolerCount
+                                      .toString(),
                                 ),
                                 HeaderItem(
                                   titleText: 'سه راهی',
                                   icon: SOCKET,
-                                  counterText: homeController.getPowerCount.toString(),
+                                  counterText:
+                                      homeController.getPowerCount.toString(),
                                 )
                               ],
                             ),

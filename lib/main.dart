@@ -5,9 +5,6 @@ import 'package:flutter/material.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  /*final AuthRepositoryImpl repository =
-  AuthRepositoryImpl();
-  repository.loadToken();
-  */
+
   runApp( MyApp());
 }

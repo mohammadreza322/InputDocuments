@@ -1,7 +1,7 @@
 import 'package:chisco/data/data_class/Device.dart';
 
 import 'Schedule.dart';
-
+///this data class is use in @userDevice data class (List<Cooler>)
 class Cooler extends Device {
   String brand;
   String fan;
@@ -48,7 +48,7 @@ class Cooler extends Device {
         timer: json['timer'],
         verticalSwing: json['verticalSwing'],
       power: json['power'],
-      temp: json['temp']
+      temp: json['temp'] !=null ? json['temp'] : 20
     );
   }
 }

@@ -3,6 +3,8 @@ import 'package:chisco/data/data_class/Schedule.dart';
 
 import 'Connector.dart';
 
+///this data class is use in @userDevice data class (List<Power>)
+
 class Power extends Device {
   String category;
   String name;

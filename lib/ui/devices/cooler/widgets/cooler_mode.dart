@@ -37,9 +37,7 @@ class CoolerMode extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SvgPicture.asset(
-              icon,
-              color: Colors.white,
-            ),
+              icon, color: Colors.white,),
             const SizedBox(
               width: 6,
             ),
@@ -62,7 +60,7 @@ class CoolerMode extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              SvgPicture.asset(icon,color: Styles.secondaryColor,),
+              SvgPicture.asset(icon,color: Styles.primaryTextColor,),
 
               const SizedBox(
                 width: 5,

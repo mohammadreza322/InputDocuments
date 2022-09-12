@@ -1,6 +1,8 @@
+import 'package:chisco/ui/account/account_controller.dart';
 import 'package:chisco/utils/theme.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-//Todo Role And ... Link
+
 class AuthDefaultText extends StatelessWidget {
   const AuthDefaultText({
     Key? key,
@@ -9,7 +11,7 @@ class AuthDefaultText extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextStyle textStyle =TextStyle(
-      color: const Color(0xff06196280).withOpacity(0.5),
+      color:  Styles.primaryTextColor.withOpacity(0.5),
       fontFamily: 'ChiscoText',
       fontSize: Styles.defaultFontSize,
       fontWeight: Styles.defaultFontWeight
@@ -21,14 +23,14 @@ class AuthDefaultText extends StatelessWidget {
           style: textStyle,
           children:  [
              TextSpan(
-              text: 'شرایط',
+              text: 'شرایط و مقررات',
               style: textStyle.copyWith(color: Styles.primaryTextColor),
+               recognizer: TapGestureRecognizer()..onTap=(){
+                 chiscoLaunchUrl();
+               }
+
             ),
-            TextSpan(text: ' و ',style: textStyle),
-             TextSpan(
-              text: 'مقررات',
-              style: textStyle.copyWith(color: Styles.primaryTextColor),
-            ),
+
             TextSpan(text: '\n .ما موافقت کرده‌اید',style: textStyle)
           ]),
     );

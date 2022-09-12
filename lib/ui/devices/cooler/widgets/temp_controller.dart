@@ -57,10 +57,10 @@ class TempController extends StatelessWidget {
                         angleRange: 180,
                         size:300,
                         customWidths: CustomSliderWidths(
-                          trackWidth: 8,
+                          trackWidth: 6,
                           shadowWidth:0,
                           progressBarWidth: 0,
-                          handlerSize: 12,
+                          handlerSize: 10,
 
                         ),
                         customColors: CustomSliderColors(

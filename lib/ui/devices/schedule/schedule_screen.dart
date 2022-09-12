@@ -54,8 +54,6 @@ class ScheduleScreen extends StatelessWidget {
       isPower = false;
     }
 
-
-
     //debugPrint("Schedule List : ${schedule[1].repeat}");
 
     return SafeArea(
@@ -78,9 +76,15 @@ class ScheduleScreen extends StatelessWidget {
                       child: DeviceAppBar(
                         title: 'زمان بندی دستگاه',
                         onBackClick: () {
-                          Navigator.pop(context);
+                          if(selectedDevice.deviceType ==DeviceType.cooler){
+                            Navigator.pushReplacementNamed(context, coolerDevicePage,arguments: serialNumber);
+                          }else{
+                            Navigator.pushReplacementNamed(context, powerDevicePage,arguments: serialNumber);
+                          }
                         },
-                        onMenuClick: () {},
+                        onMenuClick: () {
+                          Navigator.pushNamed(context, accountPage);
+                        },
                       ),
                     ),
                   )),
@@ -114,7 +118,8 @@ class ScheduleScreen extends StatelessWidget {
                       ),
                       InkWell(
                         onTap: () {
-                          controller.onAddScheduleClick(selectedDevice, selectedDevice is Power);
+                          controller.onAddScheduleClick(
+                              selectedDevice, selectedDevice is Power);
                         },
                         child: Container(
                             width: iconWidth,
@@ -150,7 +155,10 @@ class ScheduleScreen extends StatelessWidget {
                                         isPower: isPower,
                                         index: index,
                                         device: selectedDevice,
-                                        connectors: isPower ? (selectedDevice as Power).connectors : [],
+                                        connectors: isPower
+                                            ? (selectedDevice as Power)
+                                                .connectors
+                                            : [],
                                       ));
                                 }),
                           )

@@ -1,3 +1,4 @@
+//for add new schedule this data class use
 class AddSchedule {
   String? endTime;
   List<String> repeat;

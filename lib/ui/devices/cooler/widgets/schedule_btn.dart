@@ -1,4 +1,5 @@
 import 'package:chisco/utils/const.dart';
+import 'package:chisco/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -22,7 +23,8 @@ class scheduleBtn extends StatelessWidget {
           width: iconWidth,
           height: iconWidth,
           padding: const EdgeInsets.all(8),
-          decoration: const BoxDecoration(
+          decoration:  BoxDecoration(
+            boxShadow: [Styles.getBoxShadow(0.07)],
             shape: BoxShape.circle,
             color: Colors.white,
           ),

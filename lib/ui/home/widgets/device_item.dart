@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'dart:ffi';
+
 
 import 'package:chisco/utils/const.dart';
 import 'package:chisco/utils/theme.dart';
@@ -84,6 +84,7 @@ class DeviceListItem extends StatelessWidget {
                 text: isActive ? 'روشن' : 'خاموش',
               ),
               PowerIcon(
+                size: 30,
                   isActive: isActive,
                   onClick: () {
                     onPowerClick();

@@ -1,6 +1,8 @@
 import 'package:chisco/data/data_class/Cooler.dart';
 import 'package:chisco/data/data_class/Power.dart';
 
+/// this data class is contain user devices
+
 class UserDevices {
     final List<String>  categories;
     final List<Cooler>  coolers;

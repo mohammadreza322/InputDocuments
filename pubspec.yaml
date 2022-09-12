@@ -46,13 +46,15 @@ dependencies:
   sizer: ^2.0.15
 
   dio: ^4.0.6
-
   shared_preferences: ^2.0.15
-
-  get_it: ^7.2.0
   another_flushbar: ^1.10.28
   mqtt_client: ^9.6.1
   jwt_decoder: ^2.0.1
+  telephony: ^0.2.0
+  permission_handler: ^10.0.0
+  universal_html: ^2.0.8
+  flutter_launcher_icons: ^0.10.0
+  package_info_plus: ^1.4.3+1
 
 
 
@@ -60,10 +62,12 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^2.0.0
-
+flutter_icons:
+  web:
+    generate: true
+    image_path: "assets/images/logo/chisco_logo.png"
+    background_color: "#ffffff"
 flutter:
-
-
   uses-material-design: true
   assets:
     - assets/images/

@@ -1,3 +1,5 @@
+///for editing power we will send this data class
+
 class EditPower {
   String category;
   String name;

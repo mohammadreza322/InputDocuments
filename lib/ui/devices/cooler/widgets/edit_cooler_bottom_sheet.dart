@@ -23,20 +23,20 @@ class EditCoolerBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EditDeviceController controller = EditDeviceController(context);
-    final TextEditingController serialTextController = TextEditingController();
-    final TextEditingController nameTextController = TextEditingController(
-        text: selectedCooler.name);
-    final TextEditingController categoryTextController = TextEditingController(
-        text: selectedCooler.category);
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    EditDeviceController controller = Provider.of<EditDeviceController>(context);
+    if(!controller.isPageLoading){
+      print('init');
+      controller.init(selectedCooler);
+    }
+   /* final TextEditingController serialTextController =
+        TextEditingController(text:'asdasdasd');
+    final TextEditingController nameTextController =
+        TextEditingController(text: selectedCooler.name);
+    final TextEditingController categoryTextController =
+        TextEditingController(text: selectedCooler.category);*/
+
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -55,31 +55,36 @@ class EditCoolerBottomSheet extends StatelessWidget {
           const SizedBox(
             height: 10,
           ),
-
           ChiscoFixedTextField(
             text: selectedCooler.serialNumber,
             icon: SERIAL,
             label: "شماره سریال",
           ),
-          const SizedBox(
-            height: 10,
-          ),
 
-          ChiscoFixedTextField(icon: BRAND, label: 'بزند و مدل کولر:', text: selectedCooler.brand),
           const SizedBox(
             height: 10,
           ),
           ChiscoTextField(
-            controller: nameTextController,
-            hintText: selectedCooler.name,
+            controller: controller.nameTextController,
+            hintText: '',
             icon: DEVICE,
-            label: "اسم نمایشی کنترلر: ",
+            hasLabel: true,
+            label: "اسم نمایشی کنترلر:",
           ),
           const SizedBox(
             height: 10,
           ),
           ChiscoTextField(
-            controller: categoryTextController,
+            icon: BRAND,
+            label: 'برند و مدل کولر:',
+            hintText: '',
+            controller: controller.brandTextController,
+          ),
+          const SizedBox(
+            height: 10,
+          ),
+          ChiscoTextField(
+            controller: controller.categoryTextController,
             hintText: selectedCooler.category,
             icon: CATEGORY,
             label: "دسته‌بندی:",
@@ -93,10 +98,10 @@ class EditCoolerBottomSheet extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () {
                     print("delete clicked");
-                      controller.onDeviceDeleteClicked(selectedCooler.serialNumber);
+                    controller
+                        .onDeviceDeleteClicked(selectedCooler.serialNumber);
                   },
                   child: Container(
-
                     height: ChiscoConverter.calculateWidgetWidth(
                         width, buttonHeight),
                     width: double.infinity,
@@ -105,35 +110,35 @@ class EditCoolerBottomSheet extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                         boxShadow: [Styles.getBoxShadow(0.07)],
                         gradient: const LinearGradient(
-                            colors: [ Color(0xffD92249), Color(0xffCC2045)])),
-                    child: Center(
-                        child: SvgPicture.asset(TRASH)
-                    ),
+                            colors: [Color(0xffD92249), Color(0xffCC2045)])),
+                    child: Center(child: SvgPicture.asset(TRASH)),
                   ),
                 ),
               ),
-              const SizedBox(width: 10,),
+              const SizedBox(
+                width: 10,
+              ),
               Expanded(
                 flex: 5,
                 child: ChiscoButton(
                   text: 'تایید و ثبت تغییرات',
                   onClick: () {
                     print('edit Cooler clicked');
-
+                    //print(controller.brandTextController.text);
                     controller.onCoolerEditClicked(EditCooler(
-                      brand: selectedCooler.brand,
+                        brand: selectedCooler.brand,
                         model: selectedCooler.model,
-                        category:categoryTextController.text,
-                        name: nameTextController.text,
-                        serialNumber: selectedCooler.serialNumber));
+                        category: controller.categoryTextController.text,
+                        name: controller.nameTextController.text,
+                        serialNumber: selectedCooler.serialNumber)
+                    );
                   },
                   icon: '',
                   hasIcon: false,
                 ),
               ),
-            ],),
-
-
+            ],
+          ),
         ],
       ),
     );

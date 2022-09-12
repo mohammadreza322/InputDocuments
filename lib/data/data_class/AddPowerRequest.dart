@@ -1,3 +1,5 @@
+//data Class for send add power request
+
 class AddPower {
   String category;
   String name;

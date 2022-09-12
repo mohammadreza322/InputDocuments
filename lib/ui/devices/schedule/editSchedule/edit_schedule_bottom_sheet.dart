@@ -3,7 +3,9 @@ import 'package:chisco/data/data_class/Device.dart';
 import 'package:chisco/data/data_class/Power.dart';
 import 'package:chisco/data/data_class/Schedule.dart';
 import 'package:chisco/ui/devices/schedule/addSchedule/add_schedule_controller.dart';
+import 'package:chisco/ui/devices/schedule/addSchedule/widgets/schedule_drop_down.dart';
 import 'package:chisco/ui/devices/schedule/editSchedule/edit_schedule_controller.dart';
+import 'package:chisco/ui/devices/schedule/editSchedule/time_converter.dart';
 import 'package:chisco/ui/devices/schedule/schedule_controller.dart';
 import 'package:chisco/ui/devices/schedule/addSchedule/widgets/add_schedule_item.dart';
 import 'package:chisco/ui/widget/chisco_time_text_view.dart';
@@ -51,14 +53,10 @@ class EditScheduleBottomSheet extends StatelessWidget {
       controller.onTime = schedule.start;
       controller.offTime = schedule.end;
 
-      print(controller.days);
-      print('Start Time : ${schedule.start} End Time :${schedule.end}');
-      if (schedule.start != null && schedule.end != null) {
-        print("Both");
+      if (schedule.start != '' && schedule.end != '') {
         controller.changeSelectedScheduleItem(ScheduleType.both);
-      } else if (schedule.start != null && schedule.end == null) {
+      } else if (schedule.start != '' && schedule.end == '') {
         controller.changeSelectedScheduleItem(ScheduleType.on);
-        print("Onn");
       } else {
         controller.changeSelectedScheduleItem(ScheduleType.off);
         print("Offff");
@@ -131,61 +129,10 @@ class EditScheduleBottomSheet extends StatelessWidget {
           isPower
               ? Column(
                   children: [
-                    DropdownButtonHideUnderline(
-                        child: DropdownButton2(
-                      items: connectors
-                          .map((item) => DropdownMenuItem<int>(
-                              value: item.connectorId,
-                              alignment: Alignment.centerRight,
-                              child: ChiscoText(
-                                text: item.name,
-                              )))
-                          .toList(),
-                      onChanged: (value) {
-                        print(value);
-                        int index = connectors.indexWhere(
-                            (element) => element.connectorId == value);
-                        controller.changeDropDownValue(
-                            connectors[index].name, value as int);
-                      },
-                      buttonHeight: buttonHeight,
-                      buttonDecoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(16)),
-                      buttonWidth: double.infinity,
-                      itemHeight: ChiscoConverter.calculateWidgetHeight(
-                          width, buttonHeight),
-                      hint: Padding(
-                        padding: EdgeInsets.only(
-                            right: ChiscoConverter.calculateWidgetHeight(
-                                width, 20)),
-                        child: Row(
-                          children: [
-                            SvgPicture.asset(DEVICE),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const ChiscoText(
-                              fontWeight: FontWeight.w400,
-                              text: 'اسم پورت یا پریز:',
-                            ),
-                            const SizedBox(
-                              width: 4,
-                            ),
-                            ChiscoText(
-                              text: controller.dropDownString,
-                              fontWeight: FontWeight.w400,
-                            )
-                          ],
-                        ),
-                      ),
-                      icon: Padding(
-                        padding: EdgeInsets.only(
-                            left: ChiscoConverter.calculateWidgetHeight(
-                                width, 20)),
-                        child: SvgPicture.asset(ARROW_BOTTOM),
-                      ),
-                    )),
+                    ChiscoDropDown(
+                        connectors: connectors,
+                        onDropDownChange: (value) {},
+                        dropDownString: controller.dropDownString),
                     const SizedBox(
                       height: 20,
                     ),
@@ -201,7 +148,12 @@ class EditScheduleBottomSheet extends StatelessWidget {
                   onClick: () async {
                     var picked = await showPersianTimePicker(
                         context: context,
-                        initialTime: TimeOfDay.now(),
+                        initialTime: controller.onTime == ''
+                            ? TimeOfDay.now()
+                            : TimeOfDay(
+                                hour: TimeConverter.getHour(controller.onTime),
+                                minute:
+                                    TimeConverter.getMin(controller.onTime)),
                         buttonTextStyle: const TextStyle(
                             fontSize: 12, fontWeight: FontWeight.w400),
                         titleTextStyle: const TextStyle(
@@ -226,13 +178,16 @@ class EditScheduleBottomSheet extends StatelessWidget {
                   onClick: () async {
                     var picked = await showPersianTimePicker(
                       context: context,
-                      initialTime: TimeOfDay.now(),
+                      initialTime: controller.offTime == ''
+                          ? TimeOfDay.now()
+                          : TimeOfDay(
+                              hour: TimeConverter.getHour(controller.offTime),
+                              minute: TimeConverter.getMin(controller.offTime)),
                       buttonTextStyle: const TextStyle(
                           fontSize: 12, fontWeight: FontWeight.w400),
                       titleTextStyle: const TextStyle(
                           fontSize: 12, fontWeight: FontWeight.w500),
                     );
-
                     if (picked != null) {
                       controller.changeOffTimeText(picked.to24hours());
                     }

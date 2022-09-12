@@ -8,16 +8,17 @@ import 'package:flutter_svg/flutter_svg.dart';
 class PowerIcon extends StatelessWidget {
   final bool isActive;
   final GestureTapCallback onClick;
+  final double size;
 
-  const PowerIcon({Key? key, required this.isActive, required this.onClick})
+  const PowerIcon({Key? key, required this.isActive, required this.onClick, required this.size})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     if (isActive) {
-      return PowerIconOn(onClick: onClick, iconWidth: 30);
+      return PowerIconOn(onClick: onClick, iconWidth: size);
     } else {
-      return PowerIconOff(iconWidth: 30, onClick: onClick);
+      return PowerIconOff(iconWidth: size, onClick: onClick);
     }
   }
 }

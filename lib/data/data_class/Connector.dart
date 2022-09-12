@@ -1,3 +1,4 @@
+///this data class is use in power data class
 class Connector {
     int connectorId;
     String connectorType;

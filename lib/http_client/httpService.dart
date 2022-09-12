@@ -1,20 +1,18 @@
 import 'dart:io';
-
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
 import 'package:chisco/data/data_source/auth/auth_local_data_source_impl.dart';
 import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-enum RequestType { post, get, put }
+///this class is for connecting to Server
 
 final httpClient = ChiscoClient();
+/// we have 3 type of request post get put in our app
+enum RequestType { post, get, put }
 
-bool _isServerDown(DioError error) {
-  return (error.error is SocketException) ||
-      (error.type == DioErrorType.connectTimeout);
-}
 
 class ChiscoClient {
+
   late final Dio _dio;
   RequestType requestType = RequestType.post;
   AuthLocalDataSourceImpl localDataSourceImpl = AuthLocalDataSourceImpl();
@@ -104,7 +102,6 @@ class ChiscoClient {
           return ChiscoResponse(
               status: false, code: 401, errorMessage: err.toString());
         }
-
         //return ChiscoResponse(status: false, code: error.response?.statusCode);
       } else {
         return ChiscoResponse(

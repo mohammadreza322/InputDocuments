@@ -17,8 +17,14 @@ class ChiscoSpeedDial extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     return SpeedDial(
-      overlayColor: Colors.black,
+      onOpen: (){
+        print('open');
+        },
+      onClose: (){
+        print('close');
+      },
 
+      overlayColor: Colors.black,
       overlayOpacity: 0.4,
       visible: true,
       spaceBetweenChildren: 4,

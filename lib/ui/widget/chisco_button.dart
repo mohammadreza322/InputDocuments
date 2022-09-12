@@ -46,10 +46,17 @@ class ChiscoButton extends StatelessWidget {
             fontWeight: FontWeight.w500,
             textColor: Colors.white,
           ),
+          SizedBox(width: 4,),
           hasProgressBar
-              ? (const CircularProgressIndicator(
-                  color: Colors.white,
-                ))
+              ? const SizedBox(
+                width: 20,
+                height: 20,
+                child: ( CircularProgressIndicator(
+                  strokeWidth: 1.5,
+                    color: Colors.white,
+
+                  )),
+              )
               : hasIcon ? SvgPicture.asset(icon, color: Colors.white,) : Container()
         ]),
       ),

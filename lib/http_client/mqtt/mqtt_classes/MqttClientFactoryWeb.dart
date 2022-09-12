@@ -3,5 +3,6 @@
 import 'package:mqtt_client/mqtt_browser_client.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 
+///this method is for connecting to  MQTT in web applications
 MqttClient makeClient(String url, String clientId) =>
-    MqttBrowserClient.withPort(url, clientId, 8885);
+    MqttBrowserClient.withPort("$url/mqtt", clientId, 8083);

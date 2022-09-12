@@ -1,5 +1,6 @@
-import 'package:chisco/ui/account/account_header.dart';
+import 'package:chisco/data/data_class/UserDetail.dart';
 import 'package:chisco/ui/account/account_controller.dart';
+import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:chisco/utils/theme.dart';
 import 'package:chisco/ui/widget/chisco_appbar.dart';
@@ -21,9 +22,21 @@ class AccountScreen extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     AccountController accountController = Provider.of<AccountController>(context);
-    if(!accountController.isLoadingPage){
-      accountController.init();
+    // if(!accountController.isLoadingPage){
+    //   accountController.init();
+    // }
+    //accountController.init();
+    double blueHeight = 0;
+    double positionedTopHeight = 0;
+    if(height<740){
+      blueHeight = 260;
+      positionedTopHeight = 220;
+    }else{
+      blueHeight = ChiscoConverter.calculateWidgetHeight(height,260);
+      positionedTopHeight= ChiscoConverter.calculateWidgetHeight(height,220);
     }
+
+    UserDetail userDetail = Provider.of<AppController>(context).getUserDetail();
 
     List<AccountItem> items = accountController.getSettingItems();
 
@@ -36,7 +49,7 @@ class AccountScreen extends StatelessWidget {
               left: 0,
               right: 0,
               child: Container(
-                height: ChiscoConverter.calculateWidgetHeight(height, 260),
+                height: blueHeight,
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 decoration: const BoxDecoration(
                     image: DecorationImage(
@@ -54,8 +67,7 @@ class AccountScreen extends StatelessWidget {
                               Navigator.pop(context);
                             }),
                         SizedBox(
-                          height:
-                              ChiscoConverter.calculateWidgetWidth(width, 20),
+                          height: ChiscoConverter.calculateWidgetWidth(width, 20),
                         ),
                         SvgPicture.asset(
                           PROFILE,
@@ -64,11 +76,10 @@ class AccountScreen extends StatelessWidget {
                         ),
 
                         SizedBox(
-                            height: ChiscoConverter.calculateWidgetWidth(
-                                width, 10)),
-                        //todo User Name and Phone Number
+                            height: ChiscoConverter.calculateWidgetWidth(width, 10)),
+
                          ChiscoText(
-                          text: accountController.userDetail!.fullName,
+                          text: userDetail.fullName,
                           textColor: Colors.white,
                           fontWeight: FontWeight.w500,
                         ),
@@ -77,7 +88,7 @@ class AccountScreen extends StatelessWidget {
                                 ChiscoConverter.calculateWidgetWidth(width, 5)),
 
                         ChiscoText(
-                          text: accountController.userDetail!.phoneNumber,
+                          text: userDetail.phoneNumber,
                           textColor: Colors.white,
                           fontWeight: FontWeight.w400,
                         ),
@@ -91,7 +102,7 @@ class AccountScreen extends StatelessWidget {
                 ),
               )),
           Positioned(
-              top: ChiscoConverter.calculateWidgetHeight(height, 220),
+              top: positionedTopHeight,
               left: 0,
               right: 0,
               bottom: 0,
@@ -108,7 +119,7 @@ class AccountScreen extends StatelessWidget {
                       child: const ListHandlerView(),
                     ),
                     SizedBox(
-                      height: ChiscoConverter.calculateWidgetWidth(width, 4),
+                      height: ChiscoConverter.calculateWidgetWidth(width, 0),
                     ),
                     ...items.map((AccountItem item) {
                       return InkWell(
@@ -174,8 +185,8 @@ class AccountScreen extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 20),
                         child: ChiscoText(
-                          //todo Get From Server With Some Package
-                          text: 'نسخه 1.0.0 طراحی شده در ویوتک',
+
+                          text: 'نسخه ${accountController.appVersionString} طراحی شده در ویوتک ',
                           textColor: Styles.primaryTextColor.withOpacity(0.5),
                         ),
                       ),

@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
-import 'package:chisco/data/data_class/TokenSingeleton.dart';
 import 'package:chisco/data/repository/auth/auth_repository.dart';
 import 'package:chisco/data/repository/auth/auth_repository_impl.dart';
-import 'package:chisco/http_client/mqtt/mqtt_controller.dart';
+
 import 'package:chisco/ui/main/app_controller.dart';
+import 'package:chisco/ui/main/global_variable.dart';
 import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:chisco/utils/const.dart';
 import 'package:flutter/material.dart';
@@ -18,7 +18,7 @@ class SplashController extends ChangeNotifier {
   bool isPageLoading = false;
   BuildContext context;
   bool progressBarShown = true;
-
+  bool isSplashEnd= false;
   SplashController(this.context);
 
   init() async {
@@ -31,27 +31,26 @@ class SplashController extends ChangeNotifier {
     if (accessToken == null) {
       print('AccessToken Nulllllllllllllllll');
       progressBarShown = false;
+      GlobalVariable.isUserLogin =false;
 
-      Timer(const Duration(seconds: 2), () {
-        Navigator.pushReplacementNamed(context, loginPage);
+      return Timer(const Duration(seconds: 2), () {
+        print('timer 2');
+        Navigator.pushNamedAndRemoveUntil(context, loginPage,(r)=>false);
       });
     } else {
       String? detail = sharedPreferences.getString('detail');
       print(detail);
 
-      print('Okkkkkkk123');
-      // print(str2);
+
       ChiscoResponse response = await repository.getUserDevices();
       if (response.status) {
         Provider.of<AppController>(context, listen: false).setData(response.object);
-
+        GlobalVariable.isUserLogin = true;
         Provider.of<AppController>(context, listen: false).connect(topicForSubscribe: 'chisco/test');
 
-        progressBarShown = false;
 
-        Timer(const Duration(seconds: 2), () {
-          Navigator.pushReplacementNamed(context, homePage);
-        });
+        isSplashEnd = true;
+
 
       } else {
         progressBarShown = false;

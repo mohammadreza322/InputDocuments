@@ -11,6 +11,7 @@ import 'package:chisco/ui/widget/chisco_textfield.dart';
 import 'package:chisco/ui/widget/list_handler.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class EditPowerBottomSheet extends StatelessWidget {
   final Power selectedPower;
@@ -20,34 +21,17 @@ class EditPowerBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
-    EditDeviceController controller = EditDeviceController(context);
+    double height = MediaQuery.of(context).size.height;
 
-    final TextEditingController serialTextController = TextEditingController(
-        text: selectedPower.serialNumber);
-    final TextEditingController nameTextController = TextEditingController(
-        text: selectedPower.name);
-    final TextEditingController categoryTextController = TextEditingController(
-        text: selectedPower.category);
-    final TextEditingController powerOutletFirst = TextEditingController(
-        text: selectedPower.connectors[0].name);
-    final TextEditingController powerOutletSecond = TextEditingController(
-        text: selectedPower.connectors[1].name);
-    final TextEditingController powerOutletThird = TextEditingController(
-        text: selectedPower.connectors[2].name);
-    final TextEditingController powerOutletFourth = TextEditingController(
-        text: selectedPower.connectors[3].name);
-    final TextEditingController usbPortFirst = TextEditingController(
-        text: selectedPower.connectors[4].name);
-    final TextEditingController usbPortSecond = TextEditingController(
-        text: selectedPower.connectors[5].name);
+    double width = MediaQuery.of(context).size.width;
+
+    EditDeviceController controller = Provider.of<EditDeviceController>(context);
+
+    if(!controller.isPageLoading){
+      controller.init(selectedPower);
+
+    }
+
     final theme = Theme.of(context).copyWith(dividerColor: Colors.transparent);
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -75,7 +59,7 @@ class EditPowerBottomSheet extends StatelessWidget {
             height: 10,
           ),
           ChiscoTextField(
-            controller: nameTextController,
+            controller: controller.nameTextController,
             icon: DEVICE,
             label: "اسم نمایشی سه راهی:",
             hintText: '',
@@ -84,7 +68,7 @@ class EditPowerBottomSheet extends StatelessWidget {
             height: 10,
           ),
           ChiscoTextField(
-            controller: categoryTextController,
+            controller: controller.categoryTextController,
             hintText: '',
             icon: CATEGORY,
             label: "دسته‌بندی:",
@@ -98,7 +82,7 @@ class EditPowerBottomSheet extends StatelessWidget {
                     text: 'اسم نمایشی پریز ها پورت ها(دلخواه)'),
                 children: [
                   ChiscoTextField(
-                    controller: powerOutletFirst,
+                    controller: controller.powerOutletFirst,
                     hintText: ' مانند پریز چراغ مطالعه',
                     icon: PORT,
                     label: "پریز 1:",
@@ -107,7 +91,7 @@ class EditPowerBottomSheet extends StatelessWidget {
                     height: 15,
                   ),
                   ChiscoTextField(
-                    controller: powerOutletSecond,
+                    controller: controller.powerOutletSecond,
                     hintText: ' مانند پریز تلوزیون',
                     icon: PORT,
                     label: "پریز 2:",
@@ -116,7 +100,7 @@ class EditPowerBottomSheet extends StatelessWidget {
                     height: 15,
                   ),
                   ChiscoTextField(
-                    controller: powerOutletThird,
+                    controller: controller.powerOutletThird,
                     hintText: 'مانند پریز گرمکن لیوان',
                     icon: PORT,
                     label: "پریز 3:",
@@ -125,7 +109,7 @@ class EditPowerBottomSheet extends StatelessWidget {
                     height: 15,
                   ),
                   ChiscoTextField(
-                    controller: powerOutletFourth,
+                    controller: controller.powerOutletFourth,
                     hintText: 'مانند پریز مودم و روتر',
                     icon: PORT,
                     label: "پریز 4:",
@@ -134,7 +118,7 @@ class EditPowerBottomSheet extends StatelessWidget {
                     height: 15,
                   ),
                   ChiscoTextField(
-                    controller: usbPortFirst,
+                    controller: controller.usbPortFirst,
                     hintText: 'مانند یو‌اس‌بی هدفون',
                     icon: USB,
                     label: "پورت 1:",
@@ -143,7 +127,7 @@ class EditPowerBottomSheet extends StatelessWidget {
                     height: 15,
                   ),
                   ChiscoTextField(
-                    controller: usbPortSecond,
+                    controller: controller.usbPortSecond,
                     hintText: 'مانند یو‌اس‌بی ساعت',
                     icon: USB,
                     label: "پورت 2:",
@@ -185,15 +169,15 @@ class EditPowerBottomSheet extends StatelessWidget {
                   text: 'تایید و ثبت تغییرات',
                   onClick: () {
                     print('edit power clicked');
-                    controller.onPowerEditClicked(EditPower(category: categoryTextController.text,
-                        name: nameTextController.text,
-                        power1: powerOutletFirst.text,
-                        power2: powerOutletSecond.text,
-                        power3: powerOutletThird.text,
-                        power4: powerOutletFourth.text,
+                    controller.onPowerEditClicked(EditPower(category: controller.categoryTextController.text,
+                        name: controller.nameTextController.text,
+                        power1: controller.powerOutletFirst.text,
+                        power2: controller.powerOutletSecond.text,
+                        power3: controller.powerOutletThird.text,
+                        power4: controller.powerOutletFourth.text,
                         serialNumber: selectedPower.serialNumber,
-                        usb1: usbPortFirst.text,
-                        usb2: usbPortSecond.text));
+                        usb1: controller.usbPortFirst.text,
+                        usb2: controller.usbPortSecond.text));
                   },
                   icon: '',
                   hasIcon: false,

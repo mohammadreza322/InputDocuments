@@ -1,3 +1,6 @@
+///this data class is use in @Cooler and @Power data classes (List<Schedule>)
+
+
 class Schedule {
   String id;
   bool enable;

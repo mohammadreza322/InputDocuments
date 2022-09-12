@@ -13,7 +13,7 @@ class AccountRemoteDataSource implements AccountDataSource {
         url: 'user/edit',
         data: {
           'birthday': birthday,
-          'location': location,
+          'address': location,
           'fullName': fullName
         });
     print(chiscoResponse.object.toString());

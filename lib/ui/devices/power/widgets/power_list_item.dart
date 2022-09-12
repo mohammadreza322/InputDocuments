@@ -95,7 +95,7 @@ class PowerListItem extends StatelessWidget {
             child: Container(
                 margin: EdgeInsets.all(
                     ChiscoConverter.calculateWidgetWidth(width, 12)),
-                child: SvgPicture.asset(isPower ? PORT : USB)),
+                child: SvgPicture.asset(isPower ? PORT : USB,color: Styles.primaryColor,)),
           ),
         ),
       ],

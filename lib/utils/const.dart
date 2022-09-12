@@ -6,7 +6,7 @@ const svgDirect = 'assets/images/svg/';
 
 const APP_HEADER_BACKGROUND_IMAGE = 'assets/images/home_header.png';
 
-const PLUS_ICON ='assets/images/svg/plus.svg';
+const PLUS_ICON ='assets/images/svg/add.svg';
 const MINUS_ICON ='assets/images/svg/minus.svg';
 
 const MINUS_FAB_ICON = 'assets/images/svg/minus-fab.svg';
@@ -50,6 +50,10 @@ const FAN_SPEED = 'assets/images/svg/fan-speed.svg';
 const AIR_FLOW = 'assets/images/svg/air-flow.svg';
 const HEATER = 'assets/images/svg/heater.svg';
 const FAN = 'assets/images/svg/fan.svg';
+
+const dryTest ='assets/images/dryTest.svg';
+const heaterTest ='assets/images/heater.svg';
+const autoTest = 'assets/images/auto.svg';
 
 const SWING = 'assets/images/svg/swing.svg';
 

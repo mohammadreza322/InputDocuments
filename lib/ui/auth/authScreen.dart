@@ -25,25 +25,34 @@ class AuthScreen extends StatelessWidget {
 
       child: Scaffold(
         backgroundColor: Styles.backGroundColor,
+
         bottomNavigationBar: Container(
             height: 50,
             margin:  EdgeInsets.only(bottom:2.h),
             child: const AuthDefaultText()),
-        body: Column(
-          children: [
+        body: SingleChildScrollView(
+          child: SizedBox(
+            height: MediaQuery.of(context).size.height*.83,
+            child: Column(
+              children: [
+                Container(
+                  margin:  EdgeInsets.only(top: ChiscoConverter.calculateWidgetWidth(width, 45)),
+                  child: (Image.asset(OTP_HEADER_PNG)
+                )),
+                 //SizedBox(height: ChiscoConverter.calculateWidgetWidth(width,90),),
 
-            Container(
-              margin:  EdgeInsets.only(top: 52),
-              child: (Image.asset(OTP_HEADER_PNG)
-            )),
-             SizedBox(height: ChiscoConverter.calculateWidgetWidth(width,90),),
+                Expanded(
+                  flex: 1,
+                    child: Center(
+                  child: PageView(
+                    physics: NeverScrollableScrollPhysics(),
+                    controller: controller.pageViewController,
+                    children: const [SubmitNumberPage(),SubmitCodePage(), CompleteProfilePage()],),
+                )),
 
-            Expanded(child: PageView(
-              physics: NeverScrollableScrollPhysics(),
-              controller: controller.pageViewController,
-              children: const [SubmitNumberPage(),SubmitCodePage(), CompleteProfilePage()],)),
-
-          ],
+              ],
+            ),
+          ),
         ),
       ),
     );
