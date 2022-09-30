@@ -14,12 +14,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const axios_1 = __importDefault(require("axios"));
-const constants_1 = require("../utility/constants");
+const request = require('request');
 class BrokerProvider {
     /**
      * @author Amir Hemmateenejad amirhemmateenejad@gmail.com
@@ -31,38 +27,67 @@ class BrokerProvider {
      */
     static addUserToMnesia(username, password) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield axios_1.default
-                .post(`${constants_1.brokerUrlAPI}/api/v4/auth_username`, {
-                username: encodeURIComponent(username),
-                password: encodeURIComponent(password),
-            }, this._config)
-                .catch((e) => {
-                console.error('error in add user mnesia response');
-                console.error(e);
+            var options = {
+                'method': 'POST',
+                'url': 'http://185.204.197.144:8081/api/v4/auth_username',
+                'headers': {
+                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw==',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    "username": username,
+                    "password": password
+                })
+            };
+            return yield request(options, function (error, response) {
+                if (error) {
+                    console.error('inside add mnesia user');
+                    console.error(error);
+                    return false;
+                }
+                return true;
             });
-            return response;
         });
     }
     static userExist(username) {
         return __awaiter(this, void 0, void 0, function* () {
-            const response = yield axios_1.default
-                .get(`${constants_1.brokerUrlAPI}/api/v4/auth_username/${username}`, this._config)
-                .catch((e) => {
-                console.error('error in exists user mnesia response');
-                console.error(e);
+            const options = {
+                'method': 'GET',
+                'url': `http://185.204.197.144:8081/api/v4/auth_username/${username}`,
+                'headers': {
+                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw=='
+                }
+            };
+            return yield request(options, function (error, response) {
+                if (error) {
+                    console.error('inside check mnesia user');
+                    console.error(error);
+                    return false;
+                }
+                return true;
             });
-            if (response) {
-                return Object.keys(response.data.data).length !== 0;
-            }
-            return false;
+        });
+    }
+    static kickDevice(serialNumber) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const options = {
+                'method': 'GET',
+                'url': `http://185.204.197.144:8081/api/v4/clients/${serialNumber}`,
+                'headers': {
+                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw=='
+                }
+            };
+            return yield request(options, function (error, response) {
+                if (error) {
+                    console.error('inside check kick mnesia');
+                    console.error(error);
+                    return false;
+                }
+                return true;
+            });
         });
     }
 }
 exports.default = BrokerProvider;
-BrokerProvider._config = {
-    auth: {
-        username: '20bf501bc0fa6',
-        password: 'MzA1NTY2NTE4NzM5MTk5NzY5MDAyNTEwNzM2NDA1OTU0NTG',
-    },
-};
-//# sourceMappingURL=broker_provider.js.map
+BrokerProvider.username = '20bf501bc0fa6';
+BrokerProvider.pass = 'MzA1NTY2NTE4NzM5MTk5NzY5MDAyNTEwNzM2NDA1OTU0NTG';

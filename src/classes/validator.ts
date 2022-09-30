@@ -17,24 +17,54 @@ export default class AhpValidator {
 
 	static isWeekDayArray(value: any) {
 		if (!Array.isArray(value)) {
-			console.log('not array');
+			// console.log('not array');
 			return false;
 		}
 
 		if (value.length == 0) return true;
 
-		const isArrayStringAndWeekDay = value.every(
+		return value.every(
 			(v) =>
 				typeof v === 'string' &&
 				['sat', 'sun', 'mon', 'tue', 'wed', 'thr', 'fri'].includes(
 					v.toLowerCase(),
 				),
 		);
-
-		return isArrayStringAndWeekDay;
 	}
 
 	static isTime(time: string) {
 		return /^(0[0-9]|1[0-9]|2[0-3]):[0-5][0-9]$/.test(time);
+	}
+
+	static isNumber = (number:string) => /\d+/.test(number)
+
+	static isMobileNumber = (mobile:string) => /09[0-9]{9}/.test(mobile)
+
+	static validImageExtensions = (filename:string, extensions:string) => {
+		const extension = filename.substring(
+			filename.lastIndexOf('.') + 1,
+			filename.length - 1
+		)
+		if (extension.toString().trim() == '') return false
+		return extensions.includes(extension)
+	}
+
+	static isEmpty = (val:any) => {
+		const typeOfVal: string = typeof val
+		switch (typeOfVal) {
+			case 'object':
+				return val.length == 0 || !Object.keys(val).length
+				break
+			case 'string': {
+				const str: string = val.trim()
+				return str == '' || str == undefined || str == null || str == 'null'
+				break
+			}
+			case 'number':
+				return val == ''
+				break
+			default:
+				return val == '' || val == undefined
+		}
 	}
 }

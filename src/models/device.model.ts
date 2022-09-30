@@ -32,6 +32,10 @@ const defaultDeviceSchema = {
 	category: {
 		type: 'string',
 	},
+	createAt:{
+		type:Date,
+		default:Date.now
+	},
 	registerAt: {
 		type: Date,
 	},
@@ -41,14 +45,24 @@ const defaultDeviceSchema = {
 	deviceLastConnection: {
 		type: 'string',
 	},
+	password:{
+		type: 'string',
+	},
+	insertedUser:{
+		type: Types.ObjectId,
+	}
 };
 
 interface IDevice extends Document {
 	serialNumber: string;
+	createAt:Date;
 	name?: string;
 	category?: string;
 	owner?: Types.ObjectId;
 	registerAt?: Date;
+	deviceLastConnection?:string;
+	password?:string;
+	insertedUser:Types.ObjectId
 }
 
 interface ISchedule {
@@ -63,8 +77,8 @@ interface ISchedule {
 interface PowerConnectors {
 	status: boolean;
 	name?: string;
-	type: string;
-	portNumber: number;
+	connectorType: string;
+	connectorId: number;
 }
 
 interface IPowerStripSchedule extends ISchedule {

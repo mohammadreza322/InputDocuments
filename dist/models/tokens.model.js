@@ -27,4 +27,3 @@ const tokenSchema = new mongoose_1.Schema({
 });
 const Token = (0, mongoose_1.model)('Tokens', tokenSchema);
 exports.default = Token;
-//# sourceMappingURL=tokens.model.js.map

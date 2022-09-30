@@ -1,0 +1,220 @@
+<div id="mainContent" dir="rtl">
+    <div class="top-content-title">
+        <div class=" d-flex .flex-row justify-content-between">
+            <div class="title-group"><span class="title">انبار</span><span class="text"> تعداد کل: <?= (+countAllPowers)+(+countAllCoolers) ?> دستگاه</span></div>
+            <button id="slide-down" class="button">  افزودن دستگاه جدید<object data="/photo/svg/arrow-down.svg" type=""></object></button>
+        </div>
+        <div id="add" class="slide-down-add storehouse-add">
+            <div class="d-flex justify-content-between flex-row">
+                <div class="group-info  name-text add-device-group">
+                    <label class="title" for="name"> شماره سریال  </label>
+                    <div class="input-group ">
+                        <object
+                                data="/photo/svg/userdark.svg"
+                                class="input-group-text"
+                                id="basic-addon1"
+                        ></object>
+                        <input
+                                id="name"
+                                value=""
+                                type="text"
+                                class="form-control input-inner"
+                                placeholder="مانند: Ch-1254687 "
+                                aria-label="Username"
+                                aria-describedby="basic-addon1"
+                        />
+                    </div>
+                </div>
+                <div class="group-info">
+                    <label class="title" for="pass"> کلمه عبور دستگاه   </label>
+                    <div class="input-group ">
+                        <object
+                                data="/photo/svg/call.svg"
+                                class="input-group-text"
+                                id="basic-addon1"
+                        ></object>
+                        <input
+                                id="pass"
+                                value=""
+                                type="text"
+                                class="form-control input-inner"
+                                placeholder="مانند: !$(om4B}r/  "
+                                aria-label="Username"
+                                aria-describedby="basic-addon1"
+                        />
+                        <button  id="random" class="random-text">ساخت کلمه عبور اتفاقی</button>
+                    </div>
+                </div>
+                <div class="group-info add-device-group">
+                    <label class="title" for="name">نوع دستگاه </label>
+                    <div class="input-group">
+                        <object
+                                data="/photo/svg/level.svg"
+                                class="input-group-text"
+                                id="basic-addon1"
+                        ></object>
+                        <select
+                                class="form-select form-select-sm input-inner select-inner access device-type"
+                                aria-label="form-select-sm example"
+                        >
+                            <option selected value="cooler">کولر</option>
+                            <option value="power">سه راهی</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="d-flex align-items-end justify-content-between ">
+                    <button class="opt-out" id="slide-up"><object data="/photo/svg/arrow-upsvg.svg" type=""></object>انصراف و بستن</button>
+                    <button class="accept add-device-btn"><object data="/photo/svg/cpu.svg" type=""></object>تایید و ثبت دستگاه     </button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+    <!-- tab table -->
+    <div class="teble-content tab-table">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button
+                        class="nav-link<?= activeTab == 'cooler'?' active' :'' ?>"
+                        id="home-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#home"
+                        type="button"
+                        role="tab"
+                        aria-controls="home"
+                        aria-selected="true"
+                >
+                    <span class="num"><?= countAllCoolers ?></span>کنترلر کولر
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button
+                        class="nav-link<?= activeTab == 'power'?' active' :'' ?>"
+                        id="profile-tab"
+                        data-bs-toggle="tab"
+                        data-bs-target="#profile"
+                        type="button"
+                        role="tab"
+                        aria-controls="profile"
+                        aria-selected="false"
+                >
+                    <span class="num"><?= countAllPowers ?></span>سه راهی
+                </button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div
+                    class="tab-pane fade<?= activeTab == 'cooler'?' active show' :'' ?>"
+                    id="home"
+                    role="tabpanel"
+                    aria-labelledby="home-tab"
+            >
+                <!-- table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="t-head" scope="col">ردیف</th>
+                        <th class="t-head" scope="col">شماره سریال</th>
+                        <th class="t-head" scope="col"> کلمه عبور دستگاه  </th>
+                        <th class="t-head" scope="col"> تاریخ ثبت انبار</th>
+                        <th class="t-head" scope="col">  ثبت کننده دستگاه</th>
+                        <th class="t-head" scope="col">عملیات</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <? let iCoolers =  ((coolerPageNumber * limit)-limit)+1; ?>
+                    <? allCoolers.map(c => { ?>
+                    <tr>
+                        <th scope="row"><?= iCoolers++ ?></th>
+
+                        <td><?= c.serialNumber ?></td>
+                        <td><?= c.password ?></td>
+
+                        <td><?= c.createAtJalali ?></td>
+                        <td><?= c.fullName ?></td>
+
+                        <td>
+                            <div class="icon-table">
+
+                                <a
+                                   class="delete-device"
+                                   data-id="<?= c.serialNumber ?>"
+                                   data-type="cooler"
+                                   data-bs-custom-class="custom-tooltip"
+                                   data-bs-toggle="tooltip"
+                                   data-bs-title="حذف دستگاه  "
+                                ><object
+                                            data="/photo/svg/trash.svg"
+                                            type=""
+                                    ></object
+                                    ></a>
+                            </div>
+                        </td>
+                    </tr>
+                   <? }) ?>
+                    </tbody>
+                </table>
+                <? locals.queries.activeTab = 'cooler' ?>
+                <!-- pagination -->
+                <?- include('./include/pagination.ejs',{pagination:coolerPagination}) ?>
+            </div>
+            <!-- tab2 -->
+            <div
+                    class="tab-pane fade<?= activeTab == 'power'?' active show' :'' ?>"
+                    id="profile"
+                    role="tabpanel"
+                    aria-labelledby="profile-tab"
+            >
+                <!-- table -->
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th class="t-head" scope="col">ردیف</th>
+                        <th class="t-head" scope="col">شماره سریال</th>
+                        <th class="t-head" scope="col"> کلمه عبور دستگاه  </th>
+                        <th class="t-head" scope="col"> تاریخ ثبت انبار</th>
+                        <th class="t-head" scope="col">  ثبت کننده دستگاه</th>
+                        <th class="t-head" scope="col">عملیات</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <? let iPowers =  ((powerPageNumber * limit)-limit)+1; ?>
+                    <? allPowers.map(p => { ?>
+                    <tr>
+                        <th scope="row"><?= iPowers++  ?></th>
+
+                        <td><?= p.serialNumber ?></td>
+                        <td> <?= p.password ?></td>
+
+                        <td><?= p.createAtJalali ?></td>
+                        <td><?= p.fullName ?></td>
+
+                        <td>
+                            <div class="icon-table">
+                                <a
+                                   class="delete-device"
+                                   data-id="<?= p.serialNumber ?>"
+                                   data-type="power"
+                                   data-bs-custom-class="custom-tooltip"
+                                   data-bs-toggle="tooltip"
+                                   data-bs-title="حذف دستگاه  "
+                                ><object
+                                            data="/photo/svg/trash.svg"
+                                            type=""
+                                    ></object
+                                    ></a>
+                            </div>
+                        </td>
+                    </tr>
+                    <? }) ?>
+                    </tbody>
+                </table>
+                <? locals.queries.activeTab = 'power' ?>
+                <!-- pagination -->
+                <?- include('./include/pagination.ejs',{pagination:powerPagination}) ?>
+            </div>
+        </div>
+    </div>
+
+</div>

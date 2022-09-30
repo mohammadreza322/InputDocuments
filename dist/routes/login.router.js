@@ -10,4 +10,3 @@ const router = express_1.default.Router();
 exports.loginRouter = router;
 router.post('/get-mobile', login_controller_1.getMobile);
 router.post('/check-otp', login_controller_1.checkOtp);
-//# sourceMappingURL=login.router.js.map

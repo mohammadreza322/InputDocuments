@@ -14,6 +14,7 @@ const jwt = require('jsonwebtoken');
 import Token, { IToken } from '../models/tokens.model';
 import moment from 'moment';
 import TokenEntity, { generateTokenOutput } from '../entities/token.entity';
+import {isValidObjectId, Types} from "mongoose";
 
 export const getFullName = async (req: CustomRequest, res: Response) => {
 	try {
@@ -48,8 +49,12 @@ export const getFullName = async (req: CustomRequest, res: Response) => {
 
 export const getUserDetails = async (req: CustomRequest, res: Response) => {
 	try {
-		const userDetails: getUserInformationOutput =
+		const userDetails: getUserInformationOutput | null =
 			await UserEntity.getUserInformation(req.userId);
+
+		if(!userDetails) {
+			return res.status(500).json({ message: 'خطایی پیش آمده!!' });
+		}
 
 		const userDevices: listOfDevices = await DeviceEntity.getAllDevices(
 			req.userId,
@@ -122,7 +127,7 @@ export const refreshToken = async (req: CustomRequest, res: Response) => {
 		return res.status(404).send({ message: 'خطا در شناسایی توکن' });
 	}
 
-	if (refreshToken == null || userToken == null) {
+	if (!refreshToken|| !userToken ) {
 		return res.status(404).send({ message: 'خطا در شناسایی توکن' });
 	}
 	try {
@@ -163,3 +168,153 @@ export const refreshToken = async (req: CustomRequest, res: Response) => {
 		return res.status(500).json({ message: 'خطایی پیش آمده' });
 	}
 };
+
+export const addAdmin = async (req:Request,res:Response) => {
+	try {
+		const {fullName, phoneNumber, access, enable} = req.body
+
+		const validateAdminOutput= validateAdmin(fullName,phoneNumber,access,enable);
+		if(!validateAdminOutput.status){
+			return res.status(400).json({message:validateAdminOutput.message,status:false})
+		}
+		if(await UserEntity.checkPhoneNumberExists(phoneNumber)){
+			return res.status(400).json({status: false, message: 'شماره تماس وارد شده مربوط به کاربر دیگری میباشد'})
+		}
+
+		await UserEntity.addAdmin(fullName, phoneNumber, access, enable)
+
+		return res.json({
+			status: true,
+			message: 'مدیر با موفقیت به سیستم اضافه شد',
+		});
+	} catch (e) {
+		console.error('inside edit admin');
+		console.error(e);
+		return res.status(500).json({ message: 'خطایی پیش آمده' });
+	}
+}
+
+export const editAdmin = async (req:Request,res:Response) => {
+	try {
+		const {fullName, phoneNumber, access, enable,id} = req.body
+
+		if (!fullName || !phoneNumber || !access || !enable || !id) {
+			return res.status(400).json({message: 'ورودی نامعتبر!'});
+		}
+
+		if(!isValidObjectId(id)){
+			return res.status(400).json({message: 'ورودی نامعتبر!'});
+		}
+
+		const validateAdminOutput= validateAdmin(fullName,phoneNumber,access,enable);
+		if(!validateAdminOutput.status){
+			return res.status(400).json({message:validateAdminOutput.message,status:false})
+		}
+
+		if(await UserEntity.checkPhoneNumberWithId(new Types.ObjectId(id),phoneNumber)){
+			return res.json({status: false, message: 'شماره تماس وارد شده مربوط به کاربر دیگری میباشد'})
+		}
+
+		await UserEntity.editAdmin(new Types.ObjectId(id),fullName, phoneNumber, access, enable)
+
+		return res.json({
+			status: true,
+			message: 'اطلاعات مدیر با موفقیت تغییر کرد',
+		});
+	} catch (e) {
+		console.error('inside add admin');
+		console.error(e);
+		return res.status(500).json({ message: 'خطایی پیش آمده' });
+	}
+}
+
+const validateAdmin = (fullName:string,phoneNumber:string,access:string,enable:string) => {
+
+	if (fullName.toString().trim() == '') {
+		return {status:false,message: 'نام و نام خانوادگی را وارد نکرده اید!'};
+	}
+
+	if (phoneNumber.toString().trim() == '') {
+		return {message: 'شماره تماس را وارد نکرده اید!',status:false};
+	}
+
+	if (access.toString().trim() == '') {
+		return {message: 'سطح دسترسی را وارد نکرده اید!',status:false};
+	}
+
+	if (enable.toString().trim() == '') {
+		return {status:false,message: 'وضعیت حساب را وارد نکرده اید!'};
+	}
+
+	if (!['admin', 'warehouse', 'customer_service'].includes(access)) {
+		return {status:false,message: 'سطح دسترسی را وارد شده اشتباه است!'};
+	}
+
+	if (!['enable', 'disable'].includes(enable)) {
+		return {status:false,message: 'وضعیت حساب وارد شده اشتباه است!'};
+	}
+
+	return {status:true,message:''}
+}
+
+export const deleteAdmin = async (req:Request,res:Response) => {
+	try {
+		const {id} = req.body;
+		if (!id) {
+			return res.status(400).json({message: 'ورودی نامعتبر!'});
+		}
+
+		if (id.toString().trim() == '') {
+			return res.status(400).json({message: 'ورودی نامعتبر!'});
+		}
+
+		if (!isValidObjectId(id)) {
+			return res.status(400).json({message: 'ورودی نامعتبر!'});
+		}
+
+		await UserEntity.deleteAdmin(new Types.ObjectId(id))
+
+		return res.json({
+			status: true,
+			message: 'اطلاعات مدیر با موفقیت حذف شد',
+		});
+
+	}catch (e) {
+		console.error('inside delete admin');
+		console.error(e);
+		return res.status(500).json({ message: 'خطایی پیش آمده' });
+	}
+}
+
+export const editCurrentAdmin = async (req:Request,res:Response) => {
+	try {
+		const {fullName, phoneNumber} = req.body;
+
+		if (!fullName || !phoneNumber) {
+			return res.status(400).json({message: 'ورودی نامعتبر!'});
+		}
+
+		if (fullName.toString().trim() == '') {
+			return {status: false, message: 'نام و نام خانوادگی را وارد نکرده اید!'};
+		}
+
+		if (phoneNumber.toString().trim() == '') {
+			return {message: 'شماره تماس را وارد نکرده اید!', status: false};
+		}
+
+		if (await UserEntity.checkPhoneNumberWithId(new Types.ObjectId(req.user.id), phoneNumber)) {
+			return res.json({status: false, message: 'شماره تماس وارد شده مربوط به کاربر دیگری میباشد'})
+		}
+
+		await UserEntity.editCurrentAdmin(new Types.ObjectId(req.user.id), fullName, phoneNumber)
+
+		return res.json({
+			status: true,
+			message: 'اطلاعات مدیر با موفقیت تغییر کرد',
+		});
+	} catch (e) {
+		console.error('inside add admin');
+		console.error(e);
+		return res.status(500).json({ message: 'خطایی پیش آمده' });
+	}
+}

@@ -1,3 +1,6 @@
+import {Types} from "mongoose";
+import {IUser} from "../models/users.model";
+
 export interface getFullNameInput {
 	fullName: string;
 }
@@ -7,6 +10,13 @@ export interface getUserInformationOutput {
 	fullName?: string;
 	address?: string;
 	birthday?: number;
+
+}
+
+export interface getUserFullInformationOutput extends getUserInformationOutput{
+	role:string,
+	id:Types.ObjectId;
+	registerDate:Date
 }
 
 export interface editUserProfileInput {
@@ -14,4 +24,10 @@ export interface editUserProfileInput {
 	phoneNumber: string;
 	address?: string;
 	birthday?: number;
+}
+
+export interface lastCustomersOutput extends IUser{
+	countDevices:number;
+	jalaliRegisterDate:string;
+	userJalaliBirthday:string
 }

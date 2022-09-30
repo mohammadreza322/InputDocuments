@@ -6,6 +6,7 @@ export interface IPermission extends Document {
 	POST: Array<string>;
 	PUT: Array<string>;
 	DELETE: Array<string>;
+	initialRoute:string;
 }
 
 const permissionSchema = new Schema({
@@ -13,6 +14,10 @@ const permissionSchema = new Schema({
 		type: 'string',
 		required: true,
 		trim: true,
+	},
+	initialRoute:{
+		type: 'string',
+		default:'/dashboard'
 	},
 	GET: [
 		{

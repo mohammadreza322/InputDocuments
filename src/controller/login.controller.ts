@@ -1,103 +1,145 @@
-import { Request, Response } from 'express';
+import {Request, Response} from 'express';
 import {
-	getMobileInput,
-	checkOtpInput,
-	checkOtpOutput,
+    getMobileInput,
+    checkOtpInput,
+    checkOtpOutput,
 } from '../types/login.type';
 import isMobilePhone from 'validator/lib/isMobilePhone';
 import LoginEntity from '../entities/login.entity';
 import SmsProvider from '../classes/sms_provider';
-import TokenEntity, { generateTokenOutput } from '../entities/token.entity';
+import TokenEntity, {generateTokenOutput} from '../entities/token.entity';
 import UserEntity from '../entities/user.entity';
+import {CustomRequest} from "../types/global.type";
+import LogsEntity from "../entities/logs.entity";
 
-export const getMobile = async (req: Request, res: Response) => {
-	const { phoneNumber }: getMobileInput = req.body;
+export const getMobile = async (req: CustomRequest, res: Response) => {
+    const {phoneNumber}: getMobileInput = req.body;
 
-	if (!phoneNumber) {
-		return res
-			.status(404)
-			.json({ message: 'شماره تلفن خود را وارد کنید!' });
-	}
+    // console.log(req.body)
 
-	if (phoneNumber.trim() === '') {
-		return res
-			.status(404)
-			.json({ message: 'شماره تلفن خود را وارد کنید!' });
-	}
+    if (!phoneNumber) {
+        return res
+            .status(404)
+            .json({message: 'شماره تلفن خود را وارد کنید!'});
+    }
 
-	if (!isMobilePhone(phoneNumber, 'fa-IR')) {
-		return res
-			.status(404)
-			.json({ message: 'شماره تلفن وارد شده اشتباه است!' });
-	}
+    if (phoneNumber.trim() === '') {
+        return res
+            .status(404)
+            .json({message: 'شماره تلفن خود را وارد کنید!'});
+    }
 
-	const loginOutput = await LoginEntity.getCode(phoneNumber);
+    if (!isMobilePhone(phoneNumber, 'fa-IR')) {
+        return res
+            .status(404)
+            .json({message: 'شماره تلفن وارد شده اشتباه است!'});
+    }
 
-	if (loginOutput?.id) {
-		// const smsProvider: SmsProvider = new SmsProvider(phoneNumber);
+    const loginOutput = await LoginEntity.getCode(phoneNumber);
 
-		// await smsProvider.sendAuthSms(loginOutput.code!.toString());
+    if (loginOutput?.id) {
+        await SmsProvider.sendOTPCode(loginOutput.code!.toString(),phoneNumber);
 
-		return res.json({
-			message: 'پیامک با موفقیت ارسال شد',
-			id: loginOutput.id,
-			isNewUser: loginOutput.isNewUser,
-			code: loginOutput.code,
-		});
-	}
 
-	return res.status(400).json({ message: loginOutput?.message });
+        console.log(loginOutput.code)
+
+        req.session.loginId = loginOutput.id.toString()
+        req.session.loginCode = loginOutput.code.toString()
+        req.session.userPhone = phoneNumber
+
+
+        return res.json({
+            message: 'پیامک با موفقیت ارسال شد',
+            id: loginOutput.id,
+            isNewUser: loginOutput.isNewUser,
+            code: loginOutput.code,
+            status: true
+        });
+    }
+
+    return res.status(400).json({message: loginOutput?.message, status: false});
 };
 
 export const checkOtp = async (req: Request, res: Response) => {
-	try {
-		const { smsId, code }: checkOtpInput = req.body;
+    try {
+        const {smsId, code, isDashboard}: checkOtpInput = req.body;
 
-		const userAgent = req.get('user-agent');
+        if (isDashboard) {
+            if (req.session.isUserLoggedIn) {
+                return res.redirect('/dashboard')
+            }
 
-		if (!userAgent) {
-			return res.status(400).json({ message: 'ورودی نامعتبر!' });
-		}
+            if (!req.session.loginCode) {
+                return res.redirect('/dashboard/auth')
+            }
+        }
 
-		if (!smsId || !code) {
-			return res.status(404).json({ message: 'خطا در ورودی' });
-		}
+        const userAgent = req.get('user-agent');
 
-		if (smsId.trim() === '') {
-			return res.status(404).json({ message: 'خطا در ورودی' });
-		}
+        if (!userAgent) {
+            return res.status(400).json({message: 'ورودی نامعتبر!'});
+        }
 
-		if (code.trim() === '') {
-			return res.status(404).json({ message: 'کد وارد شده اشتباه است' });
-		}
+        if (!smsId || !code) {
+            return res.status(404).json({message: 'خطا در ورودی'});
+        }
 
-		const otpDetails: checkOtpOutput = await LoginEntity.checkOtp(
-			smsId,
-			code,
-		);
+        if (smsId.trim() === '') {
+            return res.status(404).json({message: 'خطا در ورودی'});
+        }
 
-		if (otpDetails.message) {
-			return res.status(404).json({ message: otpDetails.message });
-		}
+        if (code.trim() === '') {
+            return res.status(404).json({message: 'کد وارد شده اشتباه است'});
+        }
 
-		const tokens: generateTokenOutput = await TokenEntity.createToken(
-			otpDetails.userId!,
-			userAgent,
-		);
+        const otpDetails: checkOtpOutput = await LoginEntity.checkOtp(
+            smsId,
+            code,
+        );
 
-		const brokerDetails = await UserEntity.getBrokerUserNamePassword(
-			otpDetails.userId!,
-		);
+        if (otpDetails.message) {
+            return res.status(404).json({message: otpDetails.message});
+        }
 
-		return res.json({
-			message: 'ورود موفقیت آمیز',
-			accessToken: tokens.accessToken,
-			refreshToken: tokens.refreshToken,
-			details: brokerDetails,
-		});
-	} catch (error) {
-		console.error('inside check otp');
-		console.error(error);
-		return res.status(500).json({ message: 'خطایی پیش آمده!!' });
-	}
+        if (isDashboard) {
+        	if(!(await UserEntity.isUserCanLoginInDashboard(otpDetails.userId))){
+				return res.json({
+					message: 'شما دسترسی به این قسمت ندارید',
+					status:false
+				});
+			}
+            await LogsEntity.loginAdmin( otpDetails.userId)
+
+            req.session.isUserLoggedIn = true;
+
+            return res.json({
+                message: 'ورود موفقیت آمیز',
+				status:true
+            });
+        }
+
+        const tokens: generateTokenOutput = await TokenEntity.createToken(
+            otpDetails.userId!,
+            userAgent,
+        );
+        // console.log("********")
+
+        const brokerDetails = await UserEntity.getBrokerUserNamePassword(
+            otpDetails.userId!,
+        );
+
+        return res.json({
+            message: 'ورود موفقیت آمیز',
+            accessToken: tokens.accessToken,
+            refreshToken: tokens.refreshToken,
+            details: brokerDetails,
+			status:true
+        });
+
+
+    } catch (error) {
+        console.error('inside check otp');
+        console.error(error);
+        return res.status(500).json({message: 'خطایی پیش آمده!!'});
+    }
 };

@@ -2,17 +2,20 @@
 	"compilerOptions": {
 		"target": "ES6",
 		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
+//		"allowSyntheticDefaultImports": true,
 		"module": "CommonJS",
 		"moduleResolution": "node",
-		"sourceMap": true,
+		"sourceMap": false,
 		"outDir": "dist",
-		"allowJs": true,
-		"lib": ["dom", "es6"],
+//		"allowJs": true,
+		"lib": ["ES2015"],
 		"baseUrl": "./src",
 		"paths": {
 			"@/*": ["./*"]
-		}
+		},
+		"skipLibCheck": true,
+		"allowJs": true,
+		"resolveJsonModule": true
 	},
 	"files": ["src/index.ts"],
 	"include": ["src/**/*.ts"],

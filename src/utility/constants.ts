@@ -9,3 +9,7 @@ export const refreshTokenExpireTime: string = '30d';
 
 export const brokerUrl: string = 'mqtt://185.204.197.144:1883';
 export const brokerUrlAPI: string = 'http://185.204.197.144:8081';
+
+export const sessionName: string = 'di_noissaes_mait';
+
+export const sessionSecret: string = 'S?XiD=bv3^u0kE)';

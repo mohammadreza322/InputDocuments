@@ -1,4 +1,10 @@
 "use strict";
+/**
+ * @author Amir Hemmateenejad amirhemmateenejad@gmail.com
+ * @description
+ * class that manage send sms to users
+ * @type {SmsProvider}
+ */
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -8,83 +14,72 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-/**
- * @author Amir Hemmateenejad amirhemmateenejad@gmail.com
- * @description
- * class that manage send sms to users
- * @type {SmsProvider}
- */
-const axios_1 = __importDefault(require("axios"));
-const fs_1 = __importDefault(require("fs"));
-const path_1 = __importDefault(require("path"));
+const request = require('request');
 class SmsProvider {
-    constructor(mobilePhone) {
-        this._apiKey = 'nc7wjMYbZbHhWmDi8fo-6RllrpqrDC1w_6fGJ1j5eUY= ';
-        this._smsNumber = '+983000505';
-        this._url = 'http://ippanel.com:8080/';
-        this._moblePhone = mobilePhone;
+    static sendOTPCode(code, mobileNumber) {
+        this.sendSms(mobileNumber, `به چیسکو خوش آمدید\r\nکد ورود:${code}`);
     }
-    /**
-     * @description
-     * this method send verification code to user for authorization
-     * @param code
-     * @param lang
-     * @returns {Promise<boolean>}
-     */
-    sendAuthSms(code) {
-        //todo fix pattern id with language
-        const patternId = '8n8fto5aq9';
-        const patternKey = 'verification-code';
-        //send sms code to user
-        return this._sendWithPattern(patternId, [patternKey], [code]);
-    }
-    /**
-     * @description
-     * this method manage send sms process to sms provider host
-     * @async
-     * @param patternValues
-     *
-     * if use patterns we can set pattern id and pattern values
-     * @param patternId
-     * @param patternKey
-     * @returns {Promise<boolean>}
-     * @private
-     */
-    _sendWithPattern(patternId, patternKey = ['%name'], patternValues = ['آرش']) {
+    static checkPanelCredit() {
         return __awaiter(this, void 0, void 0, function* () {
-            const params = new URLSearchParams([
-                ['apikey', this._apiKey],
-                ['fnum', this._smsNumber],
-                ['tnum', this._moblePhone],
-            ]);
-            if (patternId) {
-                params.append('pid', patternId);
-            }
-            patternKey.forEach((value, index) => {
-                params.append(`p${index + 1}`, value);
-            });
-            patternValues.forEach((value, index) => {
-                params.append(`v${index + 1}`, value);
-            });
-            const response = yield axios_1.default.get(this._url, { params });
-            //todo add log function
-            if (response.status > 400) {
-                fs_1.default.writeFile(path_1.default.join(__dirname, '..', 'logs/sms_errors.txt'), JSON.stringify(response), (err) => {
-                    if (err) {
-                        console.error(err);
+            const options = {
+                method: 'POST',
+                url: 'https://api.ghasedak.me/v2/account/info',
+                headers: {
+                    'cache-control': 'no-cache',
+                    apikey: this.apiKey,
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+                form: {}
+            };
+            return new Promise(function (resolve, reject) {
+                request(options, function (error, response, body) {
+                    if (error) {
+                        console.error('send sms error');
+                        console.error(error);
+                        return resolve(0);
+                        // return;
                     }
+                    try {
+                        const jsonBody = JSON.parse(body);
+                        console.log(jsonBody);
+                        return resolve(jsonBody.items.balance);
+                    }
+                    catch (e) {
+                        return resolve(0);
+                    }
+                    // console.log(body)
                 });
+            });
+        });
+    }
+    static sendSms(receptor, message) {
+        const method = 'POST';
+        const options = {
+            method,
+            url: `${this.url}sms/send/simple`,
+            headers: {
+                'cache-control': 'no-cache',
+                'apikey': this.apiKey,
+                'content-type': 'application/x-www-form-urlencoded'
+            },
+            form: {
+                message: message,
+                receptor: receptor,
+                linenumber: this.smsNumber
             }
-            console.log('response status');
-            console.log(response.status);
-            console.log(response.data);
-            return response.status === 200 || response.status === 201;
+        };
+        request(options, function (error, response, body) {
+            if (error) {
+                console.error('send sms error');
+                console.error(error);
+                return;
+            }
+            console.log(body);
         });
     }
 }
 exports.default = SmsProvider;
-//# sourceMappingURL=sms_provider.js.map
+SmsProvider.apiKey = '77ea86d1fee701d5f493d9d774562cd5648412db622a05c44295a9ed97965d75';
+SmsProvider.smsNumber = '10008566';
+SmsProvider.url = 'https://api.ghasedak.me/v2/';

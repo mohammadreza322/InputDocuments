@@ -17,6 +17,7 @@ const db_1 = __importDefault(require("../config/db"));
 const device_model_1 = require("../models/device.model");
 //import Device  from '../models/device.model';
 const constants_1 = require("../utility/constants");
+const logs_entity_1 = __importDefault(require("../entities/logs.entity"));
 (0, db_1.default)().then(() => {
     try {
         const client = (0, mqtt_1.connect)(constants_1.brokerUrl, {
@@ -27,7 +28,7 @@ const constants_1 = require("../utility/constants");
         });
         client.on('connect', () => {
             console.log('connected');
-            client.subscribe('/event/disconnected', (err) => {
+            client.subscribe('/event_chisco/disconnected', (err) => {
                 if (err) {
                     console.error('can not subscribe /event/disconnected');
                     console.error(err);
@@ -35,7 +36,7 @@ const constants_1 = require("../utility/constants");
                 }
                 console.log('subscribe disconnect');
             });
-            client.subscribe('/event/connected', (err) => {
+            client.subscribe('/event_chisco/connected', (err) => {
                 if (err) {
                     console.error('can not subscribe /event/connected');
                     console.error(err);
@@ -116,6 +117,7 @@ function changeDisconnectStatus(payload) {
                 $set: { deviceLastConnection: lastConnection },
             });
         }
+        yield logs_entity_1.default.deviceDisconnectToServer(serialNumber);
     });
 }
 function changeConnectStatus(payload) {
@@ -128,14 +130,15 @@ function changeConnectStatus(payload) {
         }
         if (validSerialNumber.type == 'power') {
             yield device_model_1.PowerStrip.updateOne({ serialNumber }, {
-                $set: { deviceLastConnection: lastConnection },
+                $set: { deviceLastConnection: 'آنلاین' },
             });
         }
         else {
             yield device_model_1.Cooler.updateOne({ serialNumber }, {
-                $set: { deviceLastConnection: lastConnection },
+                $set: { deviceLastConnection: 'آنلاین' },
             });
         }
+        yield logs_entity_1.default.deviceReconnectToServer(serialNumber);
     });
 }
 function changeCooler(serialNumber, payload) {
@@ -188,4 +191,3 @@ function _deviceExists(serialNumber) {
         };
     });
 }
-//# sourceMappingURL=change_device.service.js.map

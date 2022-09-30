@@ -50,4 +50,10 @@ export default class TokenEntity {
 			user: userId,
 		});
 	}
+
+	static async removeAllUserTokens(userId:Types.ObjectId) {
+		await Token.deleteMany({
+			user: userId,
+		});
+	}
 }

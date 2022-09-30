@@ -109,4 +109,3 @@ class LoginEntity {
     }
 }
 exports.default = LoginEntity;
-//# sourceMappingURL=login.entity.js.map

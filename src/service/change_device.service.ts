@@ -3,6 +3,7 @@ import connectDb from '../config/db';
 import { Cooler, PowerStrip } from '../models/device.model';
 //import Device  from '../models/device.model';
 import { brokerUrl } from '../utility/constants';
+import LogsEntity from "../entities/logs.entity";
 connectDb().then(() => {
 	try {
 		const client = connect(brokerUrl, {
@@ -15,7 +16,7 @@ connectDb().then(() => {
 		client.on('connect', () => {
 			console.log('connected');
 
-			client.subscribe('/event/disconnected', (err) => {
+			client.subscribe('/event_chisco/disconnected', (err) => {
 				if (err) {
 					console.error('can not subscribe /event/disconnected');
 					console.error(err);
@@ -24,7 +25,7 @@ connectDb().then(() => {
 				console.log('subscribe disconnect');
 			});
 
-			client.subscribe('/event/connected', (err) => {
+			client.subscribe('/event_chisco/connected', (err) => {
 				if (err) {
 					console.error('can not subscribe /event/connected');
 					console.error(err);
@@ -75,13 +76,13 @@ connectDb().then(() => {
 			const data = JSON.parse(message.toString('utf8'));
 
 			if (changeCoolerRegex) {
-				changeCooler(changeCoolerRegex[1], data);
+				 changeCooler(changeCoolerRegex[1], data);
 			} else if (changePowerRegex) {
-				changePower(changePowerRegex[1], data);
+				 changePower(changePowerRegex[1], data);
 			} else if (changeScheduleRegex) {
-				changeSchedule(changeScheduleRegex[1], data);
+				 changeSchedule(changeScheduleRegex[1], data);
 			} else if (connectedDeviceRegex) {
-				changeConnectStatus(data);
+				 changeConnectStatus(data);
 			} else if (disconnectDeviceRegex) {
 				changeDisconnectStatus(data);
 			}
@@ -116,6 +117,8 @@ async function changeDisconnectStatus(payload: any) {
 			},
 		);
 	}
+
+	await LogsEntity.deviceDisconnectToServer(serialNumber);
 }
 
 async function changeConnectStatus(payload: any) {
@@ -131,17 +134,19 @@ async function changeConnectStatus(payload: any) {
 		await PowerStrip.updateOne(
 			{ serialNumber },
 			{
-				$set: { deviceLastConnection: lastConnection },
+				$set: { deviceLastConnection: 'آنلاین' },
 			},
 		);
 	} else {
 		await Cooler.updateOne(
 			{ serialNumber },
 			{
-				$set: { deviceLastConnection: lastConnection },
+				$set: { deviceLastConnection: 'آنلاین' },
 			},
 		);
 	}
+
+	await LogsEntity.deviceReconnectToServer(serialNumber);
 }
 
 async function changeCooler(serialNumber: string, payload: any) {

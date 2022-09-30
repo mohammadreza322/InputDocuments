@@ -1,0 +1,24 @@
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.dashboardRoute = void 0;
+const express_1 = __importDefault(require("express"));
+const auth_router_1 = require("./auth.router");
+const dashboard_pageview_1 = require("../page_view/dashboard.pageview");
+const authorization_1 = require("../middleware/authorization");
+const customer_1 = require("./customer");
+const admin_1 = require("./admin");
+const devices_site_router_1 = require("./devices.site_router");
+const store_room_route_1 = require("./store_room.route");
+const router = express_1.default.Router();
+exports.dashboardRoute = router;
+router.use('/auth', auth_router_1.authRoute);
+router.get('/exit', dashboard_pageview_1.exitAdmin);
+router.use(authorization_1.hasPermissionDashboard);
+router.use('/client', customer_1.customerRoute);
+router.use('/admin', admin_1.adminRoute);
+router.use('/devices', devices_site_router_1.deviceSiteRouter);
+router.use('/store_room', store_room_route_1.storeRoomRoute);
+router.get('/', dashboard_pageview_1.dashboardPage);

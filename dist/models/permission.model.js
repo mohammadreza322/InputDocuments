@@ -7,6 +7,10 @@ const permissionSchema = new mongoose_1.Schema({
         required: true,
         trim: true,
     },
+    initialRoute: {
+        type: 'string',
+        default: '/dashboard'
+    },
     GET: [
         {
             type: String,
@@ -22,4 +26,3 @@ const permissionSchema = new mongoose_1.Schema({
 });
 const Permission = (0, mongoose_1.model)('Permission', permissionSchema);
 exports.default = Permission;
-//# sourceMappingURL=permission.model.js.map

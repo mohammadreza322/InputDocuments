@@ -4,13 +4,13 @@ export interface IUser extends Document {
 	_id?: Types.ObjectId;
 	fullName?: string;
 	phoneNumber: string;
-	status: string;
 	registerDate: Date;
 	role: string;
 	usernameBroker?: string;
 	passwordBroker?: string;
 	address?: string;
 	birthday?: Date;
+	enable:boolean;
 }
 
 const UserSchema = new Schema(
@@ -43,6 +43,10 @@ const UserSchema = new Schema(
 		birthday: {
 			type: Date,
 		},
+		enable:{
+			type:Boolean,
+			default:true
+		}
 	},
 	{ toJSON: { virtuals: true } },
 );

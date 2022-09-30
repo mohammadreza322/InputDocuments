@@ -13,6 +13,7 @@ export interface getCodeOutput {
 export interface checkOtpInput {
 	smsId: string;
 	code: string;
+	isDashboard?:boolean
 }
 
 export interface checkOtpOutput {

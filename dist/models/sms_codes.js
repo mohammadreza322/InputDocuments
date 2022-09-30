@@ -43,4 +43,3 @@ const smsCodesSchema = new mongoose_1.Schema({
 });
 const SmsCode = mongoose_1.default.model('SmsCodes', smsCodesSchema);
 exports.default = SmsCode;
-//# sourceMappingURL=sms_codes.js.map

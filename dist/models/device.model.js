@@ -32,6 +32,10 @@ const defaultDeviceSchema = {
     category: {
         type: 'string',
     },
+    createAt: {
+        type: Date,
+        default: Date.now
+    },
     registerAt: {
         type: Date,
     },
@@ -41,6 +45,12 @@ const defaultDeviceSchema = {
     deviceLastConnection: {
         type: 'string',
     },
+    password: {
+        type: 'string',
+    },
+    insertedUser: {
+        type: mongoose_1.Types.ObjectId,
+    }
 };
 const powerStripSchema = new mongoose_1.Schema(Object.assign(Object.assign({}, defaultDeviceSchema), { connectors: {
         type: [
@@ -108,4 +118,3 @@ const coolerSchema = new mongoose_1.Schema(Object.assign(Object.assign({}, defau
         default: true,
     } }));
 exports.Cooler = (0, mongoose_1.model)('Cooler', coolerSchema);
-//# sourceMappingURL=device.model.js.map

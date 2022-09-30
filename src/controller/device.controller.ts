@@ -1,4 +1,4 @@
-import { Response } from 'express';
+import {Request, Response} from 'express';
 import { isValidObjectId, ObjectId, Types } from 'mongoose';
 import AhpValidator from '../classes/validator';
 import DeviceEntity from '../entities/device.entity';
@@ -9,6 +9,8 @@ import {
 	listOfDevices,
 } from '../types/device.type';
 import { CustomRequest } from '../types/global.type';
+import BrokerProvider from "../classes/broker_provider";
+import LogsEntity from "../entities/logs.entity";
 
 export const saveDevice = async (req: CustomRequest, res: Response) => {
 	try {
@@ -31,6 +33,12 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 		}
 
 		if (name.trim() === '') {
+			return res
+				.status(400)
+				.json({ message: 'نام دستگاه نمیتواند بیشتر از ۶۰ کاراکتر باشد!' });
+		}
+
+		if (name.trim().length > 60) {
 			return res
 				.status(400)
 				.json({ message: 'نام دستگاه را وارد نکرده اید!' });
@@ -324,3 +332,152 @@ export const deleteSchedule = async (req: CustomRequest, res: Response) => {
 		return res.status(500).json({ message: 'خطایی پیش آمده' });
 	}
 };
+
+export const deleteOwnerOfDevice = async (req: CustomRequest, res: Response) => {
+	try {
+		const { serialNumber }: deleteDeviceInput = req.body;
+
+		if (!serialNumber) {
+			return res.status(400).json({ message: 'خطا در ورودی!',status:false });
+		}
+
+		const validateSerialNumber = await DeviceEntity.validateSerialNumberForAdmin(
+			serialNumber,
+		);
+
+		if (!validateSerialNumber.valid) {
+			return res
+				.status(400)
+				.json({ message: validateSerialNumber.message ,status:false});
+		}
+
+
+		await DeviceEntity.deleteOwnerDevice(
+			serialNumber,
+			validateSerialNumber.type,
+		);
+
+		return res.json({ message: 'دستگاه شما با موفقیت حذف شد',status:true });
+	} catch (err) {
+		console.error('inside delete device site');
+		console.error(err);
+
+		return res.status(500).json({ message: 'خطایی پیش آمده' });
+	}
+};
+
+export const kickDevice = async (req:Request,res:Response) => {
+	try {
+		const {serialNumber}= req.body;
+
+		if (!serialNumber) {
+			return res.status(400).json({message: 'خطا در ورودی!', status: false});
+		}
+
+		const validateSerialNumber = await DeviceEntity.validateSerialNumberForAdmin(
+			serialNumber,
+		);
+
+		if (!validateSerialNumber.valid) {
+			return res
+				.status(400)
+				.json({message: validateSerialNumber.message, status: false});
+		}
+
+		await BrokerProvider.kickDevice(serialNumber);
+
+		await LogsEntity.kickDeviceFromBroker(serialNumber,req.user.id,req.user.fullName)
+
+		return res
+			.json({message: 'ارتباط دستگاه با موفقیت با سرور قطع شد', status: true});
+	} catch (err) {
+		console.error('inside kick device');
+		console.error(err);
+
+		return res.status(500).json({ message: 'خطایی پیش آمده',status:false });
+	}
+}
+
+export const addDevice = async (req:Request,res:Response) => {
+	try {
+		const {serialNumber, password, type} = req.body
+
+		if (!serialNumber || !password || !type) {
+			return res.status(400).json({status:false,message: 'خطا در ورودی'});
+		}
+
+		if (serialNumber.toString().trim() == '') {
+			return res.status(400).json({status:false,message: 'شماره سریال را وارد نکرده اید'});
+		}
+
+		if (password.toString().trim() == '') {
+			return res.status(400).json({status:false,message: 'کلمه عبور دستگاه را وارد نکرده اید'});
+		}
+
+		if (type.toString().trim() == '') {
+			return res.status(400).json({status:false,message: 'نوع دستگاه را وارد نکرده اید'});
+		}
+
+		if (!['cooler', 'power'].includes(type.toString())) {
+			return res.status(400).json({status:false,message: 'خطا در ورودی'});
+		}
+
+		let deviceId = undefined
+
+		if(type == 'power') {
+			deviceId = await DeviceEntity.addPower(serialNumber, password, req.user.id)
+		} else if (type=='cooler') {
+			deviceId = await DeviceEntity.addCooler(serialNumber,password,req.user.id)
+		}
+
+		await LogsEntity.addDevice(serialNumber,req.user.id,deviceId)
+
+		return res.json({status:true,message:'دستگاه با موفقیت اضافه شد!'})
+
+	}catch (err) {
+		console.error('inside add device');
+		console.error(err);
+
+		return res.status(500).json({ message: 'خطایی پیش آمده',status:false });
+	}
+}
+
+export const deleteDeviceInStoreRoom = async (req:Request,res:Response) => {
+	try {
+		const {serialNumber, type} = req.body
+
+		if (!serialNumber || !type) {
+			return res.status(400).json({status:false,message: 'ورودی نامعتبر!'});
+		}
+
+		if (serialNumber.toString().trim() == '') {
+			return res.status(400).json({status:false,message: 'ورودی نامعتبر!'});
+		}
+
+		if (type.toString().trim() == '') {
+			return res.status(400).json({status:false,message: 'ورودی نامعتبر!'});
+		}
+
+		if (type == 'cooler') {
+			if (!await DeviceEntity.coolerExists(serialNumber)) {
+				return res.status(400).json({status:false,message: 'ورودی نامعتبر!'});
+			}
+
+			await DeviceEntity.removeCooler(serialNumber)
+		} else if (type == 'power') {
+			if (!await DeviceEntity.powerExists(serialNumber)) {
+				return res.status(400).json({status:false,message: 'ورودی نامعتبر!'});
+			}
+
+			await DeviceEntity.removePower(serialNumber)
+		}
+
+		return res.json({status: true, message: 'دستگاه مورد نظر با موفقیت حذف شد!'})
+	}
+	catch (err) {
+			console.error('inside remove device');
+			console.error(err);
+
+			return res.status(500).json({ message: 'خطایی پیش آمده',status:false });
+		}
+}

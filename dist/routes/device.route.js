@@ -14,4 +14,3 @@ router.post('/save', device_controller_1.saveDevice);
 router.post('/delete', device_controller_1.deleteDevice);
 router.post('/schedule', device_controller_1.saveSchedule);
 router.post('/delete-schedule', device_controller_1.deleteSchedule);
-//# sourceMappingURL=device.route.js.map

@@ -12,13 +12,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.hasPermission = exports.getAuthorization = void 0;
+exports.hasPermissionDashboard = exports.hasPermission = exports.getAuthorization = void 0;
 // import type { CustomRequest } from '../types/global.type';
 const permission_model_1 = __importDefault(require("../models/permission.model"));
 const isJWT_1 = __importDefault(require("validator/lib/isJWT"));
 const tokens_model_1 = __importDefault(require("../models/tokens.model"));
 const constants_1 = require("../utility/constants");
 const users_model_1 = __importDefault(require("../models/users.model"));
+const user_entity_1 = __importDefault(require("../entities/user.entity"));
 const jwt = require('jsonwebtoken');
 const getAuthorization = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
     const userToken = req.header('x-auth-token');
@@ -85,4 +86,96 @@ const hasPermission = (req, res, next) => __awaiter(void 0, void 0, void 0, func
     }
 });
 exports.hasPermission = hasPermission;
-//# sourceMappingURL=authorization.js.map
+const hasPermissionDashboard = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        if (!req.session.isUserLoggedIn) {
+            // console.log("in permission user not login")
+            // console.log(req.session.isUserLoggedIn)
+            return res.redirect('/auth');
+        }
+        const sessionUserPhoneNumber = req.session.userPhone;
+        const user = yield user_entity_1.default.getUserInformationWithPhoneNumber(sessionUserPhoneNumber);
+        if (!user) {
+            req.session.isUserLoggedIn = false;
+            return res.redirect('/auth');
+        }
+        if (user.role == 'user') {
+            return res.redirect('/error/403');
+        }
+        let path = null;
+        if (req.path.charAt(0) === '/') {
+            path = req.baseUrl + req.path;
+        }
+        else {
+            path = `${req.baseUrl}/${req.path}`;
+        }
+        const method = req.method;
+        if (path[path.length - 1] === '/') {
+            path = path.substring(0, path.length - 1);
+        }
+        const permissions = yield permission_model_1.default.findOne({
+            role: user.role,
+        });
+        if (!permissions) {
+            return res.redirect('/auth');
+        }
+        const hasPermission = permissions
+            .get(method.toUpperCase())
+            .find((permission) => {
+            const permissionRegex = new RegExp(permission);
+            return permissionRegex.test(path);
+        });
+        // console.log(path)
+        if (!hasPermission) {
+            if (method.toUpperCase() == 'GET') {
+                res.redirect(permissions.initialRoute);
+            }
+            return res.json({ status: false, message: 'دسترسی غیر مجاز' });
+        }
+        req.user = user;
+        res.locals.userName = user.fullName.split(' ')[0];
+        res.locals.fullName = user.fullName;
+        res.locals.phoneNumber = user.phoneNumber;
+        res.locals.role = user.role;
+        const routes = [
+            {
+                route: '/dashboard',
+                title: 'پیشخوان',
+                image: 'element-4.svg',
+                name: 'dashboard'
+            },
+            {
+                route: '/dashboard/admin',
+                title: 'مدیران',
+                image: 'user.svg',
+                name: 'admin'
+            },
+            {
+                route: '/dashboard/client',
+                title: 'مشتریان',
+                image: 'profile-2user.svg',
+                name: 'client'
+            },
+            {
+                route: '/dashboard/devices',
+                title: 'دستگاه‌ها',
+                image: 'cpu.svg',
+                name: 'devices'
+            },
+            {
+                route: '/dashboard/store_room',
+                title: 'انبار',
+                image: '3d-cube-scan.svg',
+                name: 'storehouse'
+            }
+        ];
+        res.locals.routes = routes.filter((r) => permissions === null || permissions === void 0 ? void 0 : permissions.get(method.toUpperCase()).includes(r.route));
+        return next();
+    }
+    catch (e) {
+        console.error('inside site permission middle  ware');
+        console.error(e);
+        return res.status(500).json({ message: 'خطایی پیش آمده!' });
+    }
+});
+exports.hasPermissionDashboard = hasPermissionDashboard;

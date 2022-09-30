@@ -51,6 +51,12 @@ class TokenEntity {
             });
         });
     }
+    static removeAllUserTokens(userId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield tokens_model_1.default.deleteMany({
+                user: userId,
+            });
+        });
+    }
 }
 exports.default = TokenEntity;
-//# sourceMappingURL=token.entity.js.map

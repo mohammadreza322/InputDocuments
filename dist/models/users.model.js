@@ -30,7 +30,10 @@ const UserSchema = new mongoose_1.Schema({
     birthday: {
         type: Date,
     },
+    enable: {
+        type: Boolean,
+        default: true
+    }
 }, { toJSON: { virtuals: true } });
 const Users = (0, mongoose_1.model)('User', UserSchema);
 exports.default = Users;
-//# sourceMappingURL=users.model.js.map

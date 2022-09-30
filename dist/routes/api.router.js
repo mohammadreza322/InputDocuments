@@ -19,4 +19,3 @@ router.get('/', (req, res) => {
 router.use((req, res) => {
     return res.status(404).send('are you lost baby?');
 });
-//# sourceMappingURL=api.router.js.map

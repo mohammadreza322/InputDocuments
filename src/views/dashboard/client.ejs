@@ -1,0 +1,170 @@
+<div id="mainContent" dir="rtl">
+    <div class="top-content-title">
+        <div class="title-group">
+                <span class="title">مشتریان</span
+                ><span class="text">تعداد کل: <?= allClientsCounts ?> نفر </span>
+        </div>
+    </div>
+    <!-- table -->
+    <div class="teble-content">
+        <!-- table -->
+        <table class="table">
+            <thead>
+            <tr>
+                <th class="t-head" scope="col">ردیف</th>
+                <th class="t-head" scope="col">نام و نام خانوادگی</th>
+                <th class="t-head" scope="col">شماره تماس</th>
+                <th class="t-head" scope="col">تاریخ عضویت</th>
+
+                <th class="t-head" scope="col">محل سکونت</th>
+                <th class="t-head" scope="col">تاریخ تولد</th>
+                <th class="t-head" scope="col">تعداد دستگاه</th>
+                <th class="t-head" scope="col">عملیات</th>
+            </tr>
+            </thead>
+            <tbody>
+            <? let i =  ((pageNumber * limit)-limit)+1; ?>
+            <? allClients.map(c => { ?>
+            <tr data-id="<?= c._id ?>">
+                <th scope="row"><?= i++ ?></th>
+                <td class="name-js"><?= c.fullName ?></td>
+                <td class="number-js"><?= c.phoneNumber ?></td>
+                <td class="date-js"><?= c.jalaliRegisterDate ?></td>
+
+                <td class="address-js"><?= c.address ?></td>
+                <td class="birth-js"><?= c.userJalaliBirthday ?></td>
+                <td class="device-js"><?= c.countDevices ?> دستگاه</td>
+                <td>
+                    <div class="icon-table">
+                        <a class="edit-js"  data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="<?= c._id ?>">
+                            <button
+
+                                    data-bs-custom-class="custom-tooltip"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-title="ویراش مشتری"
+                            >
+                                <object
+                                        data="/photo/svg/user-editdark.svg"
+                                        type=""
+                                ></object>
+                            </button>
+                        </a>
+                        <a >
+                            <button
+                                    data-bs-custom-class="custom-tooltip"
+                                    data-bs-toggle="tooltip"
+                                    data-bs-title="حذف مشتری "
+                                    class="remove-client"
+                                    data-id="<?= c._id ?>"
+                            >
+                                <object
+                                        data="/photo/svg/trash.svg"
+
+                                ></object>
+                            </button>
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            <? }) ?>
+            </tbody>
+        </table>
+        <!-- pagination -->
+       <?- include('./include/pagination.ejs') ?>
+    </div>
+</div>
+
+
+<div class="modal edit-modal custoemr-edit-modal fade " id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered " dir="rtl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">ویرایش مشتری  “<span class="customer_name">علی میرهادی</span>”</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">بستن</button>
+            </div>
+            <div class="modal-body">
+                <div class="group-info">
+                    <label class="title" for="name">نام و نام خانوادگی</label>
+                    <div class="input-group">
+                        <object
+                                data="/photo/svg/userdark.svg"
+                                class="input-group-text"
+                                id="basic-addon1"
+                        ></object>
+                        <input
+                                id="name"
+                                type="text"
+                                class="form-control input-inner"
+                                placeholder="مانند: علی میرهادی"
+                                aria-label="Username"
+                                aria-describedby="basic-addon1"
+                        />
+                    </div>
+                </div>
+                <div class="group-info">
+                    <label class="title" for="number"> شماره تماس </label>
+                    <div class="input-group">
+                        <object
+                                data="/photo/svg/call.svg"
+                                class="input-group-text"
+                                id="basic-addon1"
+                        ></object>
+                        <input
+                                id="number"
+                                type="text"
+                                class="form-control input-inner"
+                                placeholder="مانند: 09215863622  "
+                                aria-label="Username"
+                                aria-describedby="basic-addon1"
+                        />
+                    </div>
+                </div>
+                <div class="group-info">
+                    <label class="title" for="name">  محل سکونت </label>
+                    <div class="input-group">
+                        <object
+                                data="/photo/svg/location.svg"
+                                class="input-group-text"
+                                id="basic-addon1"
+                        ></object>
+                        <input
+                                id="address"
+                                type="text"
+                                class="form-control input-inner"
+                                placeholder="مانند: علی میرهادی"
+                                aria-label="Username"
+                                aria-describedby="basic-addon1"
+                        />
+                    </div>
+                </div>
+                <div class="group-info">
+                    <label class="title" for="date"> تاریخ تولد  </label>
+                    <div class="input-group">
+                        <object
+                                data="/photo/svg/cake.svg"
+                                class="input-group-text"
+                                id="basic-addon1"
+                        ></object>
+                        <input
+                                class="initial-value-type-example"
+                                value=""
+                                id="date"
+                                type="text"
+                                placeholder="تاریخ تولد"
+                                class="form-control input-inner"
+                                aria-label="Username"
+                                aria-describedby="basic-addon1"
+                        />
+                        <div class="observer-example-alt" style="display: none"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+
+                    <button type="button" class="btn btn-modal-edit">تایید اطلاعات و ثبت مدیر</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

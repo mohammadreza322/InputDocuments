@@ -14,4 +14,3 @@ router.use([authorization_1.getAuthorization, authorization_1.hasPermission]);
 router.post('/get-name', user_controller_1.getFullName);
 router.put('/edit', user_controller_1.editUserProfile);
 router.get('/', user_controller_1.getUserDetails);
-//# sourceMappingURL=user.router.js.map
