@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 
-
+///for create responsive application we need calculate size of widgets with Media Query
 class ChiscoConverter  {
   static calculateWidgetWidth(double parentSize, double widgetSize) {
 

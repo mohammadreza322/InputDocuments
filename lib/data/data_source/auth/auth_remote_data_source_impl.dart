@@ -4,7 +4,8 @@ import 'package:chisco/data/data_class/GetMobileResponse.dart';
 import 'package:chisco/data/data_class/MessageResponse.dart';
 import 'package:chisco/data/data_source/auth/auth_data_source.dart';
 import 'package:chisco/http_client/httpService.dart';
-
+///remoteDataSource is for sending http request functions
+///this class implement abstract AuthDataSource
 class AuthRemoteDataSourceImpl implements AuthDataSource {
   final ChiscoClient httpClient = ChiscoClient();
 

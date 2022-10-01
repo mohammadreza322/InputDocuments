@@ -15,7 +15,9 @@ import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../http_client/mqtt/mqtt_classes/MqttClientFactory.dart';
-
+///AppController is Provider Controller class for Base functions or Common functions in our Project
+///we Store all Lists and UserDetail here
+///and if somewhere we need something we have Access to it
 class AppController extends ChangeNotifier {
   User? _user;
 
@@ -44,7 +46,9 @@ class AppController extends ChangeNotifier {
 
   get getUserDevicesList => _userDevicesList;
 
-
+  ///after user login or splash screen and after we send request to server for getting dates
+  ///this method will call and its for setting data in appController
+  ///its a setter for all data we have
   setData(User value) {
     _user = value;
     _categories = _user!.devices.categories;
@@ -55,6 +59,8 @@ class AppController extends ChangeNotifier {
     convertDeviceList();
     notifyListeners();
   }
+  ///if user didn't add any device its return false for else it's return true
+  ///in the Screen if this function return false we show EmptyState for else we show list
   isUserHaveDevice() {
     if (_coolers.length == 0 && _powers.length == 0) {
       return false;
@@ -62,13 +68,16 @@ class AppController extends ChangeNotifier {
       return true;
     }
   }
-
+  ///we have 2 type of list
+  ///Cooler and Powers
+  ///in this method we combine these to one
   convertDeviceList() {
     _userDevicesList = List.from(_powers)
       ..addAll(_coolers);
     print("User Device List : ${_userDevicesList.toString()}");
   }
-
+  ///after any editing in our app such as Add Or Edit Device , Add or Edit Schedule
+  ///this method will call and its for updating or refreshing dates
   refreshData(AddDeviceResponse response) {
     print('****************************');
     _coolers = response.devices.coolers;
@@ -79,7 +88,7 @@ class AppController extends ChangeNotifier {
     print(_userDevicesList);
     notifyListeners();
   }
-
+  ///after editing user detail such as Location birthday or name we refresh User Data With this method
   refreshUserData({required String location, required String name, required num date}){
     _user!.userDetail.address =location;
     _user!.userDetail.birthday = date;
@@ -89,25 +98,26 @@ class AppController extends ChangeNotifier {
     notifyListeners();
   }
 
-
+  ///we find Cooler in our list with serial Number and we return the Cooler
   Cooler getCoolerWithSerialNumber(String serialNumber) {
     final index =
     _coolers.indexWhere((element) => element.serialNumber == serialNumber);
     return _coolers[index];
   }
-
+  ///we find Power in our list with serial Number and we return the Power
   Power getPowerWithSerialNumber(String serialNumber) {
     final index =
     _powers.indexWhere((element) => element.serialNumber == serialNumber);
     return _powers[index];
   }
-
+  ///we find Device in our list with serial Number and we return the Device
   Device getDeviceWithSerialNumber(String serialNumber) {
     final index = _userDevicesList
         .indexWhere((element) => element.serialNumber == serialNumber);
     return _userDevicesList[index];
   }
-
+  ///we update power with this method
+  ///first we find it in list and then we replace it
   setPower(Power power) {
     int index = _powers
         .indexWhere((element) => element.serialNumber == power.serialNumber);
@@ -117,24 +127,31 @@ class AppController extends ChangeNotifier {
 
     notifyListeners();
   }
+  setCooler(Cooler selectedCooler) {
+    int index = _coolers.indexWhere(
+            (element) => element.serialNumber == selectedCooler.serialNumber);
+    _coolers[index] = selectedCooler;
 
+    notifyListeners();
+  }
+  ///this method is for Connect to Mqtt
   connect({String? topicForSubscribe}) async {
-    //MqttClient client = MqttServerClient.withPort('mqtt://chisco.tech', '',8885);
-    //MqttClient client = makeClient('mqtt://chisco.tech', 'gdfsg');
-    print('controller');
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     Map<String, dynamic> decodedToken = JwtDecoder.decode(sharedPreferences.getString('detail')!);
+    ///we need to decode Mqtt Username and password for connection
     String userNameBroker = decodedToken['usernameBroker'];
     String passwordBroker = decodedToken['passwordBroker'];
 
     String url ='';
-
+    ///if user use Web App we have to connect mqtt like this ws://[url]
+    ///and if user use Mobile we don't need add anything at the start of url
     if(kIsWeb) {
       url = "ws://";
     }
 
     url+="chisco.tech";
     print('UserName : ${decodedToken['usernameBroker']}\nPassword: ${decodedToken['passwordBroker']}');
+
     MqttClient client = makeClient(url, '');
     client.websocketProtocols = ['mqtts','mqtt'];
 
@@ -176,6 +193,11 @@ class AppController extends ChangeNotifier {
 
     mqttClient = client;
   }
+  ///for Subscribe to mqtt or Listen to Received Messages we need this method
+  ///our Mqtt send serial Number of Device
+  ///we get 2 thing in device
+  ///if device is instance of Power we need to update Voltage in view and list
+  ///if device is instance of Cooler we need to update Current state of Cooler in both view and list
 
   mqttListen(List<MqttReceivedMessage<MqttMessage?>>? c) {
    //print('hjjhj');
@@ -187,12 +209,13 @@ class AppController extends ChangeNotifier {
       try {
         final payload = jsonDecode(payloadString);
         final topic = c[0].topic;
+        ///here we find serial Number
+
         RegExp regExp = RegExp(r'/chisco/(.*)');
         var matches = regExp.allMatches(topic);
         String? serialNumber = matches.first.group(1);
-
+        ///update coolers
         _coolers.forEach((element) {
-
           if (element.serialNumber == serialNumber) {
             Cooler cooler = getCoolerWithSerialNumber(serialNumber!);
             cooler.timer = payload['timer'];
@@ -204,6 +227,7 @@ class AppController extends ChangeNotifier {
             setCooler(cooler);
           }
         });
+        ///update powers
 
         _powers.forEach((element) {
           print(element.serialNumber);
@@ -227,7 +251,7 @@ class AppController extends ChangeNotifier {
           }
         });
 
-        print(serialNumber);
+
 
         notifyListeners();
       } on FormatException {
@@ -236,7 +260,7 @@ class AppController extends ChangeNotifier {
       }
     }
   }
-
+  ///this function is for publish or send message to mqtt
   publishMessage(String topic, MqttClientPayloadBuilder data) {
     if (data.payload == null) {
       data.addString({"chisco": true}.toString());
@@ -247,13 +271,7 @@ class AppController extends ChangeNotifier {
     mqttClient?.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
   }
 
-  setCooler(Cooler selectedCooler) {
-    int index = _coolers.indexWhere(
-            (element) => element.serialNumber == selectedCooler.serialNumber);
-    _coolers[index] = selectedCooler;
 
-    notifyListeners();
-  }
 
   publishPowerMqtt(Power power) {
     List ports = [];

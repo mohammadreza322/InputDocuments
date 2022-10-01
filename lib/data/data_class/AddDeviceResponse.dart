@@ -1,5 +1,6 @@
 import 'package:chisco/data/data_class/UserDevices.dart';
-//after adding device this data class will response
+
+///after adding device this data class will response
 
 class AddDeviceResponse {
 

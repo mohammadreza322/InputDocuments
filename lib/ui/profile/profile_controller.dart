@@ -1,5 +1,7 @@
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
+import 'package:chisco/data/data_class/EditUserResponse.dart';
 import 'package:chisco/data/data_class/MessageResponse.dart';
+import 'package:chisco/data/data_class/User.dart';
 import 'package:chisco/data/data_class/UserDetail.dart';
 import 'package:chisco/data/repository/account/account_repository.dart';
 import 'package:chisco/ui/account/account_controller.dart';
@@ -13,7 +15,6 @@ class ProfileController extends ChangeNotifier {
   final BuildContext context;
   AccountRepositoryImpl accountRepositoryImpl = AccountRepositoryImpl();
   String selectedStringDate = '';
-  String selectedCity = '';
   int selectedDateLong = 0;
   bool isHintDate = true;
   bool isPageLoading = false;
@@ -27,20 +28,21 @@ class ProfileController extends ChangeNotifier {
   init() {
     isPageLoading = true;
     UserDetail userDetail = Provider.of<AppController>(context).getUserDetail();
-    print(userDetail.address);
+    print('Birthday AppController');
+    print(Provider.of<AppController>(context).getUserDetail().birthday);
     nameController.text = userDetail.fullName;
     numberController.text = userDetail.phoneNumber;
     locationController.text = userDetail.address;
-  //print(userDetail.birthday);
+    print(userDetail.birthday);
     if (userDetail.birthday != null) {
-      int second = (userDetail.birthday as int)*1000;
+      print('BirthDay in if ${userDetail.birthday}');
+      int second = (userDetail.birthday as int) * 1000;
       var date = DateTime.fromMillisecondsSinceEpoch(second);
       print(date.millisecondsSinceEpoch);
       changeSelectedDate(date);
     } else {
       selectedStringDate = 'ندارد';
     }
-    selectedCity = userDetail.address;
     //jalali Birthday
   }
 
@@ -51,23 +53,26 @@ class ProfileController extends ChangeNotifier {
     selectedDateLong = selectedDate.millisecondsSinceEpoch;
     print(selectedDateLong);
     isHintDate = false;
-    Future.delayed(const Duration(milliseconds: 250),() {
+    Future.delayed(const Duration(milliseconds: 250), () {
       notifyListeners();
     });
   }
 
   submitEditUserBtnClicked(
       String name, String? birthday, String? location) async {
-    ChiscoResponse response = await accountRepositoryImpl.editUserInformation(location, selectedDateLong, name);
-
+    ChiscoResponse response = await accountRepositoryImpl.editUserInformation(
+        location, selectedDateLong, name);
+    print('OnClick Long : ${selectedDateLong}');
     if (response.status) {
-      MessageResponse messageResponse = response.object;
-      Provider.of<AppController>(context, listen: false).refreshUserData(name: name, date: selectedDateLong, location: location!);
+      print(response.object);
+      EditUserResponse editUserResponse = response.object;
 
+      Provider.of<AppController>(context, listen: false).refreshUserData(
+          name: editUserResponse.details.fullName,
+          date: editUserResponse.details.birthday!,
+          location: editUserResponse.details.address);
       Navigator.pop(context);
-
-
-      ChiscoFlushBar.showSuccessFlushBar(context, messageResponse.message);
+      ChiscoFlushBar.showSuccessFlushBar(context, editUserResponse.message);
     } else {
       print("Error Edit User");
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);

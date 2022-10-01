@@ -1,4 +1,5 @@
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
+import 'package:chisco/data/data_class/EditUserResponse.dart';
 import 'package:chisco/data/data_class/MessageResponse.dart';
 import 'package:chisco/data/data_source/account/account_remote_data_source.dart';
 
@@ -19,8 +20,9 @@ class AccountRepositoryImpl extends AccountRepository {
     if (response.status) {
       MessageResponse messageResponse =
           MessageResponse.fromJson(response.object);
+      EditUserResponse editUserResponse = EditUserResponse.fromJson(response.object);
       ChiscoResponse chiscoResponse =
-          ChiscoResponse(status: true, code: 408, object: messageResponse);
+          ChiscoResponse(status: true, code: 408, object: editUserResponse);
       return chiscoResponse;
     } else {
       return response;

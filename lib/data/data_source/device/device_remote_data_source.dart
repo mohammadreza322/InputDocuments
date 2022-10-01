@@ -8,6 +8,8 @@ import 'package:chisco/data/data_class/EditPowerRequest.dart';
 import 'package:chisco/data/data_source/device/device_data_source.dart';
 import 'package:chisco/http_client/httpService.dart';
 
+
+///Implementation of DeviceDataSource for sending http request
 class DeviceRemoteDataSource extends DeviceDataSource {
   final ChiscoClient client = ChiscoClient();
 

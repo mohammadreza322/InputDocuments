@@ -12,6 +12,14 @@ import 'package:provider/provider.dart';
 
 import '../../utils/const.dart';
 
+///in pwa we need Check url or routes when change routes
+///we define two type of route [public] and [private]
+///[public] is routes that we can access or enter without Tokens
+///[private] is routes that we need to Token to enter it such as [Home] [Cooler] [Power]
+///also we have isUserLogin that it changes when user logout or login
+///if isUserLogin is false we cant access to private routes
+///if its true we can
+
 class ConditionalRouter extends MapMixin<String, WidgetBuilder> {
   final Map<String, WidgetBuilder> public;
   final Map<String, WidgetBuilder> private;
@@ -24,9 +32,6 @@ class ConditionalRouter extends MapMixin<String, WidgetBuilder> {
     if (public.containsKey(key)) {
       print(GlobalVariable.isUserLogin);
       if(GlobalVariable.isUserLogin==null){
-        print('guhk,l.');
-        print("#################");
-        print("called1");
         return (ctx) => ChangeNotifierProvider(
           create: (context) => SplashController(context),
           child: const SplashScreen(),
@@ -45,8 +50,7 @@ class ConditionalRouter extends MapMixin<String, WidgetBuilder> {
     }
     if (private.containsKey(key)) {
       if(GlobalVariable.isUserLogin==null){
-        print("#################");
-        print("called1");
+
         return  (ctx) => ChangeNotifierProvider(
           create: (context) => SplashController(context),
           child: const SplashScreen(),

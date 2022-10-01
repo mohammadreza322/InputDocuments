@@ -2,12 +2,17 @@ import 'package:chisco/data/data_class/AddSchedule.dart';
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
 import 'package:chisco/http_client/httpService.dart';
 
+///abstract dataClass for schedule functions
 abstract class ScheduleDataSource {
+  ///saving schedule
   Future<ChiscoResponse> saveSchedule(AddSchedule schedule);
-
+  ///deleting schedule
   Future<ChiscoResponse> deleteSchedule(
       String deviceSerialNumber, String scheduleId);
+
 }
+
+
 
 class ScheduleRemoteDataSource extends ScheduleDataSource {
   ChiscoClient _client = ChiscoClient();

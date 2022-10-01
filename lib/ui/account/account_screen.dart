@@ -18,22 +18,20 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
     AccountController accountController = Provider.of<AccountController>(context);
-    // if(!accountController.isLoadingPage){
-    //   accountController.init();
-    // }
-    //accountController.init();
+
+    accountController.init();
+
     double blueHeight = 0;
     double positionedTopHeight = 0;
-    if(height<740){
+    if (height < 740) {
       blueHeight = 260;
       positionedTopHeight = 220;
-    }else{
-      blueHeight = ChiscoConverter.calculateWidgetHeight(height,260);
-      positionedTopHeight= ChiscoConverter.calculateWidgetHeight(height,220);
+    } else {
+      blueHeight = ChiscoConverter.calculateWidgetHeight(height, 260);
+      positionedTopHeight = ChiscoConverter.calculateWidgetHeight(height, 220);
     }
 
     UserDetail userDetail = Provider.of<AppController>(context).getUserDetail();
@@ -67,18 +65,18 @@ class AccountScreen extends StatelessWidget {
                               Navigator.pop(context);
                             }),
                         SizedBox(
-                          height: ChiscoConverter.calculateWidgetWidth(width, 20),
+                          height:
+                              ChiscoConverter.calculateWidgetWidth(width, 20),
                         ),
                         SvgPicture.asset(
                           PROFILE,
                           width: 68,
                           height: 68,
                         ),
-
                         SizedBox(
-                            height: ChiscoConverter.calculateWidgetWidth(width, 10)),
-
-                         ChiscoText(
+                            height: ChiscoConverter.calculateWidgetWidth(
+                                width, 10)),
+                        ChiscoText(
                           text: userDetail.fullName,
                           textColor: Colors.white,
                           fontWeight: FontWeight.w500,
@@ -86,13 +84,11 @@ class AccountScreen extends StatelessWidget {
                         SizedBox(
                             height:
                                 ChiscoConverter.calculateWidgetWidth(width, 5)),
-
                         ChiscoText(
                           text: userDetail.phoneNumber,
                           textColor: Colors.white,
                           fontWeight: FontWeight.w400,
                         ),
-
                         const SizedBox(
                           height: 10,
                         )
@@ -184,9 +180,7 @@ class AccountScreen extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: ChiscoText(
-
-                          text: 'نسخه ${accountController.appVersionString} طراحی شده در ویوتک ',
+                        child: ChiscoText(text: 'نسخه ${accountController.appVersionString} طراحی شده در ویوتک ',
                           textColor: Styles.primaryTextColor.withOpacity(0.5),
                         ),
                       ),

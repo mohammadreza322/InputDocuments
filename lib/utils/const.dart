@@ -2,6 +2,8 @@
 
 import 'package:flutter/widgets.dart';
 
+///here we highlight address for [icon],[images],[screens],[sizes]
+
 const svgDirect = 'assets/images/svg/';
 
 const APP_HEADER_BACKGROUND_IMAGE = 'assets/images/home_header.png';

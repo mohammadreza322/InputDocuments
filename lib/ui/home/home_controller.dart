@@ -54,11 +54,10 @@ class HomeController extends ChangeNotifier {
 
 
   init() {
-    print("ok1");
+    ///[init] is called only one time when is opened
     isPageLoading = true;
     AppController appController = Provider.of<AppController>(context);
     user = appController.getUser();
-    print('home controller init');
     if(!_categories.contains('نمایش همه')) {
       _categories.insert(0, 'نمایش همه');
     }
@@ -72,16 +71,12 @@ class HomeController extends ChangeNotifier {
     if (!response.status) {
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
 
-      print("Error...........");
       return;
     } else {
       print(response.object.toString());
       AddDeviceResponse addDeviceResponse =response.object;
       Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
-
-     // Navigator.pop(context);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
-
       Provider.of<AppController>(context,listen: false).refreshData(response.object);
 
     }
@@ -108,7 +103,10 @@ class HomeController extends ChangeNotifier {
 
   }
 
-
+  ///this function is for filtering devices with [category]
+  ///if user select [نمایش همه] it shows all the devices
+  ///and if user select each other it filters devices
+  ///for filtering we create a list [filteredDevices] and we use it for showing devices in homePage
    filteringDevices(String category) {
     print('Devices : ${_listDevices.toString()}');
     if (category == 'نمایش همه') {
@@ -130,7 +128,7 @@ class HomeController extends ChangeNotifier {
   }
 
   homeLists(){
-
+    ///we get these parameters here from [AppController]
     _coolerCount =Provider.of<AppController>(context,listen: false).getCoolers().length;
     _powerCount = Provider.of<AppController>(context,listen: false).getPowers().length;
     _listDevices = Provider.of<AppController>(context,listen: false).getUserDevicesList;
@@ -138,24 +136,20 @@ class HomeController extends ChangeNotifier {
 
   }
 
-  isUserHaveDevice() {
-    if (_listDevices.length ==0) {
-      return false;
-    } else {
-      return true;
-    }
-  }
 
 
-
+  ///onClick for all Devices {on or off button} Icon
   onDevicePowerBtnClicked(Device device){
     if(device.deviceType == DeviceType.power){
+      ///if user click on power icon for powers we have to change all [connectors] state
+      ///and publish data in Mqtt
+
       Power power = device as Power;
       bool isPowerActive= changeDevicePowersBtn(device);
       power.connectors.forEach((element) {
         element.status = !isPowerActive;
-
       });
+
 
       Provider.of<AppController>(context,listen: false).setPower(power);
       isPowerActive = !isPowerActive;
@@ -165,6 +159,8 @@ class HomeController extends ChangeNotifier {
       notifyListeners();
 
     }else {
+      ///and if user click on Cooler's power icon we have only change isPowerActive bool
+      ///and publish it in MQTT
       Cooler cooler =device as Cooler;
       bool isPowerActive= changeDevicePowersBtn(device);
       cooler.power = !isPowerActive;
@@ -178,6 +174,9 @@ class HomeController extends ChangeNotifier {
 
 
   }
+  ///this function is for getting device power bool state
+  ///we pass Device then we search in our list to find the device
+  ///after that we @return deviceIsActive
   bool changeDevicePowersBtn(Device device){
     if (device.deviceType == DeviceType.power) {
       List<Connector> connectors = (device as Power)

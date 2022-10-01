@@ -16,8 +16,8 @@ class AddCoolerBottomSheet extends StatelessWidget {
     final TextEditingController serialTextController = TextEditingController();
     final TextEditingController brandTextController = TextEditingController();
     final TextEditingController nameTextController = TextEditingController();
-    final TextEditingController categoryTextController =
-        TextEditingController();
+    final TextEditingController categoryTextController = TextEditingController();
+    ///we use [HomeController] because it's in Home Screen
     final HomeController controller = HomeController(context);
 
     return Directionality(
@@ -75,7 +75,7 @@ class AddCoolerBottomSheet extends StatelessWidget {
           ChiscoButton(
             text: 'تایید و افزودن دستگاه',
             onClick: () async {
-              print('clicked');
+
                controller.addCoolerBtnClicked(AddCooler(
                   brand: brandTextController.text,
                   category: categoryTextController.text,

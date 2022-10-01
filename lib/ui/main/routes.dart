@@ -21,6 +21,7 @@ import 'package:chisco/ui/splash/splash_screen.dart';
 import 'package:chisco/ui/splash/splash_controller.dart';
 import 'package:chisco/utils/const.dart';
 
+///here we highlighting our routes
 var splashScreenPage = ChangeNotifierProvider(
   create: (context) => SplashController(context),
   child: const SplashScreen(),
@@ -62,8 +63,6 @@ var routes = ConditionalRouter(public: {
   },
   schedulePage: (context) {
     if (ModalRoute.of(context)!.settings.arguments == null) {
-      print("////////////////////////");
-      print(ModalRoute.of(context)!.settings.arguments);
       return splashScreenPage;
     }
 

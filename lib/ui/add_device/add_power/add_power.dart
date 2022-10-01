@@ -13,6 +13,7 @@ class AddPowerBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     final TextEditingController serialTextController = TextEditingController();
     final TextEditingController nameTextController = TextEditingController();
     final TextEditingController categoryTextController = TextEditingController();
@@ -66,7 +67,6 @@ class AddPowerBottomSheet extends StatelessWidget {
             label: "دسته‌بندی:",
           ),
           ExpansionTile(
-          //todo Select Background color
             title: const ChiscoText(text: 'اسم نمایشی پریز ها پورت ها(دلخواه)'),
             children: [
               ChiscoTextField(

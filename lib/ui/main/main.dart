@@ -1,4 +1,4 @@
-import 'package:chisco/ui/main/add_to_home_page.dart';
+
 import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/ui/main/routes.dart';
 
@@ -6,8 +6,9 @@ import 'package:chisco/utils/const.dart';
 import 'package:chisco/utils/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:sizer/sizer.dart';
+
 import "package:universal_html/js.dart" as js;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
@@ -26,8 +27,6 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const defaultTextStyle =
-        TextStyle(fontFamily: 'ChiscoText', color: Styles.primaryTextColor);
 
     return Sizer(
       builder: (BuildContext context, Orientation orientation,
