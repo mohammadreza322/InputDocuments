@@ -11,7 +11,7 @@ import {brokerUrlAPI} from '../utility/constants';
 
 export default class BrokerProvider {
     private static username = '20bf501bc0fa6'
-    private static pass = 'MzA1NTY2NTE4NzM5MTk5NzY5MDAyNTEwNzM2NDA1OTU0NTG'
+    private static pass = 'jEwsRgWmOHAaPk1BpC0IkF4IvElXgMB6cswEhpv02zN'
 
     /**
      * @author Amir Hemmateenejad amirhemmateenejad@gmail.com
@@ -24,9 +24,9 @@ export default class BrokerProvider {
     static async addUserToMnesia(username: string, password: string) {
         var options = {
             'method': 'POST',
-            'url': 'http://185.204.197.144:8081/api/v4/auth_username',
+            'url': 'http://185.164.73.252:8081/api/v4/auth_username',
             'headers': {
-                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw==',
+                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO',
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -49,9 +49,9 @@ export default class BrokerProvider {
     static async userExist(username: string) {
         const  options = {
             'method': 'GET',
-            'url': `http://185.204.197.144:8081/api/v4/auth_username/${username}`,
+            'url': `http://185.164.73.252:8081/api/v4/auth_username/${username}`,
             'headers': {
-                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw=='
+                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
             }
         };
         return await request(options, function (error, response) {
@@ -67,9 +67,9 @@ export default class BrokerProvider {
     static async kickDevice(serialNumber: string) {
         const  options = {
             'method': 'GET',
-            'url': `http://185.204.197.144:8081/api/v4/clients/${serialNumber}`,
+            'url': `http://185.164.73.252:8081/api/v4/clients/${serialNumber}`,
             'headers': {
-                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw=='
+                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
             }
         };
         return  await request(options, function (error, response) {

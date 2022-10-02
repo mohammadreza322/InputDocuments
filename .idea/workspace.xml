@@ -20,155 +20,115 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/dataSources.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/dictionaries/ahp.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/convert.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/classes/pagination.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/controller/customer.controller.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/entities/logs.entity.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/models/logs.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/page_view/admin.pageview.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/page_view/auth.pageview.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/page_view/clients.pageview.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/page_view/dashboard.pageview.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/page_view/devices.pageview.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/css/ie.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/css/lib/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/css/lib/persian-datepicker.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehFaNum-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehFaNum-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehFaNum-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehFaNum-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehFaNum-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehFaNum-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehFaNum-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-ExtraLight.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-ExtraLight.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Light.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Light.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Medium.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Medium.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-SemiBold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-SemiBold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Thin.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/fonts/kalameh/KalamehWebFaNum-Thin.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/admin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/chisco.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/client.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/dashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/device.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/lib/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/lib/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/lib/persian-date.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/lib/persian-datepicker.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/lib/sweetAlert.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/otp.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/js/storehouse.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/Export This.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/Group 3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/Pattern.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/Rectangle 237.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/Top Linexl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/3d-cube-scan.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Alert Icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Cooler Controller.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Divider.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Ellipse 1 offline.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Ellipse online 1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Group 14.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Group 2 3r.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Line 1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Power Strip.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Title Efect.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Title Efectmd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Titlesm Efect.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/Top Line.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/alert.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/arrow-down dark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/arrow-down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/arrow-downp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/arrow-downpr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/arrow-left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/arrow-upsvg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/cake.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/call.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/cpu.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/device-message.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/document-text.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/element-4.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/error.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/forbidden-2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/forbidden.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/level.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/location.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/logout.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/profile-2user.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/profile-circle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/search-status.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/success.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/trash.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/user-add.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/user-edit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/user-editdark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/user.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/svg/userdark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/admin.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/auth.router.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/customer.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/dashboard.route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/devices.site_router.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/routes/store_room.route.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/types/session.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/auth/footer_login.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/auth/header_login.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/auth/login.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/auth/main.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/auth/otp.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/client.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/include/pagination.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/include/profile.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/include/right_navbar.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/main.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/error/403.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/views/error/404.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/css/ie.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/css/lib/bootstrap.min.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/css/lib/persian-datepicker.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Bold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-ExtraLight.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Light.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Medium.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Regular.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-SemiBold.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Thin.ttf" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Bold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Bold.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-ExtraLight.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-ExtraLight.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Light.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Light.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Medium.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Medium.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Regular.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Regular.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-SemiBold.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-SemiBold.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Thin.woff" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Thin.woff2" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/admin.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/chisco.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/client.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/dashboard.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/device.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/bootstrap.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/jquery.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/persian-date.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/persian-datepicker.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/sweetAlert.min.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/login.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/main.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/otp.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/js/storehouse.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/Export This.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/Group 3.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/Pattern.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/Rectangle 237.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/Top Linexl.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/3d-cube-scan.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Alert Icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Cooler Controller.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Divider.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Ellipse 1 offline.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Ellipse online 1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Group 14.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Group 2 3r.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Line 1.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Power Strip.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Title Efect.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Title Efectmd.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Titlesm Efect.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Top Line.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/alert.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-down dark.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-down.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-downp.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-downpr.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-left.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-upsvg.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/cake.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/call.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/cpu.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/device-message.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/document-text.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/element-4.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/error.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/forbidden-2.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/forbidden.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/level.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/location.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/logout.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/profile-2user.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/profile-circle.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/search-status.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/success.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/trash.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/user-add.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/user-edit.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/user-editdark.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/user.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/userdark.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/auth/footer_login.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/auth/header_login.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/auth/login.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/auth/main.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/auth/otp.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/pagination.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/profile.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/right_navbar.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/main.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/error/403.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/views/error/404.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/validator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/broker_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/broker_provider.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/sms_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/sms_provider.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/validator.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/validator.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/device.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/device.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/login.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/login.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/device.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/device.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/token.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/token.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/authorization.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/device.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/device.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/permission.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/permission.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/users.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/users.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/change_device.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/change_device.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/global.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/global.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/login.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/login.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/user.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/user.type.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utility/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/constants.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/tsconfig.json" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -245,7 +205,8 @@
       <workItem from="1663735442387" duration="13257000" />
       <workItem from="1664005449864" duration="927000" />
       <workItem from="1664493062511" duration="893000" />
-      <workItem from="1664549890248" duration="4880000" />
+      <workItem from="1664549890248" duration="6979000" />
+      <workItem from="1664599877716" duration="1464000" />
     </task>
     <servers />
   </component>
@@ -280,26 +241,26 @@
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state x="2660" y="270" key="FileChooserDialogImpl/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662970582804" />
-    <state width="1055" height="149" key="GridCell.Tab.0.bottom" timestamp="1664550085026">
+    <state width="1055" height="149" key="GridCell.Tab.0.bottom" timestamp="1664565841580">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state width="1324" height="202" key="GridCell.Tab.0.bottom/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1663742825898" />
-    <state width="1055" height="149" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1664550085026" />
-    <state width="1055" height="149" key="GridCell.Tab.0.center" timestamp="1664550085026">
+    <state width="1055" height="149" key="GridCell.Tab.0.bottom/0.0.1536.816@0.0.1536.816" timestamp="1664565841580" />
+    <state width="1055" height="149" key="GridCell.Tab.0.center" timestamp="1664565841580">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state width="1324" height="202" key="GridCell.Tab.0.center/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1663742825898" />
-    <state width="1055" height="149" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1664550085026" />
-    <state width="1055" height="149" key="GridCell.Tab.0.left" timestamp="1664550085026">
+    <state width="1055" height="149" key="GridCell.Tab.0.center/0.0.1536.816@0.0.1536.816" timestamp="1664565841580" />
+    <state width="1055" height="149" key="GridCell.Tab.0.left" timestamp="1664565841580">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state width="1324" height="202" key="GridCell.Tab.0.left/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1663742825898" />
-    <state width="1055" height="149" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1664550085026" />
-    <state width="1055" height="149" key="GridCell.Tab.0.right" timestamp="1664550085026">
+    <state width="1055" height="149" key="GridCell.Tab.0.left/0.0.1536.816@0.0.1536.816" timestamp="1664565841580" />
+    <state width="1055" height="149" key="GridCell.Tab.0.right" timestamp="1664565841580">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state width="1324" height="202" key="GridCell.Tab.0.right/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1663742825898" />
-    <state width="1055" height="149" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1664550085026" />
+    <state width="1055" height="149" key="GridCell.Tab.0.right/0.0.1536.816@0.0.1536.816" timestamp="1664565841580" />
     <state width="196" height="457" key="HiddenNamespacesPopup" timestamp="1662539447559">
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
@@ -313,5 +274,9 @@
     </state>
     <state x="2587" y="249" width="586" height="534" key="find.popup/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1663668005762" />
     <state x="534" y="197" width="549" height="534" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1664552170275" />
+    <state x="425" y="185" key="run.anything.popup" timestamp="1664599933704">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="425" y="185" key="run.anything.popup/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1664599933704" />
   </component>
 </project>

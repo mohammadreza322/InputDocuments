@@ -29,9 +29,9 @@ class BrokerProvider {
         return __awaiter(this, void 0, void 0, function* () {
             var options = {
                 'method': 'POST',
-                'url': 'http://185.204.197.144:8081/api/v4/auth_username',
+                'url': 'http://185.164.73.252:8081/api/v4/auth_username',
                 'headers': {
-                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw==',
+                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO',
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -53,9 +53,9 @@ class BrokerProvider {
         return __awaiter(this, void 0, void 0, function* () {
             const options = {
                 'method': 'GET',
-                'url': `http://185.204.197.144:8081/api/v4/auth_username/${username}`,
+                'url': `http://185.164.73.252:8081/api/v4/auth_username/${username}`,
                 'headers': {
-                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw=='
+                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
                 }
             };
             return yield request(options, function (error, response) {
@@ -72,9 +72,9 @@ class BrokerProvider {
         return __awaiter(this, void 0, void 0, function* () {
             const options = {
                 'method': 'GET',
-                'url': `http://185.204.197.144:8081/api/v4/clients/${serialNumber}`,
+                'url': `http://185.164.73.252:8081/api/v4/clients/${serialNumber}`,
                 'headers': {
-                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw=='
+                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
                 }
             };
             return yield request(options, function (error, response) {
@@ -90,4 +90,4 @@ class BrokerProvider {
 }
 exports.default = BrokerProvider;
 BrokerProvider.username = '20bf501bc0fa6';
-BrokerProvider.pass = 'MzA1NTY2NTE4NzM5MTk5NzY5MDAyNTEwNzM2NDA1OTU0NTG';
+BrokerProvider.pass = 'jEwsRgWmOHAaPk1BpC0IkF4IvElXgMB6cswEhpv02zN';

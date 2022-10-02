@@ -1,0 +1,59 @@
+<form class="login-form otp" data-id="<?= id ?>">
+    <object class="top-line" data="/photo/svg/Top Line.svg" type=""></object>
+    <h1 class="title-login">چیسکو</h1>
+    <p class="text-login"> کد برای شماره  <span><?= phone ?></span>ارسال شد</p>
+    <div class="d-flex input-login otp">
+        <div
+                id="otp"
+                class="inputs d-flex flex-row justify-content-center"
+        >
+            <input
+                    class=" text-center form-control rounded otp-num"
+                    type="text"
+                    id="first"
+                    oninput="digitValidate(this)"
+                    onkeyup="tabChange(1)"
+                    maxlength="1"
+            />
+            <input
+                    class="text-center form-control rounded otp-num"
+                    type="text"
+                    id="second"
+                    oninput="digitValidate(this)"
+                    onkeyup="tabChange(2)"
+                    maxlength="1"
+            />
+            <input
+                    class=" text-center form-control rounded otp-num"
+                    type="text"
+                    id="third"
+                    oninput="digitValidate(this)"
+                    onkeyup="tabChange(3)"
+                    maxlength="1"
+            />
+            <input
+                    class=" text-center form-control rounded otp-num"
+                    type="text"
+                    id="fourth"
+                    oninput="digitValidate(this)"
+                    onkeyup="tabChange(4)"
+                    maxlength="1"
+            />
+            <input
+                    class=" text-center form-control rounded otp-num"
+                    type="text"
+                    id="fifth"
+                    oninput="digitValidate(this)"
+                    onkeyup="tabChange(5)"
+                    maxlength="1"
+            />
+        </div>
+    </div>
+
+
+
+
+    <button type="submit" class="btn btn-lg  btn-block btn-login" > ورود به پیشخوان</button>
+    <div class="back-div"><a class="back-login" href="/dashboard/auth">برگشت به مرحله قبل</a></div>
+
+</form>

@@ -1,0 +1,40 @@
+<nav id="sideNav" dir="rtl">
+    <div class="logo">
+        <h2 class="title">چیسکو</h2>
+        <p class="text">داشبورد نظارتی و مدیریتی</p>
+    </div>
+    <ul class="nav nav-pills flex-column mb-auto navbar-nav">
+        <? locals.routes.map(r => { ?>
+        <li class="nav-item">
+            <a href="<?= r.route ?>" class="nav-link<?= r.name == page ? ' active':' text-white' ?>" aria-current="page">
+                <object data="/photo/svg/<?= r.image ?>" type=""></object>
+                <?= r.title ?>
+            </a>
+        </li>
+        <? }) ?>
+
+    </ul>
+
+    <ul
+            class="nav navbar-nav nav-end nav nav-pills flex-column mb-auto"
+    >
+        <li class="nav-item">
+            <a href="#" class="nav-link text-white" data-bs-toggle="modal" data-bs-target="#exampleModal2">
+                <object data="/photo/svg/user-edit.svg" type=""></object>
+                پروفایل
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="/dashboard/exit" class="nav-link text-white">
+                <object data="/photo/svg/logout.svg" type=""></object>
+                خروج از حساب
+            </a>
+        </li>
+    </ul>
+
+    <object
+            class="victor-nav"
+            data="/photo/Export This.svg"
+            type=""
+    ></object>
+</nav>
