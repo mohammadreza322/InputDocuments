@@ -90,6 +90,7 @@ const powerStripSchema = new mongoose_1.Schema(Object.assign(Object.assign({}, d
 exports.PowerStrip = (0, mongoose_1.model)('PowerStrip', powerStripSchema);
 const coolerSchema = new mongoose_1.Schema(Object.assign(Object.assign({}, defaultDeviceSchema), { brand: {
         type: String,
+        default: 'brand0'
     }, model: {
         type: String,
     }, temp: {

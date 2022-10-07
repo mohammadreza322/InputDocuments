@@ -25,14 +25,14 @@ export default class DeviceEntity {
             {
                 owner: userId,
             },
-            {_id: 0, 'connectors._id': 0, __v: 0, registerAt: 0, owner: 0},
+            {_id: 0, 'connectors._id': 0, __v: 0, registerAt: 0, owner: 0,createAt:0,password:0,insertedUser:0},
         );
 
         const coolers: Array<ICooler> | null = await Cooler.find(
             {
                 owner: userId,
             },
-            {_id: 0, __v: 0, owner: 0, registerAt: 0},
+            {_id: 0, __v: 0, owner: 0, registerAt: 0,createAt:0,password:0,insertedUser:0},
         );
 
         const devices: listOfDevices = {

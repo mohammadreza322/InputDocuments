@@ -81,7 +81,7 @@ app.use((0, express_session_1.default)({
 }));
 app.use('/api', api_router_1.apiRouter);
 //server static files
-app.use(express_1.default.static(path.join(__dirname, '/public')));
+app.use('/public', express_1.default.static(path.join(__dirname, '/public')));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 app.set('view options', { delimiter: '?' });
@@ -151,9 +151,9 @@ app.use('/error/404', (req, res) => {
 app.use('/error/403', (req, res) => {
     return res.render('error/403.ejs');
 });
-app.use('/', (_, res) => {
-    return res.redirect('/dashboard/auth');
-});
+// app.use('/', (_: Request, res: Response) => {
+// 	return res.redirect('/dashboard/auth');
+// });
 const PORT = process.env.PORT || 8800;
 (0, db_1.default)().then(() => {
     console.log('mongo database connected');

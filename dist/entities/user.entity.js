@@ -67,9 +67,9 @@ class UserEntity {
             const usernameBroker = (0, crypto_js_1.SHA1)(user.registerDate.toString() + user._id.toString()).toString();
             const passwordBroker = (0, crypto_js_1.SHA1)(user.registerDate.toString() + (user === null || user === void 0 ? void 0 : user.phoneNumber.toString())).toString();
             const checkUserExists = yield broker_provider_1.default.userExist(usernameBroker);
-            // console.log(checkUserExists)
+            console.log(checkUserExists);
             if (!checkUserExists) {
-                // console.log("add user mnesia")
+                console.log("add user mnesia");
                 yield broker_provider_1.default.addUserToMnesia(usernameBroker, passwordBroker);
             }
             return (0, jsonwebtoken_1.sign)({

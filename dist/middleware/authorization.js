@@ -91,13 +91,13 @@ const hasPermissionDashboard = (req, res, next) => __awaiter(void 0, void 0, voi
         if (!req.session.isUserLoggedIn) {
             // console.log("in permission user not login")
             // console.log(req.session.isUserLoggedIn)
-            return res.redirect('/auth');
+            return res.redirect('/dashboard/auth');
         }
         const sessionUserPhoneNumber = req.session.userPhone;
         const user = yield user_entity_1.default.getUserInformationWithPhoneNumber(sessionUserPhoneNumber);
         if (!user) {
             req.session.isUserLoggedIn = false;
-            return res.redirect('/auth');
+            return res.redirect('/dashboard/auth');
         }
         if (user.role == 'user') {
             return res.redirect('/error/403');
@@ -117,7 +117,7 @@ const hasPermissionDashboard = (req, res, next) => __awaiter(void 0, void 0, voi
             role: user.role,
         });
         if (!permissions) {
-            return res.redirect('/auth');
+            return res.redirect('/dashboard/auth');
         }
         const hasPermission = permissions
             .get(method.toUpperCase())

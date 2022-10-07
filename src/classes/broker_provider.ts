@@ -10,8 +10,7 @@ const request = require('request')
 import {brokerUrlAPI} from '../utility/constants';
 
 export default class BrokerProvider {
-    private static username = '20bf501bc0fa6'
-    private static pass = 'jEwsRgWmOHAaPk1BpC0IkF4IvElXgMB6cswEhpv02zN'
+    private static authorization = 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
 
     /**
      * @author Amir Hemmateenejad amirhemmateenejad@gmail.com
@@ -24,9 +23,9 @@ export default class BrokerProvider {
     static async addUserToMnesia(username: string, password: string) {
         var options = {
             'method': 'POST',
-            'url': 'http://185.164.73.252:8081/api/v4/auth_username',
+            'url': `${brokerUrlAPI}/auth_username`,
             'headers': {
-                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO',
+                'Authorization': this.authorization,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -35,50 +34,64 @@ export default class BrokerProvider {
             })
 
         }
-        return await request(options, function (error, response) {
-            if (error) {
-                console.error('inside add mnesia user')
-                console.error(error)
-                return false;
-            }
-            return true;
+        return new Promise((resolve, reject) => {
+            request(options, function (error, response) {
+                if (error) {
+                    console.error('inside add mnesia user')
+                    console.error(error)
+                    return resolve(false);
+                }
+                return resolve(true);
+            })
         });
 
     }
 
     static async userExist(username: string) {
-        const  options = {
+        const options = {
             'method': 'GET',
-            'url': `http://185.164.73.252:8081/api/v4/auth_username/${username}`,
+            'url': `${brokerUrlAPI}/auth_username/${username}`,
             'headers': {
-                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
+                'Authorization': this.authorization
             }
         };
-        return await request(options, function (error, response) {
-            if (error) {
-                console.error('inside check mnesia user')
-                console.error(error)
-                return false;
-            }
-            return true
-        });
+        return new Promise(function (resolve, reject) {
+            request(options, function (error, response) {
+                if (error) {
+                    console.error('inside check mnesia user')
+                    console.error(error)
+                    return resolve(false);
+                }
+                console.log(response)
+                const data = JSON.parse(response.body)
+                if(data.data){
+                    if(data.data.username){
+                        return resolve(true)
+                    }
+                    return resolve(false)
+                }
+                return resolve(false)
+            });
+        })
     }
 
     static async kickDevice(serialNumber: string) {
-        const  options = {
+        const options = {
             'method': 'GET',
-            'url': `http://185.164.73.252:8081/api/v4/clients/${serialNumber}`,
+            'url': `${this.authorization}/clients/${serialNumber}`,
             'headers': {
-                'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
+                'Authorization': this.authorization
             }
         };
-        return  await request(options, function (error, response) {
-            if (error) {
-                console.error('inside check kick mnesia')
-                console.error(error)
-                return false;
-            }
-            return true
-        });
+        return new Promise((resolve, reject) => {
+            request(options, function (error, response) {
+                if (error) {
+                    console.error('inside check kick mnesia')
+                    console.error(error)
+                    return resolve(false);
+                }
+                return resolve(true)
+            });
+        })
     }
 }

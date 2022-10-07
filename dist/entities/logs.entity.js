@@ -27,8 +27,8 @@ class LogsEntity {
     }
     static addDevice(serialNumber, adminId, deviceId) {
         return __awaiter(this, void 0, void 0, function* () {
-            yield this.addLog('ورود اولیه به سیستم.', deviceId);
-            return yield this.addLog(`حذف کردن کاربر “اضافه کردن دستگاه سه راهه با شماره سریال “${serialNumber}”.`, adminId);
+            // await this.addLog('ورود اولیه به سیستم.',deviceId);
+            return yield this.addLog(`حذف کردن دستگاه “اضافه کردن دستگاه سه راهه با شماره سریال “${serialNumber}”.`, adminId);
         });
     }
     static kickDeviceFromBroker(serialNumber, adminId, adminName) {

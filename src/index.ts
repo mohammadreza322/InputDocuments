@@ -57,7 +57,7 @@ app.use(
 app.use('/api', apiRouter);
 
 //server static files
-app.use(express.static(path.join(__dirname , '/public')));
+app.use('/public',express.static(path.join(__dirname , '/public')));
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname,'views'));
@@ -138,9 +138,9 @@ app.use('/error/403',(req:Request,res:Response) => {
 	return res.render('error/403.ejs')
 })
 
-app.use('/', (_: Request, res: Response) => {
-	return res.redirect('/dashboard/auth');
-});
+// app.use('/', (_: Request, res: Response) => {
+// 	return res.redirect('/dashboard/auth');
+// });
 
 const PORT = process.env.PORT || 8800;
 

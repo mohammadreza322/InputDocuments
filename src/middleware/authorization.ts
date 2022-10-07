@@ -108,7 +108,7 @@ export const hasPermissionDashboard = async (req:Request,res:Response,next:NextF
 		if (!req.session.isUserLoggedIn) {
 			// console.log("in permission user not login")
 			// console.log(req.session.isUserLoggedIn)
-			return res.redirect('/auth')
+			return res.redirect('/dashboard/auth')
 		}
 
 		const sessionUserPhoneNumber: string = req.session.userPhone!;
@@ -117,7 +117,7 @@ export const hasPermissionDashboard = async (req:Request,res:Response,next:NextF
 
 		if (!user) {
 			req.session.isUserLoggedIn = false;
-			return res.redirect('/auth')
+			return res.redirect('/dashboard/auth')
 		}
 
 		if (user.role =='user') {
@@ -142,7 +142,7 @@ export const hasPermissionDashboard = async (req:Request,res:Response,next:NextF
 		},);
 
 		if(!permissions){
-			return res.redirect('/auth')
+			return res.redirect('/dashboard/auth')
 		}
 
 

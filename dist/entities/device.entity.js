@@ -23,10 +23,10 @@ class DeviceEntity {
         return __awaiter(this, void 0, void 0, function* () {
             const powerStrips = yield device_model_1.PowerStrip.find({
                 owner: userId,
-            }, { _id: 0, 'connectors._id': 0, __v: 0, registerAt: 0, owner: 0 });
+            }, { _id: 0, 'connectors._id': 0, __v: 0, registerAt: 0, owner: 0, createAt: 0, password: 0, insertedUser: 0 });
             const coolers = yield device_model_1.Cooler.find({
                 owner: userId,
-            }, { _id: 0, __v: 0, owner: 0, registerAt: 0 });
+            }, { _id: 0, __v: 0, owner: 0, registerAt: 0, createAt: 0, password: 0, insertedUser: 0 });
             const devices = {
                 powers: [],
                 coolers: [],

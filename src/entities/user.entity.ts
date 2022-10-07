@@ -76,10 +76,10 @@ export default class UserEntity {
 
 		const checkUserExists = await BrokerProvider.userExist(usernameBroker);
 
-		// console.log(checkUserExists)
+		console.log(checkUserExists)
 
 		if (!checkUserExists) {
-			// console.log("add user mnesia")
+			console.log("add user mnesia")
 			await BrokerProvider.addUserToMnesia(usernameBroker, passwordBroker);
 		}
 

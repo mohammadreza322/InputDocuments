@@ -16,6 +16,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const request = require('request');
+const constants_1 = require("../utility/constants");
 class BrokerProvider {
     /**
      * @author Amir Hemmateenejad amirhemmateenejad@gmail.com
@@ -29,9 +30,9 @@ class BrokerProvider {
         return __awaiter(this, void 0, void 0, function* () {
             var options = {
                 'method': 'POST',
-                'url': 'http://185.164.73.252:8081/api/v4/auth_username',
+                'url': `${constants_1.brokerUrlAPI}/auth_username`,
                 'headers': {
-                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO',
+                    'Authorization': this.authorization,
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
@@ -39,13 +40,15 @@ class BrokerProvider {
                     "password": password
                 })
             };
-            return yield request(options, function (error, response) {
-                if (error) {
-                    console.error('inside add mnesia user');
-                    console.error(error);
-                    return false;
-                }
-                return true;
+            return new Promise((resolve, reject) => {
+                request(options, function (error, response) {
+                    if (error) {
+                        console.error('inside add mnesia user');
+                        console.error(error);
+                        return resolve(false);
+                    }
+                    return resolve(true);
+                });
             });
         });
     }
@@ -53,18 +56,28 @@ class BrokerProvider {
         return __awaiter(this, void 0, void 0, function* () {
             const options = {
                 'method': 'GET',
-                'url': `http://185.164.73.252:8081/api/v4/auth_username/${username}`,
+                'url': `${constants_1.brokerUrlAPI}/auth_username/${username}`,
                 'headers': {
-                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
+                    'Authorization': this.authorization
                 }
             };
-            return yield request(options, function (error, response) {
-                if (error) {
-                    console.error('inside check mnesia user');
-                    console.error(error);
-                    return false;
-                }
-                return true;
+            return new Promise(function (resolve, reject) {
+                request(options, function (error, response) {
+                    if (error) {
+                        console.error('inside check mnesia user');
+                        console.error(error);
+                        return resolve(false);
+                    }
+                    console.log(response);
+                    const data = JSON.parse(response.body);
+                    if (data.data) {
+                        if (data.data.username) {
+                            return resolve(true);
+                        }
+                        return resolve(false);
+                    }
+                    return resolve(false);
+                });
             });
         });
     }
@@ -72,22 +85,23 @@ class BrokerProvider {
         return __awaiter(this, void 0, void 0, function* () {
             const options = {
                 'method': 'GET',
-                'url': `http://185.164.73.252:8081/api/v4/clients/${serialNumber}`,
+                'url': `${this.authorization}/clients/${serialNumber}`,
                 'headers': {
-                    'Authorization': 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
+                    'Authorization': this.authorization
                 }
             };
-            return yield request(options, function (error, response) {
-                if (error) {
-                    console.error('inside check kick mnesia');
-                    console.error(error);
-                    return false;
-                }
-                return true;
+            return new Promise((resolve, reject) => {
+                request(options, function (error, response) {
+                    if (error) {
+                        console.error('inside check kick mnesia');
+                        console.error(error);
+                        return resolve(false);
+                    }
+                    return resolve(true);
+                });
             });
         });
     }
 }
 exports.default = BrokerProvider;
-BrokerProvider.username = '20bf501bc0fa6';
-BrokerProvider.pass = 'jEwsRgWmOHAaPk1BpC0IkF4IvElXgMB6cswEhpv02zN';
+BrokerProvider.authorization = 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO';

@@ -6,15 +6,15 @@
 <?- include('./modal.ejs') ?>
 
 
-<script src="/js/lib/bootstrap.min.js"></script>
+<script src="/public/js/lib/bootstrap.min.js"></script>
 
-<script src="/js/lib/jquery.min.js"></script>
-<script src="/js/chisco.js"></script>
+<script src="/public/js/lib/jquery.min.js"></script>
+<script src="/public/js/chisco.js"></script>
 <!--<script src="/js/lib/sweetAlert.min.js"></script>-->
-<script src="/js/main.js"></script>
+<script src="/public/js/main.js"></script>
 <?  if(locals.scripts) ?>
 <? locals.scripts.forEach((script) => { ?>
-<script src="<?= script ?>"></script>
+<script src="/public<?= script ?>"></script>
 <? }) ?>
 </body>
 </html>

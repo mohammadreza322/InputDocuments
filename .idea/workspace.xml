@@ -20,115 +20,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dist/public/css/ie.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/css/lib/bootstrap.min.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/css/lib/persian-datepicker.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Bold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-ExtraLight.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Light.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Medium.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Regular.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-SemiBold.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehFaNum-Thin.ttf" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Bold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Bold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-ExtraLight.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-ExtraLight.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Light.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Light.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Medium.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Medium.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Regular.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Regular.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-SemiBold.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-SemiBold.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Thin.woff" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/fonts/kalameh/KalamehWebFaNum-Thin.woff2" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/admin.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/chisco.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/client.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/dashboard.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/device.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/bootstrap.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/jquery.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/persian-date.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/persian-datepicker.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/lib/sweetAlert.min.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/otp.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/js/storehouse.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/Export This.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/Group 3.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/Pattern.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/Rectangle 237.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/Top Linexl.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/3d-cube-scan.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Alert Icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Cooler Controller.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Divider.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Ellipse 1 offline.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Ellipse online 1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Group 14.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Group 2 3r.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Line 1.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Power Strip.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Title Efect.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Title Efectmd.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Titlesm Efect.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/Top Line.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/alert.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-down dark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-down.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-downp.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-downpr.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-left.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/arrow-upsvg.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/cake.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/call.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/cpu.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/device-message.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/document-text.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/element-4.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/error.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/forbidden-2.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/forbidden.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/level.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/location.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/logout.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/profile-2user.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/profile-circle.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/search-status.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/success.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/trash.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/user-add.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/user-edit.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/user-editdark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/user.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/svg/userdark.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/auth/footer_login.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/auth/header_login.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/auth/login.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/auth/main.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/auth/otp.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/pagination.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/profile.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/right_navbar.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/main.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/error/403.ejs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/dist/views/error/404.ejs" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/chisco-backend.rar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/broker_provider.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/broker_provider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/device.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/device.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/logs.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/logs.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/user.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/user.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/middleware/authorization.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/authorization.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/device.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/device.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/service/change_device.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/service/change_device.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/utility/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/utility/constants.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/auth/footer_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/footer_login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/auth/header_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/header_login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/auth/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/auth/otp.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/otp.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/profile.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/right_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/right_navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/broker_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/broker_provider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/device.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/device.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/logs.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logs.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/authorization.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/device.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/device.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/service/change_device.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/change_device.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utility/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/auth/footer_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/footer_login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/auth/header_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/header_login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/auth/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/login.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/auth/otp.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/otp.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/client.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/client.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/profile.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/right_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/right_navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -207,6 +150,9 @@
       <workItem from="1664493062511" duration="893000" />
       <workItem from="1664549890248" duration="6979000" />
       <workItem from="1664599877716" duration="1464000" />
+      <workItem from="1664745699088" duration="3349000" />
+      <workItem from="1665133565827" duration="4016000" />
+      <workItem from="1665143502466" duration="4578000" />
     </task>
     <servers />
   </component>
@@ -269,11 +215,11 @@
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state x="2381" y="160" key="SettingsEditor/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662788185868" />
-    <state x="534" y="197" width="549" height="534" key="find.popup" timestamp="1664552170275">
+    <state x="534" y="197" width="549" height="592" key="find.popup" timestamp="1665134887131">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="2587" y="249" width="586" height="534" key="find.popup/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1663668005762" />
-    <state x="534" y="197" width="549" height="534" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1664552170275" />
+    <state x="534" y="197" width="549" height="592" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1665134887131" />
     <state x="425" y="185" key="run.anything.popup" timestamp="1664599933704">
       <screen x="0" y="0" width="1536" height="816" />
     </state>

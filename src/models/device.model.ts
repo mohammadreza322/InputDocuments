@@ -154,6 +154,7 @@ const coolerSchema = new Schema({
 	...defaultDeviceSchema,
 	brand: {
 		type: String,
+		default:'brand0'
 	},
 	model: {
 		type: String,

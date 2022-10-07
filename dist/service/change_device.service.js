@@ -44,46 +44,59 @@ const logs_entity_1 = __importDefault(require("../entities/logs.entity"));
                 }
                 console.log('subscribe connect');
             });
-            client.subscribe('/chisco/change_cooler/#', (err) => {
+            client.subscribe('/chisco/+/get', (err) => {
                 if (err) {
-                    console.error('can not subscribe /chisco/change_cooler');
+                    console.error('can not subscribe /chisco/+/get');
                     console.error(err);
                     process.exit(1);
                 }
-                console.log('subscribe /chisco/change_cooler');
+                console.log('subscribe /chisco/+/get');
             });
-            client.subscribe('/chisco/change_schedule/#', (err) => {
-                if (err) {
-                    console.error('can not subscribe /chisco/change_schedule');
-                    console.error(err);
-                    process.exit(1);
-                }
-                console.log('subscribe /chisco/change_schedule');
-            });
-            client.subscribe('/chisco/change_power/#', (err) => {
-                if (err) {
-                    console.error('can not subscribe /chisco/change_power');
-                    console.error(err);
-                    process.exit(1);
-                }
-                console.log('subscribe /chisco/change_power');
-            });
+            // client.subscribe('/chisco/change_cooler/#', (err) => {
+            //     if (err) {
+            //         console.error('can not subscribe /chisco/change_cooler');
+            //         console.error(err);
+            //         process.exit(1);
+            //     }
+            //     console.log('subscribe /chisco/change_cooler');
+            // });
+            //
+            // client.subscribe('/chisco/change_schedule/#', (err) => {
+            //     if (err) {
+            //         console.error('can not subscribe /chisco/change_schedule');
+            //         console.error(err);
+            //         process.exit(1);
+            //     }
+            //     console.log('subscribe /chisco/change_schedule');
+            // });
+            //
+            // client.subscribe('/chisco/change_power/#', (err) => {
+            //     if (err) {
+            //         console.error('can not subscribe /chisco/change_power');
+            //         console.error(err);
+            //         process.exit(1);
+            //     }
+            //     console.log('subscribe /chisco/change_power');
+            // });
         });
         client.on('message', (topic, message) => __awaiter(void 0, void 0, void 0, function* () {
-            const changeCoolerRegex = /\/chisco\/change_cooler\/(.+)/.exec(topic);
-            const changePowerRegex = /\/chisco\/change_power\/(.+)/.exec(topic);
-            const changeScheduleRegex = /\/chisco\/change_schedule\/(.+)/.exec(topic);
+            // const changeCoolerRegex = /\/chisco\/change_cooler\/(.+)/.exec(
+            //     topic,
+            // );
+            // const changePowerRegex = /\/chisco\/change_power\/(.+)/.exec(topic);
+            // const changeScheduleRegex = /\/chisco\/change_schedule\/(.+)/.exec(
+            //     topic,
+            // );
+            const changeDeviceRegex = /\/chisco\/(.*)\/get/.exec(topic);
             const connectedDeviceRegex = /\/event\/connected/.exec(topic);
             const disconnectDeviceRegex = /\/event\/disconnected/.exec(topic);
             const data = JSON.parse(message.toString('utf8'));
-            if (changeCoolerRegex) {
-                changeCooler(changeCoolerRegex[1], data);
-            }
-            else if (changePowerRegex) {
-                changePower(changePowerRegex[1], data);
-            }
-            else if (changeScheduleRegex) {
-                changeSchedule(changeScheduleRegex[1], data);
+            if (changeDeviceRegex) {
+                changeDevice(changeDeviceRegex[1], data);
+                // } else if (changePowerRegex) {
+                //     changePower(changePowerRegex[1], data);
+                // } else if (changeScheduleRegex) {
+                //     changeSchedule(changeScheduleRegex[1], data);
             }
             else if (connectedDeviceRegex) {
                 changeConnectStatus(data);
@@ -108,11 +121,13 @@ function changeDisconnectStatus(payload) {
             return;
         }
         if (validSerialNumber.type == 'power') {
+            console.log("power disconnnect");
             yield device_model_1.PowerStrip.updateOne({ serialNumber }, {
                 $set: { deviceLastConnection: lastConnection },
             });
         }
         else {
+            console.log("cooler disconnnect");
             yield device_model_1.Cooler.updateOne({ serialNumber }, {
                 $set: { deviceLastConnection: lastConnection },
             });
@@ -129,16 +144,59 @@ function changeConnectStatus(payload) {
             return;
         }
         if (validSerialNumber.type == 'power') {
+            console.log("power online");
             yield device_model_1.PowerStrip.updateOne({ serialNumber }, {
                 $set: { deviceLastConnection: 'آنلاین' },
             });
         }
         else {
+            console.log("cooler online");
             yield device_model_1.Cooler.updateOne({ serialNumber }, {
                 $set: { deviceLastConnection: 'آنلاین' },
             });
         }
         yield logs_entity_1.default.deviceReconnectToServer(serialNumber);
+    });
+}
+function changeDevice(serialNumber, payload) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const validSerialNumber = yield _deviceExists(serialNumber);
+        if (validSerialNumber.type == 'power') {
+            const power = yield device_model_1.PowerStrip.findOne({ serialNumber });
+            const connectors = power.connectors;
+            for (const connector of payload.connectors) {
+                const index = connectors.findIndex((c) => {
+                    return c.connectorId == connector.portNumber;
+                });
+                connectors[index] = connector.status;
+            }
+            power.connectors = connectors;
+            power.totalVoltage = payload.totalVoltage;
+            console.log("power changed");
+            yield power.save();
+            // await PowerStrip.updateOne(
+            // 	{serialNumber},
+            // 	{
+            // 		$set: {
+            //
+            // 		},
+            // 	},
+            // );
+        }
+        else {
+            console.log("cooler changed");
+            yield device_model_1.Cooler.updateOne({ serialNumber }, {
+                $set: {
+                    timer: payload.timer,
+                    mode: payload.mode,
+                    horizontalSwing: payload.horizontalSwing,
+                    verticalSwing: payload.verticalSwing,
+                    fan: payload.fan,
+                    temp: payload.temp,
+                    power: payload.status
+                },
+            });
+        }
     });
 }
 function changeCooler(serialNumber, payload) {
@@ -169,7 +227,8 @@ function changePower(serialNumber, payload) {
     });
 }
 function changeSchedule(serialNumber, payload) {
-    return __awaiter(this, void 0, void 0, function* () { });
+    return __awaiter(this, void 0, void 0, function* () {
+    });
 }
 function _deviceExists(serialNumber) {
     return __awaiter(this, void 0, void 0, function* () {

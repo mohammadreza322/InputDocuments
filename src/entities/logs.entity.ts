@@ -12,8 +12,8 @@ export default class LogsEntity {
     }
 
     static async addDevice(serialNumber:string,adminId:Types.ObjectId,deviceId:Types.ObjectId) {
-        await this.addLog('ورود اولیه به سیستم.',deviceId);
-        return await this.addLog(`حذف کردن کاربر “اضافه کردن دستگاه سه راهه با شماره سریال “${serialNumber}”.`,adminId)
+        // await this.addLog('ورود اولیه به سیستم.',deviceId);
+        return await this.addLog(`حذف کردن دستگاه “اضافه کردن دستگاه سه راهه با شماره سریال “${serialNumber}”.`,adminId)
     }
 
     static async kickDeviceFromBroker(serialNumber:string,adminId:Types.ObjectId,adminName:string) {

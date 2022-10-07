@@ -1,11 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.sessionSecret = exports.sessionName = exports.brokerUrlAPI = exports.brokerUrl = exports.refreshTokenExpireTime = exports.accessTokenExpireTime = exports.jsonWebTokenSecretKey = exports.mongoConnection = void 0;
-exports.mongoConnection = 'mongodb://ahp:amir3553@185.164.73.252:27017/chisco?authSource=admin&readPreference=primary&directConnection=true&ssl=false';
+exports.mongoConnection = 'mongodb://backend:3U3cua!47Nvm@185.164.73.252:28018/chisco?authSource=admin&readPreference=primary&directConnection=true&ssl=false';
 exports.jsonWebTokenSecretKey = 'CE1EF2B97E080294A562165650C850A3EBE452E08420ACEB6863E8543510FDEB';
 exports.accessTokenExpireTime = '10m';
 exports.refreshTokenExpireTime = '30d';
 exports.brokerUrl = 'mqtt://185.164.73.252:1883';
-exports.brokerUrlAPI = 'http://185.164.73.252:8081';
+exports.brokerUrlAPI = 'http://185.164.73.252:8081/api/v4';
 exports.sessionName = 'di_noissaes_mait';
 exports.sessionSecret = 'S?XiD=bv3^u0kE)';
