@@ -18,7 +18,7 @@ import '../../http_client/mqtt/mqtt_classes/MqttClientFactory.dart';
 ///AppController is Provider Controller class for Base functions or Common functions in our Project
 ///we Store all Lists and UserDetail here
 ///and if somewhere we need something we have Access to it
-class AppController extends ChangeNotifier {
+class AppController extends ChangeNotifier  {
   User? _user;
 
   List<Cooler> _coolers = [];
@@ -149,13 +149,13 @@ class AppController extends ChangeNotifier {
       url = "ws://";
     }
 
-    url+="chisco.tech";
+    url+="185.164.73.252";
     print('UserName : ${decodedToken['usernameBroker']}\nPassword: ${decodedToken['passwordBroker']}');
 
     MqttClient client = makeClient(url, '');
     client.websocketProtocols = ['mqtts','mqtt'];
 
-    //client.logging(on: true);
+    client.logging(on: true);
     client.onDisconnected=(){
       print("disConnectttttttttt");
 
