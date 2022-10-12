@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:io';
 
-
 import 'package:chisco/data/data_class/CheckOtpResponse.dart';
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
 import 'package:chisco/data/data_class/GetMobileResponse.dart';
@@ -28,29 +27,25 @@ class AuthController extends ChangeNotifier {
   AuthController(this.context);
 
   final AuthRepositoryImpl repository = AuthRepositoryImpl();
-  TextEditingController enterCodeController =TextEditingController();
+  TextEditingController enterCodeController = TextEditingController();
 
   String smsId = '';
 
   bool isNewUser = true;
   bool hasProgressBar = false;
-  String _userPhoneNumber ='';
-
-
+  String _userPhoneNumber = '';
 
   PageController pageViewController =
       PageController(initialPage: 0, viewportFraction: 1, keepPage: true);
 
-
-  setPhoneNumber(String phone){
+  setPhoneNumber(String phone) {
     _userPhoneNumber = phone;
     notifyListeners();
   }
 
-  String getUserPhone(){
+  String getUserPhone() {
     return _userPhoneNumber;
   }
-
 
   submitNumberBtnClicked(String number) async {
     hasProgressBar = true;
@@ -73,7 +68,8 @@ class AuthController extends ChangeNotifier {
         if (await Permission.sms.request().isGranted) {
           final Telephony telephony = Telephony.instance;
           print("OK3");
-          telephony.listenIncomingSms(onNewMessage: smsReceivedFunction, listenInBackground: false);
+          telephony.listenIncomingSms(
+              onNewMessage: smsReceivedFunction, listenInBackground: false);
         }
       }
     }
@@ -81,7 +77,6 @@ class AuthController extends ChangeNotifier {
     smsId = getMobileResponse.id;
     isNewUser = getMobileResponse.isNewUser;
     goToPage(1);
-
   }
 
   submitCodeBtnClicked(String code) async {
@@ -94,7 +89,8 @@ class AuthController extends ChangeNotifier {
       return;
     } else {
       CheckOtpResponse otpResponse = response.object;
-      MessageResponse messageResponse = MessageResponse(message: otpResponse.message);
+      MessageResponse messageResponse =
+          MessageResponse(message: otpResponse.message);
       print("Message Response : ${messageResponse.message}");
 
       if (isNewUser) {
@@ -102,7 +98,10 @@ class AuthController extends ChangeNotifier {
       } else {
         ChiscoResponse userDevices = await repository.getUserDevices();
         GlobalVariable.isUserLogin = true;
-        await Provider.of<AppController>(context, listen: false).setData(userDevices.object);
+        await Provider.of<AppController>(context, listen: false)
+            .setData(userDevices.object);
+        Provider.of<AppController>(context, listen: false)
+            .connect(topicForSubscribe: 'chisco/test');
         Navigator.pushReplacementNamed(context, homePage);
         ChiscoFlushBar.showSuccessFlushBar(context, messageResponse.message);
 
@@ -125,9 +124,11 @@ class AuthController extends ChangeNotifier {
     ChiscoFlushBar.showSuccessFlushBar(context, messageResponse.message);
     ChiscoResponse userDevices = await repository.getUserDevices();
     GlobalVariable.isUserLogin = true;
-    await Provider.of<AppController>(context, listen: false).setData(userDevices.object);
+    await Provider.of<AppController>(context, listen: false)
+        .setData(userDevices.object);
+    Provider.of<AppController>(context, listen: false)
+        .connect(topicForSubscribe: 'chisco/test');
     Navigator.pushReplacementNamed(context, homePage);
-
   }
 
   smsReceivedFunction(SmsMessage receivedMessage) {
@@ -142,10 +143,9 @@ class AuthController extends ChangeNotifier {
       if (isMessageForChiscoRegex.hasMatch(message)) {
         String? otpCode = otpCodeRegex.firstMatch(message)?.group(1);
 
-        if(otpCode == null) {
-
-        print('otp code nullll');
-        return;
+        if (otpCode == null) {
+          print('otp code nullll');
+          return;
         }
         print("otpCode");
         print(otpCode);
@@ -160,6 +160,4 @@ class AuthController extends ChangeNotifier {
     pageViewController.animateToPage(index,
         duration: const Duration(milliseconds: 300), curve: Curves.easeIn);
   }
-
 }
-

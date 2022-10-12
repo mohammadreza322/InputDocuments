@@ -21,7 +21,7 @@ class ChiscoClient {
     ///we contain Options here
     ///if after 10 minuets cant connect we got Socket Error
     _dio = Dio(BaseOptions(
-      baseUrl: "http://chisco.tech/api/",
+      baseUrl: "https://chisco.tech/api/",
       connectTimeout: 10000,
       receiveTimeout: 7000,
       sendTimeout: 7000,

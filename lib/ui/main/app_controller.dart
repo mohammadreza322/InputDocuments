@@ -162,7 +162,7 @@ class AppController extends ChangeNotifier  {
     };
 
     client.onConnected=(){
-      //print("concteeeeeeeeeeed");
+      print("concteeeeeeeeeeed");
       isMqttConnected = true;
       notifyListeners();
 
