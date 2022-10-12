@@ -169,16 +169,16 @@ class AppController extends ChangeNotifier {
     client.websocketProtocols = ['mqtts', 'mqtt'];
 
     //client.logging(on: true);
-    client.onDisconnected = () {
-      print("disConnectttttttttt");
-    };
+    // client.onDisconnected = () {
+    //   print("disConnectttttttttt");
+    // };
 
-    client.onConnected = () {
-      // print("concteeeeeeeeeeed **********************");
-      // print(client.connectionStatus!.state);
-      isMqttConnected = true;
-      //notifyListeners();
-    };
+    // client.onConnected = () {
+    //   // print("concteeeeeeeeeeed **********************");
+    //   // print(client.connectionStatus!.state);
+    //   isMqttConnected = true;
+    //   //notifyListeners();
+    // };
     final connMessage = MqttConnectMessage()
         .authenticateAs(userNameBroker, passwordBroker)
         .withClientIdentifier(
@@ -187,10 +187,15 @@ class AppController extends ChangeNotifier {
     client.connectionMessage = connMessage;
     try {
       client.autoReconnect = true;
+      client.keepAlivePeriod = 20000;
+
       client.logging(on: false);
-      await client.connect();
+      await client.connect(userNameBroker, passwordBroker);
 
       if (client.connectionStatus!.state == MqttConnectionState.connected) {
+        print("connectedddddddd");
+        print("******************");
+        isMqttConnected = true;
         //for device
         _userDevicesList.forEach((element) {
           client.subscribe(
@@ -199,13 +204,25 @@ class AppController extends ChangeNotifier {
           print("subscribe '/chisco/${element.serialNumber}'");
         });
         client.updates!.listen(mqttListen);
+        mqttClient = client;
+        // notifyListeners();
       }
     } catch (e) {
       print('MqttError $e');
       client.disconnect();
     }
+  }
 
-    mqttClient = client;
+  subscribe(serialNumber) {
+    if (mqttClient?.connectionStatus!.state == MqttConnectionState.connected) {
+      mqttClient?.subscribe('/chisco/$serialNumber/get', MqttQos.atLeastOnce);
+    }
+  }
+
+  unsubscribe(serialNumber) {
+    if (mqttClient?.connectionStatus!.state == MqttConnectionState.connected) {
+      mqttClient?.unsubscribe('/chisco/$serialNumber/get');
+    }
   }
 
   ///for Subscribe to mqtt or Listen to Received Messages we need this method
@@ -258,8 +275,8 @@ class AppController extends ChangeNotifier {
             List<Connector> connectors = [];
             for (int i = 0; i < element.connectors.length; i++) {
               Connector connector = element.connectors[i];
-              bool status = (payload['connectors'] as List<dynamic>)
-                  .singleWhere((element) =>
+              bool status = (payload['ports'] as List<dynamic>).singleWhere(
+                  (element) =>
                       element['portNumber'] == connector.connectorId)['status'];
               connector.status = status;
               connectors.add(connector);
@@ -267,7 +284,7 @@ class AppController extends ChangeNotifier {
 
             Power power = getPowerWithSerialNumber(serialNumber!);
             power.connectors = connectors;
-            power.totalVoltage = payload['totalVoltage'];
+            power.totalVoltage = payload['totalVoltage'] ?? 0;
 
             print('set power');
             setPower(power);
@@ -283,13 +300,20 @@ class AppController extends ChangeNotifier {
   }
 
   ///this function is for publish or send message to mqtt
-  publishMessage(String topic, MqttClientPayloadBuilder data) {
+  publishMessage(String topic, MqttClientPayloadBuilder data) async {
     if (data.payload == null) {
       data.addString({"chisco": true}.toString());
     }
 
-    print('published');
-    mqttClient?.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
+    // if (mqttClient == null) {
+    //   await connect();
+    // }
+    print(mqttClient?.connectionStatus!.state);
+    if (mqttClient?.connectionStatus!.state == MqttConnectionState.connected) {
+      print('published');
+      print(topic);
+      mqttClient?.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
+    }
   }
 
   publishPowerMqtt(Power power) {

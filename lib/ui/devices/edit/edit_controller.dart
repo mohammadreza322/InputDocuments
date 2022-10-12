@@ -31,16 +31,15 @@ class EditDeviceController extends ChangeNotifier {
   final TextEditingController powerOutletFourth = TextEditingController();
   final TextEditingController usbPortFirst = TextEditingController();
   final TextEditingController usbPortSecond = TextEditingController();
-  init(Device device){
+  init(Device device) {
     isPageLoading = true;
     print(nameTextController.text);
-    if(device.deviceType ==DeviceType.cooler){
+    if (device.deviceType == DeviceType.cooler) {
       Cooler cooler = device as Cooler;
       nameTextController.text = cooler.name;
-      categoryTextController.text  = cooler.category;
+      categoryTextController.text = cooler.category;
       brandTextController.text = cooler.brand;
-    }
-    else{
+    } else {
       Power power = device as Power;
       nameTextController.text = power.name;
       categoryTextController.text = power.category;
@@ -50,9 +49,9 @@ class EditDeviceController extends ChangeNotifier {
       powerOutletFourth.text = power.connectors[3].name;
       usbPortFirst.text = power.connectors[4].name;
       usbPortSecond.text = power.connectors[5].name;
-
     }
   }
+
   onCoolerEditClicked(EditCooler cooler) async {
     ChiscoResponse response = await deviceRepository.editCooler(cooler);
 
@@ -60,12 +59,13 @@ class EditDeviceController extends ChangeNotifier {
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
       return;
     } else {
-      AddDeviceResponse addDeviceResponse =response.object;
+      AddDeviceResponse addDeviceResponse = response.object;
 
       Navigator.pop(context);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
 
-      Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
+      Provider.of<AppController>(context, listen: false)
+          .refreshData(addDeviceResponse);
       //notify change
 
     }
@@ -80,17 +80,15 @@ class EditDeviceController extends ChangeNotifier {
 
       return;
     } else {
-
-      AddDeviceResponse addDeviceResponse =response.object;
+      AddDeviceResponse addDeviceResponse = response.object;
       Navigator.pop(context);
 
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
-      Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
+      Provider.of<AppController>(context, listen: false)
+          .refreshData(addDeviceResponse);
       //notify change
 
-      ChiscoFlushBar.showSuccessFlushBar(context,addDeviceResponse.message);
-
-
+      ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
     }
   }
 
@@ -101,13 +99,15 @@ class EditDeviceController extends ChangeNotifier {
       print(response.errorMessage);
       return;
     } else {
-      AddDeviceResponse addDeviceResponse =response.object;
+      AddDeviceResponse addDeviceResponse = response.object;
       print(addDeviceResponse.message);
       Navigator.pushNamed(context, homePage);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
 
-      Provider.of<AppController>(context,listen: false).refreshData(addDeviceResponse);
-
+      Provider.of<AppController>(context, listen: false)
+          .refreshData(addDeviceResponse);
+      Provider.of<AppController>(context, listen: false)
+          .unsubscribe(serialNumber);
     }
   }
 }

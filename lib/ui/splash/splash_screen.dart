@@ -14,15 +14,16 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SplashController controller = Provider.of<SplashController>(context);
-    AppController appController =Provider.of<AppController>(context);
+    AppController appController = Provider.of<AppController>(context);
     if (!controller.isPageLoading) {
       controller.init();
     }
-    if(controller.isSplashEnd && appController.isMqttConnected) {
-       Timer(const Duration(seconds: 2), () {
-         controller.progressBarShown = false;
+    if (controller.isSplashEnd && appController.isMqttConnected) {
+      Timer(const Duration(milliseconds: 250), () {
+        controller.progressBarShown = false;
         print('timer 1');
-        Navigator.pushNamedAndRemoveUntil(context, homePage,(r)=>false);
+        print("############");
+        Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
       });
     }
 
@@ -41,16 +42,14 @@ class SplashScreen extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: controller.progressBarShown
                 ? Container(
-              width: 25,
-              height: 25,
-              margin: const EdgeInsets.only(bottom: 22),
-                  child:  CircularProgressIndicator(
-
-                    strokeWidth: 2,
+                    width: 25,
+                    height: 25,
+                    margin: const EdgeInsets.only(bottom: 22),
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
                       color: Colors.white.withOpacity(0.7),
-
                     ),
-                )
+                  )
                 : Container(),
           )
         ],
