@@ -205,7 +205,7 @@ class AppController extends ChangeNotifier {
         });
         client.updates!.listen(mqttListen);
         mqttClient = client;
-        // notifyListeners();
+        notifyListeners();
       }
     } catch (e) {
       print('MqttError $e');

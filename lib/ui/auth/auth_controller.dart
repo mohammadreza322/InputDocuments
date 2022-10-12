@@ -97,6 +97,9 @@ class AuthController extends ChangeNotifier {
         goToPage(2);
       } else {
         ChiscoResponse userDevices = await repository.getUserDevices();
+        if (!userDevices.status) {
+          ChiscoFlushBar.showErrorFlushBar(context, userDevices.errorMessage);
+        }
         GlobalVariable.isUserLogin = true;
         await Provider.of<AppController>(context, listen: false)
             .setData(userDevices.object);

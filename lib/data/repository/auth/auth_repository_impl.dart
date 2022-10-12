@@ -72,7 +72,9 @@ class AuthRepositoryImpl extends AuthRepository {
           object: User.fromJson(response.object));
       return result;
     } else {
-      return response;
+      ChiscoResponse result =
+          ChiscoResponse(status: false, code: response.code, object: {});
+      return result;
     }
   }
 }
