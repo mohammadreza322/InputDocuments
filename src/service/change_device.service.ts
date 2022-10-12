@@ -44,6 +44,15 @@ connectDb().then(() => {
 				console.log('subscribe /chisco/+/get');
 			})
 
+            client.subscribe('/chisco/+/change',(err) => {
+                if (err) {
+                    console.error('can not subscribe /chisco/+/change');
+                    console.error(err);
+                    process.exit(1);
+                }
+                console.log('subscribe /chisco/+/change');
+            })
+
             // client.subscribe('/chisco/change_cooler/#', (err) => {
             //     if (err) {
             //         console.error('can not subscribe /chisco/change_cooler');
@@ -82,12 +91,14 @@ connectDb().then(() => {
             // );
 
 			const changeDeviceRegex = /\/chisco\/(.*)\/get/.exec(topic);
+            const republishRegex = /\/chisco\/(.*)\/change/.exec(topic);
             const connectedDeviceRegex = /\/event\/connected/.exec(topic);
             const disconnectDeviceRegex = /\/event\/disconnected/.exec(topic);
 
             const data = JSON.parse(message.toString('utf8'));
 
             if (changeDeviceRegex) {
+                console.log("device changed");
 
                 changeDevice(changeDeviceRegex[1], data);
             // } else if (changePowerRegex) {
@@ -98,6 +109,16 @@ connectDb().then(() => {
                 changeConnectStatus(data);
             } else if (disconnectDeviceRegex) {
                 changeDisconnectStatus(data);
+            } else if(!changeDeviceRegex){
+                if(republishRegex){
+                    const deviceExists = await  _deviceExists(republishRegex[1]);
+                    if((deviceExists).valid){
+                        if(deviceExists.type=='power'){
+                            data.totalVoltage =Math.floor(Math.random() * (220 - 50) + 50)
+                        }
+                    }
+                    client.publish(`/chisco/${republishRegex[1]}/get`,JSON.stringify(data))
+                }
             }
         });
     } catch (e) {
@@ -168,84 +189,60 @@ async function changeConnectStatus(payload: any) {
 
 async function changeDevice(serialNumber: string,payload:any) {
     const validSerialNumber = await _deviceExists(serialNumber);
+    console.log(validSerialNumber)
+    if(validSerialNumber.valid) {
+        if (validSerialNumber.type == 'power') {
+            const power = await PowerStrip.findOne({serialNumber})
+            const connectors = power.connectors
 
-    if (validSerialNumber.type == 'power') {
-    	const power = await PowerStrip.findOne({serialNumber})
-		const connectors = power.connectors
+            for (const connector of payload.ports) {
+                const index = connectors.findIndex((c) => {
+                    return c.connectorId == connector.portNumber;
+                })
+                console.log(index)
+                console.log(connector)
+                console.log(connectors)
+                const c = connectors[index];
+                c.status = connector.status
+                connectors[index] = c
+            }
 
-		for(const connector of payload.connectors) {
-			const index = connectors.findIndex((c) => {
-				return c.connectorId == connector.portNumber;
-			})
-			connectors[index]=connector.status
-		}
+            power.connectors = connectors;
+            power.totalVoltage = payload.totalVoltage
+            console.log("power changed")
+            await power.save()
 
-		power.connectors = connectors;
-		power.totalVoltage = payload.totalVoltage
-		console.log("power changed")
-		await power.save()
+            // await PowerStrip.updateOne(
+            // 	{serialNumber},
+            // 	{
+            // 		$set: {
+            //
+            // 		},
+            // 	},
+            // );
+        } else {
+            console.log("cooler changed")
+            console.log(payload)
+            payload = payload.cooler
+            await Cooler.updateOne(
+                {serialNumber},
+                {
+                    $set: {
+                        timer: payload.timer,
+                        mode: payload.mode,
+                        horizontalSwing: payload.horizontalSwing,
+                        verticalSwing: payload.verticalSwing,
+                        fan: payload.fan,
+                        temp: payload.temp,
+                        power: payload.status
+                    },
 
-		// await PowerStrip.updateOne(
-		// 	{serialNumber},
-		// 	{
-		// 		$set: {
-		//
-		// 		},
-		// 	},
-		// );
-    } else {
-    	console.log("cooler changed")
-        await Cooler.updateOne(
-            {serialNumber},
-            {
-                $set: {
-                	timer:payload.timer,
-					mode:payload.mode,
-					horizontalSwing:payload.horizontalSwing,
-					verticalSwing:payload.verticalSwing,
-					fan:payload.fan,
-					temp:payload.temp,
-                    power:payload.status
-				},
-
-            },
-        );
+                },
+            );
+        }
     }
 }
 
-async function changeCooler(serialNumber: string, payload: any) {
-    const validSerialNumber = await _deviceExists(serialNumber);
-
-    if (!validSerialNumber.valid) {
-        return;
-    }
-
-    await Cooler.updateOne(
-        {serialNumber},
-        {
-            $set: {
-                mode: payload.mode,
-                fan: payload.fan,
-                horizontalSwing: payload.swing_horizontal,
-                verticalSwing: payload.swing_vertical,
-                temp: payload.temp,
-                timer: payload.timer,
-                power: payload.power,
-            },
-        },
-    );
-}
-
-async function changePower(serialNumber: string, payload: any) {
-    const validSerialNumber = await _deviceExists(serialNumber);
-
-    if (!validSerialNumber.valid) {
-        return;
-    }
-}
-
-async function changeSchedule(serialNumber: string, payload: any) {
-}
 
 async function _deviceExists(serialNumber: string) {
     if (await PowerStrip.exists({serialNumber})) {

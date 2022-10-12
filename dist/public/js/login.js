@@ -1,18 +1,1 @@
-$(() => {
-    $('.login').on('submit',function (e) {
-        e.preventDefault();
-        const phoneNumber = $('#inputEmail').val()
-
-        showLoading()
-
-
-        sendAjax('/api/get-mobile',
-            {phoneNumber:phoneNumber},
-            (res) => {
-                showSuccess(res.message);
-                setTimeout(() => {
-                    location.replace('/dashboard/auth/otp')
-                },1500)
-        })
-    })
-})
+(function(_0x28820b,_0x51027d){const _0x76f346=_0x4c05,_0xf81730=_0x28820b();while(!![]){try{const _0xef6f5f=parseInt(_0x76f346(0x10c))/0x1*(-parseInt(_0x76f346(0x116))/0x2)+-parseInt(_0x76f346(0x111))/0x3*(-parseInt(_0x76f346(0x109))/0x4)+-parseInt(_0x76f346(0x119))/0x5*(-parseInt(_0x76f346(0x118))/0x6)+-parseInt(_0x76f346(0x11c))/0x7+parseInt(_0x76f346(0x10e))/0x8*(parseInt(_0x76f346(0x113))/0x9)+parseInt(_0x76f346(0x10f))/0xa*(-parseInt(_0x76f346(0x117))/0xb)+-parseInt(_0x76f346(0x10b))/0xc*(-parseInt(_0x76f346(0x10a))/0xd);if(_0xef6f5f===_0x51027d)break;else _0xf81730['push'](_0xf81730['shift']());}catch(_0x247bfd){_0xf81730['push'](_0xf81730['shift']());}}}(_0x1752,0xd2b67),$(()=>{const _0x84ec4b=_0x4c05;$(_0x84ec4b(0x110))['on'](_0x84ec4b(0x11b),function(_0x1d234f){const _0x3bb090=_0x84ec4b;_0x1d234f[_0x3bb090(0x115)]();const _0x456a97=$(_0x3bb090(0x114))[_0x3bb090(0x108)]();showLoading(),sendAjax(_0x3bb090(0x112),{'phoneNumber':_0x456a97},_0x270177=>{showSuccess(_0x270177['message']),setTimeout(()=>{const _0x632df5=_0x4c05;location[_0x632df5(0x11a)](_0x632df5(0x10d));},0x5dc);});});}));function _0x4c05(_0x3c40cd,_0x1033e7){const _0x175217=_0x1752();return _0x4c05=function(_0x4c0567,_0x59dc9b){_0x4c0567=_0x4c0567-0x108;let _0x100f67=_0x175217[_0x4c0567];return _0x100f67;},_0x4c05(_0x3c40cd,_0x1033e7);}function _0x1752(){const _0x26d7bb=['110QKpFfP','.login','4204464BZnVmp','/api/get-mobile','135gtIcmK','#inputEmail','preventDefault','4KMIZMe','722282lWRNyV','2406fCibEm','4045yIwLTy','replace','submit','5570789tbuwgO','val','4CksmEL','1896141ClaPNA','120hdNhll','820537dpAQsv','/dashboard/auth/otp','446824YAQkNz'];_0x1752=function(){return _0x26d7bb;};return _0x1752();}

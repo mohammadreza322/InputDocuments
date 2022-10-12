@@ -20,58 +20,116 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/chisco-backend.rar" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/gulpfile.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/ahp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/ahp.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/chisco-backend.rar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/broker_provider.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/broker_provider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/broker_provider.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/convert.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/convert.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/mqtt.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/mqtt.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/mqtt.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/pagination.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/pagination.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/sms_provider.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/sms_provider.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/sms_provider.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/validator.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/classes/validator.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/config/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/config/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/config/db.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/controller/customer.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/controller/customer.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/controller/device.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/controller/device.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/controller/device.controller.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/controller/login.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/controller/login.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/controller/login.controller.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/controller/user.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/controller/user.controller.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/controller/user.controller.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/entities/device.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/device.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/device.entity.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/login.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/login.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/login.entity.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/entities/logs.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/logs.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/token.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/token.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/token.entity.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/entities/user.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/user.entity.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/entities/user.entity.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/index.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/middleware/authorization.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/authorization.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/middleware/authorization.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/device.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/device.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/device.model.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/logs.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/logs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/permission.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/permission.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/permission.model.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/sms_codes.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/sms_codes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/sms_codes.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/tokens.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/tokens.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/tokens.model.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/users.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/users.model.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/models/users.model.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/page_view/admin.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/admin.pageview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/page_view/auth.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/auth.pageview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/page_view/clients.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/clients.pageview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/page_view/dashboard.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/dashboard.pageview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/page_view/devices.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/devices.pageview.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/css/ie.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/css/ie.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/css/lib/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/css/lib/bootstrap.min.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/css/lib/persian-datepicker.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/css/lib/persian-datepicker.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/chisco.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/chisco.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/device.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/device.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/lib/bootstrap.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/lib/bootstrap.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/lib/jquery.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/lib/jquery.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/lib/persian-date.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/lib/persian-date.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/lib/persian-datepicker.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/lib/persian-datepicker.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/lib/sweetAlert.min.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/lib/sweetAlert.min.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/login.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/main.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/main.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/otp.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/otp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/public/js/storehouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/storehouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/api.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/api.router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/api.router.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/auth.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/auth.router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/customer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/dashboard.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/dashboard.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/device.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/device.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/device.route.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/devices.site_router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/devices.site_router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/login.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/login.router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/login.router.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/store_room.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/store_room.route.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/user.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/user.router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/routes/user.router.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/service/change_device.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/service/change_device.service.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/service/change_device.service.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/test.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/device.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/device.type.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/device.type.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/global.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/global.type.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/global.type.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/login.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/login.type.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/login.type.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/session.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/session.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/user.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/user.type.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/types/user.type.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/utility/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/utility/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/auth/footer_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/footer_login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/auth/header_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/header_login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/auth/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/auth/otp.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/otp.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/profile.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/right_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/right_navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/utility/constants.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/broker_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/broker_provider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/device.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/device.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/login.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/login.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/device.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/device.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logs.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logs.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user.entity.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/authorization.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/device.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/device.model.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/change_device.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/change_device.service.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/utility/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/constants.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/auth/footer_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/footer_login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/auth/header_login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/header_login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/auth/login.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/login.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/auth/otp.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/otp.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/client.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/client.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/profile.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/profile.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/right_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/right_navbar.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -152,7 +210,10 @@
       <workItem from="1664599877716" duration="1464000" />
       <workItem from="1664745699088" duration="3349000" />
       <workItem from="1665133565827" duration="4016000" />
-      <workItem from="1665143502466" duration="4578000" />
+      <workItem from="1665143502466" duration="17144000" />
+      <workItem from="1665381266485" duration="4347000" />
+      <workItem from="1665522021152" duration="3886000" />
+      <workItem from="1665551729645" duration="3851000" />
     </task>
     <servers />
   </component>

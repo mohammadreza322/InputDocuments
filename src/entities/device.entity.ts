@@ -691,6 +691,12 @@ export default class DeviceEntity {
         return PowerStrip.exists({serialNumber});
     }
 
+    public static async deviceExists(serialNumber:string) {
+        const powerExists = await PowerStrip.exists({serialNumber});
+        const coolerExists = await Cooler.exists({serialNumber});
+        return powerExists && coolerExists
+    }
+
     public static async removeCooler(serialNumber:string){
         return Cooler.deleteOne({serialNumber})
     }

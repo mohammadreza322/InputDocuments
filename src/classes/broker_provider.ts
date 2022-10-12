@@ -10,7 +10,7 @@ const request = require('request')
 import {brokerUrlAPI} from '../utility/constants';
 
 export default class BrokerProvider {
-    private static authorization = 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO'
+    private static authorization = 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw=='
 
     /**
      * @author Amir Hemmateenejad amirhemmateenejad@gmail.com

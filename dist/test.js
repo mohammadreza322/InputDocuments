@@ -1,21 +1,14 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
+var request = require('request');
+var options = {
+    'method': 'GET',
+    'url': 'http://chisco.tech/api/user/',
+    'headers': {
+        'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDdjNTRlYzVlNGYxZTdkOGE0ODlkMiIsImlhdCI6MTY2NTUyMzQ3MSwiZXhwIjoxNjY1NTI3MDcxfQ.6TT2xh7jngMrB4T0w-SCl3Ure1HOp_lOgaOgfQt6on8',
+        'Cookie': 'di_noissaes_mait=s%3AUNdSjQKu6Lbd5UHoKDMrNu9GLF1tWGZb.kE0fxS%2Fh5NYNU3%2BjyFnfR%2Br41bwLUMIjLRounNeLtE4'
+    }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const broker_provider_1 = __importDefault(require("./classes/broker_provider"));
-const db_1 = __importDefault(require("./config/db"));
-(0, db_1.default)().then(() => __awaiter(void 0, void 0, void 0, function* () {
-    console.log(yield broker_provider_1.default.userExist('06dc732cc261b06a640268926fe290d55f0928ea'));
-    console.log("done");
-    process.exit(0);
-}));
+request(options, function (error, response) {
+    if (error)
+        throw new Error(error);
+    console.log(response.body);
+});

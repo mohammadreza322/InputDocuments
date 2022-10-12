@@ -302,6 +302,9 @@ const addDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         if (!['cooler', 'power'].includes(type.toString())) {
             return res.status(400).json({ status: false, message: 'خطا در ورودی' });
         }
+        if (yield device_entity_1.default.deviceExists(serialNumber)) {
+            return res.status(400).json({ status: false, message: 'این شماره سریال برای دستگاه دیگری قبلا ثبت شده است!' });
+        }
         let deviceId = undefined;
         if (type == 'power') {
             deviceId = yield device_entity_1.default.addPower(serialNumber, password, req.user.id);
@@ -309,6 +312,7 @@ const addDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         else if (type == 'cooler') {
             deviceId = yield device_entity_1.default.addCooler(serialNumber, password, req.user.id);
         }
+        yield broker_provider_1.default.addUserToMnesia(serialNumber, password);
         yield logs_entity_1.default.addDevice(serialNumber, req.user.id, deviceId);
         return res.json({ status: true, message: 'دستگاه با موفقیت اضافه شد!' });
     }

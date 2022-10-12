@@ -422,6 +422,11 @@ export const addDevice = async (req:Request,res:Response) => {
 			return res.status(400).json({status:false,message: 'خطا در ورودی'});
 		}
 
+		if(await DeviceEntity.deviceExists(serialNumber)){
+			return res.status(400).json({status:false,message: 'این شماره سریال برای دستگاه دیگری قبلا ثبت شده است!'});
+
+		}
+
 		let deviceId = undefined
 
 		if(type == 'power') {
@@ -429,6 +434,8 @@ export const addDevice = async (req:Request,res:Response) => {
 		} else if (type=='cooler') {
 			deviceId = await DeviceEntity.addCooler(serialNumber,password,req.user.id)
 		}
+
+		await BrokerProvider.addUserToMnesia(serialNumber,password);
 
 		await LogsEntity.addDevice(serialNumber,req.user.id,deviceId)
 

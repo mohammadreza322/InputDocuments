@@ -52,7 +52,7 @@ export const getMobile = async (req: CustomRequest, res: Response) => {
             message: 'پیامک با موفقیت ارسال شد',
             id: loginOutput.id,
             isNewUser: loginOutput.isNewUser,
-            code: loginOutput.code,
+            // code: loginOutput.code,
             status: true
         });
     }

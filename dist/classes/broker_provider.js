@@ -104,4 +104,4 @@ class BrokerProvider {
     }
 }
 exports.default = BrokerProvider;
-BrokerProvider.authorization = 'Basic MjBiZjUwMWJjMGZhNjpqRXdzUmdXbU9IQWFQazFCcEMwSWtGNEl2RWxYZ01CNmNzd0VocHYwMnpO';
+BrokerProvider.authorization = 'Basic MjBiZjUwMWJjMGZhNjpNekExTnpZd05UTTVPVGMwTURrM01Ea3pPRGd3T0RJMU5EUTVOVFV5T1RNMk9URw==';

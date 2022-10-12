@@ -582,6 +582,13 @@ class DeviceEntity {
             return device_model_1.PowerStrip.exists({ serialNumber });
         });
     }
+    static deviceExists(serialNumber) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const powerExists = yield device_model_1.PowerStrip.exists({ serialNumber });
+            const coolerExists = yield device_model_1.Cooler.exists({ serialNumber });
+            return powerExists && coolerExists;
+        });
+    }
     static removeCooler(serialNumber) {
         return __awaiter(this, void 0, void 0, function* () {
             return device_model_1.Cooler.deleteOne({ serialNumber });

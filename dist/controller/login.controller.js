@@ -48,7 +48,7 @@ const getMobile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
             message: 'پیامک با موفقیت ارسال شد',
             id: loginOutput.id,
             isNewUser: loginOutput.isNewUser,
-            code: loginOutput.code,
+            // code: loginOutput.code,
             status: true
         });
     }

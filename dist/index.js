@@ -41,7 +41,6 @@ const api_router_1 = require("./routes/api.router");
 const db_1 = __importDefault(require("./config/db"));
 require("./types/global.type");
 const mqtt_1 = __importDefault(require("./classes/mqtt"));
-const cors_1 = __importDefault(require("cors"));
 const connectMongoDBSession = __importStar(require("connect-mongodb-session"));
 const constants_1 = require("./utility/constants");
 const express_session_1 = __importDefault(require("express-session"));
@@ -51,17 +50,26 @@ const dashboard_route_1 = require("./routes/dashboard.route");
 require("./types/session");
 process.env.TZ = 'Asia/Tehran';
 const app = (0, express_1.default)();
-app.use((0, cors_1.default)());
+//app.use(cors())
 app.use((0, body_parser_1.json)());
 //app.use(helmet({contentSecurityPolicy: false,}));
-app.use((_, res, next) => {
-    res.setHeader('Access-Control-Allow-Origin', '*');
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-auth-token'); // If needed
-    res.setHeader('Access-Control-Allow-Credentials', "true");
+app.use((req, res, next) => {
+    // const responseSettings = {
+    // 	"AccessControlAllowOrigin": req.headers.origin,
+    // 	"AccessControlAllowHeaders": "Content-Type,X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5,  Date, X-Api-Version, X-File-Name",
+    // 	"AccessControlAllowMethods": "POST, GET, PUT, DELETE, OPTIONS",
+    // 	"AccessControlAllowCredentials": 'true'
+    // };
+    // res.setHeader('Access-Control-Allow-Origin', '*');
+    // res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE'); // If needed
+    // res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type,x-auth-token'); // If needed
+    // res.setHeader('Access-Control-Allow-Credentials', "true")
+    // res.header("Access-Control-Allow-Credentials", responseSettings.AccessControlAllowCredentials);
+    // res.header("Access-Control-Allow-Origin",  responseSettings.AccessControlAllowOrigin);
+    // res.header("Access-Control-Allow-Headers", (req.headers['access-control-request-headers']) ? req.headers['access-control-request-headers'] : "x-requested-with");
+    // res.header("Access-Control-Allow-Methods", (req.headers['access-control-request-method']) ? req.headers['access-control-request-method'] : responseSettings.AccessControlAllowMethods);
     return next();
 });
-//dashboard configs
 const MongoDBStore = connectMongoDBSession.default(express_session_1.default);
 const sessionStore = MongoDBStore({
     uri: constants_1.mongoConnection,
@@ -80,6 +88,7 @@ app.use((0, express_session_1.default)({
     },
 }));
 app.use('/api', api_router_1.apiRouter);
+//dashboard configs
 //server static files
 app.use('/public', express_1.default.static(path.join(__dirname, '/public')));
 app.set('view engine', 'ejs');
