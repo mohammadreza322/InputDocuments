@@ -1,4 +1,3 @@
-
 import 'package:chisco/data/data_class/CheckOtpResponse.dart';
 import 'package:chisco/data/data_class/GetMobileResponse.dart';
 
@@ -24,8 +23,10 @@ class AuthRepositoryImpl extends AuthRepository {
     if (response.status) {
       CheckOtpResponse otpResponse = CheckOtpResponse.fromJson(response.object);
 
-      authLocalDataSource.saveToken(otpResponse.accessToken,otpResponse.refreshToken,otpResponse.details);
-      ChiscoResponse result = ChiscoResponse(status: response.status, code: response.code, object: otpResponse);
+      authLocalDataSource.saveToken(otpResponse.accessToken,
+          otpResponse.refreshToken, otpResponse.details);
+      ChiscoResponse result = ChiscoResponse(
+          status: response.status, code: response.code, object: otpResponse);
       return result;
     } else {
       return response;
@@ -38,7 +39,7 @@ class AuthRepositoryImpl extends AuthRepository {
     if (response.status) {
       ChiscoResponse chiscoResponse = ChiscoResponse(
           status: true,
-          code: response.code,
+          code: 1,
           object: GetMobileResponse.fromJson(response.object));
       return chiscoResponse;
     } else {
@@ -74,6 +75,4 @@ class AuthRepositoryImpl extends AuthRepository {
       return response;
     }
   }
-
-
 }

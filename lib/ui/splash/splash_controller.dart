@@ -18,7 +18,7 @@ class SplashController extends ChangeNotifier {
   bool isPageLoading = false;
   BuildContext context;
   bool progressBarShown = true;
-  bool isSplashEnd= false;
+  bool isSplashEnd = false;
   SplashController(this.context);
 
   init() async {
@@ -31,34 +31,40 @@ class SplashController extends ChangeNotifier {
     if (accessToken == null) {
       print('AccessToken Nulllllllllllllllll');
       progressBarShown = false;
-      GlobalVariable.isUserLogin =false;
+      GlobalVariable.isUserLogin = false;
 
-      return Timer(const Duration(seconds: 2), () {
+      return Timer(const Duration(milliseconds: 100), () {
         print('timer 2');
-        Navigator.pushNamedAndRemoveUntil(context, loginPage,(r)=>false);
+        Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
       });
     } else {
       String? detail = sharedPreferences.getString('detail');
       print(detail);
 
-
       ChiscoResponse response = await repository.getUserDevices();
       if (response.status) {
-        Provider.of<AppController>(context, listen: false).setData(response.object);
-        GlobalVariable.isUserLogin = true;
-        Provider.of<AppController>(context, listen: false).connect(topicForSubscribe: 'chisco/test');
-
-
-        isSplashEnd = true;
-
-
+        return Timer(const Duration(milliseconds: 100), () {
+          print("timer ok 1");
+          print("###############");
+          Provider.of<AppController>(context, listen: false)
+              .setData(response.object);
+          GlobalVariable.isUserLogin = true;
+          Provider.of<AppController>(context, listen: false)
+              .connect(topicForSubscribe: 'chisco/test');
+          isSplashEnd = true;
+          // Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
+          notifyListeners();
+        });
       } else {
-        progressBarShown = false;
-        ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
-        print("Error Message Splash : ${response.errorMessage}");
+        return Timer(const Duration(milliseconds: 100), () {
+          print("timer ok 2");
+          print("###############");
+          progressBarShown = false;
+          ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
+          print("Error Message Splash : ${response.errorMessage}");
+          notifyListeners();
+        });
       }
-
-      print('Okkkk1234');
     }
 
     //login check

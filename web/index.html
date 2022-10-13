@@ -38,87 +38,11 @@
 
 
 
-  <script>
 
-    var serviceWorkerVersion = null;
-    var scriptLoaded = false;
-    function loadMainDartJs() {
-      if (scriptLoaded) {
-        return;
-      }
-      scriptLoaded = true;
-      var scriptTag = document.createElement('script');
-      scriptTag.src = 'main.dart.js';
-      scriptTag.type = 'application/javascript';
-      document.body.append(scriptTag);
-    }
-
-    if ('serviceWorker' in navigator) {
-      // Service workers are supported. Use them.
-      window.addEventListener('load', function () {
-        // Wait for registration to finish before dropping the <script> tag.
-        // Otherwise, the browser will load the script multiple times,
-        // potentially different versions.
-
-        var customServiceWorkerUrl = './sw.js';
-        navigator.serviceWorker.register(customServiceWorkerUrl, { scope: '.' }).then(function (registration) {
-          // Registration was successful
-          console.log('CustomServiceWorker registration successful with scope: ', registration.scope);
-        }, function (err) {
-          // registration failed
-          console.log('CustomServiceWorker registration failed: ', err);
-        });
-
-        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
-        navigator.serviceWorker.register(serviceWorkerUrl)
-          .then((reg) => {
-            function waitForActivation(serviceWorker) {
-              serviceWorker.addEventListener('statechange', () => {
-                if (serviceWorker.state == 'activated') {
-                  console.log('Installed new service worker.');
-                  loadMainDartJs();
-                }
-              });
-            }
-            if (!reg.active && (reg.installing || reg.waiting)) {
-              // No active web worker and we have installed or are installing
-              // one for the first time. Simply wait for it to activate.
-              waitForActivation(reg.installing ?? reg.waiting);
-            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
-              // When the app updates the serviceWorkerVersion changes, so we
-              // need to ask the service worker to update.
-              console.log('New service worker available.');
-              reg.update();
-              waitForActivation(reg.installing);
-            } else {
-              // Existing service worker is still good.
-              console.log('Loading app from service worker.');
-              loadMainDartJs();
-            }
-          });
-
-        // If service worker doesn't succeed in a reasonable amount of time,
-        // fallback to plaint <script> tag.
-        setTimeout(() => {
-          if (!scriptLoaded) {
-            console.warn(
-              'Failed to load app from service worker. Falling back to plain <script> tag.',
-            );
-            loadMainDartJs();
-          }
-        }, 4000);
-      });
-    } else {
-      // Service workers not supported. Just drop the <script> tag.
-      loadMainDartJs();
-    }
-  </script>
-  <!-- This script adds the flutter initialization JS code -->
-  <script src="flutter.js" defer></script>
   <style>
     @font-face {
       font-family: kalameh;
-      src: url(./font/KalamehFaNum-Medium.ttf);
+      src: url(./assets/assets/font/KalamehFaNum-Medium.ttf);
     }
 
     body {
@@ -237,13 +161,13 @@
 <body>
   <div class="body-modal">
     <header>
-      <div class="icon"><img src="./icons/logo.png" alt=""></div>
+      <div class="icon"><img src="./assets/assets/images/logo.png" alt=""></div>
       <h1 class="title"> وب اپلیکیشن <span class="blue">چیسکو</span> را به صفحه اصلی موبایل خود اضاف کنید .</h1>
     </header>
     <section>
       <div class="content-row">
         <p class="text" dir="rtl">1. در نوار پایین دکمه <span class="bold">share</span> بزنید</p> <object class="svg"
-          data="./icons/svg/export.svg" type=""></object>
+          data="./assets/assets/images/svg/export.svg" type=""></object>
       </div>
       <div class="content-row">
         <p class="text" dir="rtl">2. در منوی باز شده ،در قسمت پایین گزینه <span class="bold">Add to home screen</span>
@@ -257,6 +181,84 @@
     <button  onclick=submit() class="submit">متوجه شدم</button>
 
   </div>
+  <script>
+
+var serviceWorkerVersion = 2;
+    var scriptLoaded = false;
+    let mainUploaded = false;
+    function loadMainDartJs() {
+      if (scriptLoaded) {
+        return;
+      }
+      scriptLoaded = true;
+      var scriptTag = document.createElement('script');
+      scriptTag.src = 'main.dart.js';
+      scriptTag.type = 'application/javascript';
+      document.body.append(scriptTag);
+    }
+
+    if ('serviceWorker' in navigator) {
+      // Service workers are supported. Use them.
+      window.addEventListener('load', function () {
+        // Wait for registration to finish before dropping the <script> tag.
+        // Otherwise, the browser will load the script multiple times,
+        // potentially different versions.
+
+        var customServiceWorkerUrl = './sw.js';
+        navigator.serviceWorker.register(customServiceWorkerUrl, { scope: '.' }).then(function (registration) {
+          // Registration was successful
+          console.log('CustomServiceWorker registration successful with scope: ', registration.scope);
+        }, function (err) {
+          // registration failed
+          console.log('CustomServiceWorker registration failed: ', err);
+        });
+
+        var serviceWorkerUrl = 'flutter_service_worker.js?v=' + serviceWorkerVersion;
+        navigator.serviceWorker.register(serviceWorkerUrl)
+          .then((reg) => {
+            function waitForActivation(serviceWorker) {
+              serviceWorker.addEventListener('statechange', () => {
+                if (serviceWorker.state == 'activated') {
+                  console.log('Installed new service worker.');
+                  loadMainDartJs();
+                }
+              });
+            }
+            if (!reg.active && (reg.installing || reg.waiting)) {
+              // No active web worker and we have installed or are installing
+              // one for the first time. Simply wait for it to activate.
+              waitForActivation(reg.installing ?? reg.waiting);
+            } else if (!reg.active.scriptURL.endsWith(serviceWorkerVersion)) {
+              // When the app updates the serviceWorkerVersion changes, so we
+              // need to ask the service worker to update.
+              console.log('New service worker available.');
+              reg.update();
+              waitForActivation(reg.installing);
+            } else {
+              // Existing service worker is still good.
+              console.log('Loading app from service worker.');
+              loadMainDartJs();
+            }
+          });
+
+        // If service worker doesn't succeed in a reasonable amount of time,
+        // fallback to plaint <script> tag.
+        setTimeout(() => {
+          if (!scriptLoaded) {
+            console.warn(
+              'Failed to load app from service worker. Falling back to plain <script> tag.',
+            );
+            loadMainDartJs();
+          }
+        }, 4000);
+      });
+    } else {
+      // Service workers not supported. Just drop the <script> tag.
+      loadMainDartJs();
+    }
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
   <script>
     window.addEventListener('load', function (ev) {
       // Download main.dart.js

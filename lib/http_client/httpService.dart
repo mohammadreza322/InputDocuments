@@ -80,7 +80,7 @@ class ChiscoClient {
           status: true, code: response.statusCode, object: response.data);
     } on DioError catch (error) {
       ///here we got error if we cant connect to server
-      ///ConnectionTimeOut if we cant connect to server after 10 minuets
+      ///ConnectionTimeOut if we cant connect to server after 10 second
       if (error.type == DioErrorType.connectTimeout) {
         return ChiscoResponse(
             status: false,
@@ -97,28 +97,28 @@ class ChiscoClient {
 
       ///if response status code is 401 its means our token is Expire and we have to refresh the token
       if (error.response!.statusCode == 401) {
-
         try {
-          SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+          SharedPreferences sharedPreferences =
+              await SharedPreferences.getInstance();
           String? accessToken = sharedPreferences.getString('access_token');
           String? refreshToken = sharedPreferences.getString('refresh_token');
           String? detail = sharedPreferences.getString('detail');
+
           ///here we send request for refresh token
           Response<dynamic> refreshRequest = await _dio.put(
               "user/refresh-token",
               options: Options(headers: {"x-auth-token": accessToken}),
               data: {'refreshToken': refreshToken});
+
           ///after receive Response we save it to SharePreferences
           ///and then we call old request again
           localDataSourceImpl.saveToken(refreshRequest.data['accessToken'],
               refreshRequest.data['refreshToken'], detail!);
           return request(url: url, data: data, type: type);
-
         } catch (err) {
           return ChiscoResponse(
               status: false, code: 401, errorMessage: err.toString());
         }
-
       } else {
         return ChiscoResponse(
           status: false,
