@@ -9,6 +9,7 @@
     <div class="teble-content">
         <!-- table -->
         <table class="table">
+            <? if(allClients.length>0){ ?>
             <thead>
             <tr>
                 <th class="t-head" scope="col">ردیف</th>
@@ -71,6 +72,13 @@
         </table>
         <!-- pagination -->
        <?- include('./include/pagination.ejs') ?>
+        <? } else { ?>
+        <!-- table empty -->
+        <div class="teble-content empty-table">
+            <object data="/public/photo/Empty Icon.svg" type=""></object>
+            <span class="text-empty" dir="rtl">داده‌ای یافت نشد.</span>
+        </div>
+        <? } ?>
     </div>
 </div>
 

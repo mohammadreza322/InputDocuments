@@ -18,11 +18,10 @@
                                 id="name"
                                 value=""
                                 type="text"
-                                class="form-control input-inner"
-                                placeholder="مانند: Ch-1254687 "
+                                class="form-control input-inner margin-0"
+                                placeholder="مانند: 1254687 "
                                 aria-label="Username"
-                                aria-describedby="basic-addon1"
-                        />
+                                aria-describedby="basic-addon1" dir="ltr"><span class="static-te">-chc</span>
                     </div>
                 </div>
                 <div class="group-info">
@@ -110,6 +109,8 @@
                     role="tabpanel"
                     aria-labelledby="home-tab"
             >
+                <? if(allCoolers.length>0){ ?>
+
                 <!-- table -->
                 <table class="table">
                     <thead>
@@ -158,6 +159,13 @@
                 <? locals.queries.activeTab = 'cooler' ?>
                 <!-- pagination -->
                 <?- include('./include/pagination.ejs',{pagination:coolerPagination}) ?>
+                <? } else { ?>
+                <!-- table empty -->
+                <div class="teble-content empty-table">
+                    <object data="/public/photo/Empty Icon.svg" type=""></object>
+                    <span class="text-empty" dir="rtl">داده‌ای یافت نشد.</span>
+                </div>
+                <? }?>
             </div>
             <!-- tab2 -->
             <div
@@ -166,6 +174,7 @@
                     role="tabpanel"
                     aria-labelledby="profile-tab"
             >
+                <? if(allPowers.length>0){ ?>
                 <!-- table -->
                 <table class="table">
                     <thead>
@@ -213,6 +222,13 @@
                 <? locals.queries.activeTab = 'power' ?>
                 <!-- pagination -->
                 <?- include('./include/pagination.ejs',{pagination:powerPagination}) ?>
+                <? } else { ?>
+                <!-- table empty -->
+                <div class="teble-content empty-table">
+                    <object data="/public/photo/Empty Icon.svg" type=""></object>
+                    <span class="text-empty" dir="rtl">داده‌ای یافت نشد.</span>
+                </div>
+                <? } ?>
             </div>
         </div>
     </div>

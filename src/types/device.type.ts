@@ -1,10 +1,40 @@
 import { Types } from 'mongoose';
-import { ICooler, IPowerStrip } from '../models/device.model';
+import {ICooler, IPowerStrip, IPowerStripSchedule, PowerConnectors} from '../models/device.model';
 
 export interface listOfDevices {
-	powers: Array<IPowerStrip>;
-	coolers: Array<ICooler>;
+	powers: Array<PowerStripsForApi>;
+	coolers: Array<CoolerForApi>;
 	categories: Array<string>;
+}
+
+interface PowerStripsForApi {
+	connectionStatus:boolean;
+	connectors:Array<PowerConnectors>;
+	totalVoltage: Number;
+	schedule: Array<IPowerStripSchedule>;
+	serialNumber: string;
+	name?: string;
+	category?: string;
+	owner?: Types.ObjectId;
+	deviceLastConnection?:string;
+}
+
+interface CoolerForApi {
+	serialNumber: string;
+	name?: string;
+	category?: string;
+	owner?: Types.ObjectId;
+	deviceLastConnection?:string;
+	schedule: Array<IPowerStripSchedule>;
+	connectionStatus:boolean;
+	model?: string;
+	temp?: number;
+	mode: string;
+	horizontalSwing: string;
+	verticalSwing: string;
+	fan: string;
+	timer: string;
+	power?: boolean;
 }
 
 export interface addDeviceInput {

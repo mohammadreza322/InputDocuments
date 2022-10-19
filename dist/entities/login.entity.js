@@ -39,7 +39,9 @@ class LoginEntity {
                         return output;
                     }
                 }
-                const code = this.generateCode();
+                // const code = this.generateCode();
+                // console.log(code)
+                const code = 12345;
                 const newSmsCode = new sms_codes_1.default({ phoneNumber, code });
                 yield newSmsCode.save();
                 const userDetails = yield users_model_1.default.findOne({

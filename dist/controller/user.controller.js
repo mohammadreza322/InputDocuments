@@ -31,6 +31,9 @@ const getFullName = (req, res) => __awaiter(void 0, void 0, void 0, function* ()
         if (fullName.trim() === '') {
             return res.status(404).json({ message: 'خطا در ورودی' });
         }
+        if (fullName.trim().length > 50) {
+            return res.status(404).json({ message: 'نام ورودی نمیتواند بیش از ۵۰ کاراکتر باشد' });
+        }
         if (yield user_entity_1.default.setUserDetails(req.userId, fullName, undefined, undefined)) {
             return res.json({ message: 'نام شما با موفقیت ثبت شد' });
         }
@@ -70,6 +73,9 @@ const editUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function
         if (fullName.trim() === '') {
             return res.json({ message: 'نام خود را وارد نکرده اید!' });
         }
+        if (fullName.trim().length > 50) {
+            return res.status(404).json({ message: 'نام ورودی نمیتواند بیش از ۵۰ کاراکتر باشد' });
+        }
         let userBirthday = undefined;
         if (birthday) {
             if (!validator_1.default.isValidDate(birthday)) {
@@ -78,6 +84,13 @@ const editUserProfile = (req, res) => __awaiter(void 0, void 0, void 0, function
                 });
             }
             userBirthday = new Date(birthday);
+        }
+        if (address) {
+            if (address.trim().length > 200) {
+                return res.json({
+                    message: 'ادرس وارد شده نمیتواند بیشتر از ۲۰۰ کاراکتر باشد!',
+                });
+            }
         }
         if (yield user_entity_1.default.setUserDetails(req.userId, fullName, userBirthday, address)) {
             const userDetails = yield user_entity_1.default.getUserInformation(req.userId);

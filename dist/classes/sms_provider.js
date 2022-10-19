@@ -42,7 +42,7 @@ class SmsProvider {
                     }
                     try {
                         const jsonBody = JSON.parse(body);
-                        console.log(jsonBody);
+                        // console.log(jsonBody)
                         return resolve(jsonBody.items.balance);
                     }
                     catch (e) {
@@ -80,6 +80,6 @@ class SmsProvider {
     }
 }
 exports.default = SmsProvider;
-SmsProvider.apiKey = '77ea86d1fee701d5f493d9d774562cd5648412db622a05c44295a9ed97965d75';
-SmsProvider.smsNumber = '10008566';
+SmsProvider.apiKey = 'f992710e2dd1b2a825fe2bc1dbf554083632722173329ac9c742f8530620170f';
+SmsProvider.smsNumber = '30005006007625';
 SmsProvider.url = 'https://api.ghasedak.me/v2/';

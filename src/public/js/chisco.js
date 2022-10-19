@@ -33,7 +33,9 @@ $(document).ready(function () {
 window.onload = function () {
   setTimeout(() => {
     $('.header-loading').removeClass('animation')
-  },500)
+    $('.loading-page').css({"display":"none"})
+    $('.all-my-content').css("opacity","1")
+  },750)
 }
 
 // loading modal
@@ -43,6 +45,10 @@ function showLoading(){
   successModal.hide()
   removeModal.hide()
   errormodal.hide()
+  const prevModal = $(".modal:visible");
+  // $('body').on('show.bs.modal', '.modal', function () {
+  prevModal.removeClass("fade").modal("hide").addClass("fade");
+
 
   $(".loadmodal .text").text(text)
 
@@ -55,6 +61,10 @@ function showSuccess(text){
   removeModal.hide()
   errormodal.hide()
   loadingModal.hide()
+  const prevModal = $(".modal:visible");
+  // $('body').on('show.bs.modal', '.modal', function () {
+  prevModal.removeClass("fade").modal("hide").addClass("fade");
+
 
   $(".successModal .title").text('با موفقیت انجام شد');
   $(".successModal .text").text(text);
@@ -69,6 +79,10 @@ function showWarning(title, text, successText, success) {
   successModal.hide()
   errormodal.hide()
   loadingModal.hide()
+  const prevModal = $(".modal:visible");
+  // $('body').on('show.bs.modal', '.modal', function () {
+  prevModal.removeClass("fade").modal("hide").addClass("fade");
+
 
   $(".myModal .title").text(title);
   $(".myModal .text").text(text);
@@ -81,6 +95,7 @@ function showWarning(title, text, successText, success) {
 
   $(".myModal .cancle").on("click", function () {
     removeModal.hide();
+    prevModal.modal("show");
   });
 
   removeModal.show();
@@ -92,6 +107,11 @@ function showError( text){
   successModal.hide()
   removeModal.hide()
   loadingModal.hide()
+  const prevModal = $(".modal:visible");
+  // $('body').on('show.bs.modal', '.modal', function () {
+  prevModal.removeClass("fade").modal("hide").addClass("fade");
+
+
   const title = 'خطا'
   const successText = 'متوجه شدم'
   const cancelElement = $(".errormodal .cancle")

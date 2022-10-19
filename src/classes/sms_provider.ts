@@ -8,9 +8,9 @@
 const request = require('request');
 
 export default class SmsProvider {
-    private static apiKey = '77ea86d1fee701d5f493d9d774562cd5648412db622a05c44295a9ed97965d75';
+    private static apiKey = 'f992710e2dd1b2a825fe2bc1dbf554083632722173329ac9c742f8530620170f';
 
-    private static smsNumber = '10008566';
+    private static smsNumber = '30005006007625';
 
     private static url = 'https://api.ghasedak.me/v2/';
 
@@ -44,7 +44,7 @@ export default class SmsProvider {
                 try{
                     const jsonBody = JSON.parse(body);
 
-                    console.log(jsonBody)
+                    // console.log(jsonBody)
                     return resolve(jsonBody.items.balance)
 
                 } catch (e) {

@@ -76,7 +76,7 @@ export default class UserEntity {
 
 		const checkUserExists = await BrokerProvider.userExist(usernameBroker);
 
-		console.log(checkUserExists)
+		// console.log(checkUserExists)
 
 		if (!checkUserExists) {
 			console.log("add user mnesia")
@@ -193,7 +193,28 @@ export default class UserEntity {
 	}
 
 	public static async getCountAllClients() {
-		return await Users.countDocuments({role: 'user',fullName:{$ne:null}}) || 0;
+		const clients = await Users
+			.find(
+				{fullName:{$ne:null}},
+				{fullName:1,phoneNumber:1,_id:1,registerDate:1,address:1,birthday:1,role:1}
+			)
+
+		const output = []
+
+		for(const user of clients) {
+
+
+			const countDevices = await DeviceEntity.getAllDevicesCount(user._id)
+
+			if (user.role != 'user') {
+				if (countDevices == 0) {
+					continue;
+				}
+			}
+			output.push(user);
+		}
+
+		return output.length;
 	}
 
 	public static async addAdmin(fullName:string,phoneNumber:string,access:string,enable:string) {
@@ -251,8 +272,8 @@ export default class UserEntity {
 	public static async getAllClients(page:number,limit:number){
 		const clients = await Users
 			.find(
-				{role:'user',fullName:{$ne:null}},
-				{fullName:1,phoneNumber:1,_id:1,registerDate:1,address:1,birthday:1}
+				{fullName:{$ne:null}},
+				{fullName:1,phoneNumber:1,_id:1,registerDate:1,address:1,birthday:1,role:1}
 			)
 			.sort({registerDate:-1})
 			.skip(limit*(page-1))
@@ -262,7 +283,15 @@ export default class UserEntity {
 
 		for(const user of clients) {
 
+			
+
 			const countDevices = await DeviceEntity.getAllDevicesCount(user._id)
+
+			if(user.role!='user') {
+				if(countDevices == 0) {
+					continue;
+				}
+			}
 
 			const userJalaliPersianDate =new PersianDate(user.registerDate).calendar('jalali').toString()
 

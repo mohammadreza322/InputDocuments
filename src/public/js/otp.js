@@ -27,9 +27,9 @@ $(() => {
         showLoading()
 
         sendAjax('/api/check-otp',{code,smsId:id,isDashboard:true},(res) => {
-            showSuccess(res.message);
+            // showSuccess(res.message);
             setTimeout(() => {
-                location.replace(  '/dashboard')
+                location.replace('/dashboard')
             },1500)
         })
     })

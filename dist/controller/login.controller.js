@@ -40,7 +40,7 @@ const getMobile = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const loginOutput = yield login_entity_1.default.getCode(phoneNumber);
     if (loginOutput === null || loginOutput === void 0 ? void 0 : loginOutput.id) {
         yield sms_provider_1.default.sendOTPCode(loginOutput.code.toString(), phoneNumber);
-        console.log(loginOutput.code);
+        // console.log(loginOutput.code)
         req.session.loginId = loginOutput.id.toString();
         req.session.loginCode = loginOutput.code.toString();
         req.session.userPhone = phoneNumber;

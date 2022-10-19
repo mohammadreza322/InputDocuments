@@ -17,7 +17,7 @@ connectDb().then(() => {
         client.on('connect', () => {
             console.log('connected');
 
-            client.subscribe('/event_chisco/disconnected', (err) => {
+            client.subscribe('/event/disconnected', (err) => {
                 if (err) {
                     console.error('can not subscribe /event/disconnected');
                     console.error(err);
@@ -26,7 +26,7 @@ connectDb().then(() => {
                 console.log('subscribe disconnect');
             });
 
-            client.subscribe('/event_chisco/connected', (err) => {
+            client.subscribe('/event/connected', (err) => {
                 if (err) {
                     console.error('can not subscribe /event/connected');
                     console.error(err);
@@ -98,7 +98,7 @@ connectDb().then(() => {
             const data = JSON.parse(message.toString('utf8'));
 
             if (changeDeviceRegex) {
-                console.log("device changed");
+                
 
                 changeDevice(changeDeviceRegex[1], data);
             // } else if (changePowerRegex) {
@@ -106,8 +106,10 @@ connectDb().then(() => {
             // } else if (changeScheduleRegex) {
             //     changeSchedule(changeScheduleRegex[1], data);
             } else if (connectedDeviceRegex) {
+                
                 changeConnectStatus(data);
             } else if (disconnectDeviceRegex) {
+                
                 changeDisconnectStatus(data);
             } else if(!changeDeviceRegex){
                 if(republishRegex){
@@ -137,7 +139,7 @@ async function changeDisconnectStatus(payload: any) {
     }
 
     if (validSerialNumber.type == 'power') {
-		console.log("power disconnnect")
+		
         await PowerStrip.updateOne(
             {serialNumber},
             {
@@ -145,7 +147,7 @@ async function changeDisconnectStatus(payload: any) {
             },
         );
     } else {
-		console.log("cooler disconnnect")
+		
         await Cooler.updateOne(
             {serialNumber},
             {
@@ -189,7 +191,7 @@ async function changeConnectStatus(payload: any) {
 
 async function changeDevice(serialNumber: string,payload:any) {
     const validSerialNumber = await _deviceExists(serialNumber);
-    console.log(validSerialNumber)
+    // console.log(validSerialNumber)
     if(validSerialNumber.valid) {
         if (validSerialNumber.type == 'power') {
             const power = await PowerStrip.findOne({serialNumber})
@@ -199,9 +201,9 @@ async function changeDevice(serialNumber: string,payload:any) {
                 const index = connectors.findIndex((c) => {
                     return c.connectorId == connector.portNumber;
                 })
-                console.log(index)
-                console.log(connector)
-                console.log(connectors)
+                // console.log(index)
+                // console.log(connector)
+                // console.log(connectors)
                 const c = connectors[index];
                 c.status = connector.status
                 connectors[index] = c
@@ -222,7 +224,7 @@ async function changeDevice(serialNumber: string,payload:any) {
             // );
         } else {
             console.log("cooler changed")
-            console.log(payload)
+            // console.log(payload)
             payload = payload.cooler
             await Cooler.updateOne(
                 {serialNumber},

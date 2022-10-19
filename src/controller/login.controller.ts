@@ -41,7 +41,7 @@ export const getMobile = async (req: CustomRequest, res: Response) => {
         await SmsProvider.sendOTPCode(loginOutput.code!.toString(),phoneNumber);
 
 
-        console.log(loginOutput.code)
+        // console.log(loginOutput.code)
 
         req.session.loginId = loginOutput.id.toString()
         req.session.loginCode = loginOutput.code.toString()

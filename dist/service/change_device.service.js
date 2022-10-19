@@ -28,7 +28,7 @@ const logs_entity_1 = __importDefault(require("../entities/logs.entity"));
         });
         client.on('connect', () => {
             console.log('connected');
-            client.subscribe('/event_chisco/disconnected', (err) => {
+            client.subscribe('/event/disconnected', (err) => {
                 if (err) {
                     console.error('can not subscribe /event/disconnected');
                     console.error(err);
@@ -36,7 +36,7 @@ const logs_entity_1 = __importDefault(require("../entities/logs.entity"));
                 }
                 console.log('subscribe disconnect');
             });
-            client.subscribe('/event_chisco/connected', (err) => {
+            client.subscribe('/event/connected', (err) => {
                 if (err) {
                     console.error('can not subscribe /event/connected');
                     console.error(err);
@@ -101,7 +101,6 @@ const logs_entity_1 = __importDefault(require("../entities/logs.entity"));
             const disconnectDeviceRegex = /\/event\/disconnected/.exec(topic);
             const data = JSON.parse(message.toString('utf8'));
             if (changeDeviceRegex) {
-                console.log("device changed");
                 changeDevice(changeDeviceRegex[1], data);
                 // } else if (changePowerRegex) {
                 //     changePower(changePowerRegex[1], data);
@@ -142,13 +141,11 @@ function changeDisconnectStatus(payload) {
             return;
         }
         if (validSerialNumber.type == 'power') {
-            console.log("power disconnnect");
             yield device_model_1.PowerStrip.updateOne({ serialNumber }, {
                 $set: { deviceLastConnection: lastConnection },
             });
         }
         else {
-            console.log("cooler disconnnect");
             yield device_model_1.Cooler.updateOne({ serialNumber }, {
                 $set: { deviceLastConnection: lastConnection },
             });
@@ -182,7 +179,7 @@ function changeConnectStatus(payload) {
 function changeDevice(serialNumber, payload) {
     return __awaiter(this, void 0, void 0, function* () {
         const validSerialNumber = yield _deviceExists(serialNumber);
-        console.log(validSerialNumber);
+        // console.log(validSerialNumber)
         if (validSerialNumber.valid) {
             if (validSerialNumber.type == 'power') {
                 const power = yield device_model_1.PowerStrip.findOne({ serialNumber });
@@ -191,9 +188,9 @@ function changeDevice(serialNumber, payload) {
                     const index = connectors.findIndex((c) => {
                         return c.connectorId == connector.portNumber;
                     });
-                    console.log(index);
-                    console.log(connector);
-                    console.log(connectors);
+                    // console.log(index)
+                    // console.log(connector)
+                    // console.log(connectors)
                     const c = connectors[index];
                     c.status = connector.status;
                     connectors[index] = c;
@@ -213,7 +210,7 @@ function changeDevice(serialNumber, payload) {
             }
             else {
                 console.log("cooler changed");
-                console.log(payload);
+                // console.log(payload)
                 payload = payload.cooler;
                 yield device_model_1.Cooler.updateOne({ serialNumber }, {
                     $set: {

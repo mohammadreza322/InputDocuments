@@ -20,62 +20,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/gulpfile.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/yarn-error.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/ahp.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/ahp.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/dist/public/photo/Empty Icon.svg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/public/photo/Empty Icon.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chisco-backend.rar" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/broker_provider.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/broker_provider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/broker_provider.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/convert.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/convert.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/mqtt.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/mqtt.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/mqtt.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/pagination.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/pagination.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/sms_provider.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/sms_provider.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/sms_provider.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/validator.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/validator.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/classes/validator.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/config/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/config/db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/config/db.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/controller/customer.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/controller/customer.controller.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/controller/device.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/controller/device.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/controller/device.controller.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/controller/login.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/controller/login.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/controller/login.controller.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/controller/user.controller.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/controller/user.controller.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/controller/user.controller.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/entities/device.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/device.entity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/entities/device.entity.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/entities/login.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/login.entity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/entities/login.entity.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/entities/logs.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/logs.entity.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/entities/token.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/token.entity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/entities/token.entity.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/entities/user.entity.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/entities/user.entity.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/entities/user.entity.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/index.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/middleware/authorization.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/middleware/authorization.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/middleware/authorization.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/device.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/device.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/device.model.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/logs.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/logs.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/permission.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/permission.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/permission.model.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/sms_codes.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/sms_codes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/sms_codes.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/tokens.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/tokens.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/tokens.model.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/models/users.model.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/models/users.model.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/models/users.model.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/page_view/admin.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/admin.pageview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/page_view/auth.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/auth.pageview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/page_view/clients.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/clients.pageview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/page_view/dashboard.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/dashboard.pageview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/page_view/devices.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/devices.pageview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/public/css/ie.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/css/ie.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/public/css/lib/bootstrap.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/css/lib/bootstrap.min.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/public/css/lib/persian-datepicker.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/css/lib/persian-datepicker.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/public/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/public/js/chisco.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/chisco.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/public/js/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/client.js" afterDir="false" />
@@ -92,44 +69,62 @@
       <change beforePath="$PROJECT_DIR$/dist/public/js/storehouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/storehouse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/api.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/api.router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/api.router.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/auth.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/auth.router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/customer.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/customer.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/dashboard.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/dashboard.route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/device.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/device.route.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/device.route.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/devices.site_router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/devices.site_router.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/login.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/login.router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/login.router.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/store_room.route.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/store_room.route.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/routes/user.router.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/routes/user.router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/routes/user.router.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/service/change_device.service.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/service/change_device.service.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/service/change_device.service.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/test.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/test.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/test.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/types/device.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/device.type.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/types/device.type.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/types/global.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/global.type.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/types/global.type.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/types/login.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/login.type.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/types/login.type.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/types/session.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/session.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/types/user.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/user.type.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/types/user.type.js.map" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/utility/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/utility/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/utility/constants.js.map" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/broker_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/broker_provider.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/sms_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/sms_provider.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/device.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/device.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/login.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/login.controller.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/controller/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/device.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/device.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/login.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/login.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/logs.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logs.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/entities/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/models/device.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/device.model.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/page_view/auth.pageview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/page_view/auth.pageview.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/css/ie.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/css/ie.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/admin.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/js/chisco.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/chisco.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/js/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/client.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/dashboard.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/js/device.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/device.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/js/otp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/otp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/public/js/storehouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/storehouse.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/change_device.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/change_device.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/test.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utility/constants.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/utility/constants.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/types/device.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/device.type.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/client.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/client.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -165,9 +160,9 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="ejs.close.delimiter" value="?&gt;" />
     <property name="ejs.open.delimiter" value="&lt;?" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src/routes" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
     <property name="nodejs_package_manager_path" value="yarn" />
-    <property name="settings.editor.selected.configurable" value="Settings.JavaScript.Templates" />
+    <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="C:\projects\node\chisco-backend\node_modules\typescript\lib" />
   </component>
   <component name="RecentsManager">
@@ -213,7 +208,14 @@
       <workItem from="1665143502466" duration="17144000" />
       <workItem from="1665381266485" duration="4347000" />
       <workItem from="1665522021152" duration="3886000" />
-      <workItem from="1665551729645" duration="3851000" />
+      <workItem from="1665551729645" duration="4446000" />
+      <workItem from="1665816470146" duration="46000" />
+      <workItem from="1665983489459" duration="2441000" />
+      <workItem from="1665985959911" duration="3306000" />
+      <workItem from="1666071931681" duration="3563000" />
+      <workItem from="1666077562522" duration="8044000" />
+      <workItem from="1666154142302" duration="1820000" />
+      <workItem from="1666157410676" duration="1350000" />
     </task>
     <servers />
   </component>
@@ -244,9 +246,10 @@
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state x="2632" y="317" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662782076494" />
-    <state x="2660" y="270" key="FileChooserDialogImpl" timestamp="1662970582804">
-      <screen x="1920" y="0" width="1920" height="1032" />
+    <state x="592" y="213" key="FileChooserDialogImpl" timestamp="1666094187213">
+      <screen x="0" y="0" width="1536" height="816" />
     </state>
+    <state x="592" y="213" key="FileChooserDialogImpl/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1666094187213" />
     <state x="2660" y="270" key="FileChooserDialogImpl/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662970582804" />
     <state width="1055" height="149" key="GridCell.Tab.0.bottom" timestamp="1664565841580">
       <screen x="0" y="0" width="1536" height="816" />
@@ -272,18 +275,24 @@
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state width="196" height="457" key="HiddenNamespacesPopup/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662539447559" />
-    <state x="2381" y="160" key="SettingsEditor" timestamp="1662788185868">
-      <screen x="1920" y="0" width="1920" height="1032" />
-    </state>
-    <state x="2381" y="160" key="SettingsEditor/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662788185868" />
-    <state x="534" y="197" width="549" height="592" key="find.popup" timestamp="1665134887131">
+    <state x="369" y="106" key="SettingsEditor" timestamp="1665985946043">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
+    <state x="369" y="106" key="SettingsEditor/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1665985946043" />
+    <state x="2381" y="160" key="SettingsEditor/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662788185868" />
+    <state x="534" y="197" width="549" height="592" key="find.popup" timestamp="1666154548585">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="534" y="197" width="549" height="592" key="find.popup/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1666154548585" />
     <state x="2587" y="249" width="586" height="534" key="find.popup/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1663668005762" />
-    <state x="534" y="197" width="549" height="592" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1665134887131" />
+    <state x="534" y="197" width="549" height="592" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1666075050622" />
     <state x="425" y="185" key="run.anything.popup" timestamp="1664599933704">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
     <state x="425" y="185" key="run.anything.popup/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1664599933704" />
+    <state x="431" y="137" width="672" height="678" key="search.everywhere.popup" timestamp="1666079017715">
+      <screen x="0" y="0" width="1536" height="816" />
+    </state>
+    <state x="431" y="137" width="672" height="678" key="search.everywhere.popup/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1666079017715" />
   </component>
 </project>

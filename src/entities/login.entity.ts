@@ -29,7 +29,9 @@ export default class LoginEntity {
 				}
 			}
 
-			const code = this.generateCode();
+			// const code = this.generateCode();
+			// console.log(code)
+			const code = 12345;
 			const newSmsCode = new SmsCode({ phoneNumber, code });
 
 			await newSmsCode.save();

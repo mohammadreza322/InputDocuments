@@ -72,12 +72,13 @@
     <div class="teble-content">
         <div class="title-link">
             <p class="title">آخرین مشتریان اضافه شده</p>
-            <a class="link" href="/dashboard/clients"
+            <a class="link" href="/dashboard/client"
             >
                 <object data="/public/photo/svg/arrow-left.svg" type=""></object>
                 <p class="txt">همه مشتریان</p></a
             >
         </div>
+        <? if(lastCustomers.length>0){ ?>
         <table class="table">
             <thead>
             <tr>
@@ -136,7 +137,13 @@
             <? }) ?>
             </tbody>
         </table>
-
+        <? } else { ?>
+        <!-- table empty -->
+        <div class="teble-content empty-table">
+            <object data="/public/photo/Empty Icon.svg" type=""></object>
+            <span class="text-empty" dir="rtl">داده‌ای یافت نشد.</span>
+        </div>
+        <? } ?>
     </div>
 </div>
 

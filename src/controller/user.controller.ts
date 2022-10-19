@@ -28,6 +28,10 @@ export const getFullName = async (req: CustomRequest, res: Response) => {
 			return res.status(404).json({ message: 'خطا در ورودی' });
 		}
 
+		if(fullName.trim().length > 50){
+			return res.status(404).json({ message: 'نام ورودی نمیتواند بیش از ۵۰ کاراکتر باشد' });
+		}
+
 		if (
 			await UserEntity.setUserDetails(
 				req.userId,
@@ -80,6 +84,10 @@ export const editUserProfile = async (req: CustomRequest, res: Response) => {
 			return res.json({ message: 'نام خود را وارد نکرده اید!' });
 		}
 
+		if(fullName.trim().length > 50){
+			return res.status(404).json({ message: 'نام ورودی نمیتواند بیش از ۵۰ کاراکتر باشد' });
+		}
+
 		let userBirthday = undefined;
 
 		if (birthday) {
@@ -90,6 +98,14 @@ export const editUserProfile = async (req: CustomRequest, res: Response) => {
 			}
 
 			userBirthday = new Date(birthday);
+		}
+
+		if (address){
+			if(address.trim().length > 200){
+				return res.json({
+					message: 'ادرس وارد شده نمیتواند بیشتر از ۲۰۰ کاراکتر باشد!',
+				});
+			}
 		}
 
 		if (

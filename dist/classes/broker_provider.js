@@ -68,7 +68,7 @@ class BrokerProvider {
                         console.error(error);
                         return resolve(false);
                     }
-                    console.log(response);
+                    console.log(response.body);
                     const data = JSON.parse(response.body);
                     if (data.data) {
                         if (data.data.username) {
@@ -84,8 +84,8 @@ class BrokerProvider {
     static kickDevice(serialNumber) {
         return __awaiter(this, void 0, void 0, function* () {
             const options = {
-                'method': 'GET',
-                'url': `${this.authorization}/clients/${serialNumber}`,
+                'method': 'DELETE',
+                'url': `${constants_1.brokerUrlAPI}/clients/${serialNumber}`,
                 'headers': {
                     'Authorization': this.authorization
                 }
@@ -97,6 +97,7 @@ class BrokerProvider {
                         console.error(error);
                         return resolve(false);
                     }
+                    console.log(response.body);
                     return resolve(true);
                 });
             });

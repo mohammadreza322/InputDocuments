@@ -44,6 +44,7 @@
                     role="tabpanel"
                     aria-labelledby="home-tab"
             >
+                <? if(allCoolers.length>0){ ?>
                 <!-- table -->
                 <table class="table">
                     <thead>
@@ -120,6 +121,13 @@
                 <? locals.queries.activeTab = 'cooler' ?>
                 <!-- pagination -->
                 <?- include('./include/pagination.ejs',{pagination:coolerPagination}) ?>
+                <? } else{ ?>
+                <!-- table empty -->
+                <div class="teble-content empty-table">
+                    <object data="/public/photo/Empty Icon.svg" type=""></object>
+                    <span class="text-empty" dir="rtl">داده‌ای یافت نشد.</span>
+                </div>
+                <? } ?>
             </div>
             <!-- tab2 -->
             <div
@@ -128,6 +136,7 @@
                     role="tabpanel"
                     aria-labelledby="profile-tab"
             >
+                <? if(allPowers.length>0){ ?>
                 <!-- table -->
                 <table class="table">
                     <thead>
@@ -207,12 +216,29 @@
                 <? locals.queries.activeTab = 'power' ?>
                 <!-- pagination -->
                 <?- include('./include/pagination.ejs',{pagination:powerPagination}) ?>
+                <? } else { ?>
+                <!-- table empty -->
+                <div class="teble-content empty-table">
+                    <object data="/public/photo/Empty Icon.svg" type=""></object>
+                    <span class="text-empty" dir="rtl">داده‌ای یافت نشد.</span>
+                </div>
+                <? } ?>
             </div>
         </div>
     </div>
 </div>
 
+<template id="log-template">
+    <div class="row-log row flex justify-content-between log-row">
+        <div class="datelog ">
 
+            <span>{{hour}}</span> - <span>{{date}}</span>
+        </div>
+        <div class="textlog">
+            {{text}}
+        </div>
+    </div>
+</template>
 <!-- modal log admin  -->
 <div
         class="modal edit-modal log-modal fade"
@@ -236,39 +262,24 @@
                     بستن
                 </button>
             </div>
-            <div class="modal-body">
-                <div class="right-log">
-                    <label for="datelog" class="title-log">تاریخ</label>
-                    <ul id="datelog" class="date-log">
-                        <li class="date">
-                            <span>24:52</span> - <span>1400/05/23</span>
-                        </li>
-                        <li class="date">
-                            <span>24:52</span> - <span>1400/05/23</span>
-                        </li>
-                        <li class="date">
-                            <span>24:52</span> - <span>1400/05/23</span>
-                        </li>
-                        <li class="date">
-                            <span>24:52</span> - <span>1400/05/23</span>
-                        </li>
-                        <li class="date">
-                            <span>24:52</span> - <span>1400/05/23</span>
-                        </li>
-                    </ul>
+            <div class="modal-body notempty-modal-log">
+                <div class="title-log-contant row flex justify-content-between">
+                    <span for="datelog" class="title-log">تاریخ</span>
+                    <span for="textlog" class="title-log text">شرح فعالیت</span>
                 </div>
-                <div class="left-log">
-                    <label for="textlog" class="title-log">شرح فعالیت</label>
-                    <ul id="textlog" class="text-log">
-                        <li class="text">تغییر شماره تلفن کاربر “امیر همتی‌نژاد” از 09213332211 به 09172243322.</li>
-                        <li class="text">حذف کردن کاربر “علی میرهادی” از لیست کاربران.</li>
-                        <li class="text">اضافه کردن دستگاه سه راهه با شماره سریال “Ch-563486”.</li>
-                        <li class="text">حذف دستگاه “Ch-563486” از بروکر.</li>
-                        <li class="text">ورود به سیستم.</li>
-                    </ul>
+                <div class="list-of-logs">
+                    <div class="textlog">
+                        تغییر شماره تلفن کاربر “امیر همتی‌نژاد” از 09213332211 به
+                        09172243322.
+                    </div>
                 </div>
 
-                <div class="no-content-log" style="display: none">اطلاعاتی وجود ندارد</div>
+
+
+            </div>
+            <div class="modal-body empty-modal-log">
+                <object data="/public/photo/Empty Icon.svg" type=""></object>
+                <span class="text-empty" dir="rtl">داده ای یافت نشد.</span>
             </div>
         </div>
     </div>

@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.otpPage = exports.loginPage = void 0;
 const loginPage = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     if (req.session.isUserLoggedIn) {
-        console.log(req.session.isUserLoggedIn);
+        // console.log(req.session.isUserLoggedIn)
         return res.redirect('/dashboard');
     }
     res.locals.scripts.push('/js/login.js');

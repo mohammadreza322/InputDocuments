@@ -25,10 +25,16 @@ class LogsEntity {
             return yield this.addLog(`حذف کردن کاربر “${userFullName}” از لیست کاربران.`, adminId);
         });
     }
-    static addDevice(serialNumber, adminId, deviceId) {
+    static addDevicePower(serialNumber, adminId, deviceId) {
         return __awaiter(this, void 0, void 0, function* () {
             // await this.addLog('ورود اولیه به سیستم.',deviceId);
-            return yield this.addLog(`حذف کردن دستگاه “اضافه کردن دستگاه سه راهه با شماره سریال “${serialNumber}”.`, adminId);
+            return yield this.addLog(`اضافه کردن دستگاه سه راهه با شماره سریال “${serialNumber}”.`, adminId);
+        });
+    }
+    static addDeviceCooler(serialNumber, adminId, deviceId) {
+        return __awaiter(this, void 0, void 0, function* () {
+            // await this.addLog('ورود اولیه به سیستم.',deviceId);
+            return yield this.addLog(`اضافه کردن دستگاه کولر با شماره سریال “${serialNumber}”.`, adminId);
         });
     }
     static kickDeviceFromBroker(serialNumber, adminId, adminName) {

@@ -23,17 +23,17 @@
 		"express-flash": "^0.0.2",
 		"express-rate-limit": "^6.4.0",
 		"express-session": "^1.17.3",
-		"gulp-javascript-obfuscator": "^1.1.6",
+
 		"helmet": "^6.0.0",
 		"jsonwebtoken": "^8.5.1",
 		"moment": "^2.29.3",
 		"mongoose": "^6.3.6",
 		"mqtt": "^4.3.7",
 		"rate-limit-mongo": "^2.3.2",
-		"validator": "^13.7.0",
-		"yarn": "^1.22.19"
+		"validator": "^13.7.0"
 	},
 	"devDependencies": {
+		"gulp-javascript-obfuscator": "^1.1.6",
 		"@faker-js/faker": "^7.5.0",
 		"@types/axios": "^0.14.0",
 		"@types/body-parser": "^1.19.2",

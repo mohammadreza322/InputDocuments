@@ -2,7 +2,7 @@ import {Request,Response} from 'express'
 
 export const loginPage = async (req:Request,res:Response) => {
     if (req.session.isUserLoggedIn) {
-        console.log(req.session.isUserLoggedIn)
+        // console.log(req.session.isUserLoggedIn)
         return res.redirect('/dashboard')
     }
 

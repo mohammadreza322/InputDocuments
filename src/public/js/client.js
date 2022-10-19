@@ -2,7 +2,7 @@ $(() => {
     $('.remove-client').on('click',function () {
         const id = $(this).data('id')
         const name = $(this).closest('tr').find('.name-js').text()
-        showWarning('اخطار حذف مشتری',`آیا برای حذف “${name}” مطمئن هستید؟`,'بله، حذف مشتری',() => {
+        showWarning('اخطار حذف مشتری',`آیا برای حذف “${name}” مطمئن هستید؟`,'بله',() => {
             showLoading();
             sendAjax('/dashboard/client/delete',{id},(res) => {
                 showSuccess(res.message)

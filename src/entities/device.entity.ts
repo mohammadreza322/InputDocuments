@@ -42,7 +42,19 @@ export default class DeviceEntity {
         };
 
         for (const power of powerStrips) {
-            devices.powers.push(power);
+            devices.powers.push({
+                connectors:power.connectors,
+                connectionStatus:power.deviceLastConnection == 'آنلاین',
+                totalVoltage:power.totalVoltage,
+                schedule:power.schedule,
+                serialNumber:power.serialNumber,
+                name:power.name,
+                category:power.category,
+                owner:power.owner,
+                deviceLastConnection:power.deviceLastConnection
+            });
+
+
             if (power.category) {
                 if (!devices.categories.includes(power.category)) {
                     devices.categories.push(power.category);
@@ -51,7 +63,23 @@ export default class DeviceEntity {
         }
 
         for (const cooler of coolers) {
-            devices.coolers.push(cooler);
+            devices.coolers.push({
+                category:cooler.category,
+                connectionStatus:cooler.deviceLastConnection == 'آنلاین',
+                deviceLastConnection:cooler.deviceLastConnection,
+                fan:cooler.fan,
+                horizontalSwing:cooler.horizontalSwing,
+                mode:cooler.mode,
+                model:cooler.model,
+                name:cooler.name,
+                owner:cooler.owner,
+                power:cooler.power,
+                schedule:cooler.schedule,
+                serialNumber:cooler.serialNumber,
+                temp:cooler.temp,
+                timer:cooler.timer,
+                verticalSwing:cooler.verticalSwing
+            });
             if (cooler.category) {
                 if (!devices.categories.includes(cooler.category)) {
                     devices.categories.push(cooler.category);
@@ -438,7 +466,7 @@ export default class DeviceEntity {
     }
 
     static async getCountAllCoolersOutStore() {
-        return await PowerStrip.countDocuments({owner: {$ne: null}}) | 0
+        return await Cooler.countDocuments({owner: {$ne: null}}) | 0
     }
 
     static async getAllDevicesCount(userId: Types.ObjectId) {
@@ -506,7 +534,19 @@ export default class DeviceEntity {
         for (const power of powers) {
             const createAtJalali = new PersianDate(`${power.createAt.getFullYear()}-${power.createAt.getMonth() + 1}-${power.createAt.getDate()}`).calendar('jalali').toString()
             const activateJalaliDate = power.registerAt ? new PersianDate(`${power.registerAt.getFullYear()}-${power.registerAt.getMonth() + 1}-${power.registerAt.getDate()}`).calendar('jalali').toString() : 'ندارد';
-            const lastStatus = power.deviceLastConnection ? power.deviceLastConnection:'ندارد'
+            let lastStatus =  'ندارد'
+            if(power.deviceLastConnection){
+
+                if(power.deviceLastConnection == 'آنلاین'){
+                    lastStatus = 'آنلاین';
+                }else{
+                
+            
+                const date= new Date(parseInt(power.deviceLastConnection.toString())*1)
+                lastStatus = new PersianDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`).calendar('jalali').toString()
+                }
+           
+            }
             output.push({
                 serialNumber: power.serialNumber,
                 fullName: power.owner.fullName,
@@ -578,7 +618,16 @@ export default class DeviceEntity {
         for (const cooler of coolers) {
             const createAtJalali = new PersianDate(`${cooler.createAt.getFullYear()}-${cooler.createAt.getMonth() + 1}-${cooler.createAt.getDate()}`).calendar('jalali').toString()
             const activateJalaliDate = cooler.registerAt ? new PersianDate(`${cooler.registerAt.getFullYear()}-${cooler.registerAt.getMonth() + 1}-${cooler.registerAt.getDate()}`).calendar('jalali').toString() : 'ندارد';
-            const lastStatus = cooler.deviceLastConnection ? cooler.deviceLastConnection:'ندارد'
+
+            let lastStatus = 'ندارد'
+            if(cooler.deviceLastConnection  ){
+                if(cooler.deviceLastConnection=='آنلاین'){
+                    lastStatus = 'آنلاین'
+                }else{
+                    const date= new Date(parseInt(cooler.deviceLastConnection.toString())*1)
+                    lastStatus = new PersianDate(`${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`).calendar('jalali').toString()
+                }
+            }
             const logsDetails = await LogsEntity.getLogs(cooler._id)
             const logs = logsDetails.map(log => {
                 const date = new PersianDate(`${log.date.getFullYear()}-${log.date.getMonth() + 1}-${log.date.getDate()} ${log.date.getHours()}:${log.date.getMinutes()}`).calendar('jalali')

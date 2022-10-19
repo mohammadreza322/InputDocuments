@@ -37,12 +37,17 @@ const saveDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
         if (name.trim() === '') {
             return res
                 .status(400)
-                .json({ message: 'نام دستگاه نمیتواند بیشتر از ۶۰ کاراکتر باشد!' });
+                .json({ message: 'نام دستگاه را وارد نکرده اید!' });
         }
-        if (name.trim().length > 60) {
+        if (name.trim().length > 50) {
             return res
                 .status(400)
-                .json({ message: 'نام دستگاه را وارد نکرده اید!' });
+                .json({ message: 'نام دستگاه نمیتواند بیشتر از ۵۰ کاراکتر باشد!' });
+        }
+        if (category.trim().length > 50) {
+            return res
+                .status(400)
+                .json({ message: 'دسته بندی دستگاه نمیتواند بیشتر از ۵۰ کاراکتر باشد!' });
         }
         const validateSerialNumber = yield device_entity_1.default.validateSerialNumber(serialNumber.trim(), req.userId, 'save');
         if (!validateSerialNumber.valid) {
@@ -64,6 +69,11 @@ const saveDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
                 return res
                     .status(400)
                     .json({ message: 'مدل کولر را وارد نکرده اید!' });
+            }
+            if (model.trim().length > 25) {
+                return res
+                    .status(400)
+                    .json({ message: 'مدل کولر نمیتواند بیش تر از ۲۵ کاراکتر  باشد' });
             }
             //todo check validate brand and model
             yield device_entity_1.default.saveCooler(serialNumber.trim(), model.trim(), name.trim(), category.trim(), req.userId);
@@ -286,7 +296,8 @@ const kickDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () 
 exports.kickDevice = kickDevice;
 const addDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const { serialNumber, password, type } = req.body;
+        const { password, type } = req.body;
+        let serialNumber = req.body.serialNumber;
         if (!serialNumber || !password || !type) {
             return res.status(400).json({ status: false, message: 'خطا در ورودی' });
         }
@@ -307,13 +318,16 @@ const addDevice = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
         }
         let deviceId = undefined;
         if (type == 'power') {
+            serialNumber = `chp-${serialNumber}`;
             deviceId = yield device_entity_1.default.addPower(serialNumber, password, req.user.id);
+            yield logs_entity_1.default.addDevicePower(serialNumber, req.user.id, deviceId);
         }
         else if (type == 'cooler') {
+            serialNumber = `chc-${serialNumber}`;
             deviceId = yield device_entity_1.default.addCooler(serialNumber, password, req.user.id);
+            yield logs_entity_1.default.addDeviceCooler(serialNumber, req.user.id, deviceId);
         }
         yield broker_provider_1.default.addUserToMnesia(serialNumber, password);
-        yield logs_entity_1.default.addDevice(serialNumber, req.user.id, deviceId);
         return res.json({ status: true, message: 'دستگاه با موفقیت اضافه شد!' });
     }
     catch (err) {

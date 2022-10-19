@@ -14,6 +14,24 @@
 </head>
 <body>
 <div class="body">
+    <div class="header-loading animation"></div>
+    <div class="loading-page" style="width: 98vw;
+    /*height: 98vh;*/
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    flex-direction: column;
+">
+        <div class="spinner-border text-primary loading-icon" role="status">
+            <span class="visually-hidden">Loading...</span>
+
+        </div>
+        <p style="margin-top: 25px">در حال بارگذاری</p>
+    </div>
+    <div class="all-my-content" style="opacity: 0">
     <!-- top  nav -->
     <?- include('./top_navbar.ejs') ?>
     <!-- side nav -->

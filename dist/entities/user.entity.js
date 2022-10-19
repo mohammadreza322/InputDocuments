@@ -67,7 +67,7 @@ class UserEntity {
             const usernameBroker = (0, crypto_js_1.SHA1)(user.registerDate.toString() + user._id.toString()).toString();
             const passwordBroker = (0, crypto_js_1.SHA1)(user.registerDate.toString() + (user === null || user === void 0 ? void 0 : user.phoneNumber.toString())).toString();
             const checkUserExists = yield broker_provider_1.default.userExist(usernameBroker);
-            console.log(checkUserExists);
+            // console.log(checkUserExists)
             if (!checkUserExists) {
                 console.log("add user mnesia");
                 yield broker_provider_1.default.addUserToMnesia(usernameBroker, passwordBroker);
@@ -164,7 +164,19 @@ class UserEntity {
     }
     static getCountAllClients() {
         return __awaiter(this, void 0, void 0, function* () {
-            return (yield users_model_1.default.countDocuments({ role: 'user', fullName: { $ne: null } })) || 0;
+            const clients = yield users_model_1.default
+                .find({ fullName: { $ne: null } }, { fullName: 1, phoneNumber: 1, _id: 1, registerDate: 1, address: 1, birthday: 1, role: 1 });
+            const output = [];
+            for (const user of clients) {
+                const countDevices = yield device_entity_1.default.getAllDevicesCount(user._id);
+                if (user.role != 'user') {
+                    if (countDevices == 0) {
+                        continue;
+                    }
+                }
+                output.push(user);
+            }
+            return output.length;
         });
     }
     static addAdmin(fullName, phoneNumber, access, enable) {
@@ -219,13 +231,18 @@ class UserEntity {
     static getAllClients(page, limit) {
         return __awaiter(this, void 0, void 0, function* () {
             const clients = yield users_model_1.default
-                .find({ role: 'user', fullName: { $ne: null } }, { fullName: 1, phoneNumber: 1, _id: 1, registerDate: 1, address: 1, birthday: 1 })
+                .find({ fullName: { $ne: null } }, { fullName: 1, phoneNumber: 1, _id: 1, registerDate: 1, address: 1, birthday: 1, role: 1 })
                 .sort({ registerDate: -1 })
                 .skip(limit * (page - 1))
                 .limit(limit);
             const output = [];
             for (const user of clients) {
                 const countDevices = yield device_entity_1.default.getAllDevicesCount(user._id);
+                if (user.role != 'user') {
+                    if (countDevices == 0) {
+                        continue;
+                    }
+                }
                 const userJalaliPersianDate = new persian_date_1.default(user.registerDate).calendar('jalali').toString();
                 user.address = user.address ? user.address.trim().length > 0 ? user.address.trim() : 'ندارد' : 'ندارد';
                 const userJalaliBirthday = !user.birthday ? 'ندارد' : new persian_date_1.default(`${user.birthday.getFullYear()}-${user.birthday.getMonth() + 1}-${user.birthday.getDate()}`).calendar('jalali').toString();

@@ -11,9 +11,14 @@ export default class LogsEntity {
         return await this.addLog(`حذف کردن کاربر “${userFullName}” از لیست کاربران.`,adminId)
     }
 
-    static async addDevice(serialNumber:string,adminId:Types.ObjectId,deviceId:Types.ObjectId) {
+    static async addDevicePower(serialNumber:string,adminId:Types.ObjectId,deviceId:Types.ObjectId) {
         // await this.addLog('ورود اولیه به سیستم.',deviceId);
-        return await this.addLog(`حذف کردن دستگاه “اضافه کردن دستگاه سه راهه با شماره سریال “${serialNumber}”.`,adminId)
+        return await this.addLog(`اضافه کردن دستگاه سه راهه با شماره سریال “${serialNumber}”.`,adminId)
+    }
+
+    static async addDeviceCooler(serialNumber:string,adminId:Types.ObjectId,deviceId:Types.ObjectId) {
+        // await this.addLog('ورود اولیه به سیستم.',deviceId);
+        return await this.addLog(`اضافه کردن دستگاه کولر با شماره سریال “${serialNumber}”.`,adminId)
     }
 
     static async kickDeviceFromBroker(serialNumber:string,adminId:Types.ObjectId,adminName:string) {

@@ -55,7 +55,7 @@ $(document).ready(function(){
     $('.delete-admin').on('click',function () {
         const id = $(this).closest('tr').data('id')
         const name = $(this).closest('tr').find('.name-js').text()
-        showWarning('اخطار حذف مشتری',`آیا برای حذف “${name}” مطمئن هستید؟`,'بله، حذف مشتری',() => {
+        showWarning('اخطار حذف مدیر',`آیا برای حذف “${name}” مطمئن هستید؟`,'بله',() => {
             showLoading()
             sendAjax('/dashboard/admin/delete',{id},(res) => {
                 showSuccess(res.message);
@@ -72,37 +72,37 @@ $(document).ready(function(){
         const name = $(this).closest('tr').find('.name-js').text()
         $('.admin-name-log').text(name)
 
-        const dateLog = $('#datelog')
-        const textLog = $('#textlog')
+        // const dateLog = $('#datelog')
+        // const textLog = $('#textlog')
 
-        dateLog.html('')
-        textLog.html('')
+        // dateLog.html('')
+        // textLog.html('')
 
         if(json.length ==0) {
-            $('.no-content-log').css({display:'block'})
-            $('#exampleModallog .modal-body').css({'flex-direction':'column'})
-            $('#exampleModallog .right-log').css({display:'none'})
-            $('#exampleModallog .left-log').css({display:'none'})
+            $('.notempty-modal-log').css({display:'none'})
+            $('.empty-modal-log').attr('style',"display:flex !important")
+
         }else {
-            $('#exampleModallog .modal-body').css({'flex-direction':'row'})
-            $('#exampleModallog .right-log').css({display:'block'})
-            $('#exampleModallog .left-log').css({display:'block'})
-            $('.no-content-log').css({display:'none'})
+            $('.notempty-modal-log').css({display:'block'})
+            $('.empty-modal-log').css({display:'none'})
+            $('.list-of-logs').html('')
             const dates = []
             const messages = []
             for (const d of json) {
-                console.log(d)
                     messages.push(d.message)
                     dates.push(d.date)
             }
 
             for(let i=0;i<messages.length;i++) {
-                console.log(dates[i])
                 const d = dates[i].split(' ')
                 const year = d[0]
                 const hour = d[1]
-                dateLog.append($('<li></li>').addClass('date').html(`<span>${year}</span> - <span>${hour}</span>`))
-                textLog.append($('<li></li>').addClass('text').html(messages[i]))
+                let logTemplate = $('#log-template').html()
+                logTemplate = logTemplate.replace('{{hour}}',hour)
+                logTemplate = logTemplate.replace('{{date}}',year)
+                logTemplate = logTemplate.replace('{{text}}',messages[i])
+                $('.list-of-logs').append(logTemplate)
+                // textLog.append($('<li></li>').addClass('text').html(messages[i]))
             }
         }
     })

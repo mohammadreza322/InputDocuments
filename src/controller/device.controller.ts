@@ -35,13 +35,20 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 		if (name.trim() === '') {
 			return res
 				.status(400)
-				.json({ message: 'نام دستگاه نمیتواند بیشتر از ۶۰ کاراکتر باشد!' });
+				.json({ message: 'نام دستگاه را وارد نکرده اید!' });
+
 		}
 
-		if (name.trim().length > 60) {
+		if (name.trim().length > 50) {
 			return res
 				.status(400)
-				.json({ message: 'نام دستگاه را وارد نکرده اید!' });
+				.json({ message: 'نام دستگاه نمیتواند بیشتر از ۵۰ کاراکتر باشد!' });
+		}
+
+		if (category.trim().length > 50) {
+			return res
+				.status(400)
+				.json({ message: 'دسته بندی دستگاه نمیتواند بیشتر از ۵۰ کاراکتر باشد!' });
 		}
 
 		const validateSerialNumber = await DeviceEntity.validateSerialNumber(
@@ -73,6 +80,12 @@ export const saveDevice = async (req: CustomRequest, res: Response) => {
 				return res
 					.status(400)
 					.json({ message: 'مدل کولر را وارد نکرده اید!' });
+			}
+
+			if (model!.trim().length > 25) {
+				return res
+					.status(400)
+					.json({ message: 'مدل کولر نمیتواند بیش تر از ۲۵ کاراکتر  باشد' });
 			}
 
 			//todo check validate brand and model
@@ -400,7 +413,8 @@ export const kickDevice = async (req:Request,res:Response) => {
 
 export const addDevice = async (req:Request,res:Response) => {
 	try {
-		const {serialNumber, password, type} = req.body
+		const { password, type} = req.body
+		let serialNumber = req.body.serialNumber
 
 		if (!serialNumber || !password || !type) {
 			return res.status(400).json({status:false,message: 'خطا در ورودی'});
@@ -430,14 +444,18 @@ export const addDevice = async (req:Request,res:Response) => {
 		let deviceId = undefined
 
 		if(type == 'power') {
+			serialNumber = `chp-${serialNumber}`;
 			deviceId = await DeviceEntity.addPower(serialNumber, password, req.user.id)
+			await LogsEntity.addDevicePower(serialNumber,req.user.id,deviceId)
 		} else if (type=='cooler') {
+			serialNumber = `chc-${serialNumber}`;
 			deviceId = await DeviceEntity.addCooler(serialNumber,password,req.user.id)
+			await LogsEntity.addDeviceCooler(serialNumber,req.user.id,deviceId)
 		}
 
 		await BrokerProvider.addUserToMnesia(serialNumber,password);
 
-		await LogsEntity.addDevice(serialNumber,req.user.id,deviceId)
+		
 
 		return res.json({status:true,message:'دستگاه با موفقیت اضافه شد!'})
 

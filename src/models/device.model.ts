@@ -74,14 +74,14 @@ interface ISchedule {
 	repeat?: Array<string>;
 }
 
-interface PowerConnectors {
+export interface PowerConnectors {
 	status: boolean;
 	name?: string;
 	connectorType: string;
 	connectorId: number;
 }
 
-interface IPowerStripSchedule extends ISchedule {
+export interface IPowerStripSchedule extends ISchedule {
 	port?: number;
 }
 

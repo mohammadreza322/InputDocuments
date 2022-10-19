@@ -5,37 +5,51 @@
  * <![endif]--> */
 @font-face {
   font-family: Kalameh;
-  src: url("../fonts/kalameh/KalamehFaNum-Regular.ttf") format("truetype"), url("../fonts/kalameh/KalamehWebFaNum-Regular.woff") format("woff"), url("../fonts/kalameh/KalamehWebFaNum-Regular.woff2") format("woff2");
+  src: url("../fonts/kalameh/KalamehFaNum-Regular.ttf") format("truetype"),
+    url("../fonts/kalameh/KalamehWebFaNum-Regular.woff") format("woff"),
+    url("../fonts/kalameh/KalamehWebFaNum-Regular.woff2") format("woff2");
   font-weight: normal;
 }
 @font-face {
   font-family: Kalameh;
-  src: url("../fonts/kalameh/KalamehFaNum-Bold.ttf") format("truetype"), url("../fonts/kalameh/KalamehWebFaNum-Bold.woff") format("woff"), url("../fonts/kalameh/KalamehWebFaNum-Bold.woff2") format("woff2");
+  src: url("../fonts/kalameh/KalamehFaNum-Bold.ttf") format("truetype"),
+    url("../fonts/kalameh/KalamehWebFaNum-Bold.woff") format("woff"),
+    url("../fonts/kalameh/KalamehWebFaNum-Bold.woff2") format("woff2");
   font-weight: bold;
 }
 @font-face {
   font-family: Kalameh;
-  src: url("../fonts/kalameh/KalamehFaNum-Thin.ttf") format("truetype"), url("../fonts/kalameh/KalamehWebFaNum-Thin.woff") format("woff"), url("../fonts/kalameh/KalamehWebFaNum-Thin.woff2") format("woff2");
+  src: url("../fonts/kalameh/KalamehFaNum-Thin.ttf") format("truetype"),
+    url("../fonts/kalameh/KalamehWebFaNum-Thin.woff") format("woff"),
+    url("../fonts/kalameh/KalamehWebFaNum-Thin.woff2") format("woff2");
   font-weight: 100;
 }
 @font-face {
   font-family: Kalameh;
-  src: url("../fonts/kalameh/KalamehFaNum-ExtraLight.ttf") format("truetype"), url("../fonts/kalameh/KalamehWebFaNum-ExtraLight.woff") format("woff"), url("../fonts/kalameh/KalamehWebFaNum-ExtraLight.woff2") format("woff2");
+  src: url("../fonts/kalameh/KalamehFaNum-ExtraLight.ttf") format("truetype"),
+    url("../fonts/kalameh/KalamehWebFaNum-ExtraLight.woff") format("woff"),
+    url("../fonts/kalameh/KalamehWebFaNum-ExtraLight.woff2") format("woff2");
   font-weight: 200;
 }
 @font-face {
   font-family: Kalameh;
-  src: url("../fonts/kalameh/KalamehFaNum-Light.ttf") format("truetype"), url("../fonts/kalameh/KalamehWebFaNum-Light.woff") format("woff"), url("../fonts/kalameh/KalamehWebFaNum-Light.woff2") format("woff2");
+  src: url("../fonts/kalameh/KalamehFaNum-Regular.ttf") format("truetype"),
+    url("../fonts/kalameh/KalamehWebFaNum-Regular.woff") format("woff"),
+    url("../fonts/kalameh/KalamehWebFaNum-Regular.woff2") format("woff2");
   font-weight: 300;
 }
 @font-face {
   font-family: Kalameh;
-  src: url("../fonts/kalameh/KalamehFaNum-Medium.ttf") format("truetype"), url("../fonts/kalameh/KalamehWebFaNum-Medium.woff") format("woff"), url("../fonts/kalameh/KalamehWebFaNum-Medium.woff2") format("woff2");
+  src: url("../fonts/kalameh/KalamehFaNum-Medium.ttf") format("truetype"),
+    url("../fonts/kalameh/KalamehWebFaNum-Medium.woff") format("woff"),
+    url("../fonts/kalameh/KalamehWebFaNum-Medium.woff2") format("woff2");
   font-weight: 500;
 }
 @font-face {
   font-family: Kalameh;
-  src: url("../fonts/kalameh/KalamehFaNum-SemiBold.ttf") format("truetype"), url("../fonts/kalameh/KalamehWebFaNum-SemiBold.woff") format("woff"), url("../fonts/kalameh/KalamehWebFaNum-SemiBold.woff2") format("woff2");
+  src: url("../fonts/kalameh/KalamehFaNum-SemiBold.ttf") format("truetype"),
+    url("../fonts/kalameh/KalamehWebFaNum-SemiBold.woff") format("woff"),
+    url("../fonts/kalameh/KalamehWebFaNum-SemiBold.woff2") format("woff2");
   font-weight: 600;
 }
 /* line 99, ../sass/ie.scss */
@@ -320,7 +334,8 @@ object {
   border: none;
   width: 100%;
   padding: 9px 40px 9px 4px;
-  background: transparent url("../photo/svg/search-status.svg") no-repeat 188px center;
+  background: transparent url("../photo/svg/search-status.svg") no-repeat 188px
+    center;
   outline: none;
 }
 /* line 342, ../sass/ie.scss */
@@ -626,7 +641,7 @@ object {
 /* line 604, ../sass/ie.scss */
 .teble-content .table td {
   font-weight: 300;
-  font-size: 0.75rem;
+  font-size: 13px;
   line-height: 20px;
   color: #061962;
   text-align: right;
@@ -896,8 +911,9 @@ object {
   margin-bottom: 10px;
 }
 /* line 847, ../sass/ie.scss */
-.group-info .input-group
-> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+.group-info
+  .input-group
+  > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
   margin-left: 25px;
 }
 /* line 851, ../sass/ie.scss */
@@ -918,7 +934,7 @@ object {
   padding: 15px 0;
   background-color: transparent;
   border: none;
-  font-size: 0.75rem;
+  font-size: 13px !important;
   border-radius: unset;
   display: flex;
   align-items: center;
@@ -936,28 +952,28 @@ object {
 .group-info .input-group .input-inner::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: #838cb0;
-  font-size: 0.75rem;
+  font-size: 13px;
   font-weight: 300;
 }
 /* line 883, ../sass/ie.scss */
 .group-info .input-group .input-inner::-moz-placeholder {
   /* Firefox 19+ */
   color: #838cb0;
-  font-size: 0.75rem;
+  font-size: 13px;
   font-weight: 300;
 }
 /* line 889, ../sass/ie.scss */
 .group-info .input-group .input-inner:-ms-input-placeholder {
   /* IE 10+ */
   color: #838cb0;
-  font-size: 0.75rem;
+  font-size: 13px;
   font-weight: 300;
 }
 /* line 895, ../sass/ie.scss */
 .group-info .input-group .input-inner:-moz-placeholder {
   /* Firefox 18- */
   color: #838cb0;
-  font-size: 0.75rem;
+  font-size: 13px;
   font-weight: 300;
 }
 /* line 902, ../sass/ie.scss */
@@ -1063,6 +1079,7 @@ object {
   line-height: 20px;
   color: #061962;
   position: relative;
+  width: 196px !important;
 }
 /* line 993, ../sass/ie.scss */
 .slide-down-add.storehouse-add .random-text::before {
@@ -1167,10 +1184,10 @@ object {
   max-width: 588px;
 }
 /* line 1084, ../sass/ie.scss */
-.edit-modal.log-modal .modal-body {
+/* .edit-modal.log-modal .modal-body {
   display: flex;
   flex-direction: row;
-}
+} */
 /* line 1088, ../sass/ie.scss */
 .edit-modal.log-modal .title-log {
   font-weight: 300;
@@ -1178,7 +1195,13 @@ object {
   line-height: 20px;
   color: #061962;
   margin-bottom: 10px;
+  width: 28%;
 }
+.edit-modal.log-modal .title-log.text{
+  width: 70%;
+  text-align: start;
+}
+
 /* line 1095, ../sass/ie.scss */
 .edit-modal.log-modal .date-log {
   padding-right: 0;
@@ -1188,7 +1211,7 @@ object {
   padding-left: 15px;
 }
 /* line 1101, ../sass/ie.scss */
-.edit-modal.log-modal .date-log .date {
+.edit-modal.log-modal .datelog {
   padding: 10px 20px;
   background-color: #f5f9fd;
   width: fit-content;
@@ -1198,7 +1221,10 @@ object {
   line-height: 20px;
   color: #061962;
   border-radius: 10px;
-  direction: ltr;
+  direction: rtl;
+  width: 28%;
+  display: flex;
+  align-items: center;
 }
 /* line 1112, ../sass/ie.scss */
 .edit-modal.log-modal .date-log .date:last-child {
@@ -1215,9 +1241,10 @@ object {
   list-style: none;
   width: 100%;
   padding-left: 0;
+  
 }
 /* line 1126, ../sass/ie.scss */
-.edit-modal.log-modal .text-log .text {
+.edit-modal.log-modal .textlog {
   padding: 10px 20px;
   background-color: #f5f9fd;
   margin-bottom: 20px;
@@ -1226,7 +1253,8 @@ object {
   line-height: 20px;
   color: #061962;
   border-radius: 10px;
-  direction: ltr;
+  direction: rtl;
+  width: 70%;
 }
 /* line 1137, ../sass/ie.scss */
 .edit-modal.log-modal .text-log .text:last-child {
@@ -1270,8 +1298,14 @@ object {
 }
 /* line 1172, ../sass/ie.scss */
 .datepicker-plot-area .datepicker-day-view .table-days td.selected span,
-.datepicker-plot-area .datepicker-plot-area .datepicker-year-view .year-item.selected,
-.datepicker-plot-area .datepicker-plot-area .datepicker-month-view .month-item.selected {
+.datepicker-plot-area
+  .datepicker-plot-area
+  .datepicker-year-view
+  .year-item.selected,
+.datepicker-plot-area
+  .datepicker-plot-area
+  .datepicker-month-view
+  .month-item.selected {
   background-color: #144fa3;
   text-shadow: none;
 }
@@ -1283,14 +1317,14 @@ object {
 
 /* line 1182, ../sass/ie.scss */
 .datepicker-plot-area
-.datepicker-day-view
-.table-days
-td.selected
-span
-.datepicker-plot-area
-.datepicker-day-view
-.table-days
-td:hover,
+  .datepicker-day-view
+  .table-days
+  td.selected
+  span
+  .datepicker-plot-area
+  .datepicker-day-view
+  .table-days
+  td:hover,
 .datepicker-plot-area .datepicker-day-view .table-days td span:hover,
 .datepicker-plot-area .datepicker-year-view .year-item:hover,
 .datepicker-plot-area .datepicker-month-view .month-item:hover {
@@ -1299,8 +1333,8 @@ td:hover,
 
 /* line 1196, ../sass/ie.scss */
 .group-info
-.input-group
-> :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
+  .input-group
+  > :not(:first-child):not(.dropdown-menu):not(.valid-tooltip):not(.valid-feedback):not(.invalid-tooltip):not(.invalid-feedback) {
   font-weight: 400;
   font-size: 0.75rem;
   line-height: 20px;
@@ -1350,6 +1384,7 @@ td:hover,
   line-height: 24px;
   color: #061962;
   margin-top: 10px;
+  direction: rtl;
 }
 /* line 1240, ../sass/ie.scss */
 .error-modal .modal-dialog .modal-body .modal-footer {
@@ -1414,7 +1449,43 @@ td:hover,
   flex-direction: column-reverse;
 }
 
-
-.add-device-group{
+.add-device-group {
   width: 50% !important;
+}
+.heigh-sele {
+  height: 50px;
+}
+.margin-0 {
+  margin-left: 0 !important;
+}
+.static-te {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50px !important;
+}
+.empty-modal-log {
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column !important;
+  /* empty */
+  display: none !important;
+}
+.text-empty {
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 20px;
+  color: #061962;
+
+  opacity: 0.4;
+}
+.empty-table{
+  height: 528px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  /*display: none;*/
 }

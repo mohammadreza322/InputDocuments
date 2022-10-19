@@ -62,7 +62,7 @@ export default class BrokerProvider {
                     console.error(error)
                     return resolve(false);
                 }
-                console.log(response)
+                console.log(response.body)
                 const data = JSON.parse(response.body)
                 if(data.data){
                     if(data.data.username){
@@ -77,8 +77,8 @@ export default class BrokerProvider {
 
     static async kickDevice(serialNumber: string) {
         const options = {
-            'method': 'GET',
-            'url': `${this.authorization}/clients/${serialNumber}`,
+            'method': 'DELETE',
+            'url': `${brokerUrlAPI}/clients/${serialNumber}`,
             'headers': {
                 'Authorization': this.authorization
             }
@@ -90,6 +90,7 @@ export default class BrokerProvider {
                     console.error(error)
                     return resolve(false);
                 }
+                console.log(response.body)
                 return resolve(true)
             });
         })

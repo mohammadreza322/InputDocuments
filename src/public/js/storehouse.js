@@ -28,6 +28,18 @@ $(document).ready(function () {
         });
     });
 
+    $('.device-type').on('change',function () {
+        let preSerialNumber = ' -chc'
+
+        if(this.value == 'power'){
+            preSerialNumber = ' -chp'
+        }
+
+
+
+        $('.static-te').text(preSerialNumber)
+    })
+
     $('.add-device-btn').on('click',function () {
         const serialNumber = $('#name').val()
         const password = $('#pass').val()
@@ -46,7 +58,7 @@ $(document).ready(function () {
         const serialNumber = $(this).data('id')
         const type = $(this).data('type')
 
-        showWarning('اخطار حذف دستگاه',`آیا برای حذف “${serialNumber}” مطمئن هستید؟`,'بله، حذف دستگاه',() => {
+        showWarning('اخطار حذف دستگاه',`آیا برای حذف “${serialNumber}” مطمئن هستید؟`,'بله',() => {
             showLoading()
             sendAjax('/dashboard/store_room/delete',{serialNumber,type},(res) => {
                 showSuccess(res.message)
