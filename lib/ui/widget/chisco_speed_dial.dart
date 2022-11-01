@@ -65,7 +65,7 @@ class ChiscoSpeedDial extends StatelessWidget {
           },
           child: Container(
             width: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               shape: BoxShape.circle,
               //  border: Border.all(color: Styles.primaryColor),
             ),
@@ -80,7 +80,7 @@ class ChiscoSpeedDial extends StatelessWidget {
         ),
       ],
       activeChild: Container(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           decoration: const BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(colors: [
@@ -97,7 +97,7 @@ class ChiscoSpeedDial extends StatelessWidget {
         ),*/
           ),
       child: Container(
-          padding: EdgeInsets.all(12),
+          padding: const EdgeInsets.all(12),
           decoration: const BoxDecoration(
               shape: BoxShape.circle,
               gradient: LinearGradient(colors: [

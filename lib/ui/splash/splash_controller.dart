@@ -42,15 +42,15 @@ class SplashController extends ChangeNotifier {
       print(detail);
 
       ChiscoResponse response = await repository.getUserDevices();
+      print(response.code);
+      print(response.errorMessage);
       if (response.status) {
         return Timer(const Duration(milliseconds: 100), () {
           print("timer ok 1");
           print("###############");
-          Provider.of<AppController>(context, listen: false)
-              .setData(response.object);
+          Provider.of<AppController>(context, listen: false).setData(response.object);
           GlobalVariable.isUserLogin = true;
-          Provider.of<AppController>(context, listen: false)
-              .connect(topicForSubscribe: 'chisco/test');
+          Provider.of<AppController>(context, listen: false).connect(topicForSubscribe: 'chisco/test');
           isSplashEnd = true;
           // Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
           notifyListeners();
@@ -59,6 +59,7 @@ class SplashController extends ChangeNotifier {
         return Timer(const Duration(milliseconds: 100), () {
           print("timer ok 2");
           print("###############");
+          print(response.errorMessage);
           progressBarShown = false;
           ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
           print("Error Message Splash : ${response.errorMessage}");

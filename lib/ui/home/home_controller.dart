@@ -12,6 +12,7 @@ import 'package:chisco/data/data_class/User.dart';
 import 'package:chisco/data/data_class/UserDevices.dart';
 import 'package:chisco/data/data_class/Power.dart';
 import 'package:chisco/data/repository/device/device_reposiory_impl.dart';
+import 'package:chisco/ui/devices/power/power_screen_controller.dart';
 import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:chisco/utils/const.dart';
@@ -23,7 +24,6 @@ class HomeController extends ChangeNotifier {
   final DeviceRepositoryImpl deviceRepository = DeviceRepositoryImpl();
   final BuildContext context;
   HomeController(this.context);
-
   List<String> _categories = [];
   List<Device> devices = [];
   List<Device> _listDevices = [];
@@ -52,7 +52,8 @@ class HomeController extends ChangeNotifier {
   init() {
     ///[init] is called only one time when is opened
     isPageLoading = true;
-    AppController appController = Provider.of<AppController>(context);
+    AppController appController = Provider.of<AppController>(context,listen: false);
+    appController.setContext(context);
     user = appController.getUser();
     if (!_categories.contains('نمایش همه')) {
       _categories.insert(0, 'نمایش همه');
@@ -67,14 +68,11 @@ class HomeController extends ChangeNotifier {
 
       return;
     } else {
-      print(response.object.toString());
       AddDeviceResponse addDeviceResponse = response.object;
       Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
-      Provider.of<AppController>(context, listen: false)
-          .refreshData(response.object);
-      Provider.of<AppController>(context, listen: false)
-          .subscribe(cooler.serialNumber);
+      Provider.of<AppController>(context, listen: false).refreshData(response.object);
+      Provider.of<AppController>(context, listen: false).subscribe(cooler.serialNumber);
     }
   }
 
@@ -88,7 +86,6 @@ class HomeController extends ChangeNotifier {
     }
     // bind response to all lists
     AddDeviceResponse addDeviceResponse = response.object;
-
     //Navigator.pop(context);
     Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
     ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
@@ -138,24 +135,16 @@ class HomeController extends ChangeNotifier {
   }
 
   ///onClick for all Devices {on or off button} Icon
-  onDevicePowerBtnClicked(Device device) {
+  onDevicePowerBtnClicked(Device device)  async{
     if (device.deviceType == DeviceType.power) {
       ///if user click on power icon for powers we have to change all [connectors] state
       ///and publish data in Mqtt
 
       Power power = device as Power;
-      bool isPowerActive = changeDevicePowersBtn(device);
-      power.connectors.forEach((element) {
-        element.status = !isPowerActive;
-      });
-
-      Provider.of<AppController>(context, listen: false).setPower(power);
-      isPowerActive = !isPowerActive;
-      Provider.of<AppController>(context, listen: false)
-          .publishPowerMqtt(power);
-
-      //AppController Publish\
+      await Provider.of<AppController>(context,listen: false).updatePowersConnectors(power,context);
       notifyListeners();
+
+
     } else {
       ///and if user click on Cooler's power icon we have only change isPowerActive bool
       ///and publish it in MQTT
@@ -164,8 +153,7 @@ class HomeController extends ChangeNotifier {
       cooler.power = !isPowerActive;
       Provider.of<AppController>(context, listen: false).setCooler(cooler);
       isPowerActive = !isPowerActive;
-      Provider.of<AppController>(context, listen: false)
-          .publishCoolerMqtt(cooler);
+      Provider.of<AppController>(context, listen: false).publishCoolerMqtt(cooler,context);
       notifyListeners();
     }
   }

@@ -2,7 +2,7 @@
 class EditCooler {
 
   String category;
-  String brand;
+  // String brand;
   String model;
   String name;
   String serialNumber;
@@ -10,7 +10,7 @@ class EditCooler {
   EditCooler(
       {
         required this.category,
-        required this.brand,
+        // required this.brand,
         required this.model,
         required this.name,
         required this.serialNumber});
@@ -20,7 +20,7 @@ class EditCooler {
 
       category: json['category'],
       model: json['model'],
-      brand: json['brand'],
+      // brand: json['brand'],
       name: json['name'],
       serialNumber: json['serialNumber'],
     );
@@ -29,7 +29,7 @@ class EditCooler {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['category'] = this.category;
-    data['brand'] = this.brand;
+    // data['brand'] = this.brand;
     data['model'] = this.model;
     data['name'] = this.name;
     data['serialNumber'] = this.serialNumber;

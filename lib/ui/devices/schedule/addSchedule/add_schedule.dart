@@ -30,9 +30,19 @@ class AddScheduleBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     List<Connector> connectors = [];
-
     if (isPower) {
+
       connectors = (device as Power).connectors;
+      connectors.forEach((element) {
+       if(element.name==""){
+          if(element.connectorType=='usb'){
+            element.name = 'پورت ${element.connectorId-4}';
+          }else{
+            element.name = 'پریز ${element.connectorId}';
+          }
+
+        }
+      });
     }
 
     AddScheduleController controller = Provider.of<AddScheduleController>(
@@ -175,8 +185,11 @@ class AddScheduleBottomSheet extends StatelessWidget {
                     )),*/
               ChiscoDropDown(connectors: connectors,
                   onDropDownChange: (value) {
+                print('asdasdasdasdasdadssdasdasdasd');
                     int index = connectors.indexWhere(
                             (element) => element.connectorId == value);
+                    print(index);
+                    print(connectors[index].name);
                     controller.changeDropDownValue(
                         connectors[index].name, value as int);
                   },

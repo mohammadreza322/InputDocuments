@@ -35,16 +35,17 @@ class PowerScreen extends StatelessWidget {
 
     final selectedPower = Provider.of<AppController>(context)
         .getPowerWithSerialNumber(serialNumber);
+
     print(selectedPower.totalVoltage);
     PowerController controller = Provider.of<PowerController>(context);
     double blueHeight = 0;
     double positionedTopHeight = 0;
-    if(height<740){
+    if (height < 740) {
       blueHeight = 260;
       positionedTopHeight = 220;
-    }else{
-      blueHeight = ChiscoConverter.calculateWidgetHeight(height,260);
-      positionedTopHeight= ChiscoConverter.calculateWidgetHeight(height,220);
+    } else {
+      blueHeight = ChiscoConverter.calculateWidgetHeight(height, 260);
+      positionedTopHeight = ChiscoConverter.calculateWidgetHeight(height, 220);
     }
     if (controller.initCall) {
       controller.init(selectedPower);
@@ -88,8 +89,8 @@ class PowerScreen extends StatelessWidget {
                                 text: TextSpan(
                                   children: <TextSpan>[
                                     TextSpan(
-                                        text:
-                                            selectedPower.totalVoltage.toString(),
+                                        text: selectedPower.totalVoltage
+                                            .toString(),
                                         style: const TextStyle(
                                             fontFamily: "ChiscoText",
                                             fontSize: 50,
@@ -114,7 +115,8 @@ class PowerScreen extends StatelessWidget {
                           ),
                         ),
                         SizedBox(
-                            height: ChiscoConverter.calculateWidgetWidth(width, 5)),
+                            height:
+                                ChiscoConverter.calculateWidgetWidth(width, 5)),
                       ],
                     ),
                   ],
@@ -133,8 +135,8 @@ class PowerScreen extends StatelessWidget {
                         topRight: Radius.circular(25))),
                 padding: EdgeInsets.symmetric(
                     vertical: ChiscoConverter.calculateWidgetWidth(width, 0),
-                    horizontal: ChiscoConverter.calculateWidgetWidth(width, 20)),
-
+                    horizontal:
+                        ChiscoConverter.calculateWidgetWidth(width, 20)),
                 child: Column(
                   mainAxisSize: MainAxisSize.min,
                   children: [
@@ -191,10 +193,15 @@ class PowerScreen extends StatelessWidget {
                           ),
                           PowerIcon(
                             size: 34,
-                            isActive: controller.isPowerActive,
-                            onClick: () {
-                              controller.onPowerBtnClicked(
-                                  selectedPower: selectedPower);
+                            isActive: controller.selectedPower.isPowerActive,
+                            onClick: () async {
+                              await Provider.of<AppController>(context,
+                                      listen: false)
+                                  .updatePowersConnectors(
+                                      selectedPower, context);
+
+                              /*controller.onPowerBtnClicked(
+                                  selectedPower: selectedPower);*/
                             },
                           )
                         ],
@@ -212,19 +219,24 @@ class PowerScreen extends StatelessWidget {
                         itemBuilder: (context, index) {
                           Connector connector = selectedPower.connectors[index];
                           int connectorId = connector.connectorId;
+                          //print(connectorId);
                           String description = '';
                           if (connectorId <= 4) {
                             description = 'پریز $connectorId';
                           } else {
                             description = 'پورت ${connectorId - 4}';
                           }
+                          //print(description);
+                          //print(connector.name);
                           return Container(
                             margin: EdgeInsets.symmetric(
                               vertical: ChiscoConverter.calculateWidgetWidth(
                                   width, 5),
                             ),
                             child: PowerListItem(
-                              title: connector.name,
+                              title: connector.name == ''
+                                  ? description
+                                  : connector.name,
                               description: description,
                               isPower: connector.connectorType == 'power',
                               isActive: connector.status,

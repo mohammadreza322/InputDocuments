@@ -61,20 +61,45 @@ class EditScheduleController extends ChangeNotifier{
   changeDropDownValue(String value, int id) {
     dropDownString = value;
     connectorId = id;
-    print("select Drop Down : $value");
+    //print("select Drop Down : $value");
     notifyListeners();
   }
 
   changeSelectedScheduleItem(ScheduleType type) async {
     selectedType = type;
-    TimeOfDay oneHourLater = TimeOfDay(hour: TimeOfDay.now().hour + 1, minute: TimeOfDay.now().minute);
     if (selectedType == ScheduleType.on) {
+      print("ON Controller");
       onTimeController.text = onTime==''?'-:-':onTime;
+      print(onTimeController.text);
+      print(offTimeController.text);
+      print(" ONN String Controller");
+      print(onTime);
+      print(offTime);
     } else if (selectedType == ScheduleType.off) {
       offTimeController.text = offTime!=''?offTime:'-:-';
+      //OnTime Controller OK Beshe
+      print("OFF Controller");
+
+      print(onTimeController.text);
+      print(offTimeController.text);
+      print(" OFF String Controller");
+      print(onTime);
+      print(offTime);
+
+
     } else {
-      onTimeController.text =  onTime==''?'-:-':onTime;
+      onTimeController.text = onTime==''?'-:-':onTime;
       offTimeController.text =offTime!=''?offTime:'-:-';
+
+
+      print("BOTH Controller");
+      print(onTimeController.text);
+      print(offTimeController.text);
+      print(" BOTH String Controller");
+      print(onTime);
+      print(offTime);
+
+
     }
 
     await Future.delayed(Duration(milliseconds: 250));
@@ -108,7 +133,7 @@ class EditScheduleController extends ChangeNotifier{
   }
 
   bool isSelectedScheduleDayActive(ScheduleDays day) {
-    print("Days List : $days");
+   // print("Days List : $days");
     return days.contains(day);
   }
 
@@ -120,12 +145,11 @@ class EditScheduleController extends ChangeNotifier{
     print(onTimeController.text);
 
     ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
-        endTime: selectedType != ScheduleType.on ? offTimeController.text : null,
+        endTime: selectedType != ScheduleType.on ? offTimeController.text : "",
         repeat: days.map((e) => e.name).toList(),
-
         serialNumber: serialNumber,
         id: id,
-        startTime: selectedType != ScheduleType.off ? onTimeController.text : null));
+        startTime: selectedType != ScheduleType.off ? onTimeController.text : ""));
 
     print(response);
 
@@ -151,12 +175,12 @@ class EditScheduleController extends ChangeNotifier{
     print("response");
     print( days.map((e) => e.name).toList());
     ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
-        endTime: selectedType != ScheduleType.on ? offTimeController.text : null,
+        endTime: selectedType != ScheduleType.on ? offTimeController.text : "",
         repeat: days.map((e) => e.name).toList(),
         portNumber: connectorId,
         id: id,
         serialNumber: serialNumber,
-        startTime: selectedType != ScheduleType.off ? onTimeController.text : null));
+        startTime: selectedType != ScheduleType.off ? onTimeController.text : ""));
 
     print(response);
     if (response.status) {

@@ -1,4 +1,3 @@
-
 import 'package:chisco/ui/main/app_controller.dart';
 import 'package:chisco/ui/main/routes.dart';
 
@@ -18,16 +17,10 @@ final ThemeData androidTheme =
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-
-
   AppController appController = AppController();
-
-
-
 
   @override
   Widget build(BuildContext context) {
-
     return Sizer(
       builder: (BuildContext context, Orientation orientation,
           DeviceType deviceType) {

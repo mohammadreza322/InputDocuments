@@ -33,7 +33,7 @@ class ScheduleController extends ChangeNotifier {
             child: AddScheduleBottomSheet(device: device,isPower: isPower),
           ),
         ));
-    print("is Power  : $isPower");
+   // print("is Power  : $isPower");
     notifyListeners();
   }
 
@@ -73,10 +73,13 @@ class ScheduleController extends ChangeNotifier {
     return farsiList.join('  ');
   }
 
-  void enableChanged(bool values,Schedule schedule,Device device) {
+    enableChanged(bool values,Schedule schedule,Device device) {
     if(device.deviceType == DeviceType.cooler){
-      editCoolerSchedule(device.serialNumber, schedule,values);
+      print('^^^^^^^^^^^^^^^^^^^^^^^^');
 
+      print('Schedule Start : ${schedule.start}');
+      print('Schedule END : ${schedule.end}');
+      editCoolerSchedule(device.serialNumber, schedule,values);
     }else
       editPowerSchedule(device.serialNumber, schedule,values);
     notifyListeners();
@@ -90,7 +93,8 @@ class ScheduleController extends ChangeNotifier {
         serialNumber: serialNumber,
         id: schedule.id,
         enable: enable,
-        startTime:schedule.end));
+        startTime:schedule.start));
+
     print(response);
 
     if (response.status) {

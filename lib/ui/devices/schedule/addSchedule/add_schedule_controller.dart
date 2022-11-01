@@ -46,7 +46,7 @@ class AddScheduleController extends ChangeNotifier {
       print("off");
     } else {
       onTimeController.text = TimeOfDay.now().to24hours();
-      print("Onn");
+      print("on");
     }
   }
 
@@ -80,6 +80,7 @@ class AddScheduleController extends ChangeNotifier {
     }
     if (selectedType == ScheduleType.on) {
       onTimeController.text = TimeOfDay.now().to24hours();
+
       print("On");
     } else if (selectedType == ScheduleType.off) {
       offTimeController.text = oneHourLater.to24hours();
@@ -126,19 +127,15 @@ class AddScheduleController extends ChangeNotifier {
               context, 'ساعت روشن و خاموش شدن هردو باید وارد شود.');
           return;
         }else {
+          print("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
+        print(offTimeController.text);
+        print(onTimeController.text);
+
           response = await repositoryImpl.saveSchedule(AddSchedule(
-              endTime: selectedType != ScheduleType.on
-                  ? !offHint
-                  ? offTimeController.text
-                  : null
-                  : null,
+              endTime: selectedType != ScheduleType.on ? !offHint ? offTimeController.text : null : null,
               repeat: days.map((e) => e.name).toList(),
               serialNumber: serialNumber,
-              startTime: selectedType != ScheduleType.off
-                  ? !onHint
-                  ? onTimeController.text
-                  : null
-                  : null));
+              startTime: selectedType != ScheduleType.off ? !onHint ? onTimeController.text : null : null));
         }
       break;
       }
@@ -149,18 +146,10 @@ class AddScheduleController extends ChangeNotifier {
           return;
         }else {
           response = await repositoryImpl.saveSchedule(AddSchedule(
-              endTime: selectedType != ScheduleType.on
-                  ? !offHint
-                  ? offTimeController.text
-                  : null
-                  : null,
+              endTime: selectedType != ScheduleType.on ? !offHint ? offTimeController.text : null : null,
               repeat: days.map((e) => e.name).toList(),
               serialNumber: serialNumber,
-              startTime: selectedType != ScheduleType.off
-                  ? !onHint
-                  ? onTimeController.text
-                  : null
-                  : null));
+              startTime: selectedType != ScheduleType.off ? !onHint ? onTimeController.text : null : null));
         }
         break;
       }
@@ -189,8 +178,6 @@ class AddScheduleController extends ChangeNotifier {
         break;
       }
     }
-
-
     if (response.status) {
       AddDeviceResponse deviceResponse = response.object;
       Provider.of<AppController>(context, listen: false)
@@ -233,6 +220,8 @@ class AddScheduleController extends ChangeNotifier {
         break;
       }
       case ScheduleType.on:{
+
+
         if(onHint){
           ChiscoFlushBar.showErrorFlushBar(
               context, 'ساعت روشن شدن باید وارد شود.');

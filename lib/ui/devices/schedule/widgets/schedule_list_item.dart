@@ -11,23 +11,54 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 
 class ScheduleListItem extends StatelessWidget {
-  const ScheduleListItem({Key? key, required this.schedule, required this.index, required this.isPower, this.connectors = const [], required this.device}) : super(key: key);
+  const ScheduleListItem(
+      {Key? key,
+      required this.schedule,
+      required this.index,
+      required this.isPower,
+      this.connectors = const [],
+      required this.device})
+      : super(key: key);
 
-  final Schedule schedule ;
+  final Schedule schedule;
+
   final int index;
   final bool isPower;
   final Device device;
   final List<Connector> connectors;
+
   @override
   Widget build(BuildContext context) {
     ScheduleController controller = Provider.of<ScheduleController>(context);
-
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
 
+
     int connectorIndex = isPower ? connectors.indexWhere((Connector element) {
-    return  element.connectorId == schedule.port;
-    }) : 0 ;
+
+            return element.connectorId == schedule.port;
+          })
+        : 0;
+    String scheduleName = '';
+
+    if (!isPower) {
+      scheduleName = "زماندبندی ${index + 1}";
+    } else {
+      connectors.forEach((element) {
+        if(element.name==""){
+          if(element.connectorType=='usb'){
+
+            element.name = 'پورت ${element.connectorId-4}';
+          }else{
+            element.name = 'پریز ${element.connectorId}';
+          }
+
+        }
+      });
+
+      scheduleName = connectors[connectorIndex].name;
+
+    }
 
     return Container(
       width: ChiscoConverter.calculateWidgetWidth(width, 320),
@@ -49,9 +80,8 @@ class ScheduleListItem extends StatelessWidget {
             fit: FlexFit.tight,
             child: Row(
               children: [
-
                 ChiscoText(
-                  text: !isPower ? "زماندبندی ${index+1}" : connectors[connectorIndex].name,
+                  text: scheduleName,
                   fontWeight: FontWeight.w400,
                 ),
                 Expanded(child: Container()),
@@ -63,6 +93,7 @@ class ScheduleListItem extends StatelessWidget {
                   fontSize: 10,
                 ),
                 //Ask Amir For Switch
+
                 Directionality(
                   textDirection: TextDirection.ltr,
                   child: Switch(
@@ -75,9 +106,7 @@ class ScheduleListItem extends StatelessWidget {
                       key: UniqueKey(),
                       value: schedule.enable,
                       onChanged: (bool) {
-
-                        controller.enableChanged(bool,schedule,device);
-
+                        controller.enableChanged(bool, schedule, device);
                       }),
                 )
               ],
@@ -120,8 +149,10 @@ class ScheduleListItem extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                       ChiscoText(
-                         text: schedule.start==''?'-:-':schedule.start.toString(),
+                      ChiscoText(
+                        text: schedule.start == ''
+                            ? '-:-'
+                            : schedule.start.toString(),
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                       )
@@ -133,11 +164,9 @@ class ScheduleListItem extends StatelessWidget {
                   child: Column(
                 children: [
                   Container(
-                      height:
-                          ChiscoConverter.calculateWidgetWidth(width, 10)),
+                      height: ChiscoConverter.calculateWidgetWidth(width, 10)),
                   SvgPicture.asset(
                     SCHEDULE_ARROW,
-
                     color: const Color(0xffC4C4C4).withOpacity(0.6),
                   ),
                 ],
@@ -155,14 +184,15 @@ class ScheduleListItem extends StatelessWidget {
                       const SizedBox(
                         width: 5,
                       ),
-                       ChiscoText(
-                        text: schedule.end==''?'-:-':schedule.end.toString(),
+                      ChiscoText(
+                        text: schedule.end == ''
+                            ? '-:-'
+                            : schedule.end.toString(),
                         fontSize: 20,
                         fontWeight: FontWeight.w400,
                       )
                     ],
                   ),
-
                 ],
               ),
             ],

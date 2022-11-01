@@ -77,7 +77,6 @@ class AddCoolerBottomSheet extends StatelessWidget {
             onClick: () async {
 
                controller.addCoolerBtnClicked(AddCooler(
-                  brand: brandTextController.text,
                   category: categoryTextController.text,
                   model: brandTextController.text,
                   name: nameTextController.text,

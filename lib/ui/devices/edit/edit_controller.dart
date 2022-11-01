@@ -38,7 +38,8 @@ class EditDeviceController extends ChangeNotifier {
       Cooler cooler = device as Cooler;
       nameTextController.text = cooler.name;
       categoryTextController.text = cooler.category;
-      brandTextController.text = cooler.brand;
+
+      brandTextController.text = cooler.model;
     } else {
       Power power = device as Power;
       nameTextController.text = power.name;

@@ -29,6 +29,8 @@ class ScheduleScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    AppController appController = Provider.of<AppController>(context,listen: false);
+    appController.setContext(context);
     ScheduleController controller = Provider.of<ScheduleController>(context);
 
     double height = MediaQuery.of(context).size.height;
@@ -38,19 +40,18 @@ class ScheduleScreen extends StatelessWidget {
     final serialNumber = ModalRoute.of(context)!.settings.arguments as String;
 
     final selectedDevice = Provider.of<AppController>(context).getDeviceWithSerialNumber(serialNumber);
-
     List<Schedule> schedule = [];
     bool isPower;
     if (selectedDevice is Power) {
-      print('ok1');
+      //print('ok1');
       schedule = (selectedDevice).schedule;
       isPower = true;
-      print("Power");
+     // print("Power");
     } else {
-      print('ok1');
+     // print('ok1');
       schedule = (selectedDevice as Cooler).schedule;
 
-      print("Cooler");
+      //print("Cooler");
       isPower = false;
     }
 
@@ -150,15 +151,14 @@ class ScheduleScreen extends StatelessWidget {
                                             isPower,
                                             schedule[index]);
                                       },
+
                                       child: ScheduleListItem(
                                         schedule: schedule[index],
                                         isPower: isPower,
                                         index: index,
                                         device: selectedDevice,
-                                        connectors: isPower
-                                            ? (selectedDevice as Power)
-                                                .connectors
-                                            : [],
+                                        connectors: isPower ? (selectedDevice as Power).connectors : [],
+
                                       ));
                                 }),
                           )

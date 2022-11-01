@@ -46,6 +46,8 @@ class CoolerController extends ChangeNotifier {
     temp = selectedCooler.temp;
   }
   init(Cooler selectedCooler) {
+    AppController appController = Provider.of<AppController>(context,listen: false);
+    appController.setContext(context);
 
     this.selectedCooler = selectedCooler;
     fanSpeedString = fans.firstWhere(
@@ -73,6 +75,7 @@ class CoolerController extends ChangeNotifier {
         coolerMode = CoolerModes.auto;
         break;
     }
+    print(selectedCooler.timer);
     if (selectedCooler.timer == 'Off') {
       hourToSleepTitle = 'زمان سنج خاموش است';
       hourToSleepValue = 0;
@@ -98,10 +101,11 @@ class CoolerController extends ChangeNotifier {
 
   changeCoolerActive() {
     selectedCooler.power = !selectedCooler.power;
-    Provider.of<AppController>(context, listen: false)
-        .setCooler(selectedCooler);
-    Provider.of<AppController>(context, listen: false)
-        .publishCoolerMqtt(selectedCooler);
+    if(!selectedCooler.power)
+      selectedCooler.timer = 'Off';
+    Provider.of<AppController>(context, listen: false).setCooler(selectedCooler);
+    bool result = Provider.of<AppController>(context, listen: false).publishCoolerMqtt(selectedCooler,context);
+
     notifyListeners();
   }
 
@@ -182,10 +186,8 @@ class CoolerController extends ChangeNotifier {
   setTimer() {
     print("Set SetTimer : ${selectedCooler.timer}");
     timer = Timer(const Duration(seconds: 2), () {
-      Provider.of<AppController>(context, listen: false)
-          .setCooler(selectedCooler);
-      Provider.of<AppController>(context, listen: false)
-          .publishCoolerMqtt(selectedCooler);
+      Provider.of<AppController>(context, listen: false).setCooler(selectedCooler);
+      Provider.of<AppController>(context, listen: false).publishCoolerMqtt(selectedCooler,context);
     });
   }
 

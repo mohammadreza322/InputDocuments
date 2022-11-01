@@ -33,7 +33,8 @@ class ProfileController extends ChangeNotifier {
     nameController.text = userDetail.fullName;
     numberController.text = userDetail.phoneNumber;
     locationController.text = userDetail.address;
-    print(userDetail.birthday);
+    AppController appController = Provider.of<AppController>(context);
+    appController.setContext(context);
     if (userDetail.birthday != null) {
       print('BirthDay in if ${userDetail.birthday}');
       int second = (userDetail.birthday as int) * 1000;
@@ -69,7 +70,7 @@ class ProfileController extends ChangeNotifier {
 
       Provider.of<AppController>(context, listen: false).refreshUserData(
           name: editUserResponse.details.fullName,
-          date: editUserResponse.details.birthday!,
+          date: editUserResponse.details.birthday,
           location: editUserResponse.details.address);
       Navigator.pop(context);
       ChiscoFlushBar.showSuccessFlushBar(context, editUserResponse.message);

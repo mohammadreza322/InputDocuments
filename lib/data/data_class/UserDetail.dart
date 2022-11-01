@@ -10,7 +10,7 @@ class UserDetail {
   UserDetail({
     this.address = '',
     this.birthday =null,
-    required this.fullName,
+    this.fullName ='',
     required this.phoneNumber,
   });
 
@@ -18,7 +18,7 @@ class UserDetail {
     return UserDetail(
       address: json['address'] != null ? json['address'] : '',
       birthday: json['birthday'],
-      fullName: json['fullName'],
+      fullName: json['fullName'] !=null ?json['fullName']:'',
       phoneNumber: json['phoneNumber'],
     );
   }

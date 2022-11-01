@@ -82,6 +82,7 @@ class ChiscoClient {
       ///here we got error if we cant connect to server
       ///ConnectionTimeOut if we cant connect to server after 10 second
       if (error.type == DioErrorType.connectTimeout) {
+        print('Error HTTP Connection.......');
         return ChiscoResponse(
             status: false,
             code: 404,
@@ -105,7 +106,7 @@ class ChiscoClient {
           String? detail = sharedPreferences.getString('detail');
 
           ///here we send request for refresh token
-          Response<dynamic> refreshRequest = await _dio.put(
+          Response refreshRequest = await _dio.put(
               "user/refresh-token",
               options: Options(headers: {"x-auth-token": accessToken}),
               data: {'refreshToken': refreshToken});
@@ -114,10 +115,11 @@ class ChiscoClient {
           ///and then we call old request again
           localDataSourceImpl.saveToken(refreshRequest.data['accessToken'],
               refreshRequest.data['refreshToken'], detail!);
+
           return request(url: url, data: data, type: type);
         } catch (err) {
           return ChiscoResponse(
-              status: false, code: 401, errorMessage: err.toString());
+              status: false, code: 401, errorMessage: 'خطا در برقراری ارتباط!');
         }
       } else {
         return ChiscoResponse(

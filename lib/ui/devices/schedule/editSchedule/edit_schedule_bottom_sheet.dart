@@ -42,6 +42,17 @@ class EditScheduleBottomSheet extends StatelessWidget {
     bool isPower = device.deviceType == DeviceType.power;
     if (isPower) {
       connectors = (device as Power).connectors;
+      connectors.forEach((element) {
+        if(element.name==""){
+          if(element.connectorType=='usb'){
+           //print('Edit Callled');
+            element.name = 'پورت ${element.connectorId-4}';
+          }else{
+            element.name = 'پریز ${element.connectorId}';
+          }
+
+        }
+      });
     }
 
     if (controller.initState) {
@@ -54,15 +65,21 @@ class EditScheduleBottomSheet extends StatelessWidget {
       controller.offTime = schedule.end;
 
       if (schedule.start != '' && schedule.end != '') {
+        print('BOTH');
         controller.changeSelectedScheduleItem(ScheduleType.both);
       } else if (schedule.start != '' && schedule.end == '') {
+        print('START');
+
         controller.changeSelectedScheduleItem(ScheduleType.on);
       } else {
+        print('END');
+
         controller.changeSelectedScheduleItem(ScheduleType.off);
-        print("Offff");
+
       }
 
       if (isPower) {
+        print(connectors[schedule.port!-1].name);
         controller.dropDownString = connectors[schedule.port! - 1].name;
         controller.connectorId = schedule.port!;
       }
@@ -70,7 +87,7 @@ class EditScheduleBottomSheet extends StatelessWidget {
     bool both = controller.isScheduleItemActive(ScheduleType.both);
     bool on = controller.isScheduleItemActive(ScheduleType.on);
     bool off = controller.isScheduleItemActive(ScheduleType.off);
-    //print('On : $on /// Off : $off //// Both : $both');
+
 
     return Directionality(
       textDirection: TextDirection.rtl,
@@ -131,7 +148,15 @@ class EditScheduleBottomSheet extends StatelessWidget {
                   children: [
                     ChiscoDropDown(
                         connectors: connectors,
-                        onDropDownChange: (value) {},
+                        onDropDownChange: (value) {
+
+                          int index = connectors.indexWhere(
+                                  (element) => element.connectorId == value);
+
+                          controller.changeDropDownValue(
+                              connectors[index].name, value as int);
+
+                        },
                         dropDownString: controller.dropDownString),
                     const SizedBox(
                       height: 20,
@@ -318,6 +343,7 @@ class EditScheduleBottomSheet extends StatelessWidget {
                       controller.editPowerScheduleBtnClicked(
                           device.serialNumber, schedule.id);
                     }
+
                   },
                   icon: '',
                   hasIcon: false,
