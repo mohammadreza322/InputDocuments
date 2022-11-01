@@ -38,10 +38,10 @@ class SubmitNumberPage extends StatelessWidget {
                 text: 'لطفا اطلاعات خود را برای ورود یا ثبت ‌نام وارد کنید.',
                 fontWeight: FontWeight.w300,
                 textColor: Styles.primaryTextColor),
-             SizedBox(
-              height:  ChiscoConverter.calculateWidgetWidth(width,45),
+            SizedBox(
+              height: ChiscoConverter.calculateWidgetWidth(width, 45),
             ),
-             AuthTextField(
+            AuthTextField(
                 label: 'شماره همراه',
                 controller: controller,
                 text: 'برای مثال : 09012345789',
@@ -52,13 +52,16 @@ class SubmitNumberPage extends StatelessWidget {
             ),
             ChiscoButton(
               text: 'دریافت پیامک تایید',
-              hasProgressBar:Provider.of<AuthController>(context,listen: false).hasProgressBar,
+              hasProgressBar:
+                  Provider.of<AuthController>(context, listen: false)
+                      .hasProgressBar,
               onClick: () {
-                print("callled 1");
+                // print("callled 1");
                 FocusManager.instance.primaryFocus?.unfocus();
-                Provider.of<AuthController>(context,listen: false).setPhoneNumber(controller.text);
-                Provider.of<AuthController>(context,listen: false).submitNumberBtnClicked(controller.text);
-
+                Provider.of<AuthController>(context, listen: false)
+                    .setPhoneNumber(controller.text);
+                Provider.of<AuthController>(context, listen: false)
+                    .submitNumberBtnClicked(controller.text);
               },
               icon: LEFT_ARROW,
             ),
@@ -69,7 +72,8 @@ class SubmitNumberPage extends StatelessWidget {
               alignment: Alignment.center,
               child: TextButton(
                   onPressed: () {
-                    Provider.of<AuthController>(context,listen: false).goToPage(0);
+                    Provider.of<AuthController>(context, listen: false)
+                        .goToPage(0);
                   },
                   child: const ChiscoText(
                       text: '',

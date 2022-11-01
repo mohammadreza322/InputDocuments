@@ -9,7 +9,8 @@ import 'package:sleek_circular_slider/sleek_circular_slider.dart';
 class TempController extends StatelessWidget {
   final Function(double) tempCallBack;
   const TempController({
-    Key? key, required this.tempCallBack,
+    Key? key,
+    required this.tempCallBack,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -44,24 +45,22 @@ class TempController extends StatelessWidget {
                               offset: const Offset(0, 0),
                               blurRadius: 20)
                         ],
-                        shape: BoxShape.circle),),
+                        shape: BoxShape.circle),
+                  ),
                   Center(
                     child: SleekCircularSlider(
-
                       min: 16,
                       max: 32,
                       initialValue: controller.temp.toDouble(),
-
                       appearance: CircularSliderAppearance(
                         startAngle: 180,
                         angleRange: 180,
-                        size:300,
+                        size: 300,
                         customWidths: CustomSliderWidths(
                           trackWidth: 6,
-                          shadowWidth:0,
+                          shadowWidth: 0,
                           progressBarWidth: 0,
                           handlerSize: 10,
-
                         ),
                         customColors: CustomSliderColors(
                           progressBarColor: Colors.transparent,
@@ -69,17 +68,16 @@ class TempController extends StatelessWidget {
                             Color(0xffA04F84),
                             Color(0xff409EEB)
                           ],
-                          shadowColor: const Color(0xff144FA3).withOpacity(0.25),
+                          shadowColor:
+                              const Color(0xff144FA3).withOpacity(0.25),
                           shadowMaxOpacity: 0.1,
                           shadowStep: 0.5,
-
                           dotColor: Colors.white,
                         ),
                       ),
                       onChange: (value) {
-                        print('value ${value.toInt()}');
+                        // print('value ${value.toInt()}');
                         tempCallBack(value);
-
                       },
                       innerWidget: (percentage) {
                         return Container(
@@ -118,7 +116,7 @@ class TempController extends StatelessWidget {
                 ],
               )),
         ),
-         const Flexible(
+        const Flexible(
           fit: FlexFit.loose,
           child: Align(
             alignment: Alignment.centerLeft,

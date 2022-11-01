@@ -27,29 +27,29 @@ class SplashController extends ChangeNotifier {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     //sharedPreferences.clear();
     String? accessToken = sharedPreferences.getString('access_token');
-    isPageLoading = true;
+    //isPageLoading = true;
 
     if (accessToken == null) {
-      print('AccessToken Nulllllllllllllllll');
+      // print('AccessToken Nulllllllllllllllll');
       progressBarShown = false;
       GlobalVariable.isUserLogin = false;
 
       return Timer(const Duration(milliseconds: 100), () {
-        print('timer 2');
+        // print('timer 2');
         isPageLoading = true;
         notifyListeners();
       });
     } else {
       String? detail = sharedPreferences.getString('detail');
-      print(detail);
+      // print(detail);
 
       ChiscoResponse response = await repository.getUserDevices();
-      print(response.code);
-      print(response.errorMessage);
+      // print(response.code);
+      // print(response.errorMessage);
       if (response.status) {
         return Timer(const Duration(milliseconds: 200), () {
-          print("timer ok 1");
-          print("###############");
+          // print("timer ok 1");
+          // print("###############");
           Provider.of<AppController>(context, listen: false)
               .setData(response.object);
           GlobalVariable.isUserLogin = true;

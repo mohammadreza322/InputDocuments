@@ -28,18 +28,18 @@ class ProfileController extends ChangeNotifier {
   init() {
     isPageLoading = true;
     UserDetail userDetail = Provider.of<AppController>(context).getUserDetail();
-    print('Birthday AppController');
-    print(Provider.of<AppController>(context).getUserDetail().birthday);
+    // print('Birthday AppController');
+    // print(Provider.of<AppController>(context).getUserDetail().birthday);
     nameController.text = userDetail.fullName;
     numberController.text = userDetail.phoneNumber;
     locationController.text = userDetail.address;
     AppController appController = Provider.of<AppController>(context);
     appController.setContext(context);
     if (userDetail.birthday != null) {
-      print('BirthDay in if ${userDetail.birthday}');
+      // print('BirthDay in if ${userDetail.birthday}');
       int second = (userDetail.birthday as int) * 1000;
       var date = DateTime.fromMillisecondsSinceEpoch(second);
-      print(date.millisecondsSinceEpoch);
+      // print(date.millisecondsSinceEpoch);
       changeSelectedDate(date);
     } else {
       selectedStringDate = 'ندارد';
@@ -50,9 +50,9 @@ class ProfileController extends ChangeNotifier {
   changeSelectedDate(DateTime selectedDate) {
     Jalali jalali = Jalali.fromDateTime(selectedDate);
     selectedStringDate = jalali.formatCompactDate();
-    print(selectedDate);
+    // print(selectedDate);
     selectedDateLong = selectedDate.millisecondsSinceEpoch;
-    print(selectedDateLong);
+    // print(selectedDateLong);
     isHintDate = false;
     Future.delayed(const Duration(milliseconds: 250), () {
       notifyListeners();
@@ -63,9 +63,9 @@ class ProfileController extends ChangeNotifier {
       String name, String? birthday, String? location) async {
     ChiscoResponse response = await accountRepositoryImpl.editUserInformation(
         location, selectedDateLong, name);
-    print('OnClick Long : ${selectedDateLong}');
+    // print('OnClick Long : ${selectedDateLong}');
     if (response.status) {
-      print(response.object);
+      // print(response.object);
       EditUserResponse editUserResponse = response.object;
 
       Provider.of<AppController>(context, listen: false).refreshUserData(
@@ -75,7 +75,7 @@ class ProfileController extends ChangeNotifier {
       Navigator.pop(context);
       ChiscoFlushBar.showSuccessFlushBar(context, editUserResponse.message);
     } else {
-      print("Error Edit User");
+      // print("Error Edit User");
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
     }
   }

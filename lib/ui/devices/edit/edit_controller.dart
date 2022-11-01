@@ -33,7 +33,7 @@ class EditDeviceController extends ChangeNotifier {
   final TextEditingController usbPortSecond = TextEditingController();
   init(Device device) {
     isPageLoading = true;
-    print(nameTextController.text);
+    // print(nameTextController.text);
     if (device.deviceType == DeviceType.cooler) {
       Cooler cooler = device as Cooler;
       nameTextController.text = cooler.name;
@@ -97,11 +97,11 @@ class EditDeviceController extends ChangeNotifier {
     ChiscoResponse response = await deviceRepository.deleteDevice(serialNumber);
     if (!response.status) {
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
-      print(response.errorMessage);
+      // print(response.errorMessage);
       return;
     } else {
       AddDeviceResponse addDeviceResponse = response.object;
-      print(addDeviceResponse.message);
+      // print(addDeviceResponse.message);
       Navigator.pushNamed(context, homePage);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
 

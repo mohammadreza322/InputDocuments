@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dart:convert';
+
 class PowerController extends ChangeNotifier {
   final BuildContext context;
 
@@ -21,53 +22,54 @@ class PowerController extends ChangeNotifier {
 
   init(Power selectedPower) {
     initCall = false;
-    AppController appController = Provider.of<AppController>(context,listen: false);
+    AppController appController =
+        Provider.of<AppController>(context, listen: false);
     appController.setContext(context);
-   // List<Connector> connectors = selectedPower.connectors.where((element) => element.status).toList();
+    // List<Connector> connectors = selectedPower.connectors.where((element) => element.status).toList();
     voltage = selectedPower.totalVoltage;
-   /* if (connectors.isEmpty) {
+    /* if (connectors.isEmpty) {
       isPowerActive = false;
     } else {
       isPowerActive = true;
     }*/
-    print('init');
+    // print('init');
     selectedPower.checkIsPowerActive();
     //isPowerActive=selectedPower.isPowerActive();
     this.selectedPower = selectedPower;
-    Timer(Duration(milliseconds: 250),() {
+    Timer(Duration(milliseconds: 250), () {
       notifyListeners();
     });
   }
 
   onPowerBtnClicked({required Power selectedPower}) async {
-    await Provider.of<AppController>(context,listen: false).updatePowersConnectors(selectedPower,context);
+    await Provider.of<AppController>(context, listen: false)
+        .updatePowersConnectors(selectedPower, context);
     notifyListeners();
   }
 
-  onConnectorChange(connectorId, status) async{
-    List<Connector> connectors = selectedPower.connectors.where((element) => element.status).toList();
-    print(connectors.length);
-    print(status);
-    if(!status&& connectors.length==1){
-      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+  onConnectorChange(connectorId, status) async {
+    List<Connector> connectors =
+        selectedPower.connectors.where((element) => element.status).toList();
+    // print(connectors.length);
+    // print(status);
+    if (!status && connectors.length == 1) {
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
       sharedPreferences.remove(selectedPower.serialNumber);
-
     }
-      int index = selectedPower.connectors.indexWhere((element) => element.connectorId == connectorId);
-      print("<><><><><><><><><><>");
-      print("index : ");
-      print(index);
-      selectedPower.connectors[index].status = status;
-      print(selectedPower.connectors[index].status);
-      Provider.of<AppController>(context, listen: false).setPower(selectedPower);
-      Provider.of<AppController>(context, listen: false).publishPowerMqtt(selectedPower, context);
-      init(selectedPower);
-      notifyListeners();
-
-
-
+    int index = selectedPower.connectors
+        .indexWhere((element) => element.connectorId == connectorId);
+    // print("<><><><><><><><><><>");
+    // print("index : ");
+    // print(index);
+    selectedPower.connectors[index].status = status;
+    // print(selectedPower.connectors[index].status);
+    Provider.of<AppController>(context, listen: false).setPower(selectedPower);
+    Provider.of<AppController>(context, listen: false)
+        .publishPowerMqtt(selectedPower, context);
+    init(selectedPower);
+    notifyListeners();
   }
-
 }
 
 class PowerItem {
@@ -82,5 +84,3 @@ class PowerItem {
       required this.icon,
       required this.isOn});
 }
-
-

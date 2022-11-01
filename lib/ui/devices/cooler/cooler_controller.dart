@@ -14,7 +14,7 @@ class CoolerController extends ChangeNotifier {
   CoolerController(this.context);
 
   late Cooler selectedCooler;
-  int temp=22;
+  int temp = 22;
   CoolerModes coolerMode = CoolerModes.auto;
   String verticalString = '';
   String horizontalString = '';
@@ -41,12 +41,14 @@ class CoolerController extends ChangeNotifier {
     {'key': 'Highest', 'value': 'خیلی زیاد'},
     {'key': 'Auto', 'value': 'خودکار'}
   ];
-  initTemp(Cooler selectedCooler){
-    initCall=false;
+  initTemp(Cooler selectedCooler) {
+    initCall = false;
     temp = selectedCooler.temp;
   }
+
   init(Cooler selectedCooler) {
-    AppController appController = Provider.of<AppController>(context,listen: false);
+    AppController appController =
+        Provider.of<AppController>(context, listen: false);
     appController.setContext(context);
 
     this.selectedCooler = selectedCooler;
@@ -57,33 +59,33 @@ class CoolerController extends ChangeNotifier {
     horizontalString = swings.firstWhere((element) =>
         element['key'] == selectedCooler.horizontalSwing)['value']!;
     temp = selectedCooler.temp;
-    print(selectedCooler.temp);
-    switch(selectedCooler.mode){
+    // print(selectedCooler.temp);
+    switch (selectedCooler.mode) {
       case 'auto':
         coolerMode = CoolerModes.auto;
         break;
       case 'cold':
-        coolerMode =CoolerModes.cold;
+        coolerMode = CoolerModes.cold;
         break;
       case 'warm':
-        coolerMode =CoolerModes.warm;
+        coolerMode = CoolerModes.warm;
         break;
       case 'fan':
-        coolerMode =CoolerModes.fan;
+        coolerMode = CoolerModes.fan;
         break;
-      default :
+      default:
         coolerMode = CoolerModes.auto;
         break;
     }
-    print(selectedCooler.timer);
+    // print(selectedCooler.timer);
     if (selectedCooler.timer == 'Off') {
       hourToSleepTitle = 'زمان سنج خاموش است';
       hourToSleepValue = 0;
-      print('Off');
+      // print('Off');
     } else {
       hourToSleepValue = int.parse(selectedCooler.timer);
       hourToSleepTitle = '$hourToSleepValue ساعت تا خاموشی';
-      print('not off');
+      // print('not off');
     }
   }
 
@@ -101,10 +103,11 @@ class CoolerController extends ChangeNotifier {
 
   changeCoolerActive() {
     selectedCooler.power = !selectedCooler.power;
-    if(!selectedCooler.power)
-      selectedCooler.timer = 'Off';
-    Provider.of<AppController>(context, listen: false).setCooler(selectedCooler);
-    bool result = Provider.of<AppController>(context, listen: false).publishCoolerMqtt(selectedCooler,context);
+    if (!selectedCooler.power) selectedCooler.timer = 'Off';
+    Provider.of<AppController>(context, listen: false)
+        .setCooler(selectedCooler);
+    bool result = Provider.of<AppController>(context, listen: false)
+        .publishCoolerMqtt(selectedCooler, context);
 
     notifyListeners();
   }
@@ -136,7 +139,6 @@ class CoolerController extends ChangeNotifier {
   }
 
   changeFanSpeedString() {
-
     timer?.cancel();
     fanIndex++;
     if (fanIndex > 3) {
@@ -159,20 +161,20 @@ class CoolerController extends ChangeNotifier {
 
   changeHourToSleepDecrease() {
     timer?.cancel();
-    print('before If : $hourToSleepValue');
+    // print('before If : $hourToSleepValue');
     if (hourToSleepValue > 0) {
       hourToSleepValue--;
-      print('Value $hourToSleepValue');
+      // print('Value $hourToSleepValue');
       if (hourToSleepValue != 0) {
         hourToSleepTitle = '$hourToSleepValue ساعت تا خاموشی';
         selectedCooler.timer = hourToSleepValue.toString();
       } else {
-        print("ELSE $hourToSleepValue");
-        hourToSleepValue =0;
+        // print("ELSE $hourToSleepValue");
+        hourToSleepValue = 0;
         hourToSleepTitle = 'زمان سنج خاموش است';
         selectedCooler.timer = "Off";
       }
-      print(hourToSleepTitle);
+      // print(hourToSleepTitle);
 
     }
 
@@ -186,8 +188,10 @@ class CoolerController extends ChangeNotifier {
   setTimer() {
     print("Set SetTimer : ${selectedCooler.timer}");
     timer = Timer(const Duration(seconds: 2), () {
-      Provider.of<AppController>(context, listen: false).setCooler(selectedCooler);
-      Provider.of<AppController>(context, listen: false).publishCoolerMqtt(selectedCooler,context);
+      Provider.of<AppController>(context, listen: false)
+          .setCooler(selectedCooler);
+      Provider.of<AppController>(context, listen: false)
+          .publishCoolerMqtt(selectedCooler, context);
     });
   }
 

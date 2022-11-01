@@ -52,7 +52,8 @@ class HomeController extends ChangeNotifier {
   init() {
     ///[init] is called only one time when is opened
     isPageLoading = true;
-    AppController appController = Provider.of<AppController>(context,listen: false);
+    AppController appController =
+        Provider.of<AppController>(context, listen: false);
     appController.setContext(context);
     user = appController.getUser();
     if (!_categories.contains('نمایش همه')) {
@@ -71,13 +72,15 @@ class HomeController extends ChangeNotifier {
       AddDeviceResponse addDeviceResponse = response.object;
       Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
-      Provider.of<AppController>(context, listen: false).refreshData(response.object);
-      Provider.of<AppController>(context, listen: false).subscribe(cooler.serialNumber);
+      Provider.of<AppController>(context, listen: false)
+          .refreshData(response.object);
+      Provider.of<AppController>(context, listen: false)
+          .subscribe(cooler.serialNumber);
     }
   }
 
   addPowerBtnClicked(AddPower power) async {
-    print("power : ${power.toString()}");
+    // print("power : ${power.toString()}");
     ChiscoResponse response = await deviceRepository.addPower(power);
     if (!response.status) {
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
@@ -89,7 +92,7 @@ class HomeController extends ChangeNotifier {
     //Navigator.pop(context);
     Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
     ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
-    print(response.object.toString());
+    // print(response.object.toString());
     Provider.of<AppController>(context, listen: false)
         .refreshData(addDeviceResponse);
     Provider.of<AppController>(context, listen: false)
@@ -102,19 +105,19 @@ class HomeController extends ChangeNotifier {
   ///and if user select each other it filters devices
   ///for filtering we create a list [filteredDevices] and we use it for showing devices in homePage
   filteringDevices(String category) {
-    print('Devices : ${_listDevices.toString()}');
+    // print('Devices : ${_listDevices.toString()}');
     if (category == 'نمایش همه') {
       filteredDevices.clear();
       _filteredDevices.addAll(_listDevices);
       selectedCategory = category;
     } else {
-      print('else');
+      // print('else');
       _filteredDevices = _listDevices
           .where((element) => element.category == category)
           .toList();
-      print(filteredDevices.toString());
+      // print(filteredDevices.toString());
       selectedCategory = category;
-      print(selectedCategory);
+      // print(selectedCategory);
     }
 
     Future.delayed(const Duration(milliseconds: 250), () {
@@ -135,16 +138,15 @@ class HomeController extends ChangeNotifier {
   }
 
   ///onClick for all Devices {on or off button} Icon
-  onDevicePowerBtnClicked(Device device)  async{
+  onDevicePowerBtnClicked(Device device) async {
     if (device.deviceType == DeviceType.power) {
       ///if user click on power icon for powers we have to change all [connectors] state
       ///and publish data in Mqtt
 
       Power power = device as Power;
-      await Provider.of<AppController>(context,listen: false).updatePowersConnectors(power,context);
+      await Provider.of<AppController>(context, listen: false)
+          .updatePowersConnectors(power, context);
       notifyListeners();
-
-
     } else {
       ///and if user click on Cooler's power icon we have only change isPowerActive bool
       ///and publish it in MQTT
@@ -153,7 +155,8 @@ class HomeController extends ChangeNotifier {
       cooler.power = !isPowerActive;
       Provider.of<AppController>(context, listen: false).setCooler(cooler);
       isPowerActive = !isPowerActive;
-      Provider.of<AppController>(context, listen: false).publishCoolerMqtt(cooler,context);
+      Provider.of<AppController>(context, listen: false)
+          .publishCoolerMqtt(cooler, context);
       notifyListeners();
     }
   }

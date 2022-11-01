@@ -90,7 +90,7 @@ class ChiscoClient {
       ///here we got error if we cant connect to server
       ///ConnectionTimeOut if we cant connect to server after 10 second
       if (error.type == DioErrorType.connectTimeout) {
-        print('Error HTTP Connection.......');
+        // print('Error HTTP Connection.......');
         return ChiscoResponse(
             status: false,
             code: 404,

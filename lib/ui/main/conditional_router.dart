@@ -28,16 +28,15 @@ class ConditionalRouter extends MapMixin<String, WidgetBuilder> {
 
   @override
   WidgetBuilder? operator [](Object? key) {
-
     if (public.containsKey(key)) {
-      print(GlobalVariable.isUserLogin);
-      if(GlobalVariable.isUserLogin==null){
+      // print(GlobalVariable.isUserLogin);
+      if (GlobalVariable.isUserLogin == null) {
         return (ctx) => ChangeNotifierProvider(
-          create: (context) => SplashController(context),
-          child: const SplashScreen(),
-        );
+              create: (context) => SplashController(context),
+              child: const SplashScreen(),
+            );
       }
-      if (GlobalVariable.isUserLogin==true &&  key == loginPage) {
+      if (GlobalVariable.isUserLogin == true && key == loginPage) {
         print('Login Page Public If');
         return (ctx) => ChangeNotifierProvider(
               create: (context) => HomeController(context),
@@ -49,30 +48,24 @@ class ConditionalRouter extends MapMixin<String, WidgetBuilder> {
       return public[key];
     }
     if (private.containsKey(key)) {
-      if(GlobalVariable.isUserLogin==null){
-
-        return  (ctx) => ChangeNotifierProvider(
-          create: (context) => SplashController(context),
-          child: const SplashScreen(),
-        );
-
-      }else {
+      if (GlobalVariable.isUserLogin == null) {
+        return (ctx) => ChangeNotifierProvider(
+              create: (context) => SplashController(context),
+              child: const SplashScreen(),
+            );
+      } else {
         print("#################");
         print("called3");
         print(key);
-        if (GlobalVariable.isUserLogin==true){
-          
+        if (GlobalVariable.isUserLogin == true) {
           return private[key];
-        }else{
+        } else {
           return (ctx) => ChangeNotifierProvider(
-            create: (context) => AuthController(context),
-            child: const AuthScreen(),
-          );
+                create: (context) => AuthController(context),
+                child: const AuthScreen(),
+              );
         }
-
       }
-
-
     }
 
     return null;

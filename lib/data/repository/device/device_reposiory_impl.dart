@@ -15,7 +15,7 @@ class DeviceRepositoryImpl extends DeviceRepository {
   Future<ChiscoResponse> addCooler(AddCooler cooler) async {
     ChiscoResponse response = await _dataSource.addCooler(cooler);
     if (response.status) {
-      print(response.object.toString());
+      // print(response.object.toString());
       ChiscoResponse result = ChiscoResponse(
           status: response.status,
           code: response.code,
@@ -54,10 +54,13 @@ class DeviceRepositoryImpl extends DeviceRepository {
   }
 
   @override
-  Future<ChiscoResponse> editCooler(EditCooler cooler) async{
+  Future<ChiscoResponse> editCooler(EditCooler cooler) async {
     ChiscoResponse response = await _dataSource.editCooler(cooler);
-    if(response.status){
-      ChiscoResponse result = ChiscoResponse(status: response.status, code:response.code,object: AddDeviceResponse.fromJson(response.object));
+    if (response.status) {
+      ChiscoResponse result = ChiscoResponse(
+          status: response.status,
+          code: response.code,
+          object: AddDeviceResponse.fromJson(response.object));
       return result;
     }
     return response;
@@ -66,8 +69,11 @@ class DeviceRepositoryImpl extends DeviceRepository {
   @override
   Future<ChiscoResponse> editPower(EditPower power) async {
     ChiscoResponse response = await _dataSource.editPower(power);
-    if(response.status){
-      ChiscoResponse result = ChiscoResponse(status: response.status, code:response.code,object: AddDeviceResponse.fromJson(response.object));
+    if (response.status) {
+      ChiscoResponse result = ChiscoResponse(
+          status: response.status,
+          code: response.code,
+          object: AddDeviceResponse.fromJson(response.object));
       return result;
     }
     return response;

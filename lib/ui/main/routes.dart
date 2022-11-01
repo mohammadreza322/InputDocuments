@@ -51,8 +51,8 @@ var routes = ConditionalRouter(public: {
       ),
   coolerDevicePage: (context) {
     if (ModalRoute.of(context)!.settings.arguments == null) {
-      print("////////////////////////");
-      print(ModalRoute.of(context)!.settings.arguments);
+      // print("////////////////////////");
+      // print(ModalRoute.of(context)!.settings.arguments);
       return splashScreenPage;
     }
     return ChangeNotifierProvider(
