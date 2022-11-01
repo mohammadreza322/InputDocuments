@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:io';
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
 import 'package:chisco/data/data_source/auth/auth_local_data_source_impl.dart';
@@ -76,6 +77,13 @@ class ChiscoClient {
           }),
         );
       }
+
+      Map<String, dynamic> responseData = Map.from(response.data);
+
+      if (responseData['refreshToken'] != null) {
+        return refreshToken(url: url, data: data, type: type);
+      }
+
       return ChiscoResponse(
           status: true, code: response.statusCode, object: response.data);
     } on DioError catch (error) {
@@ -98,29 +106,7 @@ class ChiscoClient {
 
       ///if response status code is 401 its means our token is Expire and we have to refresh the token
       if (error.response!.statusCode == 401) {
-        try {
-          SharedPreferences sharedPreferences =
-              await SharedPreferences.getInstance();
-          String? accessToken = sharedPreferences.getString('access_token');
-          String? refreshToken = sharedPreferences.getString('refresh_token');
-          String? detail = sharedPreferences.getString('detail');
-
-          ///here we send request for refresh token
-          Response refreshRequest = await _dio.put(
-              "user/refresh-token",
-              options: Options(headers: {"x-auth-token": accessToken}),
-              data: {'refreshToken': refreshToken});
-
-          ///after receive Response we save it to SharePreferences
-          ///and then we call old request again
-          localDataSourceImpl.saveToken(refreshRequest.data['accessToken'],
-              refreshRequest.data['refreshToken'], detail!);
-
-          return request(url: url, data: data, type: type);
-        } catch (err) {
-          return ChiscoResponse(
-              status: false, code: 401, errorMessage: 'خطا در برقراری ارتباط!');
-        }
+        return refreshToken(url: url, type: type, data: data);
       } else {
         return ChiscoResponse(
           status: false,
@@ -129,10 +115,46 @@ class ChiscoClient {
         );
       }
     } catch (e) {
-      if ((e as SocketException).message ==
-          "Failed host lookup: 'chisco.tech' (OS Error: No address associated with hostname, errno = 7)")
-        print('***** Exception Caught *****');
-      throw Exception();
+      // if ((e as SocketException).message ==
+      //     "Failed host lookup: 'chisco.tech' (OS Error: No address associated with hostname, errno = 7)")
+      //   print('***** Exception Caught *****');
+      print(e);
+      print("**************************");
+      print("ok123");
+      return ChiscoResponse(
+          status: false,
+          code: 401,
+          errorMessage: 'خطا در برقراری ارتباط!',
+          object: {});
+    }
+  }
+
+  refreshToken(
+      {RequestType type = RequestType.post,
+      required String url,
+      dynamic data}) async {
+    try {
+      print("called refresh token");
+      SharedPreferences sharedPreferences =
+          await SharedPreferences.getInstance();
+      String? accessToken = sharedPreferences.getString('access_token');
+      String? refreshToken = sharedPreferences.getString('refresh_token');
+      // String? detail = sharedPreferences.getString('detail');
+
+      ///here we send request for refresh token
+      Response refreshRequest = await _dio.put("user/refresh-token",
+          options: Options(headers: {"x-auth-token": accessToken}),
+          data: {'refreshToken': refreshToken});
+
+      ///after receive Response we save it to SharePreferences
+      ///and then we call old request again
+      await localDataSourceImpl.saveToken(refreshRequest.data['accessToken'],
+          refreshRequest.data['refreshToken'], null);
+
+      return await request(url: url, data: data, type: type);
+    } catch (err) {
+      return ChiscoResponse(
+          status: false, code: 401, errorMessage: 'خطا در برقراری ارتباط!');
     }
   }
 }

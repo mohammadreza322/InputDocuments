@@ -18,13 +18,19 @@ class SplashScreen extends StatelessWidget {
     if (!controller.isPageLoading) {
       controller.init();
     }
-    if (controller.isSplashEnd && appController.isMqttConnected) {
+    if (controller.isSplashEnd &&
+        appController.isMqttConnected &&
+        controller.isPageLoading) {
       Timer(const Duration(milliseconds: 250), () {
         controller.progressBarShown = false;
         print('timer 1');
         print("############");
         Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
       });
+    }
+
+    if (controller.isPageLoading && !controller.isSplashEnd) {
+      Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
     }
 
     return SafeArea(
