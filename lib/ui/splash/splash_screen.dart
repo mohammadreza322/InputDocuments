@@ -14,24 +14,26 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SplashController controller = Provider.of<SplashController>(context);
-    AppController appController = Provider.of<AppController>(context);
-    if (!controller.isPageLoading) {
+    //AppController appController = Provider.of<AppController>(context);
+    if (!controller.isInitCall) {
       controller.init();
     }
-    if (controller.isSplashEnd &&
+/*    if (controller.isSplashEnd &&
         appController.isMqttConnected &&
         controller.isPageLoading) {
       Timer(const Duration(milliseconds: 250), () {
         controller.progressBarShown = false;
         print('timer 1');
         print("############");
-        Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
+
       });
     }
 
     if (controller.isPageLoading && !controller.isSplashEnd) {
-      Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
-    }
+      Timer(const Duration(milliseconds: 250), () {
+
+      });
+    }*/
 
     return SafeArea(
       child: Scaffold(

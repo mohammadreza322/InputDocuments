@@ -21,10 +21,14 @@ class SplashController extends ChangeNotifier {
   bool isSplashEnd = false;
   SplashController(this.context);
   bool isLoginPage = true;
+  bool isInitCall = false;
 
   init() async {
+    isInitCall = true;
     final AuthRepositoryImpl repository = AuthRepositoryImpl();
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+
+    //notifyListeners();
     //sharedPreferences.clear();
     String? accessToken = sharedPreferences.getString('access_token');
     isPageLoading = true;
@@ -34,36 +38,42 @@ class SplashController extends ChangeNotifier {
       progressBarShown = false;
       GlobalVariable.isUserLogin = false;
 
-      return Timer(const Duration(milliseconds: 100), () {
+      return Timer(const Duration(milliseconds: 500), () {
         print('timer 2');
         isPageLoading = true;
-        notifyListeners();
+        Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
+        // notifyListeners();
       });
     } else {
       String? detail = sharedPreferences.getString('detail');
       print(detail);
-
       ChiscoResponse response = await repository.getUserDevices();
       print(response.code);
       print(response.errorMessage);
       if (response.status) {
-        return Timer(const Duration(milliseconds: 200), () {
+        return Timer(const Duration(milliseconds: 500), () {
           print("timer ok 1");
           print("###############");
-          Provider.of<AppController>(context, listen: false)
-              .setData(response.object);
+          Provider.of<AppController>(context, listen: false).setData(response.object);
           GlobalVariable.isUserLogin = true;
           Provider.of<AppController>(context, listen: false)
               .connect(topicForSubscribe: 'chisco/test');
           isSplashEnd = true;
           isPageLoading = true;
           // Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
-          notifyListeners();
+          Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
+          // notifyListeners();
         });
       } else {
-        return Timer(const Duration(milliseconds: 200), () {
+        print('2345');
+        progressBarShown = false;
+        GlobalVariable.isUserLogin = false;
+
+        return Timer(const Duration(milliseconds: 500), () {
+          print('timer 2');
           isPageLoading = true;
-          notifyListeners();
+          Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
+          // notifyListeners();
         });
       }
     }
