@@ -330,7 +330,7 @@ class AppController extends ChangeNotifier {
     if(cooler.connectionStatus){
       publishMessage('/chisco/${cooler.serialNumber}/change', MqttClientPayloadBuilder().addString(result));
       print('TRUE');
-      //ChiscoFlushBar.showSuccessFlushBar(context, 'تغییرات با موفقیت ثبت شد!');
+      ChiscoFlushBar.showSuccessFlushBar(context, 'تغییرات با موفقیت ثبت شد!');
     }else{
     print("FALSE");
       ChiscoFlushBar.showErrorFlushBar(context, 'دستگاه شما به اینترنت وصل نیست!');
