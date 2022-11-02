@@ -66,6 +66,9 @@ class AuthRepositoryImpl extends AuthRepository {
   Future<ChiscoResponse> getUserDevices() async {
     ChiscoResponse response = await authRemoteDataSource.getUserDevices();
     if (response.status) {
+      if (response.object["hasError"] != null) {
+        return ChiscoResponse(status: false, code: response.code, object: {});
+      }
       ChiscoResponse result = ChiscoResponse(
           status: true,
           code: response.code,

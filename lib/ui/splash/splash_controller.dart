@@ -20,6 +20,7 @@ class SplashController extends ChangeNotifier {
   bool progressBarShown = true;
   bool isSplashEnd = false;
   SplashController(this.context);
+  bool isLoginPage = true;
 
   init() async {
     final AuthRepositoryImpl repository = AuthRepositoryImpl();
@@ -35,7 +36,8 @@ class SplashController extends ChangeNotifier {
 
       return Timer(const Duration(milliseconds: 100), () {
         print('timer 2');
-        Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
+        isPageLoading = true;
+        notifyListeners();
       });
     } else {
       String? detail = sharedPreferences.getString('detail');
@@ -45,24 +47,22 @@ class SplashController extends ChangeNotifier {
       print(response.code);
       print(response.errorMessage);
       if (response.status) {
-        return Timer(const Duration(milliseconds: 100), () {
+        return Timer(const Duration(milliseconds: 200), () {
           print("timer ok 1");
           print("###############");
-          Provider.of<AppController>(context, listen: false).setData(response.object);
+          Provider.of<AppController>(context, listen: false)
+              .setData(response.object);
           GlobalVariable.isUserLogin = true;
-          Provider.of<AppController>(context, listen: false).connect(topicForSubscribe: 'chisco/test');
+          Provider.of<AppController>(context, listen: false)
+              .connect(topicForSubscribe: 'chisco/test');
           isSplashEnd = true;
+          isPageLoading = true;
           // Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
           notifyListeners();
         });
       } else {
-        return Timer(const Duration(milliseconds: 100), () {
-          print("timer ok 2");
-          print("###############");
-          print(response.errorMessage);
-          progressBarShown = false;
-          ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
-          print("Error Message Splash : ${response.errorMessage}");
+        return Timer(const Duration(milliseconds: 200), () {
+          isPageLoading = true;
           notifyListeners();
         });
       }
