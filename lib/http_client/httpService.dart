@@ -80,7 +80,7 @@ class ChiscoClient {
 
       Map<String, dynamic> responseData = Map.from(response.data);
 
-      if (responseData['refreshToken'] != null) {
+      if (responseData['refreshToken1'] != null) {
         return refreshToken(url: url, data: data, type: type);
       }
 
