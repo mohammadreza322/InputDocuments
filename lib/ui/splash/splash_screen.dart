@@ -33,7 +33,7 @@ class SplashScreen extends StatelessWidget {
       Timer(const Duration(milliseconds: 250), () {
 
       });
-    }*/
+    } */
 
     return SafeArea(
       child: Scaffold(

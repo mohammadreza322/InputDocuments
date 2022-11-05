@@ -41,7 +41,8 @@ class SplashController extends ChangeNotifier {
       return Timer(const Duration(milliseconds: 250), () {
         //print('timer 2');
         isPageLoading = true;
-        notifyListeners();
+        Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
+        // notifyListeners();
       });
     } else {
       String? detail = sharedPreferences.getString('detail');
@@ -52,8 +53,8 @@ class SplashController extends ChangeNotifier {
       // print(response.errorMessage);
       if (response.status) {
         return Timer(const Duration(milliseconds: 200), () {
-         // print("timer ok 1");
-         // print("###############");
+          // print("timer ok 1");
+          // print("###############");
           Provider.of<AppController>(context, listen: false)
               .setData(response.object);
           GlobalVariable.isUserLogin = true;
@@ -61,13 +62,17 @@ class SplashController extends ChangeNotifier {
               .connect(topicForSubscribe: 'chisco/test');
           isSplashEnd = true;
           isPageLoading = true;
-          // Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
-          notifyListeners();
+          Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
+          // notifyListeners();
         });
       } else {
-        return Timer(const Duration(milliseconds: 200), () {
+        progressBarShown = false;
+        GlobalVariable.isUserLogin = false;
+        return Timer(const Duration(milliseconds: 250), () {
+          //print('timer 2');
           isPageLoading = true;
-          notifyListeners();
+          Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
+          // notifyListeners();
         });
       }
     }

@@ -26,6 +26,9 @@ class ChiscoClient {
       connectTimeout: 10000,
       receiveTimeout: 7000,
       sendTimeout: 7000,
+      validateStatus: (status) {
+        return status! < 500;
+      },
       receiveDataWhenStatusError: true,
     ))
       ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
