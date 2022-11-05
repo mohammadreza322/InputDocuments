@@ -23,22 +23,22 @@ class ScheduleController extends ChangeNotifier {
   bool isEnable = true;
   ScheduleRepositoryImpl repositoryImpl = ScheduleRepositoryImpl();
 
-  onAddScheduleClick(Device device,bool isPower) {
+  onAddScheduleClick(Device device, bool isPower) {
     showChiscoBottomSheet(
         context,
         ChangeNotifierProvider(
           create: (context) => AddScheduleController(context),
-          child:  Directionality(
+          child: Directionality(
             textDirection: TextDirection.rtl,
-            child: AddScheduleBottomSheet(device: device,isPower: isPower),
+            child: AddScheduleBottomSheet(device: device, isPower: isPower),
           ),
         ));
-   // print("is Power  : $isPower");
+    // print("is Power  : $isPower");
     notifyListeners();
   }
 
   String convertDays(List<String> engDays) {
-    List<String> farsiList=[];
+    List<String> farsiList = [];
     for (int i = 0; i < engDays.length; i++) {
       switch (engDays[i]) {
         case 'sat':
@@ -67,54 +67,51 @@ class ScheduleController extends ChangeNotifier {
           farsiList.add('ج');
           break;
       }
-
     }
 
     return farsiList.join('  ');
   }
 
-    enableChanged(bool values,Schedule schedule,Device device) {
-    if(device.deviceType == DeviceType.cooler){
-      print('^^^^^^^^^^^^^^^^^^^^^^^^');
+  enableChanged(bool values, Schedule schedule, Device device) {
+    if (device.deviceType == DeviceType.cooler) {
+      // print('^^^^^^^^^^^^^^^^^^^^^^^^');
 
-      print('Schedule Start : ${schedule.start}');
-      print('Schedule END : ${schedule.end}');
-      editCoolerSchedule(device.serialNumber, schedule,values);
-    }else
-      editPowerSchedule(device.serialNumber, schedule,values);
+      // print('Schedule Start : ${schedule.start}');
+      // print('Schedule END : ${schedule.end}');
+      editCoolerSchedule(device.serialNumber, schedule, values);
+    } else
+      editPowerSchedule(device.serialNumber, schedule, values);
     notifyListeners();
   }
 
-
-  editCoolerSchedule(String serialNumber,Schedule schedule,bool enable) async {
+  editCoolerSchedule(
+      String serialNumber, Schedule schedule, bool enable) async {
     ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
         endTime: schedule.end,
         repeat: schedule.repeat,
         serialNumber: serialNumber,
         id: schedule.id,
         enable: enable,
-        startTime:schedule.start));
+        startTime: schedule.start));
 
     print(response);
 
     if (response.status) {
       AddDeviceResponse deviceResponse = response.object;
 
-      Provider.of<AppController>(context, listen: false).refreshData(deviceResponse);
+      Provider.of<AppController>(context, listen: false)
+          .refreshData(deviceResponse);
 
       notifyListeners();
-      ChiscoFlushBar.showSuccessFlushBar(context,deviceResponse.message);
-
-
+      ChiscoFlushBar.showSuccessFlushBar(context, deviceResponse.message);
     } else {
-
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage!);
       print(response.errorMessage);
       print('status 4111 ');
     }
   }
 
-  editPowerSchedule(String serialNumber,Schedule schedule,bool enable) async {
+  editPowerSchedule(String serialNumber, Schedule schedule, bool enable) async {
     print("response");
     ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
         endTime: schedule.end,
@@ -123,16 +120,16 @@ class ScheduleController extends ChangeNotifier {
         id: schedule.id,
         enable: enable,
         serialNumber: serialNumber,
-        startTime:schedule.start));
+        startTime: schedule.start));
 
-    print(response);
+    // print(response);
     if (response.status) {
       print(response.status);
       AddDeviceResponse deviceResponse = response.object;
-      Provider.of<AppController>(context, listen: false).refreshData(deviceResponse);
+      Provider.of<AppController>(context, listen: false)
+          .refreshData(deviceResponse);
       notifyListeners();
-      ChiscoFlushBar.showSuccessFlushBar(context,deviceResponse.message);
-
+      ChiscoFlushBar.showSuccessFlushBar(context, deviceResponse.message);
     } else {
       // ChiscoFlushBar.showFlushBar(context, response.errorMessage!);
       ChiscoFlushBar.showErrorFlushBar(context, 'اسم پورت را تغییر دهید');
@@ -141,17 +138,18 @@ class ScheduleController extends ChangeNotifier {
     }
   }
 
-
-
-  onListItemClicked(Device device, bool isPower,Schedule schedule) {
+  onListItemClicked(Device device, bool isPower, Schedule schedule) {
     print(schedule);
     showChiscoBottomSheet(
         context,
         ChangeNotifierProvider(
           create: (context) => EditScheduleController(context),
-          child:  Directionality(
+          child: Directionality(
             textDirection: TextDirection.rtl,
-            child: EditScheduleBottomSheet(device: device,schedule: schedule,),
+            child: EditScheduleBottomSheet(
+              device: device,
+              schedule: schedule,
+            ),
           ),
         ));
     notifyListeners();

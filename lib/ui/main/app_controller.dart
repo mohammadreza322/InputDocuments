@@ -324,15 +324,15 @@ class AppController extends ChangeNotifier {
     coolerMap['timer'] = cooler.timer;
 
     String result = json.encode({"cooler": coolerMap});
-    print(cooler.connectionStatus);
+    // print(cooler.connectionStatus);
 
     if (cooler.connectionStatus) {
       publishMessage('/chisco/${cooler.serialNumber}/change',
           MqttClientPayloadBuilder().addString(result));
-      print('TRUE');
+      // print('TRUE');
       //ChiscoFlushBar.showSuccessFlushBar(context, 'تغییرات با موفقیت ثبت شد!');
     } else {
-      print("FALSE");
+      // print("FALSE");
       ChiscoFlushBar.showErrorFlushBar(
           context, 'دستگاه شما به اینترنت وصل نیست!');
     }
