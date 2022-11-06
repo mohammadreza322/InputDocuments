@@ -1,12 +1,1 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.authRoute = void 0;
-const express_1 = __importDefault(require("express"));
-const auth_pageview_1 = require("../page_view/auth.pageview");
-const router = express_1.default.Router();
-exports.authRoute = router;
-router.get('/', auth_pageview_1.loginPage);
-router.get('/otp', auth_pageview_1.otpPage);
+'use strict';const _0x419156=_0xe0ac;(function(_0x570079,_0x35a6ce){const _0x1f648d=_0xe0ac,_0x4597dd=_0x570079();while(!![]){try{const _0x3b0a65=parseInt(_0x1f648d(0x89))/0x1+-parseInt(_0x1f648d(0x79))/0x2+parseInt(_0x1f648d(0x7a))/0x3+parseInt(_0x1f648d(0x82))/0x4*(parseInt(_0x1f648d(0x83))/0x5)+-parseInt(_0x1f648d(0x88))/0x6*(parseInt(_0x1f648d(0x7b))/0x7)+parseInt(_0x1f648d(0x80))/0x8*(parseInt(_0x1f648d(0x7c))/0x9)+-parseInt(_0x1f648d(0x86))/0xa*(-parseInt(_0x1f648d(0x81))/0xb);if(_0x3b0a65===_0x35a6ce)break;else _0x4597dd['push'](_0x4597dd['shift']());}catch(_0x385434){_0x4597dd['push'](_0x4597dd['shift']());}}}(_0x3000,0x65095));function _0x3000(){const _0x3df34b=['__esModule','loginPage','248FmeHeX','1085788ziblsE','2032LoFhzz','2765nQRzJa','otpPage','express','30iilyXh','__importDefault','12ZIbVAt','64948JOdwLI','authRoute','get','413072OatvSK','840732LrCVyO','1785301ZfYCEe','60453kPoOgY','defineProperty'];_0x3000=function(){return _0x3df34b;};return _0x3000();}var __importDefault=this&&this[_0x419156(0x87)]||function(_0x832055){const _0x3a2511=_0x419156;return _0x832055&&_0x832055[_0x3a2511(0x7e)]?_0x832055:{'default':_0x832055};};Object[_0x419156(0x7d)](exports,_0x419156(0x7e),{'value':!![]}),exports[_0x419156(0x8a)]=void 0x0;const express_1=__importDefault(require(_0x419156(0x85))),auth_pageview_1=require('../page_view/auth.pageview'),router=express_1['default']['Router']();function _0xe0ac(_0x1fae2f,_0x1f78a7){const _0x3000f8=_0x3000();return _0xe0ac=function(_0xe0acf0,_0x1281b4){_0xe0acf0=_0xe0acf0-0x78;let _0x36462b=_0x3000f8[_0xe0acf0];return _0x36462b;},_0xe0ac(_0x1fae2f,_0x1f78a7);}exports[_0x419156(0x8a)]=router,router[_0x419156(0x78)]('/',auth_pageview_1[_0x419156(0x7f)]),router['get']('/otp',auth_pageview_1[_0x419156(0x84)]);

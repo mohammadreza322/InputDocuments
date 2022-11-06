@@ -1,16 +1,1 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.userRouter = void 0;
-const express_1 = __importDefault(require("express"));
-const user_controller_1 = require("../controller/user.controller");
-const authorization_1 = require("../middleware/authorization");
-const router = express_1.default.Router();
-exports.userRouter = router;
-router.put('/refresh-token', user_controller_1.refreshToken);
-router.use([authorization_1.getAuthorization, authorization_1.hasPermission]);
-router.post('/get-name', user_controller_1.getFullName);
-router.put('/edit', user_controller_1.editUserProfile);
-router.get('/', user_controller_1.getUserDetails);
+'use strict';const _0x3b3537=_0x46cb;function _0x1343(){const _0xd5828a=['getAuthorization','post','304400UnVFuf','35ZnPZce','/edit','210939VkoyhZ','__esModule','put','../controller/user.controller','get','755204VoIPlv','/get-name','/refresh-token','refreshToken','44264NYHvGV','6710310afQlXG','default','3237597CHMgXK','3748620hwVmts','userRouter','use','36udZPPE','Router','__importDefault','../middleware/authorization','express','editUserProfile','defineProperty','5KpXnSX'];_0x1343=function(){return _0xd5828a;};return _0x1343();}function _0x46cb(_0xbd2b27,_0x276551){const _0x134378=_0x1343();return _0x46cb=function(_0x46cb4d,_0x237bfe){_0x46cb4d=_0x46cb4d-0x11d;let _0x3845df=_0x134378[_0x46cb4d];return _0x3845df;},_0x46cb(_0xbd2b27,_0x276551);}(function(_0x11c1e9,_0x29563e){const _0x293c8a=_0x46cb,_0x5c36f8=_0x11c1e9();while(!![]){try{const _0x118774=-parseInt(_0x293c8a(0x132))/0x1+parseInt(_0x293c8a(0x11d))/0x2+-parseInt(_0x293c8a(0x135))/0x3*(parseInt(_0x293c8a(0x128))/0x4)+parseInt(_0x293c8a(0x12f))/0x5*(parseInt(_0x293c8a(0x125))/0x6)+parseInt(_0x293c8a(0x133))/0x7*(parseInt(_0x293c8a(0x121))/0x8)+-parseInt(_0x293c8a(0x124))/0x9+parseInt(_0x293c8a(0x122))/0xa;if(_0x118774===_0x29563e)break;else _0x5c36f8['push'](_0x5c36f8['shift']());}catch(_0x39c2f6){_0x5c36f8['push'](_0x5c36f8['shift']());}}}(_0x1343,0x62a96));var __importDefault=this&&this[_0x3b3537(0x12a)]||function(_0x32751c){const _0x1e00b2=_0x3b3537;return _0x32751c&&_0x32751c[_0x1e00b2(0x136)]?_0x32751c:{'default':_0x32751c};};Object[_0x3b3537(0x12e)](exports,_0x3b3537(0x136),{'value':!![]}),exports[_0x3b3537(0x126)]=void 0x0;const express_1=__importDefault(require(_0x3b3537(0x12c))),user_controller_1=require(_0x3b3537(0x138)),authorization_1=require(_0x3b3537(0x12b)),router=express_1[_0x3b3537(0x123)][_0x3b3537(0x129)]();exports[_0x3b3537(0x126)]=router,router[_0x3b3537(0x137)](_0x3b3537(0x11f),user_controller_1[_0x3b3537(0x120)]),router[_0x3b3537(0x127)]([authorization_1[_0x3b3537(0x130)],authorization_1['hasPermission']]),router[_0x3b3537(0x131)](_0x3b3537(0x11e),user_controller_1['getFullName']),router[_0x3b3537(0x137)](_0x3b3537(0x134),user_controller_1[_0x3b3537(0x12d)]),router[_0x3b3537(0x139)]('/',user_controller_1['getUserDetails']);

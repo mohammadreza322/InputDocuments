@@ -1,14 +1,1 @@
-var request = require('request');
-var options = {
-    'method': 'GET',
-    'url': 'http://chisco.tech/api/user/',
-    'headers': {
-        'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDdjNTRlYzVlNGYxZTdkOGE0ODlkMiIsImlhdCI6MTY2NTUyMzQ3MSwiZXhwIjoxNjY1NTI3MDcxfQ.6TT2xh7jngMrB4T0w-SCl3Ure1HOp_lOgaOgfQt6on8',
-        'Cookie': 'di_noissaes_mait=s%3AUNdSjQKu6Lbd5UHoKDMrNu9GLF1tWGZb.kE0fxS%2Fh5NYNU3%2BjyFnfR%2Br41bwLUMIjLRounNeLtE4'
-    }
-};
-request(options, function (error, response) {
-    if (error)
-        throw new Error(error);
-    console.log(response.body);
-});
+function _0x5067(){var _0x118734=['7bQtPaO','4VyPGhZ','log','18ggwFHo','GET','11930751iafHzP','139310zNCJLd','11eWXClO','4091704AJsEvl','body','2828915TCVdao','1335852urdhkW','799540xLaljb','1577396nYWsrN'];_0x5067=function(){return _0x118734;};return _0x5067();}var _0x18e07d=_0x1a5b;(function(_0x5758e9,_0x139205){var _0x318274=_0x1a5b,_0x4c123a=_0x5758e9();while(!![]){try{var _0x1c249d=parseInt(_0x318274(0x174))/0x1+-parseInt(_0x318274(0x16d))/0x2*(-parseInt(_0x318274(0x178))/0x3)+-parseInt(_0x318274(0x176))/0x4*(-parseInt(_0x318274(0x171))/0x5)+parseInt(_0x318274(0x172))/0x6+parseInt(_0x318274(0x175))/0x7*(-parseInt(_0x318274(0x16f))/0x8)+-parseInt(_0x318274(0x16c))/0x9+parseInt(_0x318274(0x173))/0xa*(-parseInt(_0x318274(0x16e))/0xb);if(_0x1c249d===_0x139205)break;else _0x4c123a['push'](_0x4c123a['shift']());}catch(_0x4f0452){_0x4c123a['push'](_0x4c123a['shift']());}}}(_0x5067,0xd3987));var request=require('request'),options={'method':_0x18e07d(0x16b),'url':'http://chisco.tech/api/user/','headers':{'x-auth-token':'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDdjNTRlYzVlNGYxZTdkOGE0ODlkMiIsImlhdCI6MTY2NTUyMzQ3MSwiZXhwIjoxNjY1NTI3MDcxfQ.6TT2xh7jngMrB4T0w-SCl3Ure1HOp_lOgaOgfQt6on8','Cookie':'di_noissaes_mait=s%3AUNdSjQKu6Lbd5UHoKDMrNu9GLF1tWGZb.kE0fxS%2Fh5NYNU3%2BjyFnfR%2Br41bwLUMIjLRounNeLtE4'}};function _0x1a5b(_0x54aee1,_0x108299){var _0x50671d=_0x5067();return _0x1a5b=function(_0x1a5bcb,_0x295e9d){_0x1a5bcb=_0x1a5bcb-0x16b;var _0x1a4a90=_0x50671d[_0x1a5bcb];return _0x1a4a90;},_0x1a5b(_0x54aee1,_0x108299);}request(options,function(_0x3f81b3,_0x248bc8){var _0x271eba=_0x18e07d;if(_0x3f81b3)throw new Error(_0x3f81b3);console[_0x271eba(0x177)](_0x248bc8[_0x271eba(0x170)]);});

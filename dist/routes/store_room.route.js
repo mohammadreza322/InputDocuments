@@ -1,14 +1,1 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.storeRoomRoute = void 0;
-const express_1 = __importDefault(require("express"));
-const devices_pageview_1 = require("../page_view/devices.pageview");
-const device_controller_1 = require("../controller/device.controller");
-const router = express_1.default.Router();
-exports.storeRoomRoute = router;
-router.get('/', devices_pageview_1.storeHouse);
-router.post('/add', device_controller_1.addDevice);
-router.post('/delete', device_controller_1.deleteDeviceInStoreRoom);
+'use strict';function _0x1207(_0xf11d8f,_0x3143f6){const _0x4e83db=_0x4e83();return _0x1207=function(_0x120795,_0x4dc523){_0x120795=_0x120795-0x17e;let _0x408e81=_0x4e83db[_0x120795];return _0x408e81;},_0x1207(_0xf11d8f,_0x3143f6);}const _0x3278fd=_0x1207;(function(_0x4559af,_0x5f527e){const _0x127943=_0x1207,_0x4ba212=_0x4559af();while(!![]){try{const _0x548236=parseInt(_0x127943(0x181))/0x1*(parseInt(_0x127943(0x18b))/0x2)+parseInt(_0x127943(0x187))/0x3+parseInt(_0x127943(0x18e))/0x4*(parseInt(_0x127943(0x18a))/0x5)+-parseInt(_0x127943(0x17f))/0x6*(parseInt(_0x127943(0x18d))/0x7)+-parseInt(_0x127943(0x193))/0x8+-parseInt(_0x127943(0x18c))/0x9*(-parseInt(_0x127943(0x191))/0xa)+parseInt(_0x127943(0x184))/0xb;if(_0x548236===_0x5f527e)break;else _0x4ba212['push'](_0x4ba212['shift']());}catch(_0x2ce91b){_0x4ba212['push'](_0x4ba212['shift']());}}}(_0x4e83,0xa22ac));var __importDefault=this&&this[_0x3278fd(0x192)]||function(_0x1fe1da){return _0x1fe1da&&_0x1fe1da['__esModule']?_0x1fe1da:{'default':_0x1fe1da};};Object[_0x3278fd(0x196)](exports,_0x3278fd(0x17e),{'value':!![]}),exports[_0x3278fd(0x186)]=void 0x0;function _0x4e83(){const _0x48f2ae=['post','defineProperty','/add','__esModule','722784wJtsiM','storeHouse','1VqEfMz','../page_view/devices.pageview','get','15755058eRPBtx','addDevice','storeRoomRoute','2067756eTjhdo','deleteDeviceInStoreRoom','../controller/device.controller','15835ydWaBf','731018XtrKTo','69417vTnZgQ','70VZlInB','660hCTNPa','default','express','120PGzbsd','__importDefault','9866192iSwNds','Router'];_0x4e83=function(){return _0x48f2ae;};return _0x4e83();}const express_1=__importDefault(require(_0x3278fd(0x190))),devices_pageview_1=require(_0x3278fd(0x182)),device_controller_1=require(_0x3278fd(0x189)),router=express_1[_0x3278fd(0x18f)][_0x3278fd(0x194)]();exports[_0x3278fd(0x186)]=router,router[_0x3278fd(0x183)]('/',devices_pageview_1[_0x3278fd(0x180)]),router['post'](_0x3278fd(0x197),device_controller_1[_0x3278fd(0x185)]),router[_0x3278fd(0x195)]('/delete',device_controller_1[_0x3278fd(0x188)]);

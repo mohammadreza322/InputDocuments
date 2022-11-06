@@ -1,14 +1,1 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.customerRoute = void 0;
-const express_1 = __importDefault(require("express"));
-const customer_controller_1 = require("../controller/customer.controller");
-const clients_pageview_1 = require("../page_view/clients.pageview");
-const router = express_1.default.Router();
-exports.customerRoute = router;
-router.post('/delete', customer_controller_1.deleteCustomer);
-router.post('/edit', customer_controller_1.editUser);
-router.get('/', clients_pageview_1.clientPage);
+'use strict';const _0x2e0075=_0x579b;function _0x579b(_0x339fbd,_0x1c4fc9){const _0x4b4810=_0x4b48();return _0x579b=function(_0x579b4e,_0x156097){_0x579b4e=_0x579b4e-0x17b;let _0x286a58=_0x4b4810[_0x579b4e];return _0x286a58;},_0x579b(_0x339fbd,_0x1c4fc9);}function _0x4b48(){const _0xb899d7=['4LZGUks','defineProperty','1062117jIBpka','1389968iJQwuT','228582OspWSD','/edit','../controller/customer.controller','post','865134oSOCYJ','516464wEvtXZ','__importDefault','clientPage','__esModule','Router','get','/delete','1808679OBvqbh','deleteCustomer','60UVJanP','22370nLUfnn'];_0x4b48=function(){return _0xb899d7;};return _0x4b48();}(function(_0x545e49,_0x2a07a6){const _0x4e345d=_0x579b,_0xe39c8=_0x545e49();while(!![]){try{const _0x388b96=-parseInt(_0x4e345d(0x18e))/0x1+parseInt(_0x4e345d(0x17f))/0x2+-parseInt(_0x4e345d(0x186))/0x3*(-parseInt(_0x4e345d(0x18a))/0x4)+parseInt(_0x4e345d(0x189))/0x5*(-parseInt(_0x4e345d(0x188))/0x6)+-parseInt(_0x4e345d(0x18c))/0x7+-parseInt(_0x4e345d(0x18d))/0x8+parseInt(_0x4e345d(0x17e))/0x9;if(_0x388b96===_0x2a07a6)break;else _0xe39c8['push'](_0xe39c8['shift']());}catch(_0x3c1603){_0xe39c8['push'](_0xe39c8['shift']());}}}(_0x4b48,0x57834));var __importDefault=this&&this[_0x2e0075(0x180)]||function(_0x212e95){const _0x30aee3=_0x2e0075;return _0x212e95&&_0x212e95[_0x30aee3(0x182)]?_0x212e95:{'default':_0x212e95};};Object[_0x2e0075(0x18b)](exports,_0x2e0075(0x182),{'value':!![]}),exports['customerRoute']=void 0x0;const express_1=__importDefault(require('express')),customer_controller_1=require(_0x2e0075(0x17c)),clients_pageview_1=require('../page_view/clients.pageview'),router=express_1['default'][_0x2e0075(0x183)]();exports['customerRoute']=router,router['post'](_0x2e0075(0x185),customer_controller_1[_0x2e0075(0x187)]),router[_0x2e0075(0x17d)](_0x2e0075(0x17b),customer_controller_1['editUser']),router[_0x2e0075(0x184)]('/',clients_pageview_1[_0x2e0075(0x181)]);

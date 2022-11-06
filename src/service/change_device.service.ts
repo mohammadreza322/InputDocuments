@@ -53,32 +53,14 @@ connectDb().then(() => {
                 console.log('subscribe /chisco/+/change');
             })
 
-            // client.subscribe('/chisco/change_cooler/#', (err) => {
-            //     if (err) {
-            //         console.error('can not subscribe /chisco/change_cooler');
-            //         console.error(err);
-            //         process.exit(1);
-            //     }
-            //     console.log('subscribe /chisco/change_cooler');
-            // });
-			//
-            // client.subscribe('/chisco/change_schedule/#', (err) => {
-            //     if (err) {
-            //         console.error('can not subscribe /chisco/change_schedule');
-            //         console.error(err);
-            //         process.exit(1);
-            //     }
-            //     console.log('subscribe /chisco/change_schedule');
-            // });
-			//
-            // client.subscribe('/chisco/change_power/#', (err) => {
-            //     if (err) {
-            //         console.error('can not subscribe /chisco/change_power');
-            //         console.error(err);
-            //         process.exit(1);
-            //     }
-            //     console.log('subscribe /chisco/change_power');
-            // });
+            client.subscribe('/chisco/+/change_model',(err) => {
+                if (err) {
+                    console.error('can not subscribe /chisco/+/change_model');
+                    console.error(err);
+                    process.exit(1);
+                }
+                console.log('subscribe /chisco/+/change_model');
+            })
         });
 
         client.on('message', async (topic, message) => {
@@ -92,6 +74,8 @@ connectDb().then(() => {
 
 			const changeDeviceRegex = /\/chisco\/(.*)\/get/.exec(topic);
             const republishRegex = /\/chisco\/(.*)\/change/.exec(topic);
+            const changeModelRegex = /\/chisco\/(.*)\/change_model/.exec(topic);
+
             const connectedDeviceRegex = /\/event\/connected/.exec(topic);
             const disconnectDeviceRegex = /\/event\/disconnected/.exec(topic);
 
@@ -118,9 +102,19 @@ connectDb().then(() => {
                         if(deviceExists.type=='power'){
                             data.totalVoltage =Math.floor(Math.random() * (220 - 50) + 50)
                         }
+                        client.publish(`/chisco/${republishRegex[1]}/get`,JSON.stringify(data))
                     }
-                    client.publish(`/chisco/${republishRegex[1]}/get`,JSON.stringify(data))
+
                 }
+            } else if(changeModelRegex) {
+                _deviceExists(republishRegex[1]).then((deviceExists) => {
+                    if(deviceExists.valid){
+                        if(deviceExists.type=='cooler'){
+                            changeModel(changeModelRegex[1],data.model)
+                        }
+                    }
+                });
+
             }
         });
     } catch (e) {
@@ -161,7 +155,6 @@ async function changeDisconnectStatus(payload: any) {
 
 async function changeConnectStatus(payload: any) {
     const serialNumber = payload.username;
-    const lastConnection = payload.disconnected_at;
 
     const validSerialNumber = await _deviceExists(serialNumber);
     if (!validSerialNumber.valid) {
@@ -243,6 +236,18 @@ async function changeDevice(serialNumber: string,payload:any) {
             );
         }
     }
+}
+
+async function changeModel(serialNumber:string,model:string){
+    await Cooler.updateOne(
+        {serialNumber},
+        {
+            $set: {
+              model
+            },
+
+        },
+    );
 }
 
 

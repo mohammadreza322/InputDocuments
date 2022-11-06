@@ -301,10 +301,10 @@ export default class DeviceEntity {
             );
         }
 
-        AhpMqtt.getInstance().publish(
-            `/chisco/deleteOwner/${serialNumber}`,
-            JSON.stringify({delete: true}),
-        );
+        // AhpMqtt.getInstance().publish(
+        //     `/chisco/deleteOwner/${serialNumber}`,
+        //     JSON.stringify({delete: true}),
+        // );
         return true;
     }
 

@@ -20,8 +20,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/dist/public/photo/Empty Icon.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/public/photo/Empty Icon.svg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/broker_provider.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/broker_provider.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/convert.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/convert.js" afterDir="false" />
@@ -52,7 +50,6 @@
       <change beforePath="$PROJECT_DIR$/dist/page_view/clients.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/clients.pageview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/page_view/dashboard.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/dashboard.pageview.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/page_view/devices.pageview.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/page_view/devices.pageview.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/public/css/ie.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/css/ie.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/public/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/admin.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/public/js/chisco.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/chisco.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/public/js/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/public/js/client.js" afterDir="false" />
@@ -85,46 +82,12 @@
       <change beforePath="$PROJECT_DIR$/dist/types/session.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/session.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/types/user.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/user.type.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/utility/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/utility/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/client.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/devices.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/footer.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/header.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/modal.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/top_navbar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/storehouse.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/broker_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/broker_provider.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/classes/sms_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/sms_provider.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/device.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/device.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/login.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/login.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/controller/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.controller.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/device.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/device.entity.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/entities/login.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/login.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/logs.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/logs.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/user.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/user.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/device.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/device.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page_view/auth.pageview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/page_view/auth.pageview.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/css/ie.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/css/ie.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/chisco.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/chisco.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/device.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/device.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/otp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/otp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/storehouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/storehouse.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/authorization.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/service/change_device.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/change_device.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/types/device.type.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/types/device.type.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/admin.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/client.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/client.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/devices.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/footer.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/header.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/modal.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/top_navbar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -215,7 +178,9 @@
       <workItem from="1666071931681" duration="3563000" />
       <workItem from="1666077562522" duration="8044000" />
       <workItem from="1666154142302" duration="1820000" />
-      <workItem from="1666157410676" duration="1350000" />
+      <workItem from="1666157410676" duration="1526000" />
+      <workItem from="1667624249565" duration="3296000" />
+      <workItem from="1667723466036" duration="524000" />
     </task>
     <servers />
   </component>
@@ -280,10 +245,10 @@
     </state>
     <state x="369" y="106" key="SettingsEditor/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1665985946043" />
     <state x="2381" y="160" key="SettingsEditor/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662788185868" />
-    <state x="534" y="197" width="549" height="592" key="find.popup" timestamp="1666154548585">
+    <state x="534" y="197" width="549" height="592" key="find.popup" timestamp="1667625131865">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="534" y="197" width="549" height="592" key="find.popup/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1666154548585" />
+    <state x="534" y="197" width="549" height="592" key="find.popup/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1667625131865" />
     <state x="2587" y="249" width="586" height="534" key="find.popup/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1663668005762" />
     <state x="534" y="197" width="549" height="592" key="find.popup/0.0.1536.816@0.0.1536.816" timestamp="1666075050622" />
     <state x="425" y="185" key="run.anything.popup" timestamp="1664599933704">

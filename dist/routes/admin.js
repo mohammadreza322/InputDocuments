@@ -1,16 +1,1 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.adminRoute = void 0;
-const express_1 = __importDefault(require("express"));
-const admin_pageview_1 = require("../page_view/admin.pageview");
-const user_controller_1 = require("../controller/user.controller");
-const router = express_1.default.Router();
-exports.adminRoute = router;
-router.get('/', admin_pageview_1.adminPage);
-router.post('/add', user_controller_1.addAdmin);
-router.post('/edit', user_controller_1.editAdmin);
-router.post('/delete', user_controller_1.deleteAdmin);
-router.post('/current', user_controller_1.editCurrentAdmin);
+'use strict';const _0x21dc8f=_0x4db3;(function(_0x2d313d,_0x129a7d){const _0x41f006=_0x4db3,_0x54cfb3=_0x2d313d();while(!![]){try{const _0x529bb7=-parseInt(_0x41f006(0x1f6))/0x1*(parseInt(_0x41f006(0x20c))/0x2)+-parseInt(_0x41f006(0x1f5))/0x3+-parseInt(_0x41f006(0x1fa))/0x4+-parseInt(_0x41f006(0x1f9))/0x5*(parseInt(_0x41f006(0x205))/0x6)+-parseInt(_0x41f006(0x20a))/0x7+parseInt(_0x41f006(0x1fe))/0x8*(parseInt(_0x41f006(0x20e))/0x9)+-parseInt(_0x41f006(0x207))/0xa*(-parseInt(_0x41f006(0x209))/0xb);if(_0x529bb7===_0x129a7d)break;else _0x54cfb3['push'](_0x54cfb3['shift']());}catch(_0x45905f){_0x54cfb3['push'](_0x54cfb3['shift']());}}}(_0x1c48,0x3f08a));var __importDefault=this&&this['__importDefault']||function(_0x520287){return _0x520287&&_0x520287['__esModule']?_0x520287:{'default':_0x520287};};Object[_0x21dc8f(0x1f3)](exports,'__esModule',{'value':!![]}),exports[_0x21dc8f(0x1f4)]=void 0x0;const express_1=__importDefault(require(_0x21dc8f(0x200))),admin_pageview_1=require(_0x21dc8f(0x204)),user_controller_1=require(_0x21dc8f(0x1fc)),router=express_1[_0x21dc8f(0x1f8)][_0x21dc8f(0x20b)]();function _0x1c48(){const _0x52cfaf=['editCurrentAdmin','deleteAdmin','addAdmin','../page_view/admin.pageview','218262NwdbVO','editAdmin','70120zFEGWu','/current','2662ugNHKQ','3576580dAyqJW','Router','142TBbwPH','adminPage','9SllzyL','defineProperty','adminRoute','1174191tsRQdr','843xanxxZ','/add','default','55qGpnCV','785744fbniKO','/delete','../controller/user.controller','post','960440vAHWWn','/edit','express'];_0x1c48=function(){return _0x52cfaf;};return _0x1c48();}function _0x4db3(_0x4af079,_0x3a4952){const _0x1c4830=_0x1c48();return _0x4db3=function(_0x4db3e1,_0x137770){_0x4db3e1=_0x4db3e1-0x1f3;let _0x1ff7a3=_0x1c4830[_0x4db3e1];return _0x1ff7a3;},_0x4db3(_0x4af079,_0x3a4952);}exports[_0x21dc8f(0x1f4)]=router,router['get']('/',admin_pageview_1[_0x21dc8f(0x20d)]),router[_0x21dc8f(0x1fd)](_0x21dc8f(0x1f7),user_controller_1[_0x21dc8f(0x203)]),router['post'](_0x21dc8f(0x1ff),user_controller_1[_0x21dc8f(0x206)]),router[_0x21dc8f(0x1fd)](_0x21dc8f(0x1fb),user_controller_1[_0x21dc8f(0x202)]),router[_0x21dc8f(0x1fd)](_0x21dc8f(0x208),user_controller_1[_0x21dc8f(0x201)]);

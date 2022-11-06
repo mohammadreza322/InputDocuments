@@ -1,14 +1,1 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.deviceSiteRouter = void 0;
-const express_1 = __importDefault(require("express"));
-const devices_pageview_1 = require("../page_view/devices.pageview");
-const device_controller_1 = require("../controller/device.controller");
-const router = express_1.default.Router();
-exports.deviceSiteRouter = router;
-router.post('/delete', device_controller_1.deleteOwnerOfDevice);
-router.post('/kick', device_controller_1.kickDevice);
-router.get('/', devices_pageview_1.devicesPage);
+'use strict';const _0x30b711=_0x5b06;(function(_0x449d0a,_0x53aa2e){const _0x16da3e=_0x5b06,_0x3a88fe=_0x449d0a();while(!![]){try{const _0xf0298b=-parseInt(_0x16da3e(0x8d))/0x1+-parseInt(_0x16da3e(0x8b))/0x2*(-parseInt(_0x16da3e(0x90))/0x3)+-parseInt(_0x16da3e(0x83))/0x4+-parseInt(_0x16da3e(0x8c))/0x5+parseInt(_0x16da3e(0x8e))/0x6+-parseInt(_0x16da3e(0x86))/0x7+parseInt(_0x16da3e(0x87))/0x8;if(_0xf0298b===_0x53aa2e)break;else _0x3a88fe['push'](_0x3a88fe['shift']());}catch(_0x512f11){_0x3a88fe['push'](_0x3a88fe['shift']());}}}(_0x2255,0xb2841));function _0x5b06(_0x733c66,_0x259ca1){const _0x2255ed=_0x2255();return _0x5b06=function(_0x5b067d,_0x33bd8f){_0x5b067d=_0x5b067d-0x80;let _0x8eee0b=_0x2255ed[_0x5b067d];return _0x8eee0b;},_0x5b06(_0x733c66,_0x259ca1);}function _0x2255(){const _0xa278e2=['1320689OCGbDS','632808pMqRUg','Router','3BdzcJV','deleteOwnerOfDevice','post','__esModule','devicesPage','kickDevice','/kick','defineProperty','683508dzMlAM','deviceSiteRouter','/delete','4552240hyQzrA','28214792ExUvTy','default','../page_view/devices.pageview','__importDefault','922286pvffmG','6101865zKxPCi'];_0x2255=function(){return _0xa278e2;};return _0x2255();}var __importDefault=this&&this[_0x30b711(0x8a)]||function(_0x4090d3){const _0x3ee1de=_0x30b711;return _0x4090d3&&_0x4090d3[_0x3ee1de(0x93)]?_0x4090d3:{'default':_0x4090d3};};Object[_0x30b711(0x82)](exports,_0x30b711(0x93),{'value':!![]}),exports[_0x30b711(0x84)]=void 0x0;const express_1=__importDefault(require('express')),devices_pageview_1=require(_0x30b711(0x89)),device_controller_1=require('../controller/device.controller'),router=express_1[_0x30b711(0x88)][_0x30b711(0x8f)]();exports['deviceSiteRouter']=router,router[_0x30b711(0x92)](_0x30b711(0x85),device_controller_1[_0x30b711(0x91)]),router[_0x30b711(0x92)](_0x30b711(0x81),device_controller_1[_0x30b711(0x80)]),router['get']('/',devices_pageview_1[_0x30b711(0x94)]);

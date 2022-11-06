@@ -15,7 +15,30 @@ export default class SmsProvider {
     private static url = 'https://api.ghasedak.me/v2/';
 
     static sendOTPCode(code: string, mobileNumber: string) {
-        this.sendSms(mobileNumber, `به چیسکو خوش آمدید\r\nکد ورود:${code}`,)
+        const options = {
+            method: 'POST',
+            url: 'https://api.ghasedak.me/v2/verification/send/simple',
+            headers:
+                {
+                    'cache-control': 'no-cache',
+                    apikey: this.apiKey,
+                    'content-type': 'application/x-www-form-urlencoded'
+                },
+            form:
+                {
+                    receptor: mobileNumber,
+                    template: 'otp',
+                    type: '1',
+                    param1: code
+                }
+        };
+
+        request(options, function (error, response, body) {
+            if (error) throw new Error(error);
+
+            console.log(body);
+        });
+        //this.sendSms(mobileNumber, `به چیسکو خوش آمدید\r\nکد ورود:${code}`,)
     }
 
      static async checkPanelCredit():Promise<number> {

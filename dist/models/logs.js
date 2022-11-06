@@ -1,17 +1,1 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const mongoose_1 = require("mongoose");
-const logSchema = new mongoose_1.Schema({
-    date: {
-        type: Date,
-        default: Date.now
-    },
-    message: {
-        type: String,
-    },
-    logId: {
-        type: mongoose_1.Types.ObjectId,
-    }
-});
-const Logs = (0, mongoose_1.model)('Logs', logSchema);
-exports.default = Logs;
+'use strict';const _0x6e9d45=_0x37f9;(function(_0xb29fd2,_0x171cfe){const _0x5eb1ba=_0x37f9,_0x4055ae=_0xb29fd2();while(!![]){try{const _0x540edf=-parseInt(_0x5eb1ba(0xf3))/0x1+-parseInt(_0x5eb1ba(0xf6))/0x2+parseInt(_0x5eb1ba(0xf9))/0x3*(parseInt(_0x5eb1ba(0xf4))/0x4)+-parseInt(_0x5eb1ba(0xf7))/0x5+-parseInt(_0x5eb1ba(0xfa))/0x6+parseInt(_0x5eb1ba(0xf2))/0x7+parseInt(_0x5eb1ba(0xf8))/0x8*(parseInt(_0x5eb1ba(0xf0))/0x9);if(_0x540edf===_0x171cfe)break;else _0x4055ae['push'](_0x4055ae['shift']());}catch(_0x315076){_0x4055ae['push'](_0x4055ae['shift']());}}}(_0x5eab,0x965eb));Object[_0x6e9d45(0xec)](exports,_0x6e9d45(0xf5),{'value':!![]});const mongoose_1=require(_0x6e9d45(0xfb)),logSchema=new mongoose_1['Schema']({'date':{'type':Date,'default':Date[_0x6e9d45(0xef)]},'message':{'type':String},'logId':{'type':mongoose_1[_0x6e9d45(0xf1)]['ObjectId']}}),Logs=(0x0,mongoose_1[_0x6e9d45(0xed)])('Logs',logSchema);function _0x5eab(){const _0x3ec385=['now','2077227ozdGQj','Types','4557728FGjVGU','152859Euwgzx','4RTbsPL','__esModule','24434BmyNqz','3739510vNqClK','32gGhWBX','3086967VnMiRS','6446472CvSOEK','mongoose','defineProperty','model','default'];_0x5eab=function(){return _0x3ec385;};return _0x5eab();}function _0x37f9(_0x3f45f1,_0x3231a7){const _0x5eab2e=_0x5eab();return _0x37f9=function(_0x37f973,_0xd697f5){_0x37f973=_0x37f973-0xec;let _0xe99e92=_0x5eab2e[_0x37f973];return _0xe99e92;},_0x37f9(_0x3f45f1,_0x3231a7);}exports[_0x6e9d45(0xee)]=Logs;

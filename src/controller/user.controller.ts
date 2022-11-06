@@ -147,7 +147,7 @@ export const refreshToken = async (req: CustomRequest, res: Response) => {
 		return res.status(404).send({ message: 'خطا در شناسایی توکن' });
 	}
 	try {
-		const decoded = jwt.verify(refreshToken, jsonWebTokenSecretKey);
+		const decoded = jwt.decode(refreshToken, jsonWebTokenSecretKey);
 		const token = await Token.findOne({ token: userToken });
 		if (!token) {
 			return res.status(404).json({ message: 'invalid token1' });
@@ -181,7 +181,7 @@ export const refreshToken = async (req: CustomRequest, res: Response) => {
 	} catch (e) {
 		console.error('inside refresh token');
 		console.error(e);
-		return res.status(500).json({ message: 'خطایی پیش آمده' });
+		return res.json({ message: 'خطایی پیش آمده',hasError:true });
 	}
 };
 
