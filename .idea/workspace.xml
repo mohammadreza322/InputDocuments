@@ -20,6 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/broker_provider.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/broker_provider.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/convert.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/convert.js" afterDir="false" />
@@ -82,12 +83,6 @@
       <change beforePath="$PROJECT_DIR$/dist/types/session.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/session.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/types/user.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/user.type.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/utility/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/utility/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/sms_provider.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/sms_provider.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/user.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/user.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/device.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/device.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/entities/login.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/entities/login.entity.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/authorization.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/change_device.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/change_device.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -180,7 +175,7 @@
       <workItem from="1666154142302" duration="1820000" />
       <workItem from="1666157410676" duration="1526000" />
       <workItem from="1667624249565" duration="3296000" />
-      <workItem from="1667723466036" duration="524000" />
+      <workItem from="1667723466036" duration="1158000" />
     </task>
     <servers />
   </component>

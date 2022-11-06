@@ -12,3 +12,4 @@ docker/mailserver
 
 package-lock.json
 yarn.lock
+dist
