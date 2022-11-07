@@ -6,7 +6,7 @@ import 'package:pinput/pinput.dart';
 import 'package:provider/provider.dart';
 
 class OtpInput extends StatelessWidget {
-  final TextEditingController controller ;
+  final TextEditingController controller;
   const OtpInput({super.key, required this.controller});
   @override
   Widget build(BuildContext context) {
@@ -23,24 +23,21 @@ class OtpInput extends StatelessWidget {
           height: 10,
         ),
         Directionality(
-          textDirection: TextDirection.ltr,
-          child: Pinput(
-            controller: controller,
-
-            length: 5,
-
-            defaultPinTheme: defaultPinTheme,
-            focusedPinTheme: focusedPinTheme,
-            submittedPinTheme: submittedPinTheme,
-
-            pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
-            showCursor: true,
-           onCompleted: (pin){
-              print(pin);
-              Provider.of<AuthController>(context,listen: false).submitCodeBtnClicked(pin);
-           },
-          )
-        )
+            textDirection: TextDirection.ltr,
+            child: Pinput(
+              controller: controller,
+              length: 5,
+              defaultPinTheme: defaultPinTheme,
+              focusedPinTheme: focusedPinTheme,
+              submittedPinTheme: submittedPinTheme,
+              pinputAutovalidateMode: PinputAutovalidateMode.onSubmit,
+              showCursor: true,
+              onCompleted: (pin) {
+                // print(pin);
+                Provider.of<AuthController>(context, listen: false)
+                    .submitCodeBtnClicked(pin);
+              },
+            ))
       ],
     );
   }
@@ -49,9 +46,13 @@ class OtpInput extends StatelessWidget {
 final defaultPinTheme = PinTheme(
   width: 56,
   height: 56,
-  textStyle: const TextStyle(fontSize: 15,fontFamily: 'ChiscoText', color: Color(0xff061962), fontWeight: FontWeight.w600),
+  textStyle: const TextStyle(
+      fontSize: 15,
+      fontFamily: 'ChiscoText',
+      color: Color(0xff061962),
+      fontWeight: FontWeight.w600),
   decoration: BoxDecoration(
-      color: Colors.white,
+    color: Colors.white,
     boxShadow: [Styles.getBoxShadow(0.07)],
     border: const Border.fromBorderSide(BorderSide.none),
     borderRadius: BorderRadius.circular(16),
@@ -60,13 +61,10 @@ final defaultPinTheme = PinTheme(
 
 final focusedPinTheme = defaultPinTheme.copyDecorationWith(
   border: Border.all(color: const Color(0xff2379CB)),
-
-
 );
 
 final submittedPinTheme = defaultPinTheme.copyWith(
   decoration: defaultPinTheme.decoration?.copyWith(
     color: Colors.white,
-
   ),
 );

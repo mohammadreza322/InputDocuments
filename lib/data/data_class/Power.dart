@@ -28,7 +28,9 @@ class Power extends Device {
             category: category,
             serialNumber: serialNumber,
             connectionStatus: connectionStatus
-            ,deviceType: DeviceType.power);
+            ,deviceType: DeviceType.power){
+    checkIsPowerActive();
+  }
 
   factory Power.fromJson(Map<String, dynamic> json) {
     return Power(
@@ -51,10 +53,10 @@ class Power extends Device {
    checkIsPowerActive(){
     List<Connector> connectors = this.connectors.where((element) => element.status).toList();
     if (connectors.isEmpty) {
-      print("POWER FALSE");
+      // print("POWER FALSE");
       isPowerActive= false;
     } else {
-      print("POWER TRUE");
+      // print("POWER TRUE");
       isPowerActive= true;
     }
   }

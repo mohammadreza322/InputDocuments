@@ -42,7 +42,7 @@ class AuthLocalDataSourceImpl implements AuthDataSource {
     if (detail != null) {
       sharedPreferences.setString("detail", detail);
     }
-    print("saved Tokens");
+    // print("saved Tokens");
   }
 
   @override

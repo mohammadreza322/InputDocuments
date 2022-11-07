@@ -23,12 +23,13 @@ class EditCoolerBottomSheet extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    EditDeviceController controller = Provider.of<EditDeviceController>(context);
-    if(!controller.isPageLoading){
-      print('init');
+    EditDeviceController controller =
+        Provider.of<EditDeviceController>(context);
+    if (!controller.isPageLoading) {
+      // print('init');
       controller.init(selectedCooler);
     }
-   /* final TextEditingController serialTextController =
+    /* final TextEditingController serialTextController =
         TextEditingController(text:'asdasdasd');
     final TextEditingController nameTextController =
         TextEditingController(text: selectedCooler.name);
@@ -60,7 +61,6 @@ class EditCoolerBottomSheet extends StatelessWidget {
             icon: SERIAL,
             label: "شماره سریال",
           ),
-
           const SizedBox(
             height: 10,
           ),
@@ -97,7 +97,7 @@ class EditCoolerBottomSheet extends StatelessWidget {
               Flexible(
                 child: GestureDetector(
                   onTap: () {
-                    print("delete clicked");
+                    // print("delete clicked");
                     controller
                         .onDeviceDeleteClicked(selectedCooler.serialNumber);
                   },
@@ -123,15 +123,14 @@ class EditCoolerBottomSheet extends StatelessWidget {
                 child: ChiscoButton(
                   text: 'تایید و ثبت تغییرات',
                   onClick: () {
-                    print('edit Cooler clicked');
+                    // print('edit Cooler clicked');
                     //print(controller.brandTextController.text);
                     controller.onCoolerEditClicked(EditCooler(
                         // brand: selectedCooler.brand,
                         model: selectedCooler.model,
                         category: controller.categoryTextController.text,
                         name: controller.nameTextController.text,
-                        serialNumber: selectedCooler.serialNumber)
-                    );
+                        serialNumber: selectedCooler.serialNumber));
                   },
                   icon: '',
                   hasIcon: false,

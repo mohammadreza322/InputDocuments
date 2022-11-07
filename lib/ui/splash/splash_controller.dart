@@ -19,13 +19,15 @@ class SplashController extends ChangeNotifier {
   BuildContext context;
   bool progressBarShown = true;
   bool isSplashEnd = false;
+  bool isNavigated = false;
   SplashController(this.context);
+
   bool isLoginPage = true;
   bool isInitCall = false;
-
   init() async {
     isInitCall = true;
     final AuthRepositoryImpl repository = AuthRepositoryImpl();
+    AppController appController = Provider.of<AppController>(context);
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
 
     //notifyListeners();
@@ -34,12 +36,12 @@ class SplashController extends ChangeNotifier {
     isPageLoading = true;
 
     if (accessToken == null) {
-      print('AccessToken Nulllllllllllllllll');
+      // print('AccessToken Nulllllllllllllllll');
       progressBarShown = false;
       GlobalVariable.isUserLogin = false;
 
       return Timer(const Duration(milliseconds: 250), () {
-        print('timer 2');
+        //print('timer 2');
         isPageLoading = true;
         Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
         // notifyListeners();
@@ -47,38 +49,43 @@ class SplashController extends ChangeNotifier {
     } else {
       String? detail = sharedPreferences.getString('detail');
       //print(detail);
-      ChiscoResponse response = await repository.getUserDevices();
-     // print(response.code);
-     // print(response.errorMessage);
-      if (response.status) {
-        return Timer(const Duration(milliseconds: 250), () {
-          print("timer ok 1");
-          print("###############");
-          Provider.of<AppController>(context, listen: false).setData(response.object);
-          GlobalVariable.isUserLogin = true;
-          Provider.of<AppController>(context, listen: false).connect(topicForSubscribe: 'chisco/test');
-          isSplashEnd = true;
-          isPageLoading = true;
-          // Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
-          Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
-          // notifyListeners();
-        });
-      } else {
-        ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
 
+      ChiscoResponse response = await repository.getUserDevices();
+      // print(response.code);
+      // print(response.errorMessage);
+
+      if (response.status) {
+
+        Provider.of<AppController>(context, listen: false)
+            .setData(response.object);
+        GlobalVariable.isUserLogin = true;
+        Provider.of<AppController>(context, listen: false)
+            .connect(topicForSubscribe: 'chisco/test');
+        // navigateToHome();
+
+      } else {
         progressBarShown = false;
         GlobalVariable.isUserLogin = false;
-
-        /*return Timer(const Duration(milliseconds: 500), () {
-          print('timer 2');
+        return Timer(const Duration(milliseconds: 250), () {
+          //print('timer 2');
           isPageLoading = true;
-          Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
+          Navigator.pushNamedAndRemoveUntil(context, loginPage, (r) => false);
           // notifyListeners();
-        });*/
+        });
       }
     }
 
     //login check
     //get data
+  }
+
+  navigateToHome() async {
+    isNavigated= true ;
+    Timer(const Duration(milliseconds: 200), () {
+      isSplashEnd = true;
+      isPageLoading = true;
+      // if(appController.isMqttConnected &&)
+      Navigator.pushNamedAndRemoveUntil(context, homePage, (r) => false);
+    });
   }
 }

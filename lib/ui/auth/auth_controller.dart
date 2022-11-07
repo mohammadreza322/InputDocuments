@@ -52,7 +52,7 @@ class AuthController extends ChangeNotifier {
     ChiscoResponse response = await repository.getMobile(number);
     if (!response.status) {
       hasProgressBar = false;
-      print("Error Message is : ${response.errorMessage}");
+      // print("Error Message is : ${response.errorMessage}");
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage);
       return;
     }
@@ -61,9 +61,9 @@ class AuthController extends ChangeNotifier {
     GetMobileResponse getMobileResponse = response.object;
     ChiscoFlushBar.showSuccessFlushBar(context, getMobileResponse.message);
     if (!kIsWeb) {
-      print('ok1');
+      // print('ok1');
       if (Platform.isAndroid) {
-        print('ok2');
+        // print('ok2');
 
         if (await Permission.sms.request().isGranted) {
           final Telephony telephony = Telephony.instance;
@@ -103,8 +103,9 @@ class AuthController extends ChangeNotifier {
         GlobalVariable.isUserLogin = true;
         await Provider.of<AppController>(context, listen: false)
             .setData(userDevices.object);
-        Provider.of<AppController>(context, listen: false)
-            .connect(topicForSubscribe: 'chisco/test');
+
+        Provider.of<AppController>(context, listen: false).connect(topicForSubscribe: 'chisco/test');
+
         Navigator.pushReplacementNamed(context, homePage);
         ChiscoFlushBar.showSuccessFlushBar(context, messageResponse.message);
 

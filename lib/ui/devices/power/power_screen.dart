@@ -36,7 +36,7 @@ class PowerScreen extends StatelessWidget {
     final selectedPower = Provider.of<AppController>(context)
         .getPowerWithSerialNumber(serialNumber);
 
-    print(selectedPower.totalVoltage);
+    // print(selectedPower.totalVoltage);
     PowerController controller = Provider.of<PowerController>(context);
     double blueHeight = 0;
     double positionedTopHeight = 0;
@@ -97,7 +97,7 @@ class PowerScreen extends StatelessWidget {
                                             fontWeight: FontWeight.w500,
                                             color: Colors.white)),
                                     const TextSpan(
-                                        text: ' w',
+                                        text: ' volt',
                                         style: TextStyle(
                                             fontFamily: "ChiscoText",
                                             fontSize: 20,

@@ -21,13 +21,14 @@ import '../../http_client/mqtt/mqtt_classes/MqttClientFactory.dart';
 ///we Store all Lists and UserDetail here
 ///and if somewhere we need something we have Access to it
 class AppController extends ChangeNotifier {
-
   User? _user;
 
   BuildContext? context;
-  setContext(BuildContext context){
+
+  setContext(BuildContext context) {
     this.context = context;
   }
+
   List<Cooler> _coolers = [];
 
   List<Power> _powers = [];
@@ -39,8 +40,6 @@ class AppController extends ChangeNotifier {
 
   bool isAppLoaded = false;
   bool isMqttConnected = false;
-
-
 
   UserDetail getUserDetail() {
     return _user!.userDetail;
@@ -64,8 +63,8 @@ class AppController extends ChangeNotifier {
     _categories = _user!.devices.categories;
     _coolers = _user!.devices.coolers;
     _powers = _user!.devices.powers;
-    print('set Data from app controller');
-    print("User Devices from App Controller : ${_user!.devices}");
+    //print('set Data from app controller');
+    // print("User Devices from App Controller : ${_user!.devices}");
     convertDeviceList();
     notifyListeners();
   }
@@ -85,19 +84,19 @@ class AppController extends ChangeNotifier {
   ///in this method we combine these to one
   convertDeviceList() {
     _userDevicesList = List.from(_powers)..addAll(_coolers);
-    print("User Device List : ${_userDevicesList.toString()}");
+    //print("User Device List : ${_userDevicesList.toString()}");
   }
 
   ///after any editing in our app such as Add Or Edit Device , Add or Edit Schedule
   ///this method will call and its for updating or refreshing dates
   refreshData(AddDeviceResponse response) {
-    print('****************************');
+    // print('****************************');
     _coolers = response.devices.coolers;
     _powers = response.devices.powers;
     _categories = response.devices.categories;
     convertDeviceList();
-    print("refreh data called");
-    print(_userDevicesList);
+    //print("refreh data called");
+    //print(_userDevicesList);
     notifyListeners();
   }
 
@@ -144,7 +143,8 @@ class AppController extends ChangeNotifier {
   }
 
   setCooler(Cooler selectedCooler) {
-    int index = _coolers.indexWhere((element) => element.serialNumber == selectedCooler.serialNumber);
+    int index = _coolers.indexWhere(
+        (element) => element.serialNumber == selectedCooler.serialNumber);
     _coolers[index] = selectedCooler;
 
     notifyListeners();
@@ -165,27 +165,28 @@ class AppController extends ChangeNotifier {
     ///if user use Web App we have to connect mqtt like this ws://[url]
     ///and if user use Mobile we don't need add anything at the start of url
     // if (kIsWeb) {
-      url = "wss://";
+    url = "wss://";
     // }
 
-    url += "chisco.tech";
-    print(
-        'UserName : ${decodedToken['usernameBroker']}\nPassword: ${decodedToken['passwordBroker']}');
+    url += "dashboard.chisco.tech";
+
+    //print(
+    //    'UserName : ${decodedToken['usernameBroker']}\nPassword: ${decodedToken['passwordBroker']}');
 
     MqttClient client = makeClient(url, '');
     client.websocketProtocols = ['mqtts', 'mqtt'];
 
-    client.logging(on: true);
-     client.onDisconnected = () {
-       print("disConnectttttttttt");
-     };
+    // client.logging(on: true);
+    // client.onDisconnected = () {
+    //   print("disConnectttttttttt");
+    // };
 
-     client.onConnected = () {
-       print("concteeeeeeeeeeed **********************");
-       // print(client.connectionStatus!.state);
-       isMqttConnected = true;
-       //notifyListeners();
-     };
+    // client.onConnected = () {
+    //   print("concteeeeeeeeeeed **********************");
+    //   // print(client.connectionStatus!.state);
+    //   // isMqttConnected = true;
+    //   //notifyListeners();
+    // };
     final connMessage = MqttConnectMessage()
         .authenticateAs(userNameBroker, passwordBroker)
         .withClientIdentifier(
@@ -200,13 +201,16 @@ class AppController extends ChangeNotifier {
       await client.connect(userNameBroker, passwordBroker);
 
       if (client.connectionStatus!.state == MqttConnectionState.connected) {
-
         isMqttConnected = true;
         //for device
         _userDevicesList.forEach((element) {
-          client.subscribe('/chisco/${element.serialNumber}/get', MqttQos.atLeastOnce);
-          client.subscribe('/connection/${element.serialNumber}',MqttQos.atLeastOnce);
-
+          client.subscribe(
+              '/chisco/${element.serialNumber}/get', MqttQos.atLeastOnce);
+          client.subscribe(
+              '/connection/${element.serialNumber}', MqttQos.atLeastOnce);
+          client.subscribe(
+              '/chisco/${element.serialNumber}/change_cooler_model',
+              MqttQos.atLeastOnce);
         });
         client.updates!.listen(mqttListen);
         mqttClient = client;
@@ -220,8 +224,10 @@ class AppController extends ChangeNotifier {
   subscribe(serialNumber) {
     if (mqttClient?.connectionStatus!.state == MqttConnectionState.connected) {
       mqttClient?.subscribe('/chisco/$serialNumber/get', MqttQos.atLeastOnce);
-      mqttClient?.subscribe('/connection/${serialNumber}',MqttQos.atLeastOnce);
-
+      mqttClient?.subscribe('/connection/${serialNumber}', MqttQos.atLeastOnce);
+      mqttClient?.subscribe(
+          '/chisco/${serialNumber}/change_cooler_model',
+          MqttQos.atLeastOnce);
     }
   }
 
@@ -229,6 +235,8 @@ class AppController extends ChangeNotifier {
     if (mqttClient?.connectionStatus!.state == MqttConnectionState.connected) {
       mqttClient?.unsubscribe('/chisco/$serialNumber/get');
       mqttClient?.unsubscribe('/connection/${serialNumber}');
+      mqttClient?.unsubscribe(
+          '/chisco/${serialNumber}/change_cooler_model');
     }
   }
 
@@ -241,32 +249,45 @@ class AppController extends ChangeNotifier {
   mqttListen(List<MqttReceivedMessage<MqttMessage?>>? c) {
     if (c != null) {
       final recMess = c[0].payload as MqttPublishMessage;
-      final payloadString = MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
+      final payloadString =
+          MqttPublishPayload.bytesToStringAsString(recMess.payload.message);
       try {
         final payload = jsonDecode(payloadString);
         final topic = c[0].topic;
 
         RegExp connectionRegex = RegExp(r'/connection/(.+)');
         RegExp regExpData = RegExp(r'/chisco/(.*)/get');
+        RegExp changeModel = RegExp(r'/chisco/(.*)/change_cooler_model');
         bool hasConnectionRegex = connectionRegex.hasMatch(topic);
-        RegExp regExp = connectionRegex.hasMatch(topic) ? connectionRegex : regExpData;
+        bool hasDataRegex = regExpData.hasMatch(topic);
+        bool changeModelRegex = changeModel.hasMatch(topic);
+        RegExp? regExp = null;
 
-        var matches = regExp.allMatches(topic);
+        if (hasConnectionRegex) {
+          regExp = connectionRegex;
+        } else if (hasDataRegex) {
+          regExp = regExpData;
+        } else if (changeModelRegex) {
+          regExp = changeModel;
+        }
+
+        var matches = regExp!.allMatches(topic);
         String? serialNumber = matches.first.group(1);
 
-        if(hasConnectionRegex) {
+        if (hasConnectionRegex) {
           //todo change device last connection
-          print('Has Connection Regex');
-          changeDeviceLastConnection(payload,serialNumber!);
-        }else {
+          // print('Has Connection Regex');
+          changeDeviceLastConnection(payload, serialNumber!);
+        } else if (hasDataRegex) {
           //todo change device data
           changeDeviceData(payload, serialNumber!);
-
+        } else if (changeModelRegex) {
+          changeDeviceModel(payload, serialNumber!);
         }
         notifyListeners();
       } on FormatException {
         // print(e);
-        print('The provided string is not valid JSON');
+        //  print('The provided string is not valid JSON');
       }
     }
   }
@@ -280,15 +301,16 @@ class AppController extends ChangeNotifier {
     // if (mqttClient == null) {
     //   await connect();
     // }
-    print(mqttClient?.connectionStatus!.state);
+    // print(mqttClient?.connectionStatus!.state);
+    //print()
     if (mqttClient?.connectionStatus!.state == MqttConnectionState.connected) {
-      print('published');
-      print(topic);
+      //  print('published');
+      // print(topic);
       mqttClient?.publishMessage(topic, MqttQos.exactlyOnce, data.payload!);
     }
   }
 
-  publishPowerMqtt(Power power,BuildContext context) {
+  publishPowerMqtt(Power power, BuildContext context) {
     List ports = [];
 
     power.connectors.forEach((element) {
@@ -300,21 +322,22 @@ class AppController extends ChangeNotifier {
 
     String port = 'ports:${jsonEncode(ports)}';
     String result = json.encode({"ports": ports});
+    print(result);
 
-    if(power.connectionStatus){
-      publishMessage('/chisco/${power.serialNumber}/change', MqttClientPayloadBuilder().addString(result));
+    if (power.connectionStatus) {
+      publishMessage('/chisco/${power.serialNumber}/change',
+          MqttClientPayloadBuilder().addString(result));
       //publishMessage('/chisco/${cooler.serialNumber}/change', MqttClientPayloadBuilder().addString(result));
-     // print('TRUE');
+      // print('TRUE');
       ChiscoFlushBar.showSuccessFlushBar(context, 'تغییرات با موفقیت ثبت شد!');
-    }else{
+    } else {
       //print("FALSE");
-      ChiscoFlushBar.showErrorFlushBar(context, 'دستگاه شما به اینترنت وصل نیست!');
-
-
+      ChiscoFlushBar.showErrorFlushBar(
+          context, 'دستگاه شما به اینترنت وصل نیست!');
     }
   }
 
-   publishCoolerMqtt(Cooler cooler,BuildContext context) {
+  publishCoolerMqtt(Cooler cooler, BuildContext context) {
     Map<String, dynamic> coolerMap = {};
     coolerMap['status'] = cooler.power;
     coolerMap['temp'] = cooler.temp;
@@ -325,21 +348,36 @@ class AppController extends ChangeNotifier {
     coolerMap['timer'] = cooler.timer;
 
     String result = json.encode({"cooler": coolerMap});
-    print(cooler.connectionStatus);
+    //print(cooler.connectionStatus);
 
-    if(cooler.connectionStatus){
-      publishMessage('/chisco/${cooler.serialNumber}/change', MqttClientPayloadBuilder().addString(result));
+    if (cooler.connectionStatus) {
+      publishMessage('/chisco/${cooler.serialNumber}/change',
+          MqttClientPayloadBuilder().addString(result));
       print('TRUE');
-      ChiscoFlushBar.showSuccessFlushBar(context, 'تغییرات با موفقیت ثبت شد!');
-    }else{
-    print("FALSE");
-      ChiscoFlushBar.showErrorFlushBar(context, 'دستگاه شما به اینترنت وصل نیست!');
-
-
+      //ChiscoFlushBar.showSuccessFlushBar(context, 'تغییرات با موفقیت ثبت شد!');
+    } else {
+      print("FALSE");
+      ChiscoFlushBar.showErrorFlushBar(
+          context, 'دستگاه شما به اینترنت وصل نیست!');
     }
-
   }
-  changeDeviceData(dynamic payload,String serialNumber){
+
+  changeDeviceModel(dynamic payload, String serialNumber) {
+    ///update coolers
+    _coolers.forEach((element) {
+      if (element.serialNumber == serialNumber) {
+        var model = payload['model'];
+        Cooler cooler = getCoolerWithSerialNumber(serialNumber);
+        cooler.model = model;
+
+        setCooler(cooler);
+
+        ChiscoFlushBar.showAnotherSucces(context);
+      }
+    });
+  }
+
+  changeDeviceData(dynamic payload, String serialNumber) {
     ///update coolers
     _coolers.forEach((element) {
       if (element.serialNumber == serialNumber) {
@@ -364,7 +402,8 @@ class AppController extends ChangeNotifier {
         for (int i = 0; i < element.connectors.length; i++) {
           Connector connector = element.connectors[i];
           bool status = (payload['ports'] as List<dynamic>).singleWhere(
-                  (element) => element['portNumber'] == connector.connectorId)['status'];
+              (element) =>
+                  element['portNumber'] == connector.connectorId)['status'];
           connector.status = status;
           connectors.add(connector);
         }
@@ -373,58 +412,57 @@ class AppController extends ChangeNotifier {
         power.connectors = connectors;
         power.totalVoltage = payload['totalVoltage'] ?? 0;
 
-        print('set power');
+        // print('set power');
         setPower(power);
       }
     });
   }
-  changeDeviceLastConnection(dynamic payload ,String serialNumber){
+
+  changeDeviceLastConnection(dynamic payload, String serialNumber) {
     _coolers.forEach((element) {
-      if(element.serialNumber == serialNumber){
+      if (element.serialNumber == serialNumber) {
         Cooler cooler = getCoolerWithSerialNumber(serialNumber);
         cooler.connectionStatus = payload['connectionStatus'];
         setCooler(cooler);
       }
     });
     _powers.forEach((element) {
-      if(element.serialNumber == serialNumber){
+      if (element.serialNumber == serialNumber) {
         Power power = getPowerWithSerialNumber(serialNumber);
         power.connectionStatus = payload['connectionStatus'];
         setPower(power);
-
       }
     });
   }
 
-  updatePowersConnectors(Power selectedPower,BuildContext context) async{
+  updatePowersConnectors(Power selectedPower, BuildContext context) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    List<Map<String,dynamic>> data =[];
-
-    if(selectedPower.isPowerActive){
-      print('isPowerActive is TRUE');
+    List<Map<String, dynamic>> data = [];
+    // selectedPower.isPowerActive
+    if (selectedPower.isPowerActive) {
+      //  print('isPowerActive is TRUE');
       for (var element in selectedPower.connectors) {
         //print("Element Status :${element.status}");
-        data.add({
-          'connectorId':element.connectorId,
-          'status':element.status
-        });
-        sharedPreferences.setString(selectedPower.serialNumber,jsonEncode(data));
+        data.add({'connectorId': element.connectorId, 'status': element.status});
+        ///save state in sharePreferences
+        sharedPreferences.setString(selectedPower.serialNumber, jsonEncode(data));
+
         element.status = false;
       }
-    }
-    else{
-      print('isPowerActive is FALSE');
-      if(!sharedPreferences.containsKey(selectedPower.serialNumber)) {
+    } else {
+      // print('isPowerActive is FALSE');
+      if (!sharedPreferences.containsKey(selectedPower.serialNumber)) {
         for (var element in selectedPower.connectors) {
           element.status = true;
         }
-      }else {
+      } else {
         //print('Else');
         String? data = sharedPreferences.getString(selectedPower.serialNumber);
+        ///read data from sharepref to update connectors
         List result = jsonDecode(data!);
-        for (Connector element in selectedPower.connectors){
-          for (Map<String,dynamic> connector in result) {
-            if(connector['connectorId'] == element.connectorId) {
+        for (Connector element in selectedPower.connectors) {
+          for (Map<String, dynamic> connector in result) {
+            if (connector['connectorId'] == element.connectorId) {
               element.status = connector['status'];
               break;
             }
@@ -441,7 +479,4 @@ class AppController extends ChangeNotifier {
     // print("################################");
     notifyListeners();
   }
-
-
-
 }

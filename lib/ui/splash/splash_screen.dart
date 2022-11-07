@@ -14,9 +14,12 @@ class SplashScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     SplashController controller = Provider.of<SplashController>(context);
-    //AppController appController = Provider.of<AppController>(context);
+    AppController appController = Provider.of<AppController>(context);
     if (!controller.isInitCall) {
       controller.init();
+    }
+    if(!controller.isNavigated && appController.isMqttConnected){
+      controller.navigateToHome();
     }
 /*    if (controller.isSplashEnd &&
         appController.isMqttConnected &&
@@ -33,7 +36,7 @@ class SplashScreen extends StatelessWidget {
       Timer(const Duration(milliseconds: 250), () {
 
       });
-    }*/
+    } */
 
     return SafeArea(
       child: Scaffold(

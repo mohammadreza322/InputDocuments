@@ -36,7 +36,7 @@ class CoolerScreen extends StatelessWidget {
 
     Cooler selectedCooler = Provider.of<AppController>(context)
         .getCoolerWithSerialNumber(serialNumber);
-    print(selectedCooler.temp);
+    // print(selectedCooler.temp);
 
     if (controller.initCall) {
       controller.initTemp(selectedCooler);

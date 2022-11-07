@@ -1,4 +1,3 @@
-
 import 'package:chisco/ui/home/widgets/header_item.dart';
 import 'package:chisco/ui/home/widgets/home_list.dart';
 import 'package:chisco/ui/main/app_controller.dart';
@@ -12,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../home/home_controller.dart';
 
-
 class HomeScreen extends StatelessWidget {
   const HomeScreen({Key? key}) : super(key: key);
 
@@ -25,7 +23,7 @@ class HomeScreen extends StatelessWidget {
     String selectedCategory = homeController.selectedCategory;
     homeController.homeLists();
     if (!homeController.isPageLoading) {
-      print('homeControoller init');
+      // print('homeControoller init');
       homeController.init();
     }
     return SafeArea(
@@ -83,14 +81,13 @@ class HomeScreen extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.only(left: 20, right: 20),
                             child: Row(
-                              mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 HeaderItem(
                                   titleText: 'کنترلر',
                                   icon: COOLER,
-                                  counterText: homeController.getCoolerCount
-                                      .toString(),
+                                  counterText:
+                                      homeController.getCoolerCount.toString(),
                                 ),
                                 HeaderItem(
                                   titleText: 'سه راهی',

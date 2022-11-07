@@ -31,31 +31,23 @@ class AddScheduleBottomSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Connector> connectors = [];
     if (isPower) {
-
       connectors = (device as Power).connectors;
       connectors.forEach((element) {
-       if(element.name==""){
-          if(element.connectorType=='usb'){
-            element.name = 'پورت ${element.connectorId-4}';
-          }else{
+        if (element.name == "") {
+          if (element.connectorType == 'usb') {
+            element.name = 'پورت ${element.connectorId - 4}';
+          } else {
             element.name = 'پریز ${element.connectorId}';
           }
-
         }
       });
     }
 
-    AddScheduleController controller = Provider.of<AddScheduleController>(
-        context);
+    AddScheduleController controller =
+        Provider.of<AddScheduleController>(context);
 
-    double height = MediaQuery
-        .of(context)
-        .size
-        .height;
-    double width = MediaQuery
-        .of(context)
-        .size
-        .width;
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     double scheduleWidth = ChiscoConverter.calculateWidgetWidth(width, 100);
     double scheduleHeight = ChiscoConverter.calculateWidgetWidth(width, 39);
     ScheduleType scheduleType = controller.selectedType;
@@ -115,15 +107,15 @@ class AddScheduleBottomSheet extends StatelessWidget {
           ),
           isPower
               ? const SizedBox(
-            height: 10,
-          )
+                  height: 10,
+                )
               : const SizedBox(
-            height: 20,
-          ),
+                  height: 20,
+                ),
           isPower
               ? Column(
-            children: [
-              /*  DropdownButtonHideUnderline(
+                  children: [
+                    /*  DropdownButtonHideUnderline(
                         child: DropdownButton2(
                       items: connectors
                           .map((item) => DropdownMenuItem<int>(
@@ -183,74 +175,71 @@ class AddScheduleBottomSheet extends StatelessWidget {
                       ),
 
                     )),*/
-              ChiscoDropDown(connectors: connectors,
-                  onDropDownChange: (value) {
-                print('asdasdasdasdasdadssdasdasdasd');
-                    int index = connectors.indexWhere(
-                            (element) => element.connectorId == value);
-                    print(index);
-                    print(connectors[index].name);
-                    controller.changeDropDownValue(
-                        connectors[index].name, value as int);
-                  },
-                  dropDownString: controller.dropDownString),
-              const SizedBox(
-                height: 20,
-              ),
-            ],
-          )
+                    ChiscoDropDown(
+                        connectors: connectors,
+                        onDropDownChange: (value) {
+                          // print('asdasdasdasdasdadssdasdasdasd');
+                          int index = connectors.indexWhere(
+                              (element) => element.connectorId == value);
+                          print(index);
+                          print(connectors[index].name);
+                          controller.changeDropDownValue(
+                              connectors[index].name, value as int);
+                        },
+                        dropDownString: controller.dropDownString),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                )
               : Container(),
           on || both
               ? ChiscoTimeSelector(
-              icon: CLOCK,
-              label: 'ساعت روشن شدن',
-              isHint: controller.onHint,
-              text: controller.onTimeController.text,
-              onClick: () async {
-                var picked = await showPersianTimePicker(
-                    context: context,
-                    initialTime: TimeOfDay.now(),
-                    buttonTextStyle: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w400),
-                    titleTextStyle: const TextStyle(
-                        fontSize: 12, fontWeight: FontWeight.w500),
-                    initialEntryMode: PTimePickerEntryMode.dial);
-                if (picked != null) {
-                  controller.changeOnTimeText(picked.to24hours());
-                }
-              })
+                  icon: CLOCK,
+                  label: 'ساعت روشن شدن',
+                  isHint: controller.onHint,
+                  text: controller.onTimeController.text,
+                  onClick: () async {
+                    var picked = await showPersianTimePicker(
+                        context: context,
+                        initialTime: TimeOfDay.now(),
+                        buttonTextStyle: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w400),
+                        titleTextStyle: const TextStyle(
+                            fontSize: 12, fontWeight: FontWeight.w500),
+                        initialEntryMode: PTimePickerEntryMode.dial);
+                    if (picked != null) {
+                      controller.changeOnTimeText(picked.to24hours());
+                    }
+                  })
               : Container(),
           both
               ? const SizedBox(
-            height: 10,
-          )
+                  height: 10,
+                )
               : Container(),
           off || both
               ? ChiscoTimeSelector(
-              icon: CLOCK,
-              label: 'ساعت خاموش شدن',
-              text: controller.offTimeController.text,
-              isHint: controller.offHint,
-              onClick: () async {
-                var picked = await showPersianTimePicker(
-                  context: context,
-                  initialTime: TimeOfDay(
-                      hour: TimeOfDay
-                          .now()
-                          .hour + 1,
-                      minute: TimeOfDay
-                          .now()
-                          .minute),
-                  buttonTextStyle: const TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.w400),
-                  titleTextStyle: const TextStyle(
-                      fontSize: 12, fontWeight: FontWeight.w500),
-                );
+                  icon: CLOCK,
+                  label: 'ساعت خاموش شدن',
+                  text: controller.offTimeController.text,
+                  isHint: controller.offHint,
+                  onClick: () async {
+                    var picked = await showPersianTimePicker(
+                      context: context,
+                      initialTime: TimeOfDay(
+                          hour: TimeOfDay.now().hour + 1,
+                          minute: TimeOfDay.now().minute),
+                      buttonTextStyle: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w400),
+                      titleTextStyle: const TextStyle(
+                          fontSize: 12, fontWeight: FontWeight.w500),
+                    );
 
-                if (picked != null) {
-                  controller.changeOffTimeText(picked.to24hours());
-                }
-              })
+                    if (picked != null) {
+                      controller.changeOffTimeText(picked.to24hours());
+                    }
+                  })
               : Container(),
           const SizedBox(
             height: 20,
@@ -260,9 +249,9 @@ class AddScheduleBottomSheet extends StatelessWidget {
             children: [
               AddScheduleItem(
                   scheduleWidth:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   scheduleHeight:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'ش',
                   isActive: controller.isSelectedScheduleItem(ScheduleDays.sat),
                   onClick: () {
@@ -270,9 +259,9 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   }),
               AddScheduleItem(
                   scheduleWidth:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   scheduleHeight:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'ی',
                   isActive: controller.isSelectedScheduleItem(ScheduleDays.sun),
                   onClick: () {
@@ -280,9 +269,9 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   }),
               AddScheduleItem(
                   scheduleWidth:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   scheduleHeight:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'د',
                   isActive: controller.isSelectedScheduleItem(ScheduleDays.mon),
                   onClick: () {
@@ -290,9 +279,9 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   }),
               AddScheduleItem(
                   scheduleWidth:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   scheduleHeight:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'س',
                   isActive: controller.isSelectedScheduleItem(ScheduleDays.tue),
                   onClick: () {
@@ -300,9 +289,9 @@ class AddScheduleBottomSheet extends StatelessWidget {
                   }),
               AddScheduleItem(
                   scheduleWidth:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   scheduleHeight:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'چ',
                   isActive: controller.isSelectedScheduleItem(ScheduleDays.wed),
                   onClick: () {
@@ -319,9 +308,9 @@ class AddScheduleBottomSheet extends StatelessWidget {
               ),
               AddScheduleItem(
                   scheduleWidth:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   scheduleHeight:
-                  ChiscoConverter.calculateWidgetWidth(width, 40),
+                      ChiscoConverter.calculateWidgetWidth(width, 40),
                   title: 'ج',
                   isActive: controller.isSelectedScheduleItem(ScheduleDays.fri),
                   onClick: () {
