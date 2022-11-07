@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 import 'dart:io';
 import 'package:chisco/data/data_class/ChiscoResponse.dart';
 import 'package:chisco/data/data_source/auth/auth_local_data_source_impl.dart';
@@ -23,9 +24,9 @@ class ChiscoClient {
     ///if after 10 minuets cant connect we got Socket Error
     _dio = Dio(BaseOptions(
       baseUrl: "https://chisco.tech/api/",
-      connectTimeout: 10000,
-      receiveTimeout: 7000,
-      sendTimeout: 7000,
+      connectTimeout: 5000,
+      receiveTimeout: 5000,
+      sendTimeout: 5000,
       receiveDataWhenStatusError: true,
     ))
       ..interceptors.add(LogInterceptor(responseBody: true, requestBody: true));
@@ -59,7 +60,8 @@ class ChiscoClient {
             "x-auth-token": sharedPreferences.getString("access_token")
           }),
         );
-      } else if (type == RequestType.put) {
+      }
+      else if (type == RequestType.put) {
         ///put Request
         response = await _dio.put(
           url,
@@ -68,7 +70,8 @@ class ChiscoClient {
             "x-auth-token": sharedPreferences.getString("access_token")
           }),
         );
-      } else {
+      }
+      else {
         ///get Request
         response = await _dio.get(
           url,
@@ -86,22 +89,22 @@ class ChiscoClient {
 
       return ChiscoResponse(
           status: true, code: response.statusCode, object: response.data);
+
     } on DioError catch (error) {
       ///here we got error if we cant connect to server
       ///ConnectionTimeOut if we cant connect to server after 10 second
-      if (error.type == DioErrorType.connectTimeout) {
+
+      print("Dio Error Is Catched");
+      print(error.toString());
+
+      if (error.type == DioErrorType.connectTimeout ||error.type == DioErrorType.other) {
+        ///if error type is [other] its means that our network is off
+        ///no internet , wifi error , VPN is on,
         print('Error HTTP Connection.......');
         return ChiscoResponse(
             status: false,
             code: 404,
-            errorMessage: "اتصال به اینترنت خود را بررسی کنید");
-      } else if (error.type == DioErrorType.other) {
-        ///if error type is [other] its means that our network is off
-        ///no internet , wifi error , VPN is on,
-        return ChiscoResponse(
-            status: false,
-            code: 404,
-            errorMessage: 'اتصال به اینترنت خود را بررسی کنید!');
+            errorMessage: "اتصال به اینترنت خود را بررسی کنید!");
       }
 
       ///if response status code is 401 its means our token is Expire and we have to refresh the token
@@ -115,9 +118,10 @@ class ChiscoClient {
         );
       }
     } catch (e) {
-      // if ((e as SocketException).message ==
-      //     "Failed host lookup: 'chisco.tech' (OS Error: No address associated with hostname, errno = 7)")
-      //   print('***** Exception Caught *****');
+      if ((e as SocketException).message ==
+          "Failed host lookup: 'chisco.tech' (OS Error: No address associated with hostname, errno = 7)")
+        print('***** Exception Caught *****');
+
       print(e);
       print("**************************");
       print("ok123");
@@ -129,29 +133,37 @@ class ChiscoClient {
     }
   }
 
-  refreshToken(
+  Future<ChiscoResponse> refreshToken(
       {RequestType type = RequestType.post,
       required String url,
       dynamic data}) async {
     try {
       print("called refresh token");
-      SharedPreferences sharedPreferences =
-          await SharedPreferences.getInstance();
+      SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
       String? accessToken = sharedPreferences.getString('access_token');
       String? refreshToken = sharedPreferences.getString('refresh_token');
       // String? detail = sharedPreferences.getString('detail');
+      print("Access_Token : $accessToken");
+      print("Refresh_Token : $refreshToken");
+      print("OK1111111111111111111111");
 
       ///here we send request for refresh token
-      Response refreshRequest = await _dio.put("user/refresh-token",
+      Response<dynamic> refreshRequest = await _dio.put("user/refresh-token",
           options: Options(headers: {"x-auth-token": accessToken}),
           data: {'refreshToken': refreshToken});
+      print('Refresh Token Call');
+      print(refreshRequest.data.toString());
+
+      print("OK2222222222222222222222");
+
+      print(refreshRequest.toString());
 
       ///after receive Response we save it to SharePreferences
       ///and then we call old request again
       await localDataSourceImpl.saveToken(refreshRequest.data['accessToken'],
           refreshRequest.data['refreshToken'], null);
 
-      return await request(url: url, data: data, type: type);
+      return request(url: url, data: data, type: type);
     } catch (err) {
       return ChiscoResponse(
           status: false, code: 401, errorMessage: 'خطا در برقراری ارتباط!');

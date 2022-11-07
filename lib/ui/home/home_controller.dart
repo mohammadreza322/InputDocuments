@@ -19,6 +19,7 @@ import 'package:chisco/utils/const.dart';
 import 'package:flutter/material.dart';
 import 'package:mqtt_client/mqtt_client.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomeController extends ChangeNotifier {
   final DeviceRepositoryImpl deviceRepository = DeviceRepositoryImpl();
@@ -49,12 +50,14 @@ class HomeController extends ChangeNotifier {
 
   get getPowerCount => _powerCount;
 
-  init() {
+  init() async{
     ///[init] is called only one time when is opened
     isPageLoading = true;
     AppController appController = Provider.of<AppController>(context,listen: false);
     appController.setContext(context);
     user = appController.getUser();
+    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    //sharedPreferences.setString("access_token", "asd");
     if (!_categories.contains('نمایش همه')) {
       _categories.insert(0, 'نمایش همه');
     }
