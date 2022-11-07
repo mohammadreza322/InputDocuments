@@ -4,7 +4,7 @@ $(() => {
         const id = $(this).data('id')
         showWarning('اخطار حذف مشتری',`آیا برای حذف “${name}” مطمئن هستید؟`,'بله',() => {
             showLoading();
-            sendAjax('/dashboard/client/delete',{id},(res) => {
+            sendAjax('/client/delete',{id},(res) => {
                 showSuccess(res.message)
 
                 setTimeout(() => {
@@ -55,7 +55,7 @@ $(() => {
 
 
         showLoading()
-        sendAjax('/dashboard/client/edit',{fullName:name,phoneNumber:phone,address,birthday,id},(res) => {
+        sendAjax('/client/edit',{fullName:name,phoneNumber:phone,address,birthday,id},(res) => {
             showSuccess(res.message)
             setTimeout(() => {
                 location.reload()

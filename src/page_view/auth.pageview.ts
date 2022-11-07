@@ -3,7 +3,7 @@ import {Request,Response} from 'express'
 export const loginPage = async (req:Request,res:Response) => {
     if (req.session.isUserLoggedIn) {
         // console.log(req.session.isUserLoggedIn)
-        return res.redirect('/dashboard')
+        return res.redirect('/')
     }
 
     res.locals.scripts.push('/js/login.js')
@@ -16,12 +16,11 @@ export const loginPage = async (req:Request,res:Response) => {
 
 export const otpPage = async (req:Request,res:Response) => {
     if (req.session.isUserLoggedIn) {
-        return res.redirect('/dashboard')
+        return res.redirect('/')
     }
 
     if(!req.session.userPhone || !req.session.loginCode) {
-
-        return res.redirect('/dashboard/auth')
+        return res.redirect('/auth')
     }
 
     res.locals.scripts.push('/js/otp.js')

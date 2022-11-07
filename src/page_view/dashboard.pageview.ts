@@ -36,5 +36,5 @@ export const exitAdmin = async (req:Request,res:Response) => {
     req.session.loginId = undefined;
     req.session.brokerDetails = undefined;
 
-    return  res.redirect('/dashboard/auth')
+    return  res.redirect('/auth')
 }

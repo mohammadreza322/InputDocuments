@@ -21,7 +21,7 @@ $(document).ready(function () {
     const phoneNumber = $('.edit-profile #number').val()
 
     showLoading()
-    sendAjax('/dashboard/admin/current',{fullName:name,phoneNumber},(res) => {
+    sendAjax('/admin/current',{fullName:name,phoneNumber},(res) => {
       showSuccess(res.message)
       setTimeout(() => {
         location.reload()

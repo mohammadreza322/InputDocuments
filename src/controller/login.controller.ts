@@ -66,11 +66,11 @@ export const checkOtp = async (req: Request, res: Response) => {
 
         if (isDashboard) {
             if (req.session.isUserLoggedIn) {
-                return res.redirect('/dashboard')
+                return res.redirect('/')
             }
 
             if (!req.session.loginCode) {
-                return res.redirect('/dashboard/auth')
+                return res.redirect('/auth')
             }
         }
 

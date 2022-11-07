@@ -6,12 +6,12 @@ $(() => {
         showLoading()
 
 
-        sendAjax('/api/get-mobile',
+        sendAjax('/auth/get-mobile',
             {phoneNumber:phoneNumber},
             (res) => {
                 showSuccess(res.message);
                 setTimeout(() => {
-                    location.replace('/dashboard/auth/otp')
+                    location.replace('/auth/otp')
                 },1500)
         })
     })

@@ -53,13 +53,13 @@ connectDb().then(() => {
                 console.log('subscribe /chisco/+/change');
             })
 
-            client.subscribe('/chisco/+/change_model',(err) => {
+            client.subscribe('/chisco/+/change_model_c',(err) => {
                 if (err) {
-                    console.error('can not subscribe /chisco/+/change_model');
+                    console.error('can not subscribe /chisco/+/change_model_c');
                     console.error(err);
                     process.exit(1);
                 }
-                console.log('subscribe /chisco/+/change_model');
+                console.log('subscribe /chisco/+/change_model_c');
             })
         });
 
@@ -74,7 +74,7 @@ connectDb().then(() => {
 
 			const changeDeviceRegex = /\/chisco\/(.*)\/get/.exec(topic);
             const republishRegex = /\/chisco\/(.*)\/change/.exec(topic);
-            const changeModelRegex = /\/chisco\/(.*)\/change_model/.exec(topic);
+            const changeModelRegex = /\/chisco\/(.*)\/change_model_c/.exec(topic);
 
             const connectedDeviceRegex = /\/event\/connected/.exec(topic);
             const disconnectDeviceRegex = /\/event\/disconnected/.exec(topic);
@@ -95,8 +95,9 @@ connectDb().then(() => {
             } else if (disconnectDeviceRegex) {
                 
                 changeDisconnectStatus(data);
-            } else if(!changeDeviceRegex){
-                if(republishRegex){
+            }
+                else if(republishRegex){
+                    console.log('republiiiiiish')
                     const deviceExists = await  _deviceExists(republishRegex[1]);
                     if((deviceExists).valid){
                         if(deviceExists.type=='power'){
@@ -106,11 +107,12 @@ connectDb().then(() => {
                     }
 
                 }
-            } else if(changeModelRegex) {
+             else if(changeModelRegex) {
                 _deviceExists(republishRegex[1]).then((deviceExists) => {
                     if(deviceExists.valid){
                         if(deviceExists.type=='cooler'){
                             changeModel(changeModelRegex[1],data.model)
+                            client.publish(`/chisco/${republishRegex[1]}/change_cooler_model`,JSON.stringify(data))
                         }
                     }
                 });
@@ -205,6 +207,8 @@ async function changeDevice(serialNumber: string,payload:any) {
             power.connectors = connectors;
             power.totalVoltage = payload.totalVoltage
             console.log("power changed")
+            console.log(payload)
+            console.log(power.connectors)
             await power.save()
 
             // await PowerStrip.updateOne(

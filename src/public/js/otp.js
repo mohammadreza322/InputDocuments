@@ -26,10 +26,10 @@ $(() => {
 
         showLoading()
 
-        sendAjax('/api/check-otp',{code,smsId:id,isDashboard:true},(res) => {
+        sendAjax('/auth/check-otp',{code,smsId:id,isDashboard:true},(res) => {
             // showSuccess(res.message);
             setTimeout(() => {
-                location.replace('/dashboard')
+                location.replace('/')
             },1500)
         })
     })

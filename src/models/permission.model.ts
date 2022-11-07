@@ -17,7 +17,7 @@ const permissionSchema = new Schema({
 	},
 	initialRoute:{
 		type: 'string',
-		default:'/dashboard'
+		default:'/'
 	},
 	GET: [
 		{

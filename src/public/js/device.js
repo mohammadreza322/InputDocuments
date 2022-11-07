@@ -3,7 +3,7 @@ $(() => {
         const id = $(this).data('serial')
         showWarning('اخطار حذف دستگاه',`آیا برای حذف "${id}"مطمئن هستید؟`,'بله',() => {
             showLoading()
-            sendAjax('/dashboard/devices/delete',{serialNumber:id},(res) => {
+            sendAjax('/devices/delete',{serialNumber:id},(res) => {
                 showSuccess(res.message);
                 setTimeout(() => {
                     location.reload()
@@ -16,7 +16,7 @@ $(() => {
         const id = $(this).data('serial')
         showWarning('اخطار قطع ارتباط دستگاه',`آیا برای قطع ارتباط دستگاه "${id}"مطمئن هستید؟`,'بله',() => {
             showLoading()
-            sendAjax('/dashboard/devices/kick',{serialNumber:id},(res) => {
+            sendAjax('/devices/kick',{serialNumber:id},(res) => {
                 showSuccess(res.message);
                 setTimeout(() => {
                     location.reload()

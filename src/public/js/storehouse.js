@@ -46,7 +46,7 @@ $(document).ready(function () {
         const type = $('.device-type').val()
 
         showLoading()
-        sendAjax('/dashboard/store_room/add',{serialNumber,password,type},function (res) {
+        sendAjax('/store_room/add',{serialNumber,password,type},function (res) {
             showSuccess(res.message)
             setTimeout(() => {
                 location.reload()
@@ -60,7 +60,7 @@ $(document).ready(function () {
 
         showWarning('اخطار حذف دستگاه',`آیا برای حذف “${serialNumber}” مطمئن هستید؟`,'بله',() => {
             showLoading()
-            sendAjax('/dashboard/store_room/delete',{serialNumber,type},(res) => {
+            sendAjax('/store_room/delete',{serialNumber,type},(res) => {
                 showSuccess(res.message)
                 setTimeout(() => {
                     location.reload()

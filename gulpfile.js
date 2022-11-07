@@ -13,7 +13,9 @@ const obfuscate = require('gulp-obfuscate');
 const fs = require("fs");
 
 function uglifyJs() {
-    return gulp.src("dist/**/*.js").pipe(javascriptObfuscator({compact: true})).pipe(gulp.dest('dist'))
+    return gulp.src("dist/**/*.js")
+        .pipe(javascriptObfuscator({compact: true}))
+        .pipe(gulp.dest('dist'))
 
 }
 
@@ -57,4 +59,4 @@ function clean(cb) {
     fs.rm('dist',{ recursive: true }, cb)
 }
 
-exports.default = gulp.series(clean,compileTypescript, copyStatics, gulp.parallel(compressCss, gulp.series(uglifyJs)))
+exports.default = gulp.series(clean,compileTypescript, copyStatics, gulp.parallel(compressCss, uglifyJs))

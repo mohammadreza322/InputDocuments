@@ -20,7 +20,7 @@ export const getAuthorization = async (
 	res: Response,
 	next: NextFunction,
 ) => {
-	return next();
+	//return next();
 	const userToken = req.header('x-auth-token');
 
 	try {
@@ -38,7 +38,7 @@ export const getAuthorization = async (
 			return res.json({ message: 'Token is not valid3',refreshToken1:true });
 		}
 
-		const decoded = jwt.verify(userToken, jsonWebTokenSecretKey);
+		const decoded = jwt.decode(userToken, jsonWebTokenSecretKey);
 
 		const user = await User.findById(decoded.id);
 
@@ -85,6 +85,12 @@ export const hasPermission = async (
 			role: userDetails.role,
 		});
 
+		console.log("***********")
+		console.log(path)
+		console.log(method)
+
+		return next();
+
 		const hasPermission = permissions
 			?.get(method.toUpperCase())
 			.find((permission: string) => {
@@ -92,7 +98,17 @@ export const hasPermission = async (
 				return permissionRegex.test(path!);
 			});
 
+		console.log(hasPermission)
+
+
+		console.log({
+			hasPermission,
+			path,
+			method
+		})
+
 		if (!hasPermission) {
+			console.log("fuuuuuuuuuuuuuuuuuuck")
 			return res.status(404).json({ message: 'permission denied' });
 		}
 
@@ -109,7 +125,7 @@ export const hasPermissionDashboard = async (req:Request,res:Response,next:NextF
 		if (!req.session.isUserLoggedIn) {
 			// console.log("in permission user not login")
 			// console.log(req.session.isUserLoggedIn)
-			return res.redirect('/dashboard/auth')
+			return res.redirect('/auth')
 		}
 
 		const sessionUserPhoneNumber: string = req.session.userPhone!;
@@ -118,7 +134,7 @@ export const hasPermissionDashboard = async (req:Request,res:Response,next:NextF
 
 		if (!user) {
 			req.session.isUserLoggedIn = false;
-			return res.redirect('/dashboard/auth')
+			return res.redirect('/auth')
 		}
 
 		if (user.role =='user') {
@@ -138,13 +154,15 @@ export const hasPermissionDashboard = async (req:Request,res:Response,next:NextF
 			path = path.substring(0, path.length - 1);
 		}
 
+
 		const permissions: IPermission | null = await Permission.findOne({
 			role: user.role,
 		},);
 
 		if(!permissions){
-			return res.redirect('/dashboard/auth')
+			return res.redirect('/auth')
 		}
+
 
 
 		const hasPermission = permissions
@@ -153,6 +171,7 @@ export const hasPermissionDashboard = async (req:Request,res:Response,next:NextF
 				const permissionRegex = new RegExp(permission);
 				return permissionRegex.test(path!);
 			});
+
 
 		// console.log(path)
 
@@ -172,40 +191,47 @@ export const hasPermissionDashboard = async (req:Request,res:Response,next:NextF
 
 		const routes = [
 			{
-				route:'/dashboard',
+				route:'/',
 				title:'پیشخوان',
 				image:'element-4.svg',
 				name:'dashboard'
 			},
 			{
-				route:'/dashboard/admin',
+				route:'/admin',
 				title:'مدیران',
 				image:'user.svg',
 				name:'admin'
 			},
 			{
-				route:'/dashboard/client',
+				route:'/client',
 				title:'مشتریان',
 				image:'profile-2user.svg',
 				name:'client'
 			},
 			{
-				route:'/dashboard/devices',
+				route:'/devices',
 				title:'دستگاه‌ها',
 				image:'cpu.svg',
 				name:'devices'
 			},
 			{
-				route:'/dashboard/store_room',
+				route:'/store_room',
 				title:'انبار',
 				image:'3d-cube-scan.svg',
 				name:'storehouse'
 			}
 		]
 
-		res.locals.routes = routes.filter((r) => permissions
-			?.get(method.toUpperCase())
-			.includes(r.route))
+		console.log('###############################')
+		res.locals.routes = routes.filter((r) => {
+			const p = r.route == '/' ? '/dashboard' : `/dashboard${r.route}`;
+
+			return permissions
+				?.get(method.toUpperCase())
+				.includes(p)
+		})
+
+		console.log(res.locals.routes)
 		return next();
 	} catch (e) {
 		console.error('inside site permission middle  ware');

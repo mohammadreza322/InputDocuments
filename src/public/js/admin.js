@@ -28,7 +28,7 @@ $(document).ready(function(){
         const enable = $('#add .enable').val()
 
         showLoading()
-        sendAjax('/dashboard/admin/add',{fullName,phoneNumber,access,enable},(res) => {
+        sendAjax('/admin/add',{fullName,phoneNumber,access,enable},(res) => {
             showSuccess(res.message)
             setTimeout(() => {
                 location.reload()
@@ -44,7 +44,7 @@ $(document).ready(function(){
         const id =$(this).data('id')
 
         showLoading()
-        sendAjax('/dashboard/admin/edit',{fullName,phoneNumber,access,enable,id},(res) => {
+        sendAjax('/admin/edit',{fullName,phoneNumber,access,enable,id},(res) => {
             showSuccess(res.message)
             setTimeout(() => {
                 location.reload()
@@ -57,7 +57,7 @@ $(document).ready(function(){
         const name = $(this).closest('tr').find('.name-js').text()
         showWarning('اخطار حذف مدیر',`آیا برای حذف “${name}” مطمئن هستید؟`,'بله',() => {
             showLoading()
-            sendAjax('/dashboard/admin/delete',{id},(res) => {
+            sendAjax('/admin/delete',{id},(res) => {
                 showSuccess(res.message);
                 setTimeout(() => {
                     location.reload()
