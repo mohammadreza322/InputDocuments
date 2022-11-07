@@ -22,7 +22,7 @@ class ChiscoClient {
     ///we contain Options here
     ///if after 10 minuets cant connect we got Socket Error
     _dio = Dio(BaseOptions(
-      baseUrl: "https://chisco.tech/api/",
+      baseUrl: "https://api.chisco.tech/",
       connectTimeout: 10000,
       receiveTimeout: 7000,
       sendTimeout: 7000,
@@ -121,9 +121,9 @@ class ChiscoClient {
       // if ((e as SocketException).message ==
       //     "Failed host lookup: 'chisco.tech' (OS Error: No address associated with hostname, errno = 7)")
       //   print('***** Exception Caught *****');
-      print(e);
-      print("**************************");
-      print("ok123");
+      // print(e);
+      // print("**************************");
+      // print("ok123");
       return ChiscoResponse(
           status: false,
           code: 401,

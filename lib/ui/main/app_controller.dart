@@ -206,6 +206,9 @@ class AppController extends ChangeNotifier {
               '/chisco/${element.serialNumber}/get', MqttQos.atLeastOnce);
           client.subscribe(
               '/connection/${element.serialNumber}', MqttQos.atLeastOnce);
+          client.subscribe(
+              '/chisco/${element.serialNumber}/change_cooler_model',
+              MqttQos.atLeastOnce);
         });
         client.updates!.listen(mqttListen);
         mqttClient = client;
@@ -247,20 +250,32 @@ class AppController extends ChangeNotifier {
 
         RegExp connectionRegex = RegExp(r'/connection/(.+)');
         RegExp regExpData = RegExp(r'/chisco/(.*)/get');
+        RegExp changeModel = RegExp(r'/chisco/(.*)/change_cooler_model');
         bool hasConnectionRegex = connectionRegex.hasMatch(topic);
-        RegExp regExp =
-            connectionRegex.hasMatch(topic) ? connectionRegex : regExpData;
+        bool hasDataRegex = regExpData.hasMatch(topic);
+        bool changeModelRegex = changeModel.hasMatch(topic);
+        RegExp? regExp = null;
 
-        var matches = regExp.allMatches(topic);
+        if (hasConnectionRegex) {
+          regExp = connectionRegex;
+        } else if (hasDataRegex) {
+          regExp = regExpData;
+        } else if (changeModelRegex) {
+          regExp = changeModel;
+        }
+
+        var matches = regExp!.allMatches(topic);
         String? serialNumber = matches.first.group(1);
 
         if (hasConnectionRegex) {
           //todo change device last connection
           // print('Has Connection Regex');
           changeDeviceLastConnection(payload, serialNumber!);
-        } else {
+        } else if (hasDataRegex) {
           //todo change device data
           changeDeviceData(payload, serialNumber!);
+        } else if (changeModelRegex) {
+          changeDeviceModel(payload, serialNumber!);
         }
         notifyListeners();
       } on FormatException {
@@ -336,6 +351,21 @@ class AppController extends ChangeNotifier {
       ChiscoFlushBar.showErrorFlushBar(
           context, 'دستگاه شما به اینترنت وصل نیست!');
     }
+  }
+
+  changeDeviceModel(dynamic payload, String serialNumber) {
+    ///update coolers
+    _coolers.forEach((element) {
+      if (element.serialNumber == serialNumber) {
+        var model = payload['model'];
+        Cooler cooler = getCoolerWithSerialNumber(serialNumber);
+        cooler.model = model;
+
+        setCooler(cooler);
+
+        ChiscoFlushBar.showAnotherSucces(context);
+      }
+    });
   }
 
   changeDeviceData(dynamic payload, String serialNumber) {
