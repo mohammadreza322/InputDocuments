@@ -20,6 +20,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="568eb60d-4c2a-4a7b-a657-791dae8c5e3f" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/broker_provider.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/broker_provider.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/classes/convert.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/classes/convert.js" afterDir="false" />
@@ -82,29 +83,7 @@
       <change beforePath="$PROJECT_DIR$/dist/types/session.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/session.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/types/user.type.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/types/user.type.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dist/utility/constants.js" beforeDir="false" afterPath="$PROJECT_DIR$/dist/utility/constants.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/auth/otp.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/auth/otp.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dist/views/dashboard/include/right_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/dist/views/dashboard/include/right_navbar.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gulpfile.js" beforeDir="false" afterPath="$PROJECT_DIR$/gulpfile.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/controller/login.controller.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/controller/login.controller.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/index.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/middleware/authorization.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/middleware/authorization.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/models/permission.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/models/permission.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page_view/auth.pageview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/page_view/auth.pageview.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/page_view/dashboard.pageview.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/page_view/dashboard.pageview.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/admin.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/admin.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/chisco.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/chisco.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/client.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/dashboard.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/dashboard.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/device.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/device.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/login.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/login.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/otp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/otp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/public/js/storehouse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/public/js/storehouse.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/auth.router.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/auth.router.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/service/change_device.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/service/change_device.service.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/auth/otp.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/auth/otp.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/dashboard.ejs" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/views/dashboard/include/right_navbar.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/include/right_navbar.ejs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" beforeDir="false" afterPath="$PROJECT_DIR$/src/views/dashboard/storehouse.ejs" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -140,7 +119,7 @@
     <property name="aspect.path.notification.shown" value="true" />
     <property name="ejs.close.delimiter" value="?&gt;" />
     <property name="ejs.open.delimiter" value="&lt;?" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../viaq-backend" />
     <property name="nodejs_package_manager_path" value="yarn" />
     <property name="settings.editor.selected.configurable" value="preferences.pluginManager" />
     <property name="ts.external.directory.path" value="C:\projects\node\chisco-backend\node_modules\typescript\lib" />
@@ -198,7 +177,8 @@
       <workItem from="1666157410676" duration="1526000" />
       <workItem from="1667624249565" duration="3296000" />
       <workItem from="1667723466036" duration="7609000" />
-      <workItem from="1667797167555" duration="4974000" />
+      <workItem from="1667797167555" duration="7332000" />
+      <workItem from="1667893740109" duration="64000" />
     </task>
     <servers />
   </component>
@@ -229,10 +209,10 @@
       <screen x="1920" y="0" width="1920" height="1032" />
     </state>
     <state x="2632" y="317" key="#com.intellij.fileTypes.FileTypeChooser/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662782076494" />
-    <state x="592" y="213" key="FileChooserDialogImpl" timestamp="1666094187213">
+    <state x="592" y="213" key="FileChooserDialogImpl" timestamp="1667893803367">
       <screen x="0" y="0" width="1536" height="816" />
     </state>
-    <state x="592" y="213" key="FileChooserDialogImpl/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1666094187213" />
+    <state x="592" y="213" key="FileChooserDialogImpl/0.0.1536.816/1920.0.1920.1032@0.0.1536.816" timestamp="1667893803367" />
     <state x="2660" y="270" key="FileChooserDialogImpl/0.0.1536.816/1920.0.1920.1032@1920.0.1920.1032" timestamp="1662970582804" />
     <state width="1055" height="149" key="GridCell.Tab.0.bottom" timestamp="1664565841580">
       <screen x="0" y="0" width="1536" height="816" />
