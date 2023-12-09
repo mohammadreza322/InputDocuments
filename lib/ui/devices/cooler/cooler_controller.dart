@@ -11,6 +11,7 @@ enum CoolerModes { auto, cold, warm, fan }
 
 class CoolerController extends ChangeNotifier {
   final BuildContext context;
+
   CoolerController(this.context);
 
   late Cooler selectedCooler;
@@ -41,6 +42,7 @@ class CoolerController extends ChangeNotifier {
     {'key': 'Highest', 'value': 'خیلی زیاد'},
     {'key': 'Auto', 'value': 'خودکار'}
   ];
+
   initTemp(Cooler selectedCooler) {
     initCall = false;
     temp = selectedCooler.temp;

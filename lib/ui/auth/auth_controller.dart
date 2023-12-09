@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:async';
 import 'dart:io';
 
@@ -68,8 +70,7 @@ class AuthController extends ChangeNotifier {
         if (await Permission.sms.request().isGranted) {
           final Telephony telephony = Telephony.instance;
           print("OK3");
-          telephony.listenIncomingSms(
-              onNewMessage: smsReceivedFunction, listenInBackground: false);
+          telephony.listenIncomingSms(onNewMessage: smsReceivedFunction, listenInBackground: false);
         }
       }
     }
@@ -130,8 +131,7 @@ class AuthController extends ChangeNotifier {
     GlobalVariable.isUserLogin = true;
     await Provider.of<AppController>(context, listen: false)
         .setData(userDevices.object);
-    Provider.of<AppController>(context, listen: false)
-        .connect(topicForSubscribe: 'chisco/test');
+    Provider.of<AppController>(context, listen: false).connect(topicForSubscribe: 'chisco/test');
     Navigator.pushReplacementNamed(context, homePage);
   }
 

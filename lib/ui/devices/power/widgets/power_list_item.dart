@@ -66,6 +66,7 @@ class PowerListItem extends StatelessWidget {
                     // Todo Use Svg if it can be
                     activeThumbImage: const AssetImage(ACTIVE_SWITCH_THUMB),
                     inactiveThumbImage: const AssetImage(OFF_SWITCH_THUMB),
+
                     activeTrackColor: const Color(0xff34A6F6),
                     inactiveTrackColor: const Color(0xffE2E3E4),
                     key: UniqueKey(),

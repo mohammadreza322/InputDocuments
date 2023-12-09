@@ -16,7 +16,9 @@ class AddCoolerBottomSheet extends StatelessWidget {
     final TextEditingController serialTextController = TextEditingController();
     final TextEditingController brandTextController = TextEditingController();
     final TextEditingController nameTextController = TextEditingController();
-    final TextEditingController categoryTextController = TextEditingController();
+    final TextEditingController categoryTextController =
+        TextEditingController();
+
     ///we use [HomeController] because it's in Home Screen
     final HomeController controller = HomeController(context);
 
@@ -70,13 +72,12 @@ class AddCoolerBottomSheet extends StatelessWidget {
             label: "دسته‌بندی:",
           ),
           const SizedBox(
-            height:15,
+            height: 15,
           ),
           ChiscoButton(
             text: 'تایید و افزودن دستگاه',
             onClick: () async {
-
-               controller.addCoolerBtnClicked(AddCooler(
+              controller.addCoolerBtnClicked(AddCooler(
                   category: categoryTextController.text,
                   model: brandTextController.text,
                   name: nameTextController.text,
@@ -85,7 +86,6 @@ class AddCoolerBottomSheet extends StatelessWidget {
             icon: '',
             hasIcon: false,
           ),
-
         ],
       ),
     );

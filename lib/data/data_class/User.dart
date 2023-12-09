@@ -10,8 +10,7 @@ class User {
 
   factory User.fromJson(Map<String, dynamic> json) {
     return User(
-      devices: json['devices'] != null ? UserDevices.fromJson(json['devices'])
-          : UserDevices(categories: [], coolers: [], powers: []),
+      devices: json['devices'] != null ? UserDevices.fromJson(json['devices']) : UserDevices(categories: [], coolers: [], powers: []),
       userDetail: UserDetail.fromJson(json['user']),
     );
   }

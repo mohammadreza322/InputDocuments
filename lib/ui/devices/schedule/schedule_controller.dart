@@ -94,7 +94,7 @@ class ScheduleController extends ChangeNotifier {
         enable: enable,
         startTime: schedule.start));
 
-    print(response);
+    // print(response);
 
     if (response.status) {
       AddDeviceResponse deviceResponse = response.object;
@@ -106,13 +106,13 @@ class ScheduleController extends ChangeNotifier {
       ChiscoFlushBar.showSuccessFlushBar(context, deviceResponse.message);
     } else {
       ChiscoFlushBar.showErrorFlushBar(context, response.errorMessage!);
-      print(response.errorMessage);
-      print('status 4111 ');
+      // print(response.errorMessage);
+      // print('status 4111 ');
     }
   }
 
   editPowerSchedule(String serialNumber, Schedule schedule, bool enable) async {
-    print("response");
+    // print("response");
     ChiscoResponse response = await repositoryImpl.saveSchedule(AddSchedule(
         endTime: schedule.end,
         repeat: schedule.repeat,

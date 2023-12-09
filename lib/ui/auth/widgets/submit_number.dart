@@ -17,6 +17,7 @@ class SubmitNumberPage extends StatelessWidget {
     double width = MediaQuery.of(context).size.width;
 
     TextEditingController controller = TextEditingController(text: '');
+
     return Directionality(
       textDirection: TextDirection.rtl,
       child: Container(
@@ -58,10 +59,9 @@ class SubmitNumberPage extends StatelessWidget {
               onClick: () {
                 // print("callled 1");
                 FocusManager.instance.primaryFocus?.unfocus();
-                Provider.of<AuthController>(context, listen: false)
-                    .setPhoneNumber(controller.text);
-                Provider.of<AuthController>(context, listen: false)
-                    .submitNumberBtnClicked(controller.text);
+                Provider.of<AuthController>(context, listen: false).setPhoneNumber(controller.text);
+
+                Provider.of<AuthController>(context, listen: false).submitNumberBtnClicked(controller.text);
               },
               icon: LEFT_ARROW,
             ),

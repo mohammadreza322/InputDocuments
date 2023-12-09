@@ -26,6 +26,9 @@ environment:
 # dependencies can be manually updated by changing the version numbers below to
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
+
+#flutter pub upgrade called in 1402/04/11
+#persian_datetime_picker Forked Package Changed in 1402/04/11
 dependencies:
   flutter:
     sdk: flutter
@@ -34,7 +37,8 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.2
   provider: ^6.0.3
-  pinput: ^2.2.12
+  pinput: ^3.0.1
+
   flutter_speed_dial: ^6.0.0
   url_launcher: ^6.1.5
   sleek_circular_slider: ^2.0.1
@@ -53,8 +57,8 @@ dependencies:
   telephony: ^0.2.0
   permission_handler: ^10.0.0
   universal_html: ^2.0.8
-  flutter_launcher_icons: ^0.10.0
-  package_info_plus: ^1.4.0
+  flutter_launcher_icons: ^0.11.0
+  package_info_plus: ^3.0.0
 
 
 

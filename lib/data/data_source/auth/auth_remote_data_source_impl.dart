@@ -12,8 +12,7 @@ class AuthRemoteDataSourceImpl implements AuthDataSource {
 
   @override
   Future<ChiscoResponse> checkUserOtp(String smsId, String code) async {
-    final response = await httpClient
-        .request(url: 'check-otp', data: {"smsId": smsId, "code": code});
+    final response = await httpClient.request(url: 'check-otp', data: {"smsId": smsId, "code": code});
     return response;
   }
 

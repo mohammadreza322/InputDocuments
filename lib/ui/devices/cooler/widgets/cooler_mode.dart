@@ -51,7 +51,8 @@ class CoolerMode extends StatelessWidget {
           ],
         ),
       );
-    } else {
+    }
+    else {
       return InkWell(
         onTap: onClick,
         child: SizedBox(

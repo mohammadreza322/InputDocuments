@@ -2,19 +2,6 @@
 <html>
 
 <head>
-  <!--
-    If you are serving your web app in a path other than the root, change the
-    href value below to reflect the base path you are serving from.
-
-    The path provided below has to start and end with a slash "/" in order for
-    it to work correctly.
-
-    For more details:
-    * https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base
-
-    This is a placeholder for base href that will be replaced by the value of
-    the `--base-href` argument provided to `flutter build`.
-  -->
   <base href="$FLUTTER_BASE_HREF">
 
   <meta charset="UTF-8">
@@ -35,9 +22,6 @@
 
   <title>chisco</title>
   <link rel="manifest" href="manifest.json">
-
-  <script src="https://unpkg.com/canvaskit-wasm@0.33.0/bin/canvaskit.js"></script>
-  <link rel="preload" href="https://unpkg.com/canvaskit-wasm@0.33.0/bin/canvaskit.wasm" as="fetch" crossOrigin="anonymous">
 
 
 
@@ -139,6 +123,7 @@
     .text {
       color: gray;
       line-height:24px;
+      
 
     }
 
@@ -181,7 +166,7 @@
           border-right: 8px solid #144FA3;
           border-bottom: 8px solid #DBE0EC;
           border-left: 8px solid #144FA3;
-          width: 60px !important;
+          width: 100$ !important;
           height: 60px !important;
           -webkit-animation: spin 2s linear infinite;
           animation: spin 2s linear infinite;
@@ -241,6 +226,7 @@
           element[0].parentNode.removeChild(element[0]);
       });
   </script>
+  
   <script>
 
 var serviceWorkerVersion = 2;
@@ -333,6 +319,7 @@ var serviceWorkerVersion = 2;
         return appRunner.runApp();
       });
     });
+
   </script>
   <script>//fix app doesn't rotate
     function deviceOrientation() {

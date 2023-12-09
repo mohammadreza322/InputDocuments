@@ -7,6 +7,7 @@ import 'package:chisco/data/data_source/auth/auth_data_source.dart';
 import 'package:chisco/data/data_source/auth/auth_local_data_source_impl.dart';
 import 'package:chisco/data/data_source/auth/auth_remote_data_source_impl.dart';
 import 'package:chisco/data/repository/auth/auth_repository.dart';
+import 'package:flutter/material.dart';
 
 import '../../data_class/ChiscoResponse.dart';
 
@@ -22,7 +23,6 @@ class AuthRepositoryImpl extends AuthRepository {
         await authRemoteDataSource.checkUserOtp(smsId, code);
     if (response.status) {
       CheckOtpResponse otpResponse = CheckOtpResponse.fromJson(response.object);
-
       authLocalDataSource.saveToken(otpResponse.accessToken,
           otpResponse.refreshToken, otpResponse.details);
       ChiscoResponse result = ChiscoResponse(
@@ -35,7 +35,8 @@ class AuthRepositoryImpl extends AuthRepository {
 
   @override
   Future<ChiscoResponse> getMobile(String number) async {
-    final response = await authRemoteDataSource.submitMobile(number);
+    ChiscoResponse response = await authRemoteDataSource.submitMobile(number);
+    debugPrint(response.status.toString());
     if (response.status) {
       ChiscoResponse chiscoResponse = ChiscoResponse(
           status: true,
@@ -70,9 +71,10 @@ class AuthRepositoryImpl extends AuthRepository {
         return ChiscoResponse(status: false, code: response.code, object: {});
       }
       ChiscoResponse result = ChiscoResponse(
-          status: true,
-          code: response.code,
-          object: User.fromJson(response.object));
+        status: true,
+        code: response.code,
+        object: User.fromJson(response.object),
+      );
       return result;
     } else {
       return response;

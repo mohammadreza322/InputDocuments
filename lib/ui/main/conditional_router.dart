@@ -49,15 +49,19 @@ class ConditionalRouter extends MapMixin<String, WidgetBuilder> {
     }
     if (private.containsKey(key)) {
       if (GlobalVariable.isUserLogin == null) {
+        // print("################# NULL");
+
         return (ctx) => ChangeNotifierProvider(
               create: (context) => SplashController(context),
               child: const SplashScreen(),
             );
       } else {
-        // print("#################");
+        // print("################# ELSE");
         // print("called3");
         // print(key);
         if (GlobalVariable.isUserLogin == true) {
+          // print("PRIVATE KEY");
+          // print(private[key]);
           return private[key];
         } else {
           return (ctx) => ChangeNotifierProvider(

@@ -29,22 +29,26 @@ var splashScreenPage = ChangeNotifierProvider(
 
 var routes = ConditionalRouter(public: {
   splashPage: (context) => splashScreenPage,
-  loginPage: (context) => ChangeNotifierProvider(
+  loginPage: (context) =>
+      ChangeNotifierProvider(
         child: const AuthScreen(),
         create: (ctx) => AuthController(context),
       ),
 }, private: {
-  homePage: (context) => ChangeNotifierProvider(
+  homePage: (context) =>
+      ChangeNotifierProvider(
         create: (context) => HomeController(context),
         child: const Directionality(
             textDirection: TextDirection.rtl, child: HomeScreen()),
       ),
-  accountPage: (context) => ChangeNotifierProvider(
+  accountPage: (context) =>
+      ChangeNotifierProvider(
         create: (context) => AccountController(context),
         child: const Directionality(
             textDirection: TextDirection.rtl, child: AccountScreen()),
       ),
-  profilePage: (context) => ChangeNotifierProvider(
+  profilePage: (context) =>
+      ChangeNotifierProvider(
         create: (context) => ProfileController(context),
         child: const Directionality(
             textDirection: TextDirection.rtl, child: ProfileScreen()),
@@ -62,7 +66,10 @@ var routes = ConditionalRouter(public: {
     );
   },
   schedulePage: (context) {
-    if (ModalRoute.of(context)!.settings.arguments == null) {
+    if (ModalRoute
+        .of(context)!
+        .settings
+        .arguments == null) {
       return splashScreenPage;
     }
 
@@ -73,7 +80,10 @@ var routes = ConditionalRouter(public: {
     );
   },
   powerDevicePage: (context) {
-    if (ModalRoute.of(context)!.settings.arguments == null) {
+    if (ModalRoute
+        .of(context)!
+        .settings
+        .arguments == null) {
       return splashScreenPage;
     }
     return ChangeNotifierProvider(

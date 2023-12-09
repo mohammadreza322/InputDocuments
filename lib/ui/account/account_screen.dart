@@ -20,7 +20,8 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
     double height = MediaQuery.of(context).size.height;
-    AccountController accountController = Provider.of<AccountController>(context);
+    AccountController accountController =
+        Provider.of<AccountController>(context);
 
     accountController.init();
 
@@ -136,9 +137,10 @@ class AccountScreen extends StatelessWidget {
                                   children: [
                                     Container(
                                       decoration: BoxDecoration(
-                                          shape: BoxShape.circle,
-                                          color: const Color(0xff1d67ba)
-                                              .withOpacity(0.07)),
+                                        shape: BoxShape.circle,
+                                        color: const Color(0xff1d67ba)
+                                            .withOpacity(0.07),
+                                      ),
                                       width:
                                           ChiscoConverter.calculateWidgetWidth(
                                               width, 42),
@@ -146,8 +148,9 @@ class AccountScreen extends StatelessWidget {
                                           ChiscoConverter.calculateWidgetWidth(
                                               width, 42),
                                       padding: EdgeInsets.all(
-                                          ChiscoConverter.calculateWidgetWidth(
-                                              width, 10)),
+                                        ChiscoConverter.calculateWidgetWidth(
+                                            width, 10),
+                                      ),
                                       child: SvgPicture.asset(
                                         item.icon,
                                         color: item.isRed
@@ -180,7 +183,9 @@ class AccountScreen extends StatelessWidget {
                       alignment: Alignment.bottomCenter,
                       child: Padding(
                         padding: const EdgeInsets.only(bottom: 20),
-                        child: ChiscoText(text: 'نسخه ${accountController.appVersionString} طراحی شده در ویوتک ',
+                        child: ChiscoText(
+                          text:
+                              'نسخه ${accountController.appVersionString} طراحی شده در ویوتک ',
                           textColor: Styles.primaryTextColor.withOpacity(0.5),
                         ),
                       ),

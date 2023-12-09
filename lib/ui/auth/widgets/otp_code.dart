@@ -34,8 +34,7 @@ class OtpInput extends StatelessWidget {
               showCursor: true,
               onCompleted: (pin) {
                 // print(pin);
-                Provider.of<AuthController>(context, listen: false)
-                    .submitCodeBtnClicked(pin);
+                Provider.of<AuthController>(context, listen: false).submitCodeBtnClicked(pin);
               },
             ))
       ],

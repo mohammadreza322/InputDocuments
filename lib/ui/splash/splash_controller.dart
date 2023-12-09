@@ -59,8 +59,7 @@ class SplashController extends ChangeNotifier {
         Provider.of<AppController>(context, listen: false)
             .setData(response.object);
         GlobalVariable.isUserLogin = true;
-        Provider.of<AppController>(context, listen: false)
-            .connect(topicForSubscribe: 'chisco/test');
+        Provider.of<AppController>(context, listen: false).connect(topicForSubscribe: 'chisco/test');
         // navigateToHome();
 
       } else {

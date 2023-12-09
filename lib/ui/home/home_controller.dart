@@ -24,7 +24,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 class HomeController extends ChangeNotifier {
   final DeviceRepositoryImpl deviceRepository = DeviceRepositoryImpl();
   final BuildContext context;
+
   HomeController(this.context);
+
   List<String> _categories = [];
   List<Device> devices = [];
   List<Device> _listDevices = [];
@@ -50,14 +52,15 @@ class HomeController extends ChangeNotifier {
 
   get getPowerCount => _powerCount;
 
-  init() async{
+  init() async {
     ///[init] is called only one time when is opened
     isPageLoading = true;
     AppController appController =
-        Provider.of<AppController>(context, listen: false);
+    Provider.of<AppController>(context, listen: false);
     appController.setContext(context);
     user = appController.getUser();
-    final SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final SharedPreferences sharedPreferences = await SharedPreferences
+        .getInstance();
     //sharedPreferences.setString("access_token", "asd");
     if (!_categories.contains('نمایش همه')) {
       _categories.insert(0, 'نمایش همه');
@@ -77,8 +80,8 @@ class HomeController extends ChangeNotifier {
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
       Provider.of<AppController>(context, listen: false)
           .refreshData(response.object);
-      Provider.of<AppController>(context, listen: false)
-          .subscribe(cooler.serialNumber);
+      Provider.of<AppController>(context, listen: false).subscribe(
+          cooler.serialNumber);
     }
   }
 
@@ -96,10 +99,10 @@ class HomeController extends ChangeNotifier {
     Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
     ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
     // print(response.object.toString());
-    Provider.of<AppController>(context, listen: false)
-        .refreshData(addDeviceResponse);
-    Provider.of<AppController>(context, listen: false)
-        .subscribe(power.serialNumber);
+    Provider.of<AppController>(context, listen: false).refreshData(
+        addDeviceResponse);
+    Provider.of<AppController>(context, listen: false).subscribe(
+        power.serialNumber);
     notifyListeners();
   }
 
@@ -130,14 +133,20 @@ class HomeController extends ChangeNotifier {
 
   homeLists() {
     ///we get these parameters here from [AppController]
-    _coolerCount =
-        Provider.of<AppController>(context, listen: false).getCoolers().length;
-    _powerCount =
-        Provider.of<AppController>(context, listen: false).getPowers().length;
-    _listDevices =
-        Provider.of<AppController>(context, listen: false).getUserDevicesList;
-    _categories =
-        Provider.of<AppController>(context, listen: false).getCategories;
+    _coolerCount = Provider
+        .of<AppController>(context, listen: false)
+        .getCoolers()
+        .length;
+    _powerCount = Provider
+        .of<AppController>(context, listen: false)
+        .getPowers()
+        .length;
+    _listDevices = Provider
+        .of<AppController>(context, listen: false)
+        .getUserDevicesList;
+    _categories = Provider
+        .of<AppController>(context, listen: false)
+        .getCategories;
   }
 
   ///onClick for all Devices {on or off button} Icon
@@ -150,7 +159,8 @@ class HomeController extends ChangeNotifier {
       // bool isPowerActive = changeDevicePowersBtn(device);
       // print("is Power Active : $isPowerActive");
       //power.isPowerActive = !isPowerActive;
-      await Provider.of<AppController>(context, listen: false).updatePowersConnectors(power, context);
+      await Provider.of<AppController>(context, listen: false)
+          .updatePowersConnectors(power, context);
 
       notifyListeners();
     } else {
@@ -161,7 +171,8 @@ class HomeController extends ChangeNotifier {
       cooler.power = !isPowerActive;
       Provider.of<AppController>(context, listen: false).setCooler(cooler);
       isPowerActive = !isPowerActive;
-      Provider.of<AppController>(context, listen: false).publishCoolerMqtt(cooler, context);
+      Provider.of<AppController>(context, listen: false).publishCoolerMqtt(
+          cooler, context);
       notifyListeners();
     }
   }
@@ -171,11 +182,11 @@ class HomeController extends ChangeNotifier {
   ///after that we @return deviceIsActive
   bool changeDevicePowersBtn(Device device) {
     if (device.deviceType == DeviceType.power) {
-      List<Connector> connectors = (device as Power)
+      List<Connector> activeConnectors = (device as Power)
           .connectors
           .where((element) => element.status)
           .toList();
-      if (connectors.isEmpty) {
+      if (activeConnectors.isEmpty) {
         isDeviceActive = false;
         return false;
       } else {

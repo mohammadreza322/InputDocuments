@@ -174,8 +174,7 @@ class CoolerScreen extends StatelessWidget {
                               child: CoolerMode(
                                 icon: autoTest,
                                 title: 'خودکار',
-                                isSelected: controller
-                                    .changeCoolerStateMode(CoolerModes.auto),
+                                isSelected: controller.changeCoolerStateMode(CoolerModes.auto),
                                 onClick: () {
                                   controller.changeSelectedCoolerMode(
                                       CoolerModes.auto);

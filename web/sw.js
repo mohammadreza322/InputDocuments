@@ -1,6 +1,5 @@
 const cacheName = "flutter-app-cache-v1";
 const assetsToCache = [
-  "/",
   "/index.html",
   "/icons/Icon-192.png",
   "/icons/Icon-512.png",
