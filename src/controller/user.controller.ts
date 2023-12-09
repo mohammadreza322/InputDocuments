@@ -11,7 +11,7 @@ import DeviceEntity from '../entities/device.entity';
 import AhpValidator from '../classes/validator';
 import { jsonWebTokenSecretKey } from '../utility/constants';
 const jwt = require('jsonwebtoken');
-import Token, { IToken } from '../models/tokens.model';
+import Token from '../models/tokens.model';
 import moment from 'moment';
 import TokenEntity, { generateTokenOutput } from '../entities/token.entity';
 import {isValidObjectId, Types} from "mongoose";

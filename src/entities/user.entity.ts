@@ -9,7 +9,6 @@ import DeviceEntity from "./device.entity";
 import PersianDate from "@alireza-ab/persian-date";
 import {adminRoleTranslate} from "../classes/convert";
 import LogsEntity from "./logs.entity";
-import {stringify} from "querystring";
 
 export default class UserEntity {
 	public static async setUserDetails(
@@ -68,10 +67,10 @@ export default class UserEntity {
 		const user: IUser | null = await Users.findOne({ _id: id });
 
 		const usernameBroker = SHA1(
-			user!.registerDate.toString() + user!._id!.toString(),
+			user.registerDate.toString() + user._id.toString(),
 		).toString();
 		const passwordBroker = SHA1(
-			user!.registerDate.toString() + user?.phoneNumber.toString(),
+			user.registerDate.toString() + user?.phoneNumber.toString(),
 		).toString();
 
 		const checkUserExists = await BrokerProvider.userExist(usernameBroker);
@@ -108,9 +107,9 @@ export default class UserEntity {
 		}
 
 		return {
-			phoneNumber: user!.phoneNumber,
-			fullName: user!.fullName,
-			address: user!.address,
+			phoneNumber: user.phoneNumber,
+			fullName: user.fullName,
+			address: user.address,
 			birthday: birthday,
 		} as getUserInformationOutput;
 	}
@@ -124,13 +123,13 @@ export default class UserEntity {
 		}
 
 		return {
-			phoneNumber: user!.phoneNumber,
-			fullName: user!.fullName,
-			address: user!.address,
+			phoneNumber: user.phoneNumber,
+			fullName: user.fullName,
+			address: user.address,
 			birthday: birthday,
-			role:user!.role,
+			role:user.role,
 			id:user.id,
-			registerDate:user!.registerDate
+			registerDate:user.registerDate
 		} as getUserFullInformationOutput;
 	}
 
