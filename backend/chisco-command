@@ -1,0 +1,97 @@
+#!/bin/bash
+
+checkSudo() {
+  #check command run as root or not
+  if [ "$EUID" -ne 0 ];  then
+    echo "Please run as root"
+    exit
+  fi
+}
+
+upDocker() {
+  checkSudo
+
+  ## create mongo
+  # echo "check mongo"
+  # CONTAINER_NAME='chisco-core-db'
+  # CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+  # if [ ! "${CID}" ]; then
+  #   echo "mongo container doesn't exist and install it"
+  #   runMongo
+  # fi
+  # unset CID
+  # unset CONTAINER_NAME
+  # echo "mongo done!"
+
+  ## create mailserver
+  echo "check mailserver"
+  CONTAINER_NAME='mailserver'
+  CID=$(docker ps -q -f status=running -f name=^/${CONTAINER_NAME}$)
+  if [ ! "${CID}" ]; then
+    echo "mailserver container doesn't exist and install it"
+    runMailServer
+  fi
+  unset CID
+  unset CONTAINER_NAME
+  echo "mailserver done!"
+
+  sudo docker ps
+}
+
+runMongo() {
+  cd /var/www/chisco-backend/docker/mongo
+  mkdir -p data
+  sudo docker run -d --restart always -p 27018:27017 -e MONGO_INITDB_ROOT_USERNAME=root -e MONGO_INITDB_ROOT_PASSWORD=amir1234 -v $PWD/data:/data/db --name mongodb mongo:4.4
+}
+
+runMailServer() {
+  cd /var/www/chisco-backend/docker/mailserver
+  mkdir -p data
+  docker run  -d --restart always -p 25:25 -p 82:80 -p 445:443 -p 110:110 -p 143:143 -p 465:465 -p 587:587 -p 993:993 -p 995:995 -p 4190:4190  -e TZ=Asia/Tehran   -v $PWD/data:/data --name mailserver -t analogic/poste.io
+}
+
+cp() {
+  sudo cp /var/www/chisco-backend/chisco-command /bin/chisco-command
+  echo "copied file"
+}
+
+pull() {
+  cd /var/www/chisco-backend
+  git pull
+  pm2 delete pm2-process.json
+  pm2 start pm2-process.json
+  
+}
+
+cron() {
+  cd /var/www/chisco-backend
+  git pull
+  pm2 delete pm2-cron.json
+  pm2 start pm2-cron.json
+}
+
+help() {
+  echo "up > up the docker containers\r\n"
+  echo "pull > pull the last changes in the server of viaq and create pm2 tasks for it\r\n"
+  echo "cp > copy of this file into /bin folder\r\n"
+  
+}
+
+if [ -z "$1" ]; then
+  help
+  exit 0
+fi
+
+if [ "$1" == "up" ]; then
+  upDocker
+  exit
+elif [ "$1" == "pull" ]; then
+  pull
+  exit
+elif [ "$1" == "cp" ]; then
+  cp
+  exit
+elif [ "$1" == "cron" ]; then
+  cron
+  exit
+fi

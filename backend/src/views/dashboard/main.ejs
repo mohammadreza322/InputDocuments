@@ -1,0 +1,11 @@
+<?- include('./include/header.ejs') ?>
+<style>
+    .ahp-secret{
+        display: none;
+    }
+</style>
+<div class="ahp-secret" data-ahp="<?= csrfToken ?>"></div>
+
+<?- include('./'+page+'.ejs') ?>
+
+<?- include('./include/footer.ejs') ?>
