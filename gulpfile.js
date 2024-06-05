@@ -55,8 +55,12 @@ function compileTypescript() {
     return tsProject.src().pipe(tsProject()).js.pipe(gulp.dest("dist"))
 }
 
-function clean(cb) {
-    fs.rm('dist',{ recursive: true }, cb)
+async function clean(cb) {
+    return await fs.rm('dist',{ recursive: true }, () => {
+        cb()
+        return true;
+    })
+
 }
 
 exports.default = gulp.series(clean,compileTypescript, copyStatics, gulp.parallel(compressCss, uglifyJs))

@@ -5,7 +5,8 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "ts-node-dev src/index.ts",
-		"pm2": "tsc"
+		"pm2": "tsc",
+		"gulp":"gulp"
 	},
 	"author": "AHP",
 	"license": "ISC",

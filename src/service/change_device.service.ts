@@ -86,9 +86,9 @@ connectDb().then(() => {
 			if (changeDeviceRegex) {
 				changeDevice(changeDeviceRegex[1], data);
 			} else if (connectedDeviceRegex) {
-				changeConnectStatus(data);
+				changeConnectStatus(data,client);
 			} else if (disconnectDeviceRegex) {
-				changeDisconnectStatus(data);
+				changeDisconnectStatus(data,client);
 			}  else if (changeModelRegex) {
 				_deviceExists(republishRegex[1]).then((deviceExists) => {
 					if (deviceExists.valid) {
@@ -110,7 +110,7 @@ connectDb().then(() => {
 	}
 });
 
-async function changeDisconnectStatus(payload: any) {
+async function changeDisconnectStatus(payload: any,client:any) {
 	try {
 		const serialNumber = payload.username;
 		const lastConnection = payload.disconnected_at;
@@ -135,6 +135,13 @@ async function changeDisconnectStatus(payload: any) {
 			);
 		}
 
+		client.publish(
+			`/connection/${serialNumber}`,
+			JSON.stringify({
+				connectionStatus:false
+			}),
+		);
+
 		await LogsEntity.deviceDisconnectToServer(serialNumber);
 	} catch (e) {
 		console.error('inside chang disconnect');
@@ -142,7 +149,7 @@ async function changeDisconnectStatus(payload: any) {
 	}
 }
 
-async function changeConnectStatus(payload: any) {
+async function changeConnectStatus(payload: any,client) {
 	try {
 		const serialNumber = payload.username;
 
@@ -168,6 +175,13 @@ async function changeConnectStatus(payload: any) {
 				},
 			);
 		}
+
+		client.publish(
+			`/connection/${serialNumber}`,
+			JSON.stringify({
+				connectionStatus:true
+			}),
+		);
 
 		await LogsEntity.deviceReconnectToServer(serialNumber);
 	} catch (e) {
