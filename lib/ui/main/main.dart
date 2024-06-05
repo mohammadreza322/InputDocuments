@@ -8,7 +8,6 @@ import 'package:provider/provider.dart';
 
 import 'package:sizer/sizer.dart';
 
-import "package:universal_html/js.dart" as js;
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 final ThemeData androidTheme =

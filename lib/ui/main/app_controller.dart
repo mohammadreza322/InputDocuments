@@ -4,15 +4,14 @@ import 'package:chisco/data/data_class/AddDeviceResponse.dart';
 import 'package:chisco/data/data_class/Connector.dart';
 import 'package:chisco/data/data_class/Cooler.dart';
 import 'package:chisco/data/data_class/Device.dart';
-import 'package:chisco/data/data_class/UserDetail.dart';
 import 'package:chisco/data/data_class/Power.dart';
 import 'package:chisco/data/data_class/User.dart';
+import 'package:chisco/data/data_class/UserDetail.dart';
 import 'package:chisco/utils/chisco_flush_bar.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:mqtt_client/mqtt_client.dart';
-import 'package:mqtt_client/mqtt_server_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../http_client/mqtt/mqtt_classes/MqttClientFactory.dart';
@@ -158,7 +157,6 @@ class AppController extends ChangeNotifier {
     ///we need to decode Mqtt Username and password for connection
     String userNameBroker = decodedToken['usernameBroker'];
     String passwordBroker = decodedToken['passwordBroker'];
-
     String url = '';
 
     ///if user use Web App we have to connect mqtt like this ws://[url]
@@ -167,25 +165,27 @@ class AppController extends ChangeNotifier {
       url = "wss://";
     // }
 
-    url += "dashboard.chisco.tech";
+    // url += "dashboard.chisco.tech";
+    url += "connection.chisco.tech/mqtt";
 
     //print(
     //    'UserName : ${decodedToken['usernameBroker']}\nPassword: ${decodedToken['passwordBroker']}');
 
-    MqttClient client = makeClient(url, '');
+    MqttClient client = makeClient(url, '',443);
+
     client.websocketProtocols = ['mqtts', 'mqtt'];
 
     // client.logging(on: true);
-    // client.onDisconnected = () {
-    //   print("disConnectttttttttt");
-    // };
+    client.onDisconnected = () {
+      debugPrint("disConnectttttttttt");
+    };
 
-    // client.onConnected = () {
-    //   print("concteeeeeeeeeeed **********************");
-    //   // print(client.connectionStatus!.state);
-    //   // isMqttConnected = true;
-    //   //notifyListeners();
-    // };
+    client.onConnected = () {
+      debugPrint("concteeeeeeeeeeed **********************");
+      debugPrint(client.connectionStatus!.state.toString());
+      // isMqttConnected = true;
+      // notifyListeners();
+    };
     final connMessage = MqttConnectMessage()
         .authenticateAs(userNameBroker, passwordBroker)
         .withClientIdentifier(
@@ -196,13 +196,11 @@ class AppController extends ChangeNotifier {
     try {
       client.autoReconnect = true;
       client.keepAlivePeriod = 20000;
-
-      client.logging(on: false);
       await client.connect(userNameBroker, passwordBroker);
-
       if (client.connectionStatus!.state == MqttConnectionState.connected) {
         isMqttConnected = true;
-        _userDevicesList.forEach((element) {
+        for (var element in _userDevicesList) {
+          // subscribe(element.serialNumber);
           client.subscribe(
               '/chisco/${element.serialNumber}/get', MqttQos.atLeastOnce);
           client.subscribe(
@@ -210,7 +208,7 @@ class AppController extends ChangeNotifier {
           client.subscribe(
               '/chisco/${element.serialNumber}/change_cooler_model',
               MqttQos.atLeastOnce);
-        });
+        }
         client.updates!.listen(mqttListen);
         mqttClient = client;
         notifyListeners();
@@ -224,8 +222,7 @@ class AppController extends ChangeNotifier {
     if (mqttClient?.connectionStatus!.state == MqttConnectionState.connected) {
       mqttClient?.subscribe('/chisco/$serialNumber/get', MqttQos.atLeastOnce);
       mqttClient?.subscribe('/connection/${serialNumber}', MqttQos.atLeastOnce);
-      mqttClient?.subscribe(
-          '/chisco/${serialNumber}/change_cooler_model', MqttQos.atLeastOnce);
+      mqttClient?.subscribe('/chisco/${serialNumber}/change_cooler_model', MqttQos.atLeastOnce);
     }
   }
 
@@ -269,7 +266,7 @@ class AppController extends ChangeNotifier {
 
         var matches = regExp!.allMatches(topic);
         String? serialNumber = matches.first.group(1);
-
+        print("PAYLOAD : $payload");
         if (hasConnectionRegex) {
           //todo change device last connection
           // print('Has Connection Regex');

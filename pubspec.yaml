@@ -49,14 +49,13 @@ dependencies:
       url: https://github.com/mehdi77abh/persian-datetime-picker
   sizer: ^2.0.15
 
-  dio: ^4.0.4
+  dio: ^5.0.0
   shared_preferences: ^2.0.15
   another_flushbar: ^1.10.28
-  mqtt_client: ^9.6.1
+  mqtt_client: ^10.0.0
   jwt_decoder: ^2.0.1
   telephony: ^0.2.0
   permission_handler: ^10.0.0
-  universal_html: ^2.0.8
   flutter_launcher_icons: ^0.11.0
   package_info_plus: ^3.0.0
 

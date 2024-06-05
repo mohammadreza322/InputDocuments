@@ -48,6 +48,7 @@ class SubmitNumberPage extends StatelessWidget {
                 text: 'برای مثال : 09012345789',
                 isInputNumber: true,
                 icon: PHONE),
+
             const SizedBox(
               height: 20,
             ),

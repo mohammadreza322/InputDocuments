@@ -21,9 +21,9 @@ class ChiscoClient {
     ///if after 10 minuets cant connect we got Socket Error
     _dio = Dio(BaseOptions(
       baseUrl: "https://api.chisco.tech/",
-      connectTimeout: 10000,
-      receiveTimeout: 7000,
-      sendTimeout: 7000,
+      connectTimeout: const Duration(milliseconds: 10000),
+      receiveTimeout: const Duration(milliseconds: 10000),
+      sendTimeout: const Duration(milliseconds: 10000),
       validateStatus: (status) {
         return status! < 500;
       },
@@ -96,13 +96,13 @@ class ChiscoClient {
     } on DioError catch (error) {
       ///here we got error if we cant connect to server
       ///ConnectionTimeOut if we cant connect to server after 10 second
-      if (error.type == DioErrorType.connectTimeout) {
+      if (error.type == DioExceptionType.connectionTimeout) {
         // print('Error HTTP Connection.......');
         return ChiscoResponse(
             status: false,
             code: 404,
             errorMessage: "اتصال به اینترنت خود را بررسی کنید");
-      } else if (error.type == DioErrorType.other) {
+      } else if (error.type == DioExceptionType.unknown) {
         ///if error type is [other] its means that our network is off
         ///no internet , wifi error , VPN is on,
         return ChiscoResponse(

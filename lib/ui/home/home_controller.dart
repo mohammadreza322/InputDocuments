@@ -78,10 +78,8 @@ class HomeController extends ChangeNotifier {
       AddDeviceResponse addDeviceResponse = response.object;
       Navigator.pushNamedAndRemoveUntil(context, homePage, (route) => false);
       ChiscoFlushBar.showSuccessFlushBar(context, addDeviceResponse.message);
-      Provider.of<AppController>(context, listen: false)
-          .refreshData(response.object);
-      Provider.of<AppController>(context, listen: false).subscribe(
-          cooler.serialNumber);
+      Provider.of<AppController>(context, listen: false).refreshData(response.object);
+      Provider.of<AppController>(context, listen: false).subscribe(cooler.serialNumber);
     }
   }
 

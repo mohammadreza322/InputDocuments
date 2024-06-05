@@ -5,5 +5,5 @@ import 'package:mqtt_client/mqtt_client.dart';
 
 ///this method is for creating a connection in Web App to  MQTT
 
-MqttClient makeClient(String url, String clientId) =>
-    MqttBrowserClient.withPort("$url/mqtt", clientId, 8887);
+MqttClient makeClient(String url, String clientId,int port) =>
+    MqttBrowserClient.withPort(url, clientId, port);
