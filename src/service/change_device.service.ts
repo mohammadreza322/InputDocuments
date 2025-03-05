@@ -1,9 +1,16 @@
 import { connect } from 'mqtt';
 import connectDb from '../config/db';
-import { Cooler, PowerStrip } from '../models/device.model';
+import {
+	Cooler,
+	IPowerStripSchedule,
+	ISchedule,
+	PowerStrip,
+	ScheduleStatus,
+} from '../models/device.model';
 //import Device  from '../models/device.model';
 import { brokerUrl } from '../utility/constants';
 import LogsEntity from '../entities/logs.entity';
+import DeviceEntity from '../entities/device.entity';
 
 connectDb().then(() => {
 	try {
@@ -61,6 +68,26 @@ connectDb().then(() => {
 				}
 				console.log('subscribe /chisco/+/change_model_c');
 			});
+
+			client.subscribe('/chisco/+/ack_schedule', (err) => {
+				if (err) {
+					console.error('can not subscribe /chisco/+/ack_schedule');
+					console.error(err);
+					process.exit(1);
+				}
+				console.log('subscribe /chisco/+/ack_schedule');
+			});
+
+			client.subscribe('/chisco/+/ack_delete_schedule', (err) => {
+				if (err) {
+					console.error(
+						'can not subscribe /chisco/+/ack_delete_schedule',
+					);
+					console.error(err);
+					process.exit(1);
+				}
+				console.log('subscribe /chisco/+/ack_delete_schedule');
+			});
 		});
 
 		client.on('message', async (topic, message) => {
@@ -78,6 +105,11 @@ connectDb().then(() => {
 				topic,
 			);
 
+			const ackScheduleRegex = /\/chisco\/(.*)\/ack_schedule/.exec(topic);
+
+			const ackDeleteScheduleRegex =
+				/\/chisco\/(.*)\/ack_delete_schedule/.exec(topic);
+
 			const connectedDeviceRegex = /\/event\/connected/.exec(topic);
 			const disconnectDeviceRegex = /\/event\/disconnected/.exec(topic);
 
@@ -86,10 +118,10 @@ connectDb().then(() => {
 			if (changeDeviceRegex) {
 				changeDevice(changeDeviceRegex[1], data);
 			} else if (connectedDeviceRegex) {
-				changeConnectStatus(data,client);
+				changeConnectStatus(data, client);
 			} else if (disconnectDeviceRegex) {
-				changeDisconnectStatus(data,client);
-			}  else if (changeModelRegex) {
+				changeDisconnectStatus(data, client);
+			} else if (changeModelRegex) {
 				_deviceExists(republishRegex[1]).then((deviceExists) => {
 					if (deviceExists.valid) {
 						if (deviceExists.type == 'cooler') {
@@ -101,6 +133,11 @@ connectDb().then(() => {
 						}
 					}
 				});
+			} else if (ackDeleteScheduleRegex){
+				ackDeleteSchedle(ackDeleteScheduleRegex[1],data)
+			}
+			else if (ackScheduleRegex) {
+				ackSchedle(ackScheduleRegex[1], data);
 			}
 		});
 	} catch (e) {
@@ -110,7 +147,59 @@ connectDb().then(() => {
 	}
 });
 
-async function changeDisconnectStatus(payload: any,client:any) {
+async function ackSchedle(serialNumber: string, payload: any) {
+	console.log(`payload is:${payload}`);
+	console.log(`serialNumber is:${payload}`);
+	const validSerialNumber = await _deviceExists(serialNumber);
+	console.log(validSerialNumber);
+	if (validSerialNumber.valid) {
+		if (validSerialNumber.type === 'power') {
+			await PowerStrip.updateOne(
+				{ serialNumber, 'schedule.customId': parseInt(payload) },
+				{
+					$set: {
+						'schedule.$.scheduleStatus': ScheduleStatus.ACK,
+					},
+				},
+			);
+		} else if (validSerialNumber.type === 'cooler') {
+			await Cooler.updateOne(
+				{ serialNumber, 'schedule.customId': parseInt(payload) },
+				{
+					$set: {
+						'schedule.$.scheduleStatus': ScheduleStatus.ACK,
+					},
+				},
+			);
+		}
+	}
+}
+
+async function ackDeleteSchedle(serialNumber: string, payload: any) {
+	console.log(`payload is:${payload}`);
+	console.log(`serialNumber is:${payload}`);
+	const validSerialNumber = await _deviceExists(serialNumber);
+	console.log(validSerialNumber);
+	if (validSerialNumber.valid) {
+		if (validSerialNumber.type === 'power') {
+			await PowerStrip.updateOne(
+				{ serialNumber },
+				{
+                    $pull: { pendingDeleteCustomIds: parseInt(payload) }, // حذف customId از لیست pendingDeleteCustomIds
+                },
+			);
+		} else if (validSerialNumber.type === 'cooler') {
+			await Cooler.updateOne(
+				{ serialNumber},
+				{
+                    $pull: { pendingDeleteCustomIds: parseInt(payload) }, // حذف customId از لیست pendingDeleteCustomIds
+                },
+			);
+		}
+	}
+}
+
+async function changeDisconnectStatus(payload: any, client: any) {
 	try {
 		const serialNumber = payload.username;
 		const lastConnection = payload.disconnected_at;
@@ -138,7 +227,7 @@ async function changeDisconnectStatus(payload: any,client:any) {
 		client.publish(
 			`/connection/${serialNumber}`,
 			JSON.stringify({
-				connectionStatus:false
+				connectionStatus: false,
 			}),
 		);
 
@@ -149,7 +238,7 @@ async function changeDisconnectStatus(payload: any,client:any) {
 	}
 }
 
-async function changeConnectStatus(payload: any,client) {
+async function changeConnectStatus(payload: any, client) {
 	try {
 		const serialNumber = payload.username;
 
@@ -176,10 +265,61 @@ async function changeConnectStatus(payload: any,client) {
 			);
 		}
 
+		setTimeout(async () => {
+			const schedules = await DeviceEntity.getNotSavedSchedule(
+				serialNumber,
+				validSerialNumber.type,
+			);
+
+			console.log('schedules is ');
+			console.log(schedules);
+
+			const sendScheduleWithDelay = async (data, index) => {
+				console.log(data)
+				return new Promise((resolve) => {
+					setTimeout(async () => {
+						if (data.type == 'not_saved') {
+							let schedule = data.data
+							let scheduleObject = {
+								enable: schedule.enable,
+								startTime: schedule.start,
+								endTime: schedule.end,
+								repeat: schedule.repeat,
+								id: schedule.customId.toString(),
+							};
+							if (validSerialNumber.type == 'power') {
+								scheduleObject['port'] = (
+									schedule as IPowerStripSchedule
+								).port;
+							}
+							client.publish(
+								`/chisco/set_schedule/${serialNumber}`,
+								JSON.stringify(scheduleObject),
+							);
+							console.log(`Schedule ${index + 1} sent`);
+							resolve(true);
+						} else if (data.type == "delete") {
+							client.publish(
+								`/chisco/delete_schedule/${serialNumber}`,
+								JSON.stringify({id:data.data.toString()}),
+							);
+
+							resolve(true);
+						}
+					}, index * 500); // تاخیر ۲ ثانیه بین هر schedule
+				});
+			};
+
+			// ارسال همه schedule‌ها یکی یکی
+			for (let i = 0; i < schedules.length; i++) {
+				await sendScheduleWithDelay(schedules[i], i);
+			}
+		}, 1000);
+
 		client.publish(
 			`/connection/${serialNumber}`,
 			JSON.stringify({
-				connectionStatus:true
+				connectionStatus: true,
 			}),
 		);
 

@@ -1,6 +1,14 @@
 import { Schema, model, Document, Model, Types } from 'mongoose';
 
+export enum ScheduleStatus {
+	NotSave = 'not_save',
+	ACK = 'ack',
+}
 const scheduleDeviceDefaultSchema = {
+	customId: {
+		type: Number,
+		default: Math.floor(Date.now() / 1000),
+	},
 	name: {
 		type: 'string',
 	},
@@ -14,10 +22,13 @@ const scheduleDeviceDefaultSchema = {
 		type: 'boolean',
 		default: true,
 	},
-
 	repeat: {
 		default: [],
 		type: [{ type: String }],
+	},
+	scheduleStatus: {
+		type: 'string',
+		default: ScheduleStatus.NotSave,
 	},
 };
 
@@ -32,9 +43,9 @@ const defaultDeviceSchema = {
 	category: {
 		type: 'string',
 	},
-	createAt:{
-		type:Date,
-		default:Date.now
+	createAt: {
+		type: Date,
+		default: Date.now,
 	},
 	registerAt: {
 		type: Date,
@@ -45,33 +56,40 @@ const defaultDeviceSchema = {
 	deviceLastConnection: {
 		type: 'string',
 	},
-	password:{
+	password: {
 		type: 'string',
 	},
-	insertedUser:{
+	insertedUser: {
 		type: Types.ObjectId,
-	}
+	},
+	pendingDeleteCustomIds: { // فیلد جدید
+        type: [Number],
+        default: [],
+    },
 };
 
 interface IDevice extends Document {
 	serialNumber: string;
-	createAt:Date;
+	createAt: Date;
 	name?: string;
 	category?: string;
 	owner?: Types.ObjectId;
 	registerAt?: Date;
-	deviceLastConnection?:string;
-	password?:string;
-	insertedUser:Types.ObjectId
+	deviceLastConnection?: string;
+	password?: string;
+	insertedUser: Types.ObjectId;
+	pendingDeleteCustomIds?:Array<Number>;
 }
 
-interface ISchedule {
+export interface ISchedule {
 	_id?: Types.ObjectId;
+	customId?:number;
 	name?: string;
 	start?: string;
 	end?: string;
 	enable: boolean;
 	repeat?: Array<string>;
+	scheduleStatus?: ScheduleStatus;
 }
 
 export interface PowerConnectors {
@@ -127,6 +145,10 @@ const powerStripSchema = new Schema({
 	schedule: {
 		type: [
 			{
+				customId: {
+					type: Number,
+					default: Math.floor(Date.now() / 1000),
+				},
 				port: Number,
 				name: String,
 				start: String,
@@ -139,10 +161,18 @@ const powerStripSchema = new Schema({
 					type: [{ type: String }],
 					default: [],
 				},
+				scheduleStatus: {
+					type: String,
+					default: ScheduleStatus.NotSave,
+				},
 			},
 		],
 		default: [],
 	},
+	pendingDeleteCustomIds: { // فیلد جدید
+        type: [Number],
+        default: [],
+    },
 });
 
 export const PowerStrip: Model<IPowerStrip> = model<IPowerStrip>(
@@ -154,7 +184,7 @@ const coolerSchema = new Schema({
 	...defaultDeviceSchema,
 	brand: {
 		type: String,
-		default:'brand0'
+		default: 'brand0',
 	},
 	model: {
 		type: String,
@@ -191,6 +221,7 @@ const coolerSchema = new Schema({
 		type: Boolean,
 		default: true,
 	},
+	
 });
 
 export const Cooler: Model<ICooler> = model<ICooler>('Cooler', coolerSchema);

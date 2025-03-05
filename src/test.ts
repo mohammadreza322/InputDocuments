@@ -1,13 +1,37 @@
-var request = require('request');
-var options = {
-	'method': 'GET',
-	'url': 'http://chisco.tech/api/user/',
-	'headers': {
-		'x-auth-token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjYyZDdjNTRlYzVlNGYxZTdkOGE0ODlkMiIsImlhdCI6MTY2NTUyMzQ3MSwiZXhwIjoxNjY1NTI3MDcxfQ.6TT2xh7jngMrB4T0w-SCl3Ure1HOp_lOgaOgfQt6on8',
-		'Cookie': 'di_noissaes_mait=s%3AUNdSjQKu6Lbd5UHoKDMrNu9GLF1tWGZb.kE0fxS%2Fh5NYNU3%2BjyFnfR%2Br41bwLUMIjLRounNeLtE4'
+import connectDb from './config/db';
+import { Cooler, ICooler, IPowerStrip, IPowerStripSchedule, PowerStrip } from './models/device.model';
+
+connectDb().then(async () => {
+	const power: IPowerStrip[] | null = await PowerStrip.find({});
+	let counter = 0;
+	for(const device of power) {
+		await new Promise(resolve => setTimeout(resolve, 500));
+		for(const schedule of device.schedule) {
+			const randomOffset = Math.floor(Math.random() * 1000); // یک عدد رندوم بین ۰ تا ۹۹۹
+
+			schedule.customId = Math.floor( (Date.now() - randomOffset)/1000)+counter
+			counter++
+		}
+		await device.save()
+		console.log(`power ${device.serialNumber} saved`)
+		
 	}
-};
-request(options, function (error, response) {
-	if (error) throw new Error(error);
-	console.log(response.body);
-});
+
+	const coolers: ICooler[] | null = await Cooler.find({});
+	for(const device of coolers) {
+		for(const schedule of device.schedule) {
+			await new Promise(resolve => setTimeout(resolve, 500));
+			const randomOffset = Math.floor(Math.random() * 1000); // یک عدد رندوم بین ۰ تا ۹۹۹
+            
+
+			schedule.customId = Math.floor( (Date.now() - randomOffset)/1000)+counter
+			counter++
+		}
+
+		await device.save()
+		console.log(`cooler ${device.serialNumber} saved`)
+		
+	}
+	console.log("done")
+	process.exit()
+})

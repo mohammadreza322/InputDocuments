@@ -92,7 +92,7 @@ export interface IScheduleObject {
 	endTime?: string;
 	repeat: Array<string>;
 	port?: number;
-	id?: Types.ObjectId;
+	id?: String;
 	enable: boolean;
 }
 
